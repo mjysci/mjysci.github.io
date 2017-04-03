@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://moye.bid/"/>
-  <updated>2017-04-03T01:11:23.454Z</updated>
+  <updated>2017-04-03T01:31:17.175Z</updated>
   <id>http://moye.bid/</id>
   
   <author>
@@ -20,9 +20,10 @@
     <link href="http://moye.bid/2017/04/03/highlight-visited/"/>
     <id>http://moye.bid/2017/04/03/highlight-visited/</id>
     <published>2017-04-02T23:18:07.000Z</published>
-    <updated>2017-04-03T01:11:23.454Z</updated>
+    <updated>2017-04-03T01:31:17.175Z</updated>
     
     <content type="html"><![CDATA[<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。</p>
+<a id="more"></a>
 <h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>最初的解决方案是安装<a href="https://chrome.google.com/webstore/detail/stylish-custom-themes-for/fjnbnpbmkenffdnngjfgmeleoegfcffe" target="_blank" rel="external">Stylish</a>，然后安装全局主题<a href="https://userstyles.org/styles/31267/global-dark-style-changes-everything-to-dark" target="_blank" rel="external">Global dark style</a>。</p>
 <p>但用久了感觉这个主题适合夜晚使用，特别是阅读长文。其他情况下缺乏美感。</p>
 <p>我主要是需要已访问链接高亮显示，于是选择了<a href="https://userstyles.org/styles/17357/red-visited-mark-visited-links-red-dm" target="_blank" rel="external">Red:visited</a>。不过默认的红色实在有点刺眼，我要其比未访问链接低调一些，记忆当中HTML标准的默认浅紫色就不错，完整的推荐设置<a href="https://www.w3.org/TR/html5/rendering.html#the-css-user-agent-style-sheet-and-presentational-hints" target="_blank" rel="external">在这里</a>。把主题里的#CC0000改成#551A8B即可。</p>
@@ -34,7 +35,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;原因&quot;&gt;&lt;a href=&quot;#原因&quot; class=&quot;headerlink&quot; title=&quot;原因&quot;&gt;&lt;/a&gt;原因&lt;/h2&gt;&lt;p&gt;不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。&lt;/p&gt;
-&lt;
     
     </summary>
     
@@ -52,11 +52,12 @@
     <link href="http://moye.bid/2017/04/02/hello-world/"/>
     <id>http://moye.bid/2017/04/02/hello-world/</id>
     <published>2017-04-02T04:48:03.000Z</published>
-    <updated>2017-04-02T08:58:41.241Z</updated>
+    <updated>2017-04-03T01:30:25.927Z</updated>
     
     <content type="html"><![CDATA[<p>某网站注册不能用免费邮箱，一时冲动买了个域名来弄企业邮箱，另外也配合ngrok做内网穿透。只是这样的话有点浪费，于是顺便搭个静态博客来玩。</p>
 <p>就需求来说，个人笔记以前用evernote就足够了，协作，共享都能实现，手机端操作十分方便。但私人笔记记录比较随意，注释都没几条，时间久了按步骤复现没问题，但背后原理难免有点模糊。发到博客上则能强制自己写仔细认真些。</p>
-<h2 id="静态博客平台比较"><a href="#静态博客平台比较" class="headerlink" title="静态博客平台比较"></a>静态博客平台比较</h2><p>首先要按需求和前置技能选一个合适的平台，以下结论是google得来，除了Hexo另外两个并未亲自尝试，所以并不靠谱。以后有空会都试试再详细对比。</p>
+<h2 id="静态博客平台比较"><a href="#静态博客平台比较" class="headerlink" title="静态博客平台比较"></a>静态博客平台比较</h2><a id="more"></a>
+<p>首先要按需求和前置技能选一个合适的平台，以下结论是google得来，除了Hexo另外两个并未亲自尝试，所以并不靠谱。以后有空会都试试再详细对比。</p>
 <h3 id="Jekyll-JB-octopress"><a href="#Jekyll-JB-octopress" class="headerlink" title="Jekyll (JB, octopress)"></a>Jekyll (JB, octopress)</h3><p>+Github原生支持<br>+插件众多<br>-页面生成效率低<br>-ruby搭建环境对win不友好</p>
 <h3 id="Hugo"><a href="#Hugo" class="headerlink" title="Hugo"></a>Hugo</h3><p>+GO编写，性能强大，页面生成效率极高<br>+依赖少，单个可执行文件搭建环境简单<br>-扩展性差</p>
 <h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>+Node.js，搭建环境相对简单<br>+扩展性强<br>+页面生成效率不及Hugo，但远超Jekyll<br>-社区偏小</p>
@@ -87,7 +88,8 @@
     <summary type="html">
     
       &lt;p&gt;某网站注册不能用免费邮箱，一时冲动买了个域名来弄企业邮箱，另外也配合ngrok做内网穿透。只是这样的话有点浪费，于是顺便搭个静态博客来玩。&lt;/p&gt;
-&lt;p&gt;就需求来说，个人笔记以前用evernote就足够了，协作，共享都能实现，手机端操作十分方便。但私人笔记记录比较随意，注释
+&lt;p&gt;就需求来说，个人笔记以前用evernote就足够了，协作，共享都能实现，手机端操作十分方便。但私人笔记记录比较随意，注释都没几条，时间久了按步骤复现没问题，但背后原理难免有点模糊。发到博客上则能强制自己写仔细认真些。&lt;/p&gt;
+&lt;h2 id=&quot;静态博客平台比较&quot;&gt;&lt;a href=&quot;#静态博客平台比较&quot; class=&quot;headerlink&quot; title=&quot;静态博客平台比较&quot;&gt;&lt;/a&gt;静态博客平台比较&lt;/h2&gt;
     
     </summary>
     
