@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://moye.bid/"/>
-  <updated>2017-04-02T08:58:41.241Z</updated>
+  <updated>2017-04-03T01:11:23.454Z</updated>
   <id>http://moye.bid/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>通过CSS高亮显示已访问链接</title>
+    <link href="http://moye.bid/2017/04/03/highlight-visited/"/>
+    <id>http://moye.bid/2017/04/03/highlight-visited/</id>
+    <published>2017-04-02T23:18:07.000Z</published>
+    <updated>2017-04-03T01:11:23.454Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>最初的解决方案是安装<a href="https://chrome.google.com/webstore/detail/stylish-custom-themes-for/fjnbnpbmkenffdnngjfgmeleoegfcffe" target="_blank" rel="external">Stylish</a>，然后安装全局主题<a href="https://userstyles.org/styles/31267/global-dark-style-changes-everything-to-dark" target="_blank" rel="external">Global dark style</a>。</p>
+<p>但用久了感觉这个主题适合夜晚使用，特别是阅读长文。其他情况下缺乏美感。</p>
+<p>我主要是需要已访问链接高亮显示，于是选择了<a href="https://userstyles.org/styles/17357/red-visited-mark-visited-links-red-dm" target="_blank" rel="external">Red:visited</a>。不过默认的红色实在有点刺眼，我要其比未访问链接低调一些，记忆当中HTML标准的默认浅紫色就不错，完整的推荐设置<a href="https://www.w3.org/TR/html5/rendering.html#the-css-user-agent-style-sheet-and-presentational-hints" target="_blank" rel="external">在这里</a>。把主题里的#CC0000改成#551A8B即可。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>但新的问题产生了：对于背景颜色较深的网站，紫色很难看清，所以还要改下链接的背景色。最终结果如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span>, <span class="selector-class">.fl</span><span class="selector-pseudo">:visited</span> &#123;</div><div class="line">    <span class="attribute">color</span>: <span class="number">#551A8B</span> <span class="meta">!important</span>;</div><div class="line">    <span class="attribute">background-color</span>: <span class="number">#ccc</span> <span class="meta">!important</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>如果背景是图片就无能为力了，去掉!important的话漏网之鱼又太多。想要解决的话应该是读取原有字体颜色，然后用lighten（依赖SASS）或者自己设计一个简单的数学变换来使其变浅。第一步需要javascript来实现。</p>
+<p>去<a href="https://greasyfork.org" target="_blank" rel="external">GreasyFork</a>找了下没有实现类似功能的脚本，准备自己写一个却发现由于安全问题getComputedStyle并<a href="https://hacks.mozilla.org/2010/03/privacy-related-changes-coming-to-css-vistited/" target="_blank" rel="external">不能返回已访问链接颜色的正确结果</a>。这样就不能直接在循环内判断是否visited并根据原来颜色变浅了。js读取颜色后要另外再用CSS来判断并改色。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;原因&quot;&gt;&lt;a href=&quot;#原因&quot; class=&quot;headerlink&quot; title=&quot;原因&quot;&gt;&lt;/a&gt;原因&lt;/h2&gt;&lt;p&gt;不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。&lt;/p&gt;
+&lt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="http://moye.bid/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="css" scheme="http://moye.bid/tags/css/"/>
+    
+      <category term="javascript" scheme="http://moye.bid/tags/javascript/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World! 静态博客Hexo部署于GitHub</title>
