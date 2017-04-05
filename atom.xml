@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://moye.bid/"/>
-  <updated>2017-04-03T01:31:17.175Z</updated>
+  <updated>2017-04-05T03:29:53.797Z</updated>
   <id>http://moye.bid/</id>
   
   <author>
@@ -14,6 +14,45 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>通过proxifier配合代理安装GitHub Desktop</title>
+    <link href="http://moye.bid/2017/04/05/github-desktop/"/>
+    <id>http://moye.bid/2017/04/05/github-desktop/</id>
+    <published>2017-04-05T02:41:32.000Z</published>
+    <updated>2017-04-05T03:29:53.797Z</updated>
+    
+    <content type="html"><![CDATA[<p>手贱试了下<a href="https://desktop.github.com/" target="_blank" rel="external">GitHub Desktop</a>，结果GUI逻辑古怪，且功能不完善。Sublime Text + git bash的组合完爆之，遂卸载。不过解决蛋疼的在线安装模式的过程倒是值得记录下来。</p>
+<p>GitHub Desktop用的是ClickOnce安装，程序又是放在amazon s3，由于众所周知的原因访问极不稳定，而ClickOnce并不能断点续传，所以在国内环境下总是安装失败。</p>
+<p>因为机器还有别的程序在运行，不能使用全局代理，所以关键在于确定是哪个程序负责安装包的联网下载。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><a id="more"></a>
+<ol>
+<li>socks代理（比如SS）</li>
+<li><a href="https://www.proxifier.com/" target="_blank" rel="external">proxifier</a></li>
+</ol>
+<h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>代理设置略。</p>
+<p>proxifer的操作很直观，不清楚可以参考官方文档，<a href="https://www.proxifier.com/documentation/v3/proxy.htm" target="_blank" rel="external">设置代理</a>，<a href="https://www.proxifier.com/documentation/v3/rules.htm" target="_blank" rel="external">添加规则</a></p>
+<p>直接将安装包加入规则是行不通的，通过任务管理器的网络栏进行排序可获知安装包调用的是dfsvc.exe（ClickOnce），位于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%windir%\Microsoft.NET\Framework64\v4.0.30319\dfsvc.exe</div></pre></td></tr></table></figure></p>
+<p>点击左上角Proxification Rules -&gt; Add<br>Name随意，如ClickOnce<br>点Browse选择dfsvc<br>Action选Proxy通道</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;手贱试了下&lt;a href=&quot;https://desktop.github.com/&quot;&gt;GitHub Desktop&lt;/a&gt;，结果GUI逻辑古怪，且功能不完善。Sublime Text + git bash的组合完爆之，遂卸载。不过解决蛋疼的在线安装模式的过程倒是值得记录下来。&lt;/p&gt;
+&lt;p&gt;GitHub Desktop用的是ClickOnce安装，程序又是放在amazon s3，由于众所周知的原因访问极不稳定，而ClickOnce并不能断点续传，所以在国内环境下总是安装失败。&lt;/p&gt;
+&lt;p&gt;因为机器还有别的程序在运行，不能使用全局代理，所以关键在于确定是哪个程序负责安装包的联网下载。&lt;/p&gt;
+&lt;h2 id=&quot;准备工作&quot;&gt;&lt;a href=&quot;#准备工作&quot; class=&quot;headerlink&quot; title=&quot;准备工作&quot;&gt;&lt;/a&gt;准备工作&lt;/h2&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="http://moye.bid/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="github" scheme="http://moye.bid/tags/github/"/>
+    
+      <category term="proxy" scheme="http://moye.bid/tags/proxy/"/>
+    
+  </entry>
   
   <entry>
     <title>通过CSS高亮显示已访问链接</title>
@@ -52,7 +91,7 @@
     <link href="http://moye.bid/2017/04/02/hello-world/"/>
     <id>http://moye.bid/2017/04/02/hello-world/</id>
     <published>2017-04-02T04:48:03.000Z</published>
-    <updated>2017-04-03T01:30:25.927Z</updated>
+    <updated>2017-04-05T03:18:00.110Z</updated>
     
     <content type="html"><![CDATA[<p>某网站注册不能用免费邮箱，一时冲动买了个域名来弄企业邮箱，另外也配合ngrok做内网穿透。只是这样的话有点浪费，于是顺便搭个静态博客来玩。</p>
 <p>就需求来说，个人笔记以前用evernote就足够了，协作，共享都能实现，手机端操作十分方便。但私人笔记记录比较随意，注释都没几条，时间久了按步骤复现没问题，但背后原理难免有点模糊。发到博客上则能强制自己写仔细认真些。</p>
@@ -71,7 +110,7 @@
 </ol>
 <p>若提示No such file or directory则需生成新Key<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen -t rsa -C <span class="string">"youremail@youremail.com"</span></div></pre></td></tr></table></figure></p>
 <p>passphrase为每次提交项目输入的口令，若不想每次都输入的话可以<a href="https://help.github.com/articles/working-with-ssh-key-passphrases/" target="_blank" rel="external">通过ssh-agent来保存</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span></div><div class="line">touch .profile</div><div class="line">vim .profile	<span class="comment">#添加启动代码</span></div></pre></td></tr></table></figure></p>
-<p>复制%USERPROFILE%.ssh\id_rsa.pub的内容到<a href="https://github.com/settings/keys" target="_blank" rel="external">Github Settings</a><br>注：<a href="https://en.wikipedia.org/wiki/Environment_variable#Windows" target="_blank" rel="external">Windows环境变量</a><br>测试ssh<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh -T git@github.com</div></pre></td></tr></table></figure></p>
+<p>复制%USERPROFILE%\.ssh\id_rsa.pub的内容到<a href="https://github.com/settings/keys" target="_blank" rel="external">Github Settings</a><br>注：<a href="https://en.wikipedia.org/wiki/Environment_variable#Windows" target="_blank" rel="external">Windows环境变量</a><br>测试ssh<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh -T git@github.com</div></pre></td></tr></table></figure></p>
 <p>设置用户信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"你的姓名"</span>	<span class="comment">#不是用户名</span></div><div class="line">$ git config --global user.email <span class="string">"你的邮箱"</span></div></pre></td></tr></table></figure></p>
 <h2 id="部署Hexo"><a href="#部署Hexo" class="headerlink" title="部署Hexo"></a>部署Hexo</h2><p>若访问npmjs.org过慢，可换<a href="https://npm.taobao.org" target="_blank" rel="external">淘宝的源</a>，改用cnpm即可。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g cnpm --registry=https://registry.npm.taobao.org</div></pre></td></tr></table></figure></p>
 <p>建立新文件夹，在bash中指向这个文件夹<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ hexo init</div><div class="line">$ npm install</div><div class="line">$ hexo generate		<span class="comment">#生成静态页面至public目录</span></div><div class="line">$ hexo server		<span class="comment">#http://localhost:4000 查看效果</span></div></pre></td></tr></table></figure></p>
