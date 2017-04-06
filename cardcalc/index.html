@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>steam市场售价计算器</title>
+  <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
+  <script src="./js/calc.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="./css/master.css" media="screen" title="no title" charset="utf-8">
+</head>
+
+<body>
+  <h1>steam市场售价计算器</h1>
+  <div class="bigDiv">
+    <div>
+      <p class="header">您收款：（期望值）</p>
+      <input id="rmbGot" type="text">
+    </div>
+    <div>
+      <p>一美元对人民币的汇率</p>
+      <p>可以自行输入想要的汇率</p>
+      <p style="font-size: 5px">(自动带出的汇率为k780的接口)</p>
+      <input id="excRate" type="text">
+    </div>
+    <div>
+      <button type="button" name="excBtn" onclick="autoExc()">汇率</button>
+      <button type="button" name="button" onclick="calcLoop()">计算</button>
+      <p>您收款：（建议值）</p>
+      <input id="maxRmb" type="text">
+    </div>
+  </div>
+  <!-- <img src="./images/tu.jpg" alt=""> -->
+</body>
+
+</html>

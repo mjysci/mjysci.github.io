@@ -1,0 +1,56 @@
+h1 {
+  color: #119;
+}
+
+body {
+  text-align: center;
+}
+
+.bigDiv {
+  padding-top: 20px;
+  border: 1px solid #d8dee2;
+  width: 340px;
+  height: 430px;
+  position: relative;
+  margin: 0 auto;
+}
+
+button {
+  width: 110px;
+  height: 43px;
+  margin-top: 18px;
+  margin-left: 10px;
+  margin-right: 23px;
+  font-size: 25px;
+  border-radius:10px;
+  line-height: 38px;
+  text-align: center;
+  color: #129;
+  text-shadow:1px 1px 1px #129;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  background-color: #EEFFBB;
+}
+
+input {
+  width: 255px;
+  height: auto;
+  font-size: 25px;
+  margin-left: -13px;
+}
+
+p {
+  color: #333;
+  font-size: 22px;
+  margin-left: 33px;
+  text-align: left;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 340px) {
+  .bigDiv{
+    width: 100%
+  }
+}
