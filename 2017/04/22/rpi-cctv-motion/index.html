@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>利用树莓派DIY运动检测监控 | 名实合为</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用树莓派DIY运动检测监控">
+<meta property="og:url" content="http://moye.bid/2017/04/22/rpi-cctv-motion/index.html">
+<meta property="og:site_name" content="名实合为">
+<meta property="og:description" content="出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。">
+<meta property="og:image" content="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&width=400">
+<meta property="og:updated_time" content="2017-04-22T04:36:48.091Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用树莓派DIY运动检测监控">
+<meta name="twitter:description" content="出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。">
+<meta name="twitter:image" content="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&width=400">
+  
+    <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">mjy</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/rpi/" style="font-size: 10px;">rpi</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">Valar morghulis</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">mjy</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">mjy</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-rpi-cctv-motion" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/22/rpi-cctv-motion/" class="article-date">
+      <time datetime="2017-04-22T02:38:56.000Z" itemprop="datePublished">2017-04-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      利用树莓派DIY运动检测监控
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/motion/">motion</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpi/">rpi</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。</p>
+<a id="more"></a>
+<h2 id="硬件准备"><a href="#硬件准备" class="headerlink" title="硬件准备"></a>硬件准备</h2><ol>
+<li><a href="https://www.raspberrypi.org/products/" target="_blank" rel="external">树莓派Raspberry Pi 3</a></li>
+<li><a href="http://www.waveshare.com/rpi-ir-cut-camera.htm" target="_blank" rel="external">RPi IR-CUT Camera</a></li>
+</ol>
+<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><h3 id="启用摄像头"><a href="#启用摄像头" class="headerlink" title="启用摄像头"></a>启用摄像头</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/modules</div></pre></td></tr></table></figure>
+<p>添加这一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bcm2835-v4l2</div></pre></td></tr></table></figure></p>
+<p>重启后测试摄像头<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">raspistill -o image.jpg -t 10000     <span class="comment">#test camera</span></div></pre></td></tr></table></figure></p>
+<h3 id="安装motionEye"><a href="#安装motionEye" class="headerlink" title="安装motionEye"></a>安装motionEye</h3><p>核心软件是<a href="http://www.lavrsen.dk/foswiki/bin/view/Motion/WebHome" target="_blank" rel="external">Motion</a>，我以前就是用它配合Mutt来实现前言的功能的，但配置稍麻烦，且自带的远程管理界面略简单。后来发现<a href="https://github.com/ccrisan/motioneye/wiki" target="_blank" rel="external">motionEye</a>，是用python写的Motion前端，十分好用。</p>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/ccrisan/motioneye/wiki/precompiled/ffmpeg_3.1.1-1_armhf.deb</div><div class="line">sudo dpkg -i ffmpeg_3.1.1-1_armhf.deb</div><div class="line"><span class="comment">#apt-get remove libavcodec-extra-56 libavformat56 libavresample2 libavutil54</span></div><div class="line">sudo apt-get install python-pip python-dev curl libssl-dev libcurl4-openssl-dev libjpeg-dev libx264-142 libavcodec56 libavformat56 libmysqlclient18 libswscale3 libpq5 v4l-utils</div><div class="line">wget https://github.com/Motion-Project/motion/releases/download/release-4.0.1/pi_jessie_motion_4.0.1-1_armhf.deb</div><div class="line">sudo dpkg -i pi_jessie_motion_4.0.1-1_armhf.deb</div></pre></td></tr></table></figure>
+<h4 id="更改pip源为国内aliyun镜像"><a href="#更改pip源为国内aliyun镜像" class="headerlink" title="更改pip源为国内aliyun镜像"></a>更改pip源为国内aliyun镜像</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir ~/.pip</div><div class="line">nano ~/.pip/pip.conf</div></pre></td></tr></table></figure>
+<p>添加如下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[global]</div><div class="line">trusted-host =  mirrors.aliyun.com</div><div class="line">index-url = http://mirrors.aliyun.com/pypi/simple</div></pre></td></tr></table></figure></p>
+<h4 id="安装motionEye-1"><a href="#安装motionEye-1" class="headerlink" title="安装motionEye"></a>安装motionEye</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo pip install motioneye</div><div class="line">sudo mkdir -p /etc/motioneye</div><div class="line">sudo cp /usr/<span class="built_in">local</span>/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf</div><div class="line"></div><div class="line">sudo cp /usr/<span class="built_in">local</span>/share/motioneye/extra/motioneye.systemd-unit-local /etc/systemd/system/motioneye.service</div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl <span class="built_in">enable</span> motioneye          <span class="comment">#设为开机启动，可选</span></div><div class="line">sudo systemctl start motioneye</div></pre></td></tr></table></figure>
+<h4 id="更新（可选）"><a href="#更新（可选）" class="headerlink" title="更新（可选）"></a>更新（可选）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo pip install motioneye --upgrade</div><div class="line">sudo systemctl restart motioneye</div></pre></td></tr></table></figure>
+<h2 id="配置motionEye"><a href="#配置motionEye" class="headerlink" title="配置motionEye"></a>配置motionEye</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/motioneye/motioneye.conf</div></pre></td></tr></table></figure>
+<p>更改端口（可选）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">port 8765</div><div class="line">motion_control_port 7999</div></pre></td></tr></table></figure></p>
+<p>相关配置文件位置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/motion/motion.conf</div><div class="line">sudo nano /etc/motioneye/thread-1.conf</div></pre></td></tr></table></figure></p>
+<h3 id="通过前端配置邮件提醒"><a href="#通过前端配置邮件提醒" class="headerlink" title="通过前端配置邮件提醒"></a>通过前端配置邮件提醒</h3><p>浏览器打开<br>localhost:8765<br>默认login: admin 密码为空<br>Advanced Settings ON<br>163邮件参数<br>163mail 25 non-TLS</p>
+<h2 id="控制夜视开关"><a href="#控制夜视开关" class="headerlink" title="控制夜视开关"></a>控制夜视开关</h2><p>我选用的摄像头为微雪的RPi IR-CUT Camera，没有led，而是将原来控制led的端口作为夜视开关，官方给出的控制方案为<a href="http://www.waveshare.com/wiki/RPi_IR-CUT_Camera" target="_blank" rel="external">额外接一根线到摄像头模块</a><br><img src="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&amp;width=400" alt=""><br>但这种方案不仅占用了一个外置GPIO端口，还降低了可靠性，特别是摄像头距主控较远的情况。其实<a href="https://www.raspberrypi.org/forums/viewtopic.php?p=891836&amp;sid=66eeecc88aa73bcad4f1f4109bfe54d2#p891836" target="_blank" rel="external">6by9已经指出</a>可以通过GPIO 32 (A+之后，3之前的板子) 或GPIO 5 (树莓派1)来控制camera led。</p>
+<h3 id="RPi2设置"><a href="#RPi2设置" class="headerlink" title="RPi2设置"></a>RPi2设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /boot/config.txt</div></pre></td></tr></table></figure>
+<p>添加以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">disable_camera_led=1</div></pre></td></tr></table></figure></p>
+<p>编译cnv<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/mjysci/rpi-cam-night-vision-control</div><div class="line"><span class="built_in">cd</span> rpi-cam-night-vision-control</div><div class="line">gcc -Wall -o cnv cnv.c -lwiringPi</div></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cnv</div></pre></td></tr></table></figure></p>
+<h3 id="RPi3设置"><a href="#RPi3设置" class="headerlink" title="RPi3设置"></a>RPi3设置</h3><p>最新的rpi3内置GPIO有变动，disable_camera_led失效，由于是扩展GPIO，并不能直接控制。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/6by9/rpi3-gpiovirtbuf.git</div><div class="line"><span class="built_in">cd</span> rpi3-gpiovirtbuf</div><div class="line">make</div><div class="line">cp rpi3-gpiovirtbuf ~/bin/rpi3-gpiovirtbuf</div></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpi3-gpiovirtbuf s 134 1 #夜视模式关闭</div><div class="line">rpi3-gpiovirtbuf s 134 0 #夜视模式开启</div></pre></td></tr></table></figure></p>
+<p>清空记录可以直接在前端操作，亦可通过rm实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo rm /var/lib/motioneye/Camera1/*.*</div></pre></td></tr></table></figure></p>
+<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><p>之前在rpi2按以上步骤没问题，但重新部署到rpi3时碰到refused to connect错误<br>查看服务状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl status motioneye.service <span class="_">-l</span></div></pre></td></tr></table></figure></p>
+<p>不知何故安装时并未创建数据文件夹，手动建之<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /var/lib/motioneye</div></pre></td></tr></table></figure></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/ccrisan/motioneye/wiki/Install-On-Raspbian" target="_blank" rel="external">motionEye wiki</a><br><a href="https://www.raspberrypi.org/forums/viewtopic.php?p=891836&amp;sid=66eeecc88aa73bcad4f1f4109bfe54d2#p891836" target="_blank" rel="external">Turning off camera LED</a><br><a href="https://www.raspberrypi.org/forums/viewtopic.php?f=43&amp;t=109137&amp;start=100#p989832" target="_blank" rel="external">Raw sensor access / CSI-2 receiver peripheral</a></p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipayimg.jpg" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/wechatimg.jpg" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
+        <p><span>发布时间:</span>2017年04月22日 - 10时38分</p>
+        <p><span>最后更新:</span>2017年04月22日 - 12时36分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/04/22/rpi-cctv-motion/" title="利用树莓派DIY运动检测监控">http://moye.bid/2017/04/22/rpi-cctv-motion/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://moye.bid/2017/04/22/rpi-cctv-motion/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2017/04/05/github-desktop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">通过proxifier配合代理安装GitHub Desktop</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#硬件准备"><span class="toc-number">1.</span> <span class="toc-text">硬件准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件安装"><span class="toc-number">2.</span> <span class="toc-text">软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启用摄像头"><span class="toc-number">2.1.</span> <span class="toc-text">启用摄像头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装motionEye"><span class="toc-number">2.2.</span> <span class="toc-text">安装motionEye</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装依赖"><span class="toc-number">2.2.1.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更改pip源为国内aliyun镜像"><span class="toc-number">2.2.2.</span> <span class="toc-text">更改pip源为国内aliyun镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装motionEye-1"><span class="toc-number">2.2.3.</span> <span class="toc-text">安装motionEye</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更新（可选）"><span class="toc-number">2.2.4.</span> <span class="toc-text">更新（可选）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置motionEye"><span class="toc-number">3.</span> <span class="toc-text">配置motionEye</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过前端配置邮件提醒"><span class="toc-number">3.1.</span> <span class="toc-text">通过前端配置邮件提醒</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制夜视开关"><span class="toc-number">4.</span> <span class="toc-text">控制夜视开关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RPi2设置"><span class="toc-number">4.1.</span> <span class="toc-text">RPi2设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RPi3设置"><span class="toc-number">4.2.</span> <span class="toc-text">RPi3设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug"><span class="toc-number">5.</span> <span class="toc-text">debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="youyan" id="comments">
+  <div id="uyan_frame"></div>
+  <script src="http://v2.uyan.cc/code/uyan.js?uid=2129677"></script>
+</section>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/04/05/github-desktop/" title="下一篇: 通过proxifier配合代理安装GitHub Desktop">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 mjy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
