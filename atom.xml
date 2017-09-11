@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://moye.bid/"/>
-  <updated>2017-04-22T04:36:48.091Z</updated>
+  <updated>2017-09-11T04:26:50.576Z</updated>
   <id>http://moye.bid/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>无人车开发工程师第一学期环境搭建</title>
+    <link href="http://moye.bid/2017/09/11/carnd-env/"/>
+    <id>http://moye.bid/2017/09/11/carnd-env/</id>
+    <published>2017-09-11T03:55:06.000Z</published>
+    <updated>2017-09-11T04:26:50.576Z</updated>
+    
+    <content type="html"><![CDATA[<p>第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。<br><a id="more"></a></p>
+<p>虽然如此，官方的<a href="https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/environment-gpu.yml" target="_blank" rel="external">environment-gpu.yml</a>仍具有重要参考价值。</p>
+<h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><p>OS: Linux Mint 18.2<br>GPU: NVIDIA GeForce GTX 1080 Ti</p>
+<h2 id="建立新环境"><a href="#建立新环境" class="headerlink" title="建立新环境"></a>建立新环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conda create -n carnd-term1 python=3</div></pre></td></tr></table></figure>
+<h2 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">conda install numpy matplotlib jupyter opencv pillow scikit-learn scikit-image scipy h5py flask-socketio seaborn pandas pyqt keras-gpu</div><div class="line">pip install eventlet imageio moviepy</div></pre></td></tr></table></figure>
+<p>注意这里由于网络不畅，menpo通道的opencv3下载时经常掉线。装tuna源的opencv替代。所有包默认最新版，keras选gpu版会自动装上tensorflow-gpu及cuda、cudnn等。</p>
+<h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><p>直接跑<a href="https://github.com/udacity/CarND-Term1-Starter-Kit-Test" target="_blank" rel="external">测试程序</a>会出现以下报错：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ImportError: libopenblasp-r0-39a31c03.2.18.so: cannot open shared object file: No such file or directory</div><div class="line">ImportError: Importing the multiarray numpy extension module failed.</div><div class="line">Most likely you are trying to import a failed build of numpy.</div></pre></td></tr></table></figure></p>
+<p>走了些mkl的弯路后发现解决方法简单粗暴，忽略conda已装的numpy，然后用pip装最新版numpy即可解决问题。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install --ignore-installed numpy</div></pre></td></tr></table></figure></p>
+<h2 id="安装ffmpeg"><a href="#安装ffmpeg" class="headerlink" title="安装ffmpeg"></a>安装ffmpeg</h2><p>在测试notebook里直接执行以下代码下载安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import imageio</div><div class="line">imageio.plugins.ffmpeg.download()</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="http://moye.bid/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="udacity" scheme="http://moye.bid/tags/udacity/"/>
+    
+      <category term="engineering" scheme="http://moye.bid/tags/engineering/"/>
+    
+  </entry>
   
   <entry>
     <title>利用树莓派DIY运动检测监控</title>
@@ -74,7 +107,7 @@
     <link href="http://moye.bid/2017/04/05/github-desktop/"/>
     <id>http://moye.bid/2017/04/05/github-desktop/</id>
     <published>2017-04-05T02:41:32.000Z</published>
-    <updated>2017-04-05T03:29:53.797Z</updated>
+    <updated>2017-04-05T03:29:53.798Z</updated>
     
     <content type="html"><![CDATA[<p>手贱试了下<a href="https://desktop.github.com/" target="_blank" rel="external">GitHub Desktop</a>，结果GUI逻辑古怪，且功能不完善。Sublime Text + git bash的组合完爆之，遂卸载。不过解决蛋疼的在线安装模式的过程倒是值得记录下来。</p>
 <p>GitHub Desktop用的是ClickOnce安装，程序又是放在amazon s3，由于众所周知的原因访问极不稳定，而ClickOnce并不能断点续传，所以在国内环境下总是安装失败。</p>
@@ -113,7 +146,7 @@
     <link href="http://moye.bid/2017/04/03/highlight-visited/"/>
     <id>http://moye.bid/2017/04/03/highlight-visited/</id>
     <published>2017-04-02T23:18:07.000Z</published>
-    <updated>2017-04-03T01:31:17.175Z</updated>
+    <updated>2017-04-03T01:31:17.176Z</updated>
     
     <content type="html"><![CDATA[<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。</p>
 <a id="more"></a>
@@ -189,9 +222,9 @@
       <category term="笔记" scheme="http://moye.bid/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="hexo" scheme="http://moye.bid/tags/hexo/"/>
-    
       <category term="github" scheme="http://moye.bid/tags/github/"/>
+    
+      <category term="hexo" scheme="http://moye.bid/tags/hexo/"/>
     
   </entry>
   
