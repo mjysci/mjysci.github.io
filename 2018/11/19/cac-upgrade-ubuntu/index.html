@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>无人车开发工程师第一学期环境搭建 | 名实合为</title>
+  <title>升级cloudatcost的ubuntu至18.04 | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。">
+  <meta name="description" content="升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="无人车开发工程师第一学期环境搭建">
-<meta property="og:url" content="http://moye.bid/2017/09/11/carnd-env/index.html">
+<meta property="og:title" content="升级cloudatcost的ubuntu至18.04">
+<meta property="og:url" content="http://moye.bid/2018/11/19/cac-upgrade-ubuntu/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。">
-<meta property="og:updated_time" content="2017-09-11T04:26:50.576Z">
+<meta property="og:description" content="升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。">
+<meta property="og:updated_time" content="2018-11-19T08:08:29.292Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="无人车开发工程师第一学期环境搭建">
-<meta name="twitter:description" content="第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。">
+<meta name="twitter:title" content="升级cloudatcost的ubuntu至18.04">
+<meta name="twitter:description" content="升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -196,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-carnd-env" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-cac-upgrade-ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/09/11/carnd-env/" class="article-date">
-      <time datetime="2017-09-11T03:55:06.000Z" itemprop="datePublished">2017-09-11</time>
+      <a href="/2018/11/19/cac-upgrade-ubuntu/" class="article-date">
+      <time datetime="2018-11-19T07:10:09.000Z" itemprop="datePublished">2018-11-19</time>
 </a>
     </div>
   
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      无人车开发工程师第一学期环境搭建
+      升级cloudatcost的ubuntu至18.04
     </h1>
   
 
@@ -228,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/engineering/">engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/udacity/">udacity</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vps/">vps</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,15 +238,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。<br><a id="more"></a></p>
-<p>虽然如此，官方的<a href="https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/environment-gpu.yml" target="_blank" rel="external">environment-gpu.yml</a>仍具有重要参考价值。</p>
-<h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><p>OS: Linux Mint 18.2<br>GPU: NVIDIA GeForce GTX 1080 Ti</p>
-<h2 id="建立新环境"><a href="#建立新环境" class="headerlink" title="建立新环境"></a>建立新环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conda create -n carnd-term1 python=3</div></pre></td></tr></table></figure>
-<h2 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">conda install numpy matplotlib jupyter opencv pillow scikit-learn scikit-image scipy h5py flask-socketio seaborn pandas pyqt keras-gpu</div><div class="line">pip install eventlet imageio moviepy</div></pre></td></tr></table></figure>
-<p>注意这里由于网络不畅，menpo通道的opencv3下载时经常掉线。装tuna源的opencv替代。所有包默认最新版，keras选gpu版会自动装上tensorflow-gpu及cuda、cudnn等。</p>
-<h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><p>直接跑<a href="https://github.com/udacity/CarND-Term1-Starter-Kit-Test" target="_blank" rel="external">测试程序</a>会出现以下报错：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ImportError: libopenblasp-r0-39a31c03.2.18.so: cannot open shared object file: No such file or directory</div><div class="line">ImportError: Importing the multiarray numpy extension module failed.</div><div class="line">Most likely you are trying to import a failed build of numpy.</div></pre></td></tr></table></figure></p>
-<p>走了些mkl的弯路后发现解决方法简单粗暴，忽略conda已装的numpy，然后用pip装最新版numpy即可解决问题。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install --ignore-installed numpy</div></pre></td></tr></table></figure></p>
-<h2 id="安装ffmpeg"><a href="#安装ffmpeg" class="headerlink" title="安装ffmpeg"></a>安装ffmpeg</h2><p>在测试notebook里直接执行以下代码下载安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import imageio</div><div class="line">imageio.plugins.ffmpeg.download()</div></pre></td></tr></table></figure></p>
+        <p>升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。<br><a id="more"></a><br>这个<a href="http://cloudatcost.com/index.php?a=QA9UgUtU8yJAqun" target="_blank" rel="external">cac</a>的vps前一阵抽风，恢复后别说内容了，整个server都消失了。除了数据没保障外服务器也不稳定，io性能很差，且条款随意修改，现在需要年付9刀的管理费（不过收了管理费后服务质量稍有提升，但ticket仍然万年无回复），不知道什么时候会跑路。若不是专用机场部署简单且流量不限的话真不如扔掉，想要稳定又廉价的可以上<a href="https://bwh8.net/aff.php?aff=37946" target="_blank" rel="external">搬瓦工</a>的年付19.99刀的车。  </p>
+<p>原来为了稳定所以是用centos7的系统只搭机场。现在决定装ubuntu作为测试用服务器玩新东西。但cac只提供了老掉牙的14.04。故需要升级系统。</p>
+<h1 id="升级内核开启bbr"><a href="#升级内核开启bbr" class="headerlink" title="升级内核开启bbr"></a>升级内核开启bbr</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh &amp;&amp; chmod +x bbr.sh</div><div class="line">sudo ./bbr.sh</div></pre></td></tr></table></figure>
+<p>内核选4.15.18。之前升完系统才升内核还选了最新的4.19.2结果翻车了。所以这里先升内核确保系统没挂且能正常开启bbr。升完后一般就会自动开启，运行<code>lsmod | grep bbr</code>查看结果。</p>
+<h1 id="升级发行版"><a href="#升级发行版" class="headerlink" title="升级发行版"></a>升级发行版</h1><p>远程升级需要注意ssh连接的稳定性问题，和本地不一样，需要用神器tmux以便ssh不幸断开后任务仍会继续在后台执行。</p>
+<p>另外一种方法是ssh设置防呆，在服务器端执行命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vi /etc/ssh/sshd_config</div><div class="line">文件末尾添加ClientAliveInterval 60</div><div class="line">systemctl restart ssh     //需注意14.04用的是upstart, 15.04之后才是systemctl</div></pre></td></tr></table></figure></p>
+<p>不过鉴于我国的特殊国情，防呆防不了断开，特别是晚上。所以还是要用tmux：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tmux new-session <span class="_">-s</span> ug</div><div class="line">apt update &amp;&amp; apt dist-upgrade</div><div class="line">apt-get autoremove  //删掉旧的内核免得/boot区满了</div><div class="line"><span class="keyword">do</span>-release-upgrade</div></pre></td></tr></table></figure>
+<p>如果中途断开就用ssh重连，然后<code>tmux a -t ug</code>加载屏幕继续查看。升级完成后用<code>lsb_release -a</code>查看系统版本。</p>
 
       
       
@@ -301,13 +301,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></p>
+        <p><span>本文标题:</span><a href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2017年09月11日 - 11时55分</p>
-        <p><span>最后更新:</span>2017年09月11日 - 12时26分</p>
+        <p><span>发布时间:</span>2018年11月19日 - 15时10分</p>
+        <p><span>最后更新:</span>2018年11月19日 - 16时08分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/09/11/carnd-env/" title="无人车开发工程师第一学期环境搭建">http://moye.bid/2017/09/11/carnd-env/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://moye.bid/2017/09/11/carnd-env/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/11/19/cac-upgrade-ubuntu/" title="升级cloudatcost的ubuntu至18.04">http://moye.bid/2018/11/19/cac-upgrade-ubuntu/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://moye.bid/2018/11/19/cac-upgrade-ubuntu/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -320,18 +320,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2018/11/19/cac-upgrade-ubuntu/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          升级cloudatcost的ubuntu至18.04
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/04/22/rpi-cctv-motion/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">利用树莓派DIY运动检测监控</div>
+    <a href="/2017/09/11/carnd-env/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">无人车开发工程师第一学期环境搭建</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -342,7 +333,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#系统环境"><span class="toc-number">1.</span> <span class="toc-text">系统环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立新环境"><span class="toc-number">2.</span> <span class="toc-text">建立新环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装依赖包"><span class="toc-number">3.</span> <span class="toc-text">安装依赖包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#报错"><span class="toc-number">4.</span> <span class="toc-text">报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装ffmpeg"><span class="toc-number">5.</span> <span class="toc-text">安装ffmpeg</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#升级内核开启bbr"><span class="toc-number">1.</span> <span class="toc-text">升级内核开启bbr</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级发行版"><span class="toc-number">2.</span> <span class="toc-text">升级发行版</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -399,13 +390,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/11/19/cac-upgrade-ubuntu/" title="上一篇: 升级cloudatcost的ubuntu至18.04">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/04/22/rpi-cctv-motion/" title="下一篇: 利用树莓派DIY运动检测监控">
+            <a href="/2017/09/11/carnd-env/" title="下一篇: 无人车开发工程师第一学期环境搭建">
                 <i class="fa fa-angle-right"></i>
             </a>
         
