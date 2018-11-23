@@ -252,9 +252,9 @@
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="hexo" scheme="https://majunyi.top/tags/hexo/"/>
-    
       <category term="github" scheme="https://majunyi.top/tags/github/"/>
+    
+      <category term="hexo" scheme="https://majunyi.top/tags/hexo/"/>
     
   </entry>
   
