@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2018/11/19/cac-upgrade-ubuntu/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。">
-<meta property="og:updated_time" content="2018-11-19T08:08:29.292Z">
+<meta property="og:updated_time" content="2018-11-23T01:15:06.993Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="升级cloudatcost的ubuntu至18.04">
 <meta name="twitter:description" content="升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。">
@@ -238,7 +238,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。<br><a id="more"></a><br>这个<a href="http://cloudatcost.com/index.php?a=QA9UgUtU8yJAqun" target="_blank" rel="external">cac</a>的vps前一阵抽风，恢复后别说内容了，整个server都消失了。除了数据没保障外服务器也不稳定，io性能很差，且条款随意修改，现在需要年付9刀的管理费（不过收了管理费后服务质量稍有提升，但ticket仍然万年无回复），不知道什么时候会跑路。若不是专用机场部署简单且流量不限的话真不如扔掉，想要稳定又廉价的可以上<a href="https://bwh8.net/aff.php?aff=37946" target="_blank" rel="external">搬瓦工</a>的年付19.99刀的车。  </p>
+        <p>升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。<br><a id="more"></a><br>这个<a href="http://t.cn/E2gkWbY" target="_blank" rel="external">cac</a>的vps前一阵抽风，恢复后别说内容了，整个server都消失了。除了数据没保障外服务器也不稳定，io性能很差，且条款随意修改，现在需要年付9刀的管理费（不过收了管理费后服务质量稍有提升，但ticket仍然万年无回复），不知道什么时候会跑路。若不是专用机场部署简单且流量不限的话真不如扔掉，想要稳定又廉价的可以上<a href="http://t.cn/EwLt7Zp" target="_blank" rel="external">搬瓦工</a>年付19.99刀的车。  </p>
 <p>原来为了稳定所以是用centos7的系统只搭机场。现在决定装ubuntu作为测试用服务器玩新东西。但cac只提供了老掉牙的14.04。故需要升级系统。</p>
 <h1 id="升级内核开启bbr"><a href="#升级内核开启bbr" class="headerlink" title="升级内核开启bbr"></a>升级内核开启bbr</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh &amp;&amp; chmod +x bbr.sh</div><div class="line">sudo ./bbr.sh</div></pre></td></tr></table></figure>
 <p>内核选4.15.18。之前升完系统才升内核还选了最新的4.19.2结果翻车了。所以这里先升内核确保系统没挂且能正常开启bbr。升完后一般就会自动开启，运行<code>lsmod | grep bbr</code>查看结果。</p>
@@ -304,7 +304,7 @@
         <p><span>本文标题:</span><a href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2018年11月19日 - 15时10分</p>
-        <p><span>最后更新:</span>2018年11月19日 - 16时08分</p>
+        <p><span>最后更新:</span>2018年11月23日 - 09时15分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/11/19/cac-upgrade-ubuntu/" title="升级cloudatcost的ubuntu至18.04">https://majunyi.top/2018/11/19/cac-upgrade-ubuntu/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2018/11/19/cac-upgrade-ubuntu/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

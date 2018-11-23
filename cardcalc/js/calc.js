@@ -1,17 +1,9 @@
-// 小数点后两位天花板方法
-function pointCeil(qian) {
-  var qian100 = qian * 100;
-  var qianLittleCeil = Math.ceil(qian100);
-  var qianLittleCeil = qianLittleCeil / 100;
-  return qianLittleCeil
+function pointCeil(inMoney) {
+  return Math.ceil(inMoney * 100) / 100
 }
 
-// 小数点后两位地板方法
-function pointFloor(qian) {
-  var qian100 = qian * 100;
-  var qianLittleFloor = Math.floor(qian100);
-  var qianLittleFloor = qianLittleFloor / 100;
-  return qianLittleFloor
+function pointFloor(inMoney) {
+  return Math.floor(inMoney * 100) / 100
 }
 
 function autoExc() {
@@ -22,8 +14,6 @@ function autoExc() {
     dataType: "jsonp",
     success: function(data) {
       $("#excRate").val(data.result.rate)
-      //console.log($("#excRate").value);
-      //console.log(data.result.rate)
     },
     error: function() {
       alert('汇率请求失败');
@@ -32,14 +22,11 @@ function autoExc() {
 }
 
 function calcLoop(rmbGot, excRate) {
-  
-  //console.log(rmbGot);
-  //console.log(excRate);
-  var daoGot = rmbGot / excRate;
-  var daoGot = pointCeil(daoGot);
-  //console.log(daoGot);
-  var taxCamp = daoGot * 0.1;
-  var taxValve = daoGot * 0.05;
+  var dollarGot = rmbGot / excRate;
+  var dollarGot = pointCeil(dollarGot);
+
+  var taxCamp = dollarGot * 0.1;
+  var taxValve = dollarGot * 0.05;
   if (taxCamp > 0.01) {
     taxCamp = pointFloor(taxCamp);
   } else {
@@ -50,19 +37,15 @@ function calcLoop(rmbGot, excRate) {
   } else {
     taxValve = 0.01;
   }
-  //console.log(taxCamp);
-  //console.log(taxValve);
-  var daoSell = daoGot + taxCamp + taxValve;
-  //console.log(daoSell);
-  //console.log(daoSell);
-  var initDao = daoSell;
-  while (initDao === daoSell) {
+  var dollarSell = dollarGot + taxCamp + taxValve;
+  var initdollar = dollarSell;
+  while (initdollar === dollarSell) {
     rmbGot = Number(rmbGot) + 0.01;
-    //console.log(rmbGot);
-    var daoGot = rmbGot / excRate;
-    var daoGot = pointCeil(daoGot);
-    var taxCamp = daoGot * 0.1;
-    var taxValve = daoGot * 0.05;
+
+    var dollarGot = rmbGot / excRate;
+    var dollarGot = pointCeil(dollarGot);
+    var taxCamp = dollarGot * 0.1;
+    var taxValve = dollarGot * 0.05;
     if (taxCamp > 0.01) {
       taxCamp = pointFloor(taxCamp);
     } else {
@@ -73,20 +56,15 @@ function calcLoop(rmbGot, excRate) {
     } else {
       taxValve = 0.01;
     }
-    var daoSell = Number(daoGot) + Number(taxCamp) + Number(taxValve);
-    //console.log(initDao);
-    //console.log(daoSell);
+    var dollarSell = Number(dollarGot) + Number(taxCamp) + Number(taxValve);
   }
   rmbGot = Number(rmbGot) - 0.01;
-  //console.log(rmbGot);
   return rmbGot;
 }
 
 function main(){
   var rmbGot = document.getElementById("rmbGot").value;
   var excRate = document.getElementById("excRate").value;
-  //console.log(rmbGot);
-  //console.log(excRate);
   maxRmb = calcLoop(rmbGot, excRate);
   document.getElementById("maxRmb").value = maxRmb;
   var discountRmb = maxRmb - 0.01;
