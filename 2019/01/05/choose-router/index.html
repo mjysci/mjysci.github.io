@@ -3,20 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>利用树莓派DIY运动检测监控 | 名实合为</title>
+  <title>路由选择应避开的坑 | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。">
+  <meta name="description" content="简而言之，选择ARM芯片的千兆LAN路由，按自己需求是否需要多核，大容量FLASH，是否用Merlin/OpenWrt。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用树莓派DIY运动检测监控">
-<meta property="og:url" content="https://majunyi.top/2017/04/22/rpi-cctv-motion/index.html">
+<meta property="og:title" content="路由选择应避开的坑">
+<meta property="og:url" content="https://majunyi.top/2019/01/05/choose-router/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。">
-<meta property="og:image" content="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&width=400">
-<meta property="og:updated_time" content="2017-04-22T04:36:48.091Z">
+<meta property="og:description" content="简而言之，选择ARM芯片的千兆LAN路由，按自己需求是否需要多核，大容量FLASH，是否用Merlin/OpenWrt。">
+<meta property="og:updated_time" content="2019-01-05T16:38:44.809Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用树莓派DIY运动检测监控">
-<meta name="twitter:description" content="出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。">
-<meta name="twitter:image" content="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&width=400">
+<meta name="twitter:title" content="路由选择应避开的坑">
+<meta name="twitter:description" content="简而言之，选择ARM芯片的千兆LAN路由，按自己需求是否需要多核，大容量FLASH，是否用Merlin/OpenWrt。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -198,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-rpi-cctv-motion" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-choose-router" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/04/22/rpi-cctv-motion/" class="article-date">
-      <time datetime="2017-04-22T02:38:56.000Z" itemprop="datePublished">2017-04-22</time>
+      <a href="/2019/01/05/choose-router/" class="article-date">
+      <time datetime="2019-01-05T11:50:58.000Z" itemprop="datePublished">2019-01-05</time>
 </a>
     </div>
   
@@ -215,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      利用树莓派DIY运动检测监控
+      路由选择应避开的坑
     </h1>
   
 
@@ -230,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/motion/">motion</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpi/">rpi</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/firmware/">firmware</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shopping/">shopping</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -240,36 +238,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。</p>
-<a id="more"></a>
-<h2 id="硬件准备"><a href="#硬件准备" class="headerlink" title="硬件准备"></a>硬件准备</h2><ol>
-<li><a href="https://www.raspberrypi.org/products/" target="_blank" rel="external">树莓派Raspberry Pi 3</a></li>
-<li><a href="http://www.waveshare.com/rpi-ir-cut-camera.htm" target="_blank" rel="external">RPi IR-CUT Camera</a></li>
-</ol>
-<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><h3 id="启用摄像头"><a href="#启用摄像头" class="headerlink" title="启用摄像头"></a>启用摄像头</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/modules</div></pre></td></tr></table></figure>
-<p>添加这一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bcm2835-v4l2</div></pre></td></tr></table></figure></p>
-<p>重启后测试摄像头<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">raspistill -o image.jpg -t 10000     <span class="comment">#test camera</span></div></pre></td></tr></table></figure></p>
-<h3 id="安装motionEye"><a href="#安装motionEye" class="headerlink" title="安装motionEye"></a>安装motionEye</h3><p>核心软件是<a href="http://www.lavrsen.dk/foswiki/bin/view/Motion/WebHome" target="_blank" rel="external">Motion</a>，我以前就是用它配合Mutt来实现前言的功能的，但配置稍麻烦，且自带的远程管理界面略简单。后来发现<a href="https://github.com/ccrisan/motioneye/wiki" target="_blank" rel="external">motionEye</a>，是用python写的Motion前端，十分好用。</p>
-<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/ccrisan/motioneye/wiki/precompiled/ffmpeg_3.1.1-1_armhf.deb</div><div class="line">sudo dpkg -i ffmpeg_3.1.1-1_armhf.deb</div><div class="line"><span class="comment">#apt-get remove libavcodec-extra-56 libavformat56 libavresample2 libavutil54</span></div><div class="line">sudo apt-get install python-pip python-dev curl libssl-dev libcurl4-openssl-dev libjpeg-dev libx264-142 libavcodec56 libavformat56 libmysqlclient18 libswscale3 libpq5 v4l-utils</div><div class="line">wget https://github.com/Motion-Project/motion/releases/download/release-4.0.1/pi_jessie_motion_4.0.1-1_armhf.deb</div><div class="line">sudo dpkg -i pi_jessie_motion_4.0.1-1_armhf.deb</div></pre></td></tr></table></figure>
-<h4 id="更改pip源为国内aliyun镜像"><a href="#更改pip源为国内aliyun镜像" class="headerlink" title="更改pip源为国内aliyun镜像"></a>更改pip源为国内aliyun镜像</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir ~/.pip</div><div class="line">nano ~/.pip/pip.conf</div></pre></td></tr></table></figure>
-<p>添加如下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[global]</div><div class="line">trusted-host =  mirrors.aliyun.com</div><div class="line">index-url = http://mirrors.aliyun.com/pypi/simple</div></pre></td></tr></table></figure></p>
-<h4 id="安装motionEye-1"><a href="#安装motionEye-1" class="headerlink" title="安装motionEye"></a>安装motionEye</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo pip install motioneye</div><div class="line">sudo mkdir -p /etc/motioneye</div><div class="line">sudo cp /usr/<span class="built_in">local</span>/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf</div><div class="line"></div><div class="line">sudo cp /usr/<span class="built_in">local</span>/share/motioneye/extra/motioneye.systemd-unit-local /etc/systemd/system/motioneye.service</div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl <span class="built_in">enable</span> motioneye          <span class="comment">#设为开机启动，可选</span></div><div class="line">sudo systemctl start motioneye</div></pre></td></tr></table></figure>
-<h4 id="更新（可选）"><a href="#更新（可选）" class="headerlink" title="更新（可选）"></a>更新（可选）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo pip install motioneye --upgrade</div><div class="line">sudo systemctl restart motioneye</div></pre></td></tr></table></figure>
-<h2 id="配置motionEye"><a href="#配置motionEye" class="headerlink" title="配置motionEye"></a>配置motionEye</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/motioneye/motioneye.conf</div></pre></td></tr></table></figure>
-<p>更改端口（可选）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">port 8765</div><div class="line">motion_control_port 7999</div></pre></td></tr></table></figure></p>
-<p>相关配置文件位置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/motion/motion.conf</div><div class="line">sudo nano /etc/motioneye/thread-1.conf</div></pre></td></tr></table></figure></p>
-<h3 id="通过前端配置邮件提醒"><a href="#通过前端配置邮件提醒" class="headerlink" title="通过前端配置邮件提醒"></a>通过前端配置邮件提醒</h3><p>浏览器打开<br>localhost:8765<br>默认login: admin 密码为空<br>Advanced Settings ON<br>163邮件参数<br>163mail 25 non-TLS</p>
-<h2 id="控制夜视开关"><a href="#控制夜视开关" class="headerlink" title="控制夜视开关"></a>控制夜视开关</h2><p>我选用的摄像头为微雪的RPi IR-CUT Camera，没有led，而是将原来控制led的端口作为夜视开关，官方给出的控制方案为<a href="http://www.waveshare.com/wiki/RPi_IR-CUT_Camera" target="_blank" rel="external">额外接一根线到摄像头模块</a><br><img src="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&amp;width=400" alt=""><br>但这种方案不仅占用了一个外置GPIO端口，还降低了可靠性，特别是摄像头距主控较远的情况。其实<a href="https://www.raspberrypi.org/forums/viewtopic.php?p=891836&amp;sid=66eeecc88aa73bcad4f1f4109bfe54d2#p891836" target="_blank" rel="external">6by9已经指出</a>可以通过GPIO 32 (A+之后，3之前的板子) 或GPIO 5 (树莓派1)来控制camera led。</p>
-<h3 id="RPi2设置"><a href="#RPi2设置" class="headerlink" title="RPi2设置"></a>RPi2设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /boot/config.txt</div></pre></td></tr></table></figure>
-<p>添加以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">disable_camera_led=1</div></pre></td></tr></table></figure></p>
-<p>编译cnv<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/mjysci/rpi-cam-night-vision-control</div><div class="line"><span class="built_in">cd</span> rpi-cam-night-vision-control</div><div class="line">gcc -Wall -o cnv cnv.c -lwiringPi</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cnv</div></pre></td></tr></table></figure></p>
-<h3 id="RPi3设置"><a href="#RPi3设置" class="headerlink" title="RPi3设置"></a>RPi3设置</h3><p>最新的rpi3内置GPIO有变动，disable_camera_led失效，由于是扩展GPIO，并不能直接控制。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/6by9/rpi3-gpiovirtbuf.git</div><div class="line"><span class="built_in">cd</span> rpi3-gpiovirtbuf</div><div class="line">make</div><div class="line">cp rpi3-gpiovirtbuf ~/bin/rpi3-gpiovirtbuf</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpi3-gpiovirtbuf s 134 1 #夜视模式关闭</div><div class="line">rpi3-gpiovirtbuf s 134 0 #夜视模式开启</div></pre></td></tr></table></figure></p>
-<p>清空记录可以直接在前端操作，亦可通过rm实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo rm /var/lib/motioneye/Camera1/*.*</div></pre></td></tr></table></figure></p>
-<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><p>之前在rpi2按以上步骤没问题，但重新部署到rpi3时碰到refused to connect错误<br>查看服务状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl status motioneye.service <span class="_">-l</span></div></pre></td></tr></table></figure></p>
-<p>不知何故安装时并未创建数据文件夹，手动建之<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /var/lib/motioneye</div></pre></td></tr></table></figure></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/ccrisan/motioneye/wiki/Install-On-Raspbian" target="_blank" rel="external">motionEye wiki</a><br><a href="https://www.raspberrypi.org/forums/viewtopic.php?p=891836&amp;sid=66eeecc88aa73bcad4f1f4109bfe54d2#p891836" target="_blank" rel="external">Turning off camera LED</a><br><a href="https://www.raspberrypi.org/forums/viewtopic.php?f=43&amp;t=109137&amp;start=100#p989832" target="_blank" rel="external">Raw sensor access / CSI-2 receiver peripheral</a></p>
+        <p>简而言之，选择ARM芯片的千兆LAN路由，按自己需求是否需要多核，大容量FLASH，是否用Merlin/OpenWrt。<br><a id="more"></a></p>
+<h2 id="以下列出我用过的路由及其优缺点"><a href="#以下列出我用过的路由及其优缺点" class="headerlink" title="以下列出我用过的路由及其优缺点"></a>以下列出我用过的路由及其优缺点</h2><h3 id="TP-LINK-TL-WR847N-v3"><a href="#TP-LINK-TL-WR847N-v3" class="headerlink" title="TP-LINK TL-WR847N v3"></a>TP-LINK TL-WR847N v3</h3><p>++ 便宜<br>++ 支持WDS，支持桥接，可作为无线网卡发挥余热<br>– 百兆LAN<br>– 开启WDS作为无线网卡速度不稳定，实际只有11Mbps左右<br>– FLASH太小（2M），刷不了第三方固件<br>很久以前买的无线路由，以当时的需求（ADSL小水管，还没有openwrt）和机器本身的价格来看没什么缺点。但现在看来作为无线网卡都满足不了看网络高清直播，廉颇老矣。<br>其实那个时代有个神器，华为的电信定制路由HG255D，Flash 16M，RAM 32M，SoC是Ralink RT3052@384Mhz，电信原版的u-boot就是不死的，网络页面即可刷openwrt, dd-wrt等等。另外板上还提供了JTAG，有5个GPIO，这样玩法就更多了。想想后来大火的树莓派能做的事情，当时255D就能做到，比如成为WIFI控制的智能小车。  </p>
+<h3 id="极路由-极1S-HC5661"><a href="#极路由-极1S-HC5661" class="headerlink" title="极路由 极1S HC5661"></a>极路由 极1S HC5661</h3><p>++ 便宜<br>++ 可刷openwrt<br>++ RAM 128M够大，FLASH 16M也够用<br>++ 可通过SD卡扩展空间安装插件<br>– LAN是百兆<br>– 官方插件库河蟹后没了去广告，科学上网等等，使得官方的定制系统很鸡肋<br>– 刷第三方固件前需先解锁<br>– 不支持5G<br>– 无USB接口，不方便挂移动硬盘下载和分享<br>这款路由就是用来刷原版openwrt的，方便不能装SS客户端的设备也能科学上网。主板其实有预留USB接口，可以自己焊上，但传输性能感人，且因为是百兆口，又不支持5G不久后被淘汰。另外SoC是MIPS架构的，toolchains相较ARM的比较老旧，不便于二次开发，合适版本的第三方软件不好找，很可能要自己动手。另外SoC用的是雷凌的MT7620A。</p>
+<h3 id="Netgear-R6220"><a href="#Netgear-R6220" class="headerlink" title="Netgear R6220"></a>Netgear R6220</h3><p>++ 购买时较便宜<br>++ 千兆LAN<br>– 有线传输速度稳定在75MB/s上下，跑不满带宽<br>– 官方固件不支持无线桥接<br>– 刷机没有华硕或极路由方便，救砖麻烦<br>这款路由用的时间较长，由于是主路由，所以基于稳定的原因一直用官方的固件。直到买了NAS，NAS内部测试单盘速度达110MB/s，但从台式机复制文件到NAS的实际速度却只在75MB/s上下浮动。台式机源文件在SSD，千兆LAN口，CAT6的仅1.5米的网线，所以瓶颈很可能是在路由上了。SoC是雷凌的MT7621ST（MIPS架构，单核双线程），这和它的小弟MT7620A的感人io性能有点类似，但手头没有其他MT7621ST的机器，所以只是猜测。另外一个缺点则是R6220降级为htpc的无线网卡时才发现的问题：这货的官方固件竟然没有无线桥接功能！这可是连老掉牙的白菜价WR847N都带有的，网件居然阉割掉了。<br>要解决这个问题需要刷openwrt，先检查<a href="https://openwrt.org/toh/netgear/netgear_r6220" target="_blank" rel="external">R6220的openwrt官方支持页面</a>：无线完全支持，5G也没问题。但不同版本的Flash Layout有所不同，刷错会造成无线的出厂参数不对，无法正常工作，具体现象是LAN口MAC地址和设备标签不一致。另外用的是NAND的FLASH，编程器不像SPI FLASH的那么常见，救砖不方便：需要替换成SPI FLASH或者<a href="http://forgotfun.org/2016/03/NAND-Programmer.html" target="_blank" rel="external">自制NAND编程器</a>。有空再弄。  </p>
+<h3 id="Asus-RT-AC66U"><a href="#Asus-RT-AC66U" class="headerlink" title="Asus RT-AC66U"></a>Asus RT-AC66U</h3><p>++ 性能强大，千兆LAN基本能跑满<br>++ 可刷<a href="https://sourceforge.net/projects/asuswrt-merlin/files/RT-AC66U/Release/" target="_blank" rel="external">Merlin</a>，在官方固件稳定，高性能的前提下通过脚本实现自动化功能<br>– SoC是博通的MIPS架构BCM4706，第三方软件不好找，Merlin<a href="https://github.com/RMerl/asuswrt-merlin/wiki/Supported-Devices" target="_blank" rel="external">只支持到legacy 380.xx</a><br>– openwrt不支持5G<br>目前在用的主路由，由于已有NAS，下载机由htpc兼任，所以只需路由功能，600MHz的单核SoC完全够用。科学上网各常用设备都装了客户端，极少情况下有无法装客户端的设备再开吃灰的极1S临时使用。<br>如果需要在路由端实现科学上网的建议上AC66U B1（AC68U马甲），有现成的SS ARM版客户端，双核应对通信加密的压力更轻一些。且多了USB3.0，可以挂移动硬盘用来做轻量级的下载和分享。<br>选择华硕就是选择了梅林固件，稳定高效但可玩性不如openwrt，另外要想得到382新特性和持续更新固件的话还是要选ARM芯片的华硕路由，至少是66U B1。  </p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>如果玩OpenWrt是刚需的话<a href="https://openwrt.org/supported_devices" target="_blank" rel="external">官方推荐配置</a>是8M FLASH, 64M RAM。这个配置现在基本都能达到，所以看中某个型号后仍需去<a href="https://openwrt.org/toh/views/toh_available_864" target="_blank" rel="external">这里</a>查阅兼容性，特别是<strong>Unsupported Functions</strong>这一栏。高通的芯片优先，因其无线驱动开源。博通的可用<a href="https://dd-wrt.com/support/router-database/" target="_blank" rel="external">dd-wrt</a>，因其采用了博通的闭源无线驱动，若用openwrt的话即便勉强支持其性能和稳定性也是灾难。</p>
 
       
       
@@ -324,13 +298,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></p>
+        <p><span>本文标题:</span><a href="/2019/01/05/choose-router/">路由选择应避开的坑</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2017年04月22日 - 10时38分</p>
-        <p><span>最后更新:</span>2017年04月22日 - 12时36分</p>
+        <p><span>发布时间:</span>2019年01月05日 - 19时50分</p>
+        <p><span>最后更新:</span>2019年01月06日 - 00时38分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/04/22/rpi-cctv-motion/" title="利用树莓派DIY运动检测监控">https://majunyi.top/2017/04/22/rpi-cctv-motion/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2017/04/22/rpi-cctv-motion/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/01/05/choose-router/" title="路由选择应避开的坑">https://majunyi.top/2019/01/05/choose-router/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/01/05/choose-router/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -343,18 +317,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/09/11/carnd-env/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          无人车开发工程师第一学期环境搭建
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/04/05/github-desktop/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">通过proxifier配合代理安装GitHub Desktop</div>
+    <a href="/2018/11/19/cac-upgrade-ubuntu/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">升级cloudatcost的ubuntu至18.04</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -365,7 +330,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#硬件准备"><span class="toc-number">1.</span> <span class="toc-text">硬件准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件安装"><span class="toc-number">2.</span> <span class="toc-text">软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启用摄像头"><span class="toc-number">2.1.</span> <span class="toc-text">启用摄像头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装motionEye"><span class="toc-number">2.2.</span> <span class="toc-text">安装motionEye</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装依赖"><span class="toc-number">2.2.1.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更改pip源为国内aliyun镜像"><span class="toc-number">2.2.2.</span> <span class="toc-text">更改pip源为国内aliyun镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装motionEye-1"><span class="toc-number">2.2.3.</span> <span class="toc-text">安装motionEye</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更新（可选）"><span class="toc-number">2.2.4.</span> <span class="toc-text">更新（可选）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置motionEye"><span class="toc-number">3.</span> <span class="toc-text">配置motionEye</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过前端配置邮件提醒"><span class="toc-number">3.1.</span> <span class="toc-text">通过前端配置邮件提醒</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制夜视开关"><span class="toc-number">4.</span> <span class="toc-text">控制夜视开关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RPi2设置"><span class="toc-number">4.1.</span> <span class="toc-text">RPi2设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RPi3设置"><span class="toc-number">4.2.</span> <span class="toc-text">RPi3设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug"><span class="toc-number">5.</span> <span class="toc-text">debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#以下列出我用过的路由及其优缺点"><span class="toc-number">1.</span> <span class="toc-text">以下列出我用过的路由及其优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TP-LINK-TL-WR847N-v3"><span class="toc-number">1.1.</span> <span class="toc-text">TP-LINK TL-WR847N v3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#极路由-极1S-HC5661"><span class="toc-number">1.2.</span> <span class="toc-text">极路由 极1S HC5661</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netgear-R6220"><span class="toc-number">1.3.</span> <span class="toc-text">Netgear R6220</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Asus-RT-AC66U"><span class="toc-number">1.4.</span> <span class="toc-text">Asus RT-AC66U</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">2.</span> <span class="toc-text">其他</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -422,13 +387,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/09/11/carnd-env/" title="上一篇: 无人车开发工程师第一学期环境搭建">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/04/05/github-desktop/" title="下一篇: 通过proxifier配合代理安装GitHub Desktop">
+            <a href="/2018/11/19/cac-upgrade-ubuntu/" title="下一篇: 升级cloudatcost的ubuntu至18.04">
                 <i class="fa fa-angle-right"></i>
             </a>
         

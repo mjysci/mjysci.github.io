@@ -15,7 +15,7 @@
 <meta property="og:description" content="某网站注册不能用免费邮箱，一时冲动买了个域名来弄企业邮箱，另外也配合ngrok做内网穿透。只是这样的话有点浪费，于是顺便搭个静态博客来玩。
 就需求来说，个人笔记以前用evernote就足够了，协作，共享都能实现，手机端操作十分方便。但私人笔记记录比较随意，注释都没几条，时间久了按步骤复现没问题，但背后原理难免有点模糊。发到博客上则能强制自己写仔细认真些。
 静态博客平台比较">
-<meta property="og:updated_time" content="2018-11-19T08:00:26.102Z">
+<meta property="og:updated_time" content="2019-01-05T16:26:09.436Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hello World! 静态博客Hexo部署于GitHub">
 <meta name="twitter:description" content="某网站注册不能用免费邮箱，一时冲动买了个域名来弄企业邮箱，另外也配合ngrok做内网穿透。只是这样的话有点浪费，于是顺便搭个静态博客来玩。
@@ -138,7 +138,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/rpi/" style="font-size: 10px;">rpi</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a>
+                        <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/firmware/" style="font-size: 10px;">firmware</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/rpi/" style="font-size: 10px;">rpi</a> <a href="/tags/shopping/" style="font-size: 10px;">shopping</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a>
                     </div>
                 </section>
                 
@@ -248,9 +248,9 @@
 <p>就需求来说，个人笔记以前用evernote就足够了，协作，共享都能实现，手机端操作十分方便。但私人笔记记录比较随意，注释都没几条，时间久了按步骤复现没问题，但背后原理难免有点模糊。发到博客上则能强制自己写仔细认真些。</p>
 <h2 id="静态博客平台比较"><a href="#静态博客平台比较" class="headerlink" title="静态博客平台比较"></a>静态博客平台比较</h2><a id="more"></a>
 <p>首先要按需求和前置技能选一个合适的平台，以下结论是google得来，除了Hexo另外两个并未亲自尝试，所以并不靠谱。以后有空会都试试再详细对比。</p>
-<h3 id="Jekyll-JB-octopress"><a href="#Jekyll-JB-octopress" class="headerlink" title="Jekyll (JB, octopress)"></a>Jekyll (JB, octopress)</h3><p>+Github原生支持<br>+插件众多<br>-页面生成效率低<br>-ruby搭建环境对win不友好</p>
-<h3 id="Hugo"><a href="#Hugo" class="headerlink" title="Hugo"></a>Hugo</h3><p>+GO编写，性能强大，页面生成效率极高<br>+依赖少，单个可执行文件搭建环境简单<br>-扩展性差</p>
-<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>+Node.js，搭建环境相对简单<br>+扩展性强<br>+页面生成效率不及Hugo，但远超Jekyll<br>-社区偏小</p>
+<h3 id="Jekyll-JB-octopress"><a href="#Jekyll-JB-octopress" class="headerlink" title="Jekyll (JB, octopress)"></a>Jekyll (JB, octopress)</h3><p>++ Github原生支持<br>++ 插件众多<br>– 页面生成效率低<br>– ruby搭建环境对win不友好</p>
+<h3 id="Hugo"><a href="#Hugo" class="headerlink" title="Hugo"></a>Hugo</h3><p>++ GO编写，性能强大，页面生成效率极高<br>++ 依赖少，单个可执行文件搭建环境简单<br>– 扩展性差</p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>++ Node.js，搭建环境相对简单<br>++ 扩展性强<br>++ 页面生成效率不及Hugo，但远超Jekyll<br>– 社区偏小</p>
 <p>由上可见性能和扩展性折中的Hexo更合适我个人使用。</p>
 <h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a><a href="https://git-scm.com/download/" target="_blank" rel="external">Git</a></h3><h3 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a><a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a></h3><p>通过<a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a>安装nodejs。<a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="external">win版nvm</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash</div></pre></td></tr></table></figure></p>
 <p>重启终端，然后安装node.js<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nvm install stable</div></pre></td></tr></table></figure></p>
@@ -327,7 +327,7 @@
         <p><span>本文标题:</span><a href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2017年04月02日 - 12时48分</p>
-        <p><span>最后更新:</span>2018年11月19日 - 16时00分</p>
+        <p><span>最后更新:</span>2019年01月06日 - 00时26分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/02/hello-world/" title="Hello World! 静态博客Hexo部署于GitHub">https://majunyi.top/2017/04/02/hello-world/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2017/04/02/hello-world/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -426,7 +426,7 @@
             <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">路由选择应避开的坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
@@ -456,7 +456,7 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                &copy; 2018 mjy
+                &copy; 2019 mjy
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman

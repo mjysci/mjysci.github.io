@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2018-11-23T01:15:06.993Z</updated>
+  <updated>2019-01-05T16:38:44.809Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>路由选择应避开的坑</title>
+    <link href="https://majunyi.top/2019/01/05/choose-router/"/>
+    <id>https://majunyi.top/2019/01/05/choose-router/</id>
+    <published>2019-01-05T11:50:58.000Z</published>
+    <updated>2019-01-05T16:38:44.809Z</updated>
+    
+    <content type="html"><![CDATA[<p>简而言之，选择ARM芯片的千兆LAN路由，按自己需求是否需要多核，大容量FLASH，是否用Merlin/OpenWrt。<br><a id="more"></a></p>
+<h2 id="以下列出我用过的路由及其优缺点"><a href="#以下列出我用过的路由及其优缺点" class="headerlink" title="以下列出我用过的路由及其优缺点"></a>以下列出我用过的路由及其优缺点</h2><h3 id="TP-LINK-TL-WR847N-v3"><a href="#TP-LINK-TL-WR847N-v3" class="headerlink" title="TP-LINK TL-WR847N v3"></a>TP-LINK TL-WR847N v3</h3><p>++ 便宜<br>++ 支持WDS，支持桥接，可作为无线网卡发挥余热<br>– 百兆LAN<br>– 开启WDS作为无线网卡速度不稳定，实际只有11Mbps左右<br>– FLASH太小（2M），刷不了第三方固件<br>很久以前买的无线路由，以当时的需求（ADSL小水管，还没有openwrt）和机器本身的价格来看没什么缺点。但现在看来作为无线网卡都满足不了看网络高清直播，廉颇老矣。<br>其实那个时代有个神器，华为的电信定制路由HG255D，Flash 16M，RAM 32M，SoC是Ralink RT3052@384Mhz，电信原版的u-boot就是不死的，网络页面即可刷openwrt, dd-wrt等等。另外板上还提供了JTAG，有5个GPIO，这样玩法就更多了。想想后来大火的树莓派能做的事情，当时255D就能做到，比如成为WIFI控制的智能小车。  </p>
+<h3 id="极路由-极1S-HC5661"><a href="#极路由-极1S-HC5661" class="headerlink" title="极路由 极1S HC5661"></a>极路由 极1S HC5661</h3><p>++ 便宜<br>++ 可刷openwrt<br>++ RAM 128M够大，FLASH 16M也够用<br>++ 可通过SD卡扩展空间安装插件<br>– LAN是百兆<br>– 官方插件库河蟹后没了去广告，科学上网等等，使得官方的定制系统很鸡肋<br>– 刷第三方固件前需先解锁<br>– 不支持5G<br>– 无USB接口，不方便挂移动硬盘下载和分享<br>这款路由就是用来刷原版openwrt的，方便不能装SS客户端的设备也能科学上网。主板其实有预留USB接口，可以自己焊上，但传输性能感人，且因为是百兆口，又不支持5G不久后被淘汰。另外SoC是MIPS架构的，toolchains相较ARM的比较老旧，不便于二次开发，合适版本的第三方软件不好找，很可能要自己动手。另外SoC用的是雷凌的MT7620A。</p>
+<h3 id="Netgear-R6220"><a href="#Netgear-R6220" class="headerlink" title="Netgear R6220"></a>Netgear R6220</h3><p>++ 购买时较便宜<br>++ 千兆LAN<br>– 有线传输速度稳定在75MB/s上下，跑不满带宽<br>– 官方固件不支持无线桥接<br>– 刷机没有华硕或极路由方便，救砖麻烦<br>这款路由用的时间较长，由于是主路由，所以基于稳定的原因一直用官方的固件。直到买了NAS，NAS内部测试单盘速度达110MB/s，但从台式机复制文件到NAS的实际速度却只在75MB/s上下浮动。台式机源文件在SSD，千兆LAN口，CAT6的仅1.5米的网线，所以瓶颈很可能是在路由上了。SoC是雷凌的MT7621ST（MIPS架构，单核双线程），这和它的小弟MT7620A的感人io性能有点类似，但手头没有其他MT7621ST的机器，所以只是猜测。另外一个缺点则是R6220降级为htpc的无线网卡时才发现的问题：这货的官方固件竟然没有无线桥接功能！这可是连老掉牙的白菜价WR847N都带有的，网件居然阉割掉了。<br>要解决这个问题需要刷openwrt，先检查<a href="https://openwrt.org/toh/netgear/netgear_r6220" target="_blank" rel="external">R6220的openwrt官方支持页面</a>：无线完全支持，5G也没问题。但不同版本的Flash Layout有所不同，刷错会造成无线的出厂参数不对，无法正常工作，具体现象是LAN口MAC地址和设备标签不一致。另外用的是NAND的FLASH，编程器不像SPI FLASH的那么常见，救砖不方便：需要替换成SPI FLASH或者<a href="http://forgotfun.org/2016/03/NAND-Programmer.html" target="_blank" rel="external">自制NAND编程器</a>。有空再弄。  </p>
+<h3 id="Asus-RT-AC66U"><a href="#Asus-RT-AC66U" class="headerlink" title="Asus RT-AC66U"></a>Asus RT-AC66U</h3><p>++ 性能强大，千兆LAN基本能跑满<br>++ 可刷<a href="https://sourceforge.net/projects/asuswrt-merlin/files/RT-AC66U/Release/" target="_blank" rel="external">Merlin</a>，在官方固件稳定，高性能的前提下通过脚本实现自动化功能<br>– SoC是博通的MIPS架构BCM4706，第三方软件不好找，Merlin<a href="https://github.com/RMerl/asuswrt-merlin/wiki/Supported-Devices" target="_blank" rel="external">只支持到legacy 380.xx</a><br>– openwrt不支持5G<br>目前在用的主路由，由于已有NAS，下载机由htpc兼任，所以只需路由功能，600MHz的单核SoC完全够用。科学上网各常用设备都装了客户端，极少情况下有无法装客户端的设备再开吃灰的极1S临时使用。<br>如果需要在路由端实现科学上网的建议上AC66U B1（AC68U马甲），有现成的SS ARM版客户端，双核应对通信加密的压力更轻一些。且多了USB3.0，可以挂移动硬盘用来做轻量级的下载和分享。<br>选择华硕就是选择了梅林固件，稳定高效但可玩性不如openwrt，另外要想得到382新特性和持续更新固件的话还是要选ARM芯片的华硕路由，至少是66U B1。  </p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>如果玩OpenWrt是刚需的话<a href="https://openwrt.org/supported_devices" target="_blank" rel="external">官方推荐配置</a>是8M FLASH, 64M RAM。这个配置现在基本都能达到，所以看中某个型号后仍需去<a href="https://openwrt.org/toh/views/toh_available_864" target="_blank" rel="external">这里</a>查阅兼容性，特别是<strong>Unsupported Functions</strong>这一栏。高通的芯片优先，因其无线驱动开源。博通的可用<a href="https://dd-wrt.com/support/router-database/" target="_blank" rel="external">dd-wrt</a>，因其采用了博通的闭源无线驱动，若用openwrt的话即便勉强支持其性能和稳定性也是灾难。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;简而言之，选择ARM芯片的千兆LAN路由，按自己需求是否需要多核，大容量FLASH，是否用Merlin/OpenWrt。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
+    
+      <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
+    
+  </entry>
   
   <entry>
     <title>升级cloudatcost的ubuntu至18.04</title>
@@ -211,15 +241,15 @@
     <link href="https://majunyi.top/2017/04/02/hello-world/"/>
     <id>https://majunyi.top/2017/04/02/hello-world/</id>
     <published>2017-04-02T04:48:03.000Z</published>
-    <updated>2018-11-19T08:00:26.102Z</updated>
+    <updated>2019-01-05T16:26:09.436Z</updated>
     
     <content type="html"><![CDATA[<p>某网站注册不能用免费邮箱，一时冲动买了个域名来弄企业邮箱，另外也配合ngrok做内网穿透。只是这样的话有点浪费，于是顺便搭个静态博客来玩。</p>
 <p>就需求来说，个人笔记以前用evernote就足够了，协作，共享都能实现，手机端操作十分方便。但私人笔记记录比较随意，注释都没几条，时间久了按步骤复现没问题，但背后原理难免有点模糊。发到博客上则能强制自己写仔细认真些。</p>
 <h2 id="静态博客平台比较"><a href="#静态博客平台比较" class="headerlink" title="静态博客平台比较"></a>静态博客平台比较</h2><a id="more"></a>
 <p>首先要按需求和前置技能选一个合适的平台，以下结论是google得来，除了Hexo另外两个并未亲自尝试，所以并不靠谱。以后有空会都试试再详细对比。</p>
-<h3 id="Jekyll-JB-octopress"><a href="#Jekyll-JB-octopress" class="headerlink" title="Jekyll (JB, octopress)"></a>Jekyll (JB, octopress)</h3><p>+Github原生支持<br>+插件众多<br>-页面生成效率低<br>-ruby搭建环境对win不友好</p>
-<h3 id="Hugo"><a href="#Hugo" class="headerlink" title="Hugo"></a>Hugo</h3><p>+GO编写，性能强大，页面生成效率极高<br>+依赖少，单个可执行文件搭建环境简单<br>-扩展性差</p>
-<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>+Node.js，搭建环境相对简单<br>+扩展性强<br>+页面生成效率不及Hugo，但远超Jekyll<br>-社区偏小</p>
+<h3 id="Jekyll-JB-octopress"><a href="#Jekyll-JB-octopress" class="headerlink" title="Jekyll (JB, octopress)"></a>Jekyll (JB, octopress)</h3><p>++ Github原生支持<br>++ 插件众多<br>– 页面生成效率低<br>– ruby搭建环境对win不友好</p>
+<h3 id="Hugo"><a href="#Hugo" class="headerlink" title="Hugo"></a>Hugo</h3><p>++ GO编写，性能强大，页面生成效率极高<br>++ 依赖少，单个可执行文件搭建环境简单<br>– 扩展性差</p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>++ Node.js，搭建环境相对简单<br>++ 扩展性强<br>++ 页面生成效率不及Hugo，但远超Jekyll<br>– 社区偏小</p>
 <p>由上可见性能和扩展性折中的Hexo更合适我个人使用。</p>
 <h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a><a href="https://git-scm.com/download/" target="_blank" rel="external">Git</a></h3><h3 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a><a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a></h3><p>通过<a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a>安装nodejs。<a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="external">win版nvm</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash</div></pre></td></tr></table></figure></p>
 <p>重启终端，然后安装node.js<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nvm install stable</div></pre></td></tr></table></figure></p>
