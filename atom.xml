@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-01-06T01:30:31.962Z</updated>
+  <updated>2019-01-06T15:54:52.553Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Netgear R6220刷Breed和pandorabox固件</title>
+    <link href="https://majunyi.top/2019/01/06/r6220-breed-pandora/"/>
+    <id>https://majunyi.top/2019/01/06/r6220-breed-pandora/</id>
+    <published>2019-01-06T14:21:52.000Z</published>
+    <updated>2019-01-06T15:54:52.553Z</updated>
+    
+    <content type="html"><![CDATA[<p>刷了Breed后更新固件变得十分简单和安全，采用潘多拉固件不用担心硬件版本不同带来的分区问题。<br><a id="more"></a></p>
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>FAT32格式的U盘<br>下载<a href="https://breed.hackpascal.net/breed-mt7621-r6220.bin" target="_blank" rel="external">适配R6220的Breed</a>，并拷入U盘<br>下载<a href="https://downloads.pangubox.com/pandorabox/19.01/targets/ralink/mt7621/PandoraBox-ralink-mt7621-netgear-r6220-2019-01-01-git-3e8866933-squashfs-sysupgrade.bin" target="_blank" rel="external">适配R6220的潘多拉19.01</a>  </p>
+<h1 id="刷Breed"><a href="#刷Breed" class="headerlink" title="刷Breed"></a>刷Breed</h1><p>Breed是用来替换官方Bootloader的，Web界面操作方便安全，<a href="https://www.right.com.cn/forum/thread-161906-1-1.html" target="_blank" rel="external">作者帖子</a>。<br>win10需开启telnet：<br>控制面板——程序和功能——启用或关闭Windows功能——Telnet客户端  </p>
+<p>开启R6220的telnet<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://10.0.0.1/setup.cgi?todo=debug</div></pre></td></tr></table></figure></p>
+<p>连接R6220<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">telnet 10.0.0.1</div></pre></td></tr></table></figure></p>
+<p>查看U盘挂载路径并进入，通常是U<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ls /mnt/shares</div><div class="line">cd /mnt/shares/U</div></pre></td></tr></table></figure></p>
+<p>读取mtd分区表，备份eeprom<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cat /proc/mtd</div><div class="line">dd if=/dev/mtd10 of=./mtd10.bin</div></pre></td></tr></table></figure></p>
+<p>刷Breed<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mtd_write write breed-mt7621-r6220.bin Bootloader</div></pre></td></tr></table></figure></p>
+<h1 id="刷PandoraBox固件"><a href="#刷PandoraBox固件" class="headerlink" title="刷PandoraBox固件"></a>刷PandoraBox固件</h1><p>选择PandoraBox主要是因为其“使用芯片厂家的闭源驱动,性能与稳定性比开源驱动有较大提升”，另外还有若干特性，详见<a href="https://bbs.pangubox.com/forum.php?mod=viewthread&amp;tid=561&amp;extra=" target="_blank" rel="external">官方介绍</a>。  </p>
+<p>路由断电，长按reset开机，电源规律闪烁后访问192.168.1.1进入Breed Web恢复控制台，点固件更新，选择刚才下载的潘多拉固件上传，耐心等待路由更新重启。<br>访问192.168.1.1进入潘多拉管理界面，默认用户root，密码admin。  </p>
+<h1 id="设置路由客户端模式"><a href="#设置路由客户端模式" class="headerlink" title="设置路由客户端模式"></a>设置路由客户端模式</h1><p><a href="https://majunyi.top/2019/01/05/choose-router/">之前的文章</a>提到将R6220作为htpc无线网卡时发现官方固件无法进行无线桥接。刷成潘多拉后按之前用openwrt的经验：1.点“无线”，删掉默认的两个Master； 2.用5G无线扫描，加入主路由网络； 3.填入密码，其他设置默认。<br>应用设置后通过网线连接R6220的htpc可以正常上网，测速达到100Mbps上下，看cbox的直播和爱奇艺的高清电影再无卡顿。<br>如果想让R6220也扩展无线信号可以将没用上的2.4G无线添加个AP接口即可。如果离主路由较远，5G连接不稳定也可以将2.4G用来收，5G用来发，看需求如何了，但不要将同一个无线芯片用来同时收发，否则理论速率减半，降速严重。</p>
+<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><p>但这里有个问题，这并非桥接模式，而是隔了个路由组了个子网，其他机器无法直连R6220背后的htpc。潘多拉固件的无线接口模式中，如果不选Client选WDS，则会提示需要两个路由的芯片都是雷凌的才行，而我的主路由是博通的。通过查阅官方文档<a href="https://oldwiki.archive.openwrt.org/doc/howto/clientmode" target="_blank" rel="external">Client Mode Wireless</a>可知，我现有的是Routed Client Mode，而Bridged Client Mode需要博通的芯片……而用着BCM4706的华硕是主路由，且对openwrt兼容性不好，不过测试时作为副路由用merlin的桥接倒是很顺利。<br>剩下只有Bridged Client Mode (with relayd)这一种了，通过中继的方式模拟出桥接的效果。具体操作方式<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="external">见此处</a>。但这种方式一大弊端就是降速。比起现在几乎不用的远程桌面直连htpc，似乎速度更重要。以后再弄吧。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;刷了Breed后更新固件变得十分简单和安全，采用潘多拉固件不用担心硬件版本不同带来的分区问题。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
+    
+  </entry>
   
   <entry>
     <title>购买路由注意事项</title>
