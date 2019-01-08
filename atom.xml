@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-01-06T15:54:52.553Z</updated>
+  <updated>2019-01-08T05:05:53.499Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -16,11 +16,43 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>R6220采用中继桥实现无线桥接</title>
+    <link href="https://majunyi.top/2019/01/08/r6220-relay-bridge/"/>
+    <id>https://majunyi.top/2019/01/08/r6220-relay-bridge/</id>
+    <published>2019-01-08T03:35:23.000Z</published>
+    <updated>2019-01-08T05:05:53.499Z</updated>
+    
+    <content type="html"><![CDATA[<p>htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。<br><a id="more"></a></p>
+<h1 id="安装relay协议"><a href="#安装relay协议" class="headerlink" title="安装relay协议"></a>安装relay协议</h1><p>潘多拉默认未带，不过其应用层是和openwrt及luci兼容的，可装<a href="https://openwrt.org/packages/pkgdata/luci-proto-relay" target="_blank" rel="external">luci-proto-relay</a><br>ssh连上路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.1</div></pre></td></tr></table></figure></p>
+<p>更新并安装luci-proto-relay  </p>
+<pre><code>opkg update
+opkg install luci-proto-relay
+</code></pre><p>注：潘多拉的web ui其实自带软件包管理项，不想输命令可登录web管理——系统——软件包处搜索并安装。  </p>
+<h1 id="设置中继桥"><a href="#设置中继桥" class="headerlink" title="设置中继桥"></a>设置中继桥</h1><h2 id="修改LAN"><a href="#修改LAN" class="headerlink" title="修改LAN"></a>修改LAN</h2><p>接口——LAN，地址修改为和主路由不同的网段，如<code>192.168.2.1</code>。禁用DHCP。<br>将计算机连路由的接口取消自动获取IP, 改成静态IP<code>192.168.2.10</code>，默认网关<code>192.168.2.1</code>。断开与路由的连接然后重连。</p>
+<h2 id="以无线客户端模式加入主路由网络"><a href="#以无线客户端模式加入主路由网络" class="headerlink" title="以无线客户端模式加入主路由网络"></a>以无线客户端模式加入主路由网络</h2><p>无线——扫描——加入网络，填入密码后记得<strong>把防火墙区域改成lan</strong>。    </p>
+<h2 id="添加桥接接口"><a href="#添加桥接接口" class="headerlink" title="添加桥接接口"></a>添加桥接接口</h2><p>接口，添加接口，协议选<code>中继桥</code>（Relay bridge）。<br>在新接口设置界面勾选<code>lan</code>和<code>wwan</code>。<br>重启路由。  </p>
+<p>注：以上步骤参考自官方的<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="external">luci界面设置中继桥教程</a>。</p>
+<h1 id="htpc连NAS"><a href="#htpc连NAS" class="headerlink" title="htpc连NAS"></a>htpc连NAS</h1><p>此步非必须。只是现在网络发现处NAS只出现在多媒体类别下，而不在计算机类别。<br>程序与功能——启用或关闭Windows功能——勾选SMB 1.0，重启win10。  </p>
+<h1 id="备用资料"><a href="#备用资料" class="headerlink" title="备用资料"></a>备用资料</h1><p>附上R6220刷回原版固件资料以备不时之需：<br><a href="https://www.netgear.com/support/product/R6220.aspx#download" target="_blank" rel="external">R6220官方支持页面</a><br><a href="https://kb.netgear.com/24108/How-do-I-configure-my-Nighthawk-router-as-a-wireless-repeater" target="_blank" rel="external">Netgear设置wireless repeater步骤</a><br><a href="http://www.downloads.netgear.com/files/GDC/R6220/R6220-V1.1.0.80_1.0.1.zip" target="_blank" rel="external">R6220官方固件V1.1.0.80_1.0.1</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Netgear R6220刷Breed和pandorabox固件</title>
     <link href="https://majunyi.top/2019/01/06/r6220-breed-pandora/"/>
     <id>https://majunyi.top/2019/01/06/r6220-breed-pandora/</id>
     <published>2019-01-06T14:21:52.000Z</published>
-    <updated>2019-01-06T15:54:52.553Z</updated>
+    <updated>2019-01-08T04:40:40.953Z</updated>
     
     <content type="html"><![CDATA[<p>刷了Breed后更新固件变得十分简单和安全，采用潘多拉固件不用担心硬件版本不同带来的分区问题。<br><a id="more"></a></p>
 <h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>FAT32格式的U盘<br>下载<a href="https://breed.hackpascal.net/breed-mt7621-r6220.bin" target="_blank" rel="external">适配R6220的Breed</a>，并拷入U盘<br>下载<a href="https://downloads.pangubox.com/pandorabox/19.01/targets/ralink/mt7621/PandoraBox-ralink-mt7621-netgear-r6220-2019-01-01-git-3e8866933-squashfs-sysupgrade.bin" target="_blank" rel="external">适配R6220的潘多拉19.01</a>  </p>
@@ -32,7 +64,12 @@
 <p>刷Breed<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mtd_write write breed-mt7621-r6220.bin Bootloader</div></pre></td></tr></table></figure></p>
 <h1 id="刷PandoraBox固件"><a href="#刷PandoraBox固件" class="headerlink" title="刷PandoraBox固件"></a>刷PandoraBox固件</h1><p>选择PandoraBox主要是因为其“使用芯片厂家的闭源驱动,性能与稳定性比开源驱动有较大提升”，另外还有若干特性，详见<a href="https://bbs.pangubox.com/forum.php?mod=viewthread&amp;tid=561&amp;extra=" target="_blank" rel="external">官方介绍</a>。  </p>
 <p>路由断电，长按reset开机，电源规律闪烁后访问192.168.1.1进入Breed Web恢复控制台，点固件更新，选择刚才下载的潘多拉固件上传，耐心等待路由更新重启。<br>访问192.168.1.1进入潘多拉管理界面，默认用户root，密码admin。  </p>
-<h1 id="设置路由客户端模式"><a href="#设置路由客户端模式" class="headerlink" title="设置路由客户端模式"></a>设置路由客户端模式</h1><p><a href="https://majunyi.top/2019/01/05/choose-router/">之前的文章</a>提到将R6220作为htpc无线网卡时发现官方固件无法进行无线桥接。刷成潘多拉后按之前用openwrt的经验：1.点“无线”，删掉默认的两个Master； 2.用5G无线扫描，加入主路由网络； 3.填入密码，其他设置默认。<br>应用设置后通过网线连接R6220的htpc可以正常上网，测速达到100Mbps上下，看cbox的直播和爱奇艺的高清电影再无卡顿。<br>如果想让R6220也扩展无线信号可以将没用上的2.4G无线添加个AP接口即可。如果离主路由较远，5G连接不稳定也可以将2.4G用来收，5G用来发，看需求如何了，但不要将同一个无线芯片用来同时收发，否则理论速率减半，降速严重。</p>
+<h1 id="设置路由客户端模式"><a href="#设置路由客户端模式" class="headerlink" title="设置路由客户端模式"></a>设置路由客户端模式</h1><p><a href="https://majunyi.top/2019/01/05/choose-router/">之前的文章</a>提到将R6220作为htpc无线网卡时发现官方固件无法进行无线桥接。刷成潘多拉后按之前用openwrt的经验：  </p>
+<ol>
+<li>点“无线”，删掉默认的两个Master  </li>
+<li>用5G无线扫描，加入主路由网络  </li>
+<li>填入密码，其他设置默认<br>应用设置后通过网线连接R6220的htpc可以正常上网，测速达到100Mbps上下，看cbox的直播和爱奇艺的高清电影再无卡顿。<br>如果想让R6220也扩展无线信号可以将没用上的2.4G无线添加个AP接口即可。如果离主路由较远，5G连接不稳定也可以将2.4G用来收，5G用来发，看需求如何了，但不要将同一个无线芯片用来同时收发，否则理论速率减半，降速严重。</li>
+</ol>
 <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><p>但这里有个问题，这并非桥接模式，而是隔了个路由组了个子网，其他机器无法直连R6220背后的htpc。潘多拉固件的无线接口模式中，如果不选Client选WDS，则会提示需要两个路由的芯片都是雷凌的才行，而我的主路由是博通的。通过查阅官方文档<a href="https://oldwiki.archive.openwrt.org/doc/howto/clientmode" target="_blank" rel="external">Client Mode Wireless</a>可知，我现有的是Routed Client Mode，而Bridged Client Mode需要博通的芯片……而用着BCM4706的华硕是主路由，且对openwrt兼容性不好，不过测试时作为副路由用merlin的桥接倒是很顺利。<br>剩下只有Bridged Client Mode (with relayd)这一种了，通过中继的方式模拟出桥接的效果。具体操作方式<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="external">见此处</a>。但这种方式一大弊端就是降速。比起现在几乎不用的远程桌面直连htpc，似乎速度更重要。以后再弄吧。</p>
 ]]></content>
     
@@ -54,14 +91,14 @@
     <link href="https://majunyi.top/2019/01/05/choose-router/"/>
     <id>https://majunyi.top/2019/01/05/choose-router/</id>
     <published>2019-01-05T11:50:58.000Z</published>
-    <updated>2019-01-06T01:30:31.962Z</updated>
+    <updated>2019-01-08T04:29:44.586Z</updated>
     
     <content type="html"><![CDATA[<p>简而言之，选择ARM芯片的千兆LAN路由，按自己需求是否需要多核（轻量级NAS），是否用Merlin(华硕)或OpenWrt（高通或雷凌SoC）。<br><a id="more"></a></p>
-<h2 id="以下列出我用过的路由及其优缺点"><a href="#以下列出我用过的路由及其优缺点" class="headerlink" title="以下列出我用过的路由及其优缺点"></a>以下列出我用过的路由及其优缺点</h2><h3 id="TP-LINK-TL-WR847N-v3"><a href="#TP-LINK-TL-WR847N-v3" class="headerlink" title="TP-LINK TL-WR847N v3"></a>TP-LINK TL-WR847N v3</h3><p>++ 便宜<br>++ 支持WDS，支持桥接，可作为无线网卡发挥余热<br>– 百兆LAN<br>– 开启WDS作为无线网卡速度不稳定，实际只有11Mbps左右<br>– FLASH太小（2M），刷不了第三方固件<br>很久以前买的无线路由，以当时的需求（ADSL小水管，还没有openwrt）和机器本身的价格来看没什么缺点。但现在看来作为无线网卡都满足不了看网络高清直播，廉颇老矣。<br>其实那个时代有个神器，华为的电信定制路由HG255D，Flash 16M，RAM 32M，SoC是Ralink RT3052@384Mhz，电信原版的u-boot就是不死的，网络页面即可刷openwrt, dd-wrt等等。另外板上还提供了JTAG，有5个GPIO，这样玩法就更多了。想想后来大火的树莓派能做的事情，当时255D就能做到，比如成为WIFI控制的智能小车。  </p>
-<h3 id="极路由-极1S-HC5661"><a href="#极路由-极1S-HC5661" class="headerlink" title="极路由 极1S HC5661"></a>极路由 极1S HC5661</h3><p>++ 便宜<br>++ 可刷openwrt<br>++ RAM 128M够大，FLASH 16M也够用<br>++ 可通过SD卡扩展空间安装插件<br>– LAN是百兆<br>– 官方插件库河蟹后没了去广告，科学上网等等，使得官方的定制系统很鸡肋<br>– 刷第三方固件前需先解锁<br>– 不支持5G<br>– 无USB接口，不方便挂移动硬盘下载和分享<br>这款路由就是用来刷原版openwrt的，方便不能装SS客户端的设备也能科学上网。主板其实有预留USB接口，可以自己焊上，但传输性能感人，且因为是百兆口，又不支持5G不久后被淘汰。另外SoC是MIPS架构的，toolchains相较ARM的比较老旧，不便于二次开发，合适版本的第三方软件不好找，很可能要自己动手。另外SoC用的是雷凌的MT7620A。</p>
-<h3 id="Netgear-R6220"><a href="#Netgear-R6220" class="headerlink" title="Netgear R6220"></a>Netgear R6220</h3><p>++ 购买时较便宜<br>++ 千兆LAN<br>– 有线传输速度稳定在75MB/s上下，跑不满带宽<br>– 官方固件不支持无线桥接<br>– 刷机没有华硕或极路由方便，救砖麻烦<br>这款路由用的时间较长，由于是主路由，所以基于稳定的原因一直用官方的固件。直到买了NAS，NAS内部测试单盘速度达110MB/s，但从台式机复制文件到NAS的实际速度却只在75MB/s上下浮动。台式机源文件在SSD，千兆LAN口，CAT6的仅1.5米的网线，没开QoS，所以瓶颈很可能是在路由上了。SoC是雷凌的MT7621ST（MIPS架构，单核双线程），这和它的小弟MT7620A的感人io性能有点类似，但手头没有其他MT7621ST的机器，所以只是猜测。另外一个缺点则是打算将R6220作为htpc的无线网卡时才发现的问题：这货的官方固件竟然没有无线桥接功能！这可是连老掉牙的白菜价WR847N都带有的，网件居然阉割掉了。<br>要解决这个问题需要刷openwrt，先检查<a href="https://openwrt.org/toh/netgear/netgear_r6220" target="_blank" rel="external">R6220的openwrt官方支持页面</a>：无线完全支持，5G也没问题。但不同版本的Flash Layout有所不同，刷错会造成无线的出厂参数不对，无法正常工作，具体现象是LAN口MAC地址和设备标签不一致。另外用的是NAND的FLASH，编程器不像SPI FLASH的那么常见，救砖不方便：需要替换成SPI FLASH或者<a href="http://forgotfun.org/2016/03/NAND-Programmer.html" target="_blank" rel="external">自制NAND编程器</a>。有空再弄。  </p>
-<h3 id="Asus-RT-AC66U"><a href="#Asus-RT-AC66U" class="headerlink" title="Asus RT-AC66U"></a>Asus RT-AC66U</h3><p>++ 性能强大，千兆LAN基本能跑满<br>++ 可刷<a href="https://sourceforge.net/projects/asuswrt-merlin/files/RT-AC66U/Release/" target="_blank" rel="external">Merlin</a>，在官方固件稳定，高性能的前提下通过脚本实现自动化功能<br>– SoC是博通的MIPS架构BCM4706，第三方软件不好找，Merlin<a href="https://github.com/RMerl/asuswrt-merlin/wiki/Supported-Devices" target="_blank" rel="external">只支持到legacy 380.xx</a><br>– openwrt不支持5G<br>目前在用的主路由，由于：1.已有NAS，下载机由htpc兼任；2.科学上网各常用设备都装了客户端，极少情况下才会使用有无法安装SS客户端的设备再开吃灰的极1S临时使用；3.IPTV走光猫专用接口，迅雷跑满也不影响电视盒子的高清直播，故对QoS无需求。所以只需路由功能，600MHz的单核SoC完全够用。<br>如果需要在路由端实现科学上网的建议上AC66U B1（AC68U马甲），有现成的SS ARM版客户端，双核应对通信加密的压力更轻一些。且多了USB3.0，可以挂移动硬盘用来做轻量级的下载和分享。<br>选择华硕就是选择了梅林固件，稳定高效但可玩性不如openwrt，另外要想得到384新特性和持续更新固件的话还是要选ARM芯片的华硕路由，至少是66U B1。  </p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果玩OpenWrt是刚需的话<a href="https://openwrt.org/supported_devices" target="_blank" rel="external">官方推荐配置</a>是8M FLASH, 64M RAM。这个配置现在基本都能达到，所以看中某个型号后仍需去<a href="https://openwrt.org/toh/views/toh_available_864" target="_blank" rel="external">这里</a>查阅兼容性，特别是<strong>Unsupported Functions</strong>这一栏。高通的芯片优先，因其无线驱动开源。雷凌也开源了无线驱动，虽然性能差些，可考虑作为廉价openwrt平台的选择。博通的可用<a href="https://dd-wrt.com/support/router-database/" target="_blank" rel="external">dd-wrt</a>，因其采用了博通的闭源无线驱动，若用openwrt的话即便勉强支持其性能和稳定性也是灾难。各家芯片对开源的支持可<a href="https://en.wikipedia.org/wiki/Comparison_of_open-source_wireless_drivers" target="_blank" rel="external">参照此处</a>，可作为openwrt支持的另一个参考。<br>至于品牌选择，其实就是对官方固件的选择，否则刷了第三方固件就是硬件的比较了。目前来看华硕的官方固件最好用，无阉割，易用性好，响应也快，而且可以不经uboot和Merlin自由切换，方便安全。普联即便是白菜价的低端型号，功能也很全，把硬件性能压榨到极致，官方固件是专业风格，虽不够华硕简洁但熟悉后想找什么功能一目了然，响应速度还行。网件的官方固件则比较糟糕，分成了简易和进阶模式，默认简易模式，找不到还要跑进阶找，而且响应速度很慢，最重要的是一些功能被屏蔽掉了，只在高端型号开启。<br>此外，由于路由比较耐用，本文并未涉及较新的型号。比如普联的某些低端型号有用到VxWorks，由于是实时系统，理论上比linux更适合做路由，但很考验厂商的开发能力，不知功能和易用性如何。华硕的新一代高端路由是带<a href="https://www.asus.com/us/AiMesh/" target="_blank" rel="external">AiMesh</a>的，但Merlin<a href="https://github.com/RMerl/asuswrt-merlin.ng/blob/master/Changelog-NG.txt" target="_blank" rel="external">尚未支持</a>，如有需求则只能用官方固件。网件在高端型号上比同级别华硕要便宜，硬件有时还会稍好一些，部分型号可以刷Merlin，但步骤比华硕要繁琐许多，能忍受官方固件的话作为主路由也蛮不错。</p>
+<h1 id="以下列出我用过的路由及其优缺点"><a href="#以下列出我用过的路由及其优缺点" class="headerlink" title="以下列出我用过的路由及其优缺点"></a>以下列出我用过的路由及其优缺点</h1><h2 id="TP-LINK-TL-WR847N-v3"><a href="#TP-LINK-TL-WR847N-v3" class="headerlink" title="TP-LINK TL-WR847N v3"></a>TP-LINK TL-WR847N v3</h2><p>++ 便宜<br>++ 支持WDS，支持桥接，可作为无线网卡发挥余热<br>– 百兆LAN<br>– 开启WDS作为无线网卡速度不稳定，实际只有11Mbps左右<br>– FLASH太小（2M），刷不了第三方固件<br>很久以前买的无线路由，以当时的需求（ADSL小水管，还没有openwrt）和机器本身的价格来看没什么缺点。但现在看来作为无线网卡都满足不了看网络高清直播，廉颇老矣。<br>其实那个时代有个神器，华为的电信定制路由HG255D，Flash 16M，RAM 32M，SoC是Ralink RT3052@384Mhz，电信原版的u-boot就是不死的，网络页面即可刷openwrt, dd-wrt等等。另外板上还提供了JTAG，有5个GPIO，这样玩法就更多了。想想后来大火的树莓派能做的事情，当时255D就能做到，比如成为WIFI控制的智能小车。  </p>
+<h2 id="极路由-极1S-HC5661"><a href="#极路由-极1S-HC5661" class="headerlink" title="极路由 极1S HC5661"></a>极路由 极1S HC5661</h2><p>++ 便宜<br>++ 可刷openwrt<br>++ RAM 128M够大，FLASH 16M也够用<br>++ 可通过SD卡扩展空间安装插件<br>– LAN是百兆<br>– 官方插件库河蟹后没了去广告，科学上网等等，使得官方的定制系统很鸡肋<br>– 刷第三方固件前需先解锁<br>– 不支持5G<br>– 无USB接口，不方便挂移动硬盘下载和分享<br>这款路由就是用来刷原版openwrt的，方便不能装SS客户端的设备也能科学上网。主板其实有预留USB接口，可以自己焊上，但传输性能感人，且因为是百兆口，又不支持5G不久后被淘汰。另外SoC是MIPS架构的，toolchains相较ARM的比较老旧，不便于二次开发，合适版本的第三方软件不好找，很可能要自己动手。另外SoC用的是雷凌的MT7620A。</p>
+<h2 id="Netgear-R6220"><a href="#Netgear-R6220" class="headerlink" title="Netgear R6220"></a>Netgear R6220</h2><p>++ 购买时较便宜<br>++ 千兆LAN<br>– 有线传输速度稳定在75MB/s上下，跑不满带宽<br>– 官方固件不支持无线桥接<br>– 刷机没有华硕或极路由方便，救砖麻烦<br>这款路由用的时间较长，由于是主路由，所以基于稳定的原因一直用官方的固件。直到买了NAS，NAS内部测试单盘速度达110MB/s，但从台式机复制文件到NAS的实际速度却只在75MB/s上下浮动。台式机源文件在SSD，千兆LAN口，CAT6的仅1.5米的网线，没开QoS，所以瓶颈很可能是在路由上了。SoC是雷凌的MT7621ST（MIPS架构，单核双线程），这和它的小弟MT7620A的感人io性能有点类似，但手头没有其他MT7621ST的机器，所以只是猜测。另外一个缺点则是打算将R6220作为htpc的无线网卡时才发现的问题：这货的官方固件竟然没有无线桥接功能！这可是连老掉牙的白菜价WR847N都带有的，网件居然阉割掉了。<br>要解决这个问题需要刷openwrt，先检查<a href="https://openwrt.org/toh/netgear/netgear_r6220" target="_blank" rel="external">R6220的openwrt官方支持页面</a>：无线完全支持，5G也没问题。但不同版本的Flash Layout有所不同，刷错会造成无线的出厂参数不对，无法正常工作，具体现象是LAN口MAC地址和设备标签不一致。另外用的是NAND的FLASH，编程器不像SPI FLASH的那么常见，救砖不方便：需要替换成SPI FLASH或者<a href="http://forgotfun.org/2016/03/NAND-Programmer.html" target="_blank" rel="external">自制NAND编程器</a>。有空再弄。  </p>
+<h2 id="Asus-RT-AC66U"><a href="#Asus-RT-AC66U" class="headerlink" title="Asus RT-AC66U"></a>Asus RT-AC66U</h2><p>++ 性能强大，千兆LAN基本能跑满<br>++ 可刷<a href="https://sourceforge.net/projects/asuswrt-merlin/files/RT-AC66U/Release/" target="_blank" rel="external">Merlin</a>，在官方固件稳定，高性能的前提下通过脚本实现自动化功能<br>– SoC是博通的MIPS架构BCM4706，第三方软件不好找，Merlin<a href="https://github.com/RMerl/asuswrt-merlin/wiki/Supported-Devices" target="_blank" rel="external">只支持到legacy 380.xx</a><br>– openwrt不支持5G<br>目前在用的主路由，由于：1.已有NAS，下载机由htpc兼任；2.科学上网各常用设备都装了客户端，极少情况下才会使用有无法安装SS客户端的设备再开吃灰的极1S临时使用；3.IPTV走光猫专用接口，迅雷跑满也不影响电视盒子的高清直播，故对QoS无需求。所以只需路由功能，600MHz的单核SoC完全够用。<br>如果需要在路由端实现科学上网的建议上AC66U B1（AC68U马甲），有现成的SS ARM版客户端，双核应对通信加密的压力更轻一些。且多了USB3.0，可以挂移动硬盘用来做轻量级的下载和分享。<br>选择华硕就是选择了梅林固件，稳定高效但可玩性不如openwrt，另外要想得到384新特性和持续更新固件的话还是要选ARM芯片的华硕路由，至少是66U B1。  </p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>如果玩OpenWrt是刚需的话<a href="https://openwrt.org/supported_devices" target="_blank" rel="external">官方推荐配置</a>是8M FLASH, 64M RAM。这个配置现在基本都能达到，所以看中某个型号后仍需去<a href="https://openwrt.org/toh/views/toh_available_864" target="_blank" rel="external">这里</a>查阅兼容性，特别是<strong>Unsupported Functions</strong>这一栏。高通的芯片优先，因其无线驱动开源。雷凌也开源了无线驱动，虽然性能差些，可考虑作为廉价openwrt平台的选择。博通的可用<a href="https://dd-wrt.com/support/router-database/" target="_blank" rel="external">dd-wrt</a>，因其采用了博通的闭源无线驱动，若用openwrt的话即便勉强支持其性能和稳定性也是灾难。各家芯片对开源的支持可<a href="https://en.wikipedia.org/wiki/Comparison_of_open-source_wireless_drivers" target="_blank" rel="external">参照此处</a>，可作为openwrt支持的另一个参考。<br>至于品牌选择，其实就是对官方固件的选择，否则刷了第三方固件就是硬件的比较了。目前来看华硕的官方固件最好用，无阉割，易用性好，响应也快，而且可以不经uboot和Merlin自由切换，方便安全。普联即便是白菜价的低端型号，功能也很全，把硬件性能压榨到极致，官方固件是专业风格，虽不够华硕简洁但熟悉后想找什么功能一目了然，响应速度还行。网件的官方固件则比较糟糕，分成了简易和进阶模式，默认简易模式，找不到还要跑进阶找，而且响应速度很慢，最重要的是一些功能被屏蔽掉了，只在高端型号开启。<br>此外，由于路由比较耐用，本文并未涉及较新的型号。比如普联的某些低端型号有用到VxWorks，由于是实时系统，理论上比linux更适合做路由，但很考验厂商的开发能力，不知功能和易用性如何。华硕的新一代高端路由是带<a href="https://www.asus.com/us/AiMesh/" target="_blank" rel="external">AiMesh</a>的，但Merlin<a href="https://github.com/RMerl/asuswrt-merlin.ng/blob/master/Changelog-NG.txt" target="_blank" rel="external">尚未支持</a>，如有需求则只能用官方固件。网件在高端型号上比同级别华硕要便宜，硬件有时还会稍好一些，部分型号可以刷Merlin，但步骤比华硕要繁琐许多，能忍受官方固件的话作为主路由也蛮不错。</p>
 ]]></content>
     
     <summary type="html">

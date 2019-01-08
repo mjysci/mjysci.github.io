@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2019/01/06/r6220-breed-pandora/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="刷了Breed后更新固件变得十分简单和安全，采用潘多拉固件不用担心硬件版本不同带来的分区问题。">
-<meta property="og:updated_time" content="2019-01-06T15:54:52.553Z">
+<meta property="og:updated_time" content="2019-01-08T04:40:40.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netgear R6220刷Breed和pandorabox固件">
 <meta name="twitter:description" content="刷了Breed后更新固件变得十分简单和安全，采用潘多拉固件不用担心硬件版本不同带来的分区问题。">
@@ -248,7 +248,12 @@
 <p>刷Breed<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mtd_write write breed-mt7621-r6220.bin Bootloader</div></pre></td></tr></table></figure></p>
 <h1 id="刷PandoraBox固件"><a href="#刷PandoraBox固件" class="headerlink" title="刷PandoraBox固件"></a>刷PandoraBox固件</h1><p>选择PandoraBox主要是因为其“使用芯片厂家的闭源驱动,性能与稳定性比开源驱动有较大提升”，另外还有若干特性，详见<a href="https://bbs.pangubox.com/forum.php?mod=viewthread&amp;tid=561&amp;extra=" target="_blank" rel="external">官方介绍</a>。  </p>
 <p>路由断电，长按reset开机，电源规律闪烁后访问192.168.1.1进入Breed Web恢复控制台，点固件更新，选择刚才下载的潘多拉固件上传，耐心等待路由更新重启。<br>访问192.168.1.1进入潘多拉管理界面，默认用户root，密码admin。  </p>
-<h1 id="设置路由客户端模式"><a href="#设置路由客户端模式" class="headerlink" title="设置路由客户端模式"></a>设置路由客户端模式</h1><p><a href="https://majunyi.top/2019/01/05/choose-router/">之前的文章</a>提到将R6220作为htpc无线网卡时发现官方固件无法进行无线桥接。刷成潘多拉后按之前用openwrt的经验：1.点“无线”，删掉默认的两个Master； 2.用5G无线扫描，加入主路由网络； 3.填入密码，其他设置默认。<br>应用设置后通过网线连接R6220的htpc可以正常上网，测速达到100Mbps上下，看cbox的直播和爱奇艺的高清电影再无卡顿。<br>如果想让R6220也扩展无线信号可以将没用上的2.4G无线添加个AP接口即可。如果离主路由较远，5G连接不稳定也可以将2.4G用来收，5G用来发，看需求如何了，但不要将同一个无线芯片用来同时收发，否则理论速率减半，降速严重。</p>
+<h1 id="设置路由客户端模式"><a href="#设置路由客户端模式" class="headerlink" title="设置路由客户端模式"></a>设置路由客户端模式</h1><p><a href="https://majunyi.top/2019/01/05/choose-router/">之前的文章</a>提到将R6220作为htpc无线网卡时发现官方固件无法进行无线桥接。刷成潘多拉后按之前用openwrt的经验：  </p>
+<ol>
+<li>点“无线”，删掉默认的两个Master  </li>
+<li>用5G无线扫描，加入主路由网络  </li>
+<li>填入密码，其他设置默认<br>应用设置后通过网线连接R6220的htpc可以正常上网，测速达到100Mbps上下，看cbox的直播和爱奇艺的高清电影再无卡顿。<br>如果想让R6220也扩展无线信号可以将没用上的2.4G无线添加个AP接口即可。如果离主路由较远，5G连接不稳定也可以将2.4G用来收，5G用来发，看需求如何了，但不要将同一个无线芯片用来同时收发，否则理论速率减半，降速严重。</li>
+</ol>
 <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><p>但这里有个问题，这并非桥接模式，而是隔了个路由组了个子网，其他机器无法直连R6220背后的htpc。潘多拉固件的无线接口模式中，如果不选Client选WDS，则会提示需要两个路由的芯片都是雷凌的才行，而我的主路由是博通的。通过查阅官方文档<a href="https://oldwiki.archive.openwrt.org/doc/howto/clientmode" target="_blank" rel="external">Client Mode Wireless</a>可知，我现有的是Routed Client Mode，而Bridged Client Mode需要博通的芯片……而用着BCM4706的华硕是主路由，且对openwrt兼容性不好，不过测试时作为副路由用merlin的桥接倒是很顺利。<br>剩下只有Bridged Client Mode (with relayd)这一种了，通过中继的方式模拟出桥接的效果。具体操作方式<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="external">见此处</a>。但这种方式一大弊端就是降速。比起现在几乎不用的远程桌面直连htpc，似乎速度更重要。以后再弄吧。</p>
 
       
@@ -307,7 +312,7 @@
         <p><span>本文标题:</span><a href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2019年01月06日 - 22时21分</p>
-        <p><span>最后更新:</span>2019年01月06日 - 23时54分</p>
+        <p><span>最后更新:</span>2019年01月08日 - 12时40分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/01/06/r6220-breed-pandora/" title="Netgear R6220刷Breed和pandorabox固件">https://majunyi.top/2019/01/06/r6220-breed-pandora/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/01/06/r6220-breed-pandora/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -322,6 +327,15 @@
 
 
 <nav id="article-nav">
+  
+    <a href="/2019/01/08/r6220-relay-bridge/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          R6220采用中继桥实现无线桥接
+        
+      </div>
+    </a>
   
   
     <a href="/2019/01/05/choose-router/" id="article-nav-older" class="article-nav-link-wrap">
@@ -393,7 +407,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2019/01/08/r6220-relay-bridge/" title="上一篇: R6220采用中继桥实现无线桥接">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -402,7 +418,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
