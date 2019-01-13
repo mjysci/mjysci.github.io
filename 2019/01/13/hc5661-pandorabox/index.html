@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2019/01/13/hc5661-pandorabox/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="折腾了R6220后顺便把吃灰的极1s也更新一下，刷19.01潘多拉，功能和以前一样，以路由客户端形式实现科学上网专用路由。">
-<meta property="og:updated_time" content="2019-01-13T03:35:17.108Z">
+<meta property="og:updated_time" content="2019-01-13T03:40:15.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="极1s（hc5661）刷潘多拉固件">
 <meta name="twitter:description" content="折腾了R6220后顺便把吃灰的极1s也更新一下，刷19.01潘多拉，功能和以前一样，以路由客户端形式实现科学上网专用路由。">
@@ -239,7 +239,7 @@
       
           
         <p>折腾了R6220后顺便把吃灰的极1s也更新一下，刷19.01潘多拉，功能和以前一样，以路由客户端形式实现科学上网专用路由。<br><a id="more"></a></p>
-<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>由于之前已经申请root并刷了<a href="https://breed.hackpascal.net/breed-mt7620-hiwifi-hc5761.bin" target="_blank" rel="external">Breed</a>，所以准备工作省了。<br>需注意极1s先后有两个版本，早期和极2芯片一致用<a href="https://www.mediatek.com/products/homeNetworking/mt7620n-a" target="_blank" rel="external">MT7620A</a>的hc5661和后续缩水用<a href="https://www.mediatek.com/products/homeNetworking/mt7628k-n-a" target="_blank" rel="external">MT7628</a>的hc5661a，从MTK官方介绍可知主要是缩掉了硬件网络加速(HWNAT)和存储加速，但软件上增加了AES128/256的加速。二者uboot和固件均不一样，不能混用。想确定版本见路由底部标签，另外ssh登录路由后通过<code>cat /proc/cpuinfo</code>也可进一步确认。  </p>
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>由于之前已经申请root并刷了<a href="https://breed.hackpascal.net/breed-mt7620-hiwifi-hc5761.bin" target="_blank" rel="external">Breed</a>，目前在用的是<a href="https://github.com/rssnsj/openwrt-hc5x61/tree/chaos_calmer" target="_blank" rel="external">rssnsj</a>的<a href="http://rssn.cn/roms/" target="_blank" rel="external">固件</a>，所以准备工作省了。<br>需注意极1s先后有两个版本，早期和极2芯片一致用<a href="https://www.mediatek.com/products/homeNetworking/mt7620n-a" target="_blank" rel="external">MT7620A</a>的hc5661和后续缩水用<a href="https://www.mediatek.com/products/homeNetworking/mt7628k-n-a" target="_blank" rel="external">MT7628</a>的hc5661a，从MTK官方介绍可知主要是缩掉了硬件网络加速(HWNAT)和存储加速，但软件上增加了AES128/256的加速。二者uboot和固件均不一样，不能混用。想确定版本见路由底部标签，另外ssh登录路由后通过<code>cat /proc/cpuinfo</code>也可进一步确认。  </p>
 <h1 id="刷潘多拉固件"><a href="#刷潘多拉固件" class="headerlink" title="刷潘多拉固件"></a>刷潘多拉固件</h1><p>长按reset并开机，访问<code>192.168.1.1</code>进入breed。<br>选择<a href="https://downloads.pangubox.com/pandorabox/19.01/targets/ralink/mt7620/PandoraBox-ralink-mt7620-hc5661-2018-12-31-git-4b6a3d5ca-squashfs-sysupgrade.bin" target="_blank" rel="external">潘多拉19.01固件</a>并上传即可。</p>
 <h1 id="设置以路由模式桥接"><a href="#设置以路由模式桥接" class="headerlink" title="设置以路由模式桥接"></a>设置以路由模式桥接</h1><p>由于是科学上网专用路由，故无需像<a href="https://majunyi.top/2019/01/08/r6220-relay-bridge/">之前R6220那样</a>弄成中继桥，简单不少。<br>无线——扫描——加入网络，输入主路由密码，其他配置默认并提交。<br>接口，添加接口，协议选AP，设置无线名称和密码，提交。这样方便无线设备也可连上此路由。<br>此时笔记本通过LAN和路由相连，路由通过2.4G无线与主路由连接<a href="http://www.speedtest.cn/" target="_blank" rel="external">测速</a>下行为45.78Mbps。</p>
 <h1 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h1><p>这里主要参考<a href="https://cokebar.info/archives/664" target="_blank" rel="external">cokebar的这篇文章</a>，讲得很详细。但安装部分注意有改动：<br>系统——软件包处搜索并安装<code>luci-app-shadowsocks</code>，opkg会自动解决依赖装上<code>shadowsocks-libev</code>相关包。<br>同理装上<code>luci-app-ChinaDNS</code>。<br>但潘多拉的源里并未包含<code>DNS-forwarder</code>，需要到作者aa65535的<a href="https://github.com/aa65535/openwrt-dns-forwarder" target="_blank" rel="external">项目页面</a> 下载<a href="https://github.com/aa65535/openwrt-dns-forwarder/releases/download/v1.1.1/dns-forwarder_1.1.1-1_ramips_24kec.ipk" target="_blank" rel="external">dns-forwarder</a>和<a href="http://openwrt-dist.sourceforge.net/packages/luci/luci-app-dns-forwarder_1.6.2-1_all.ipk" target="_blank" rel="external">luci-app-dns-forwarder</a><br>scp上传到路由的root文件夹处。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp *.ipk root@192.168.1.1:/root</div></pre></td></tr></table></figure></p>
@@ -304,7 +304,7 @@
         <p><span>本文标题:</span><a href="/2019/01/13/hc5661-pandorabox/">极1s（hc5661）刷潘多拉固件</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2019年01月13日 - 10时00分</p>
-        <p><span>最后更新:</span>2019年01月13日 - 11时35分</p>
+        <p><span>最后更新:</span>2019年01月13日 - 11时40分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/01/13/hc5661-pandorabox/" title="极1s（hc5661）刷潘多拉固件">https://majunyi.top/2019/01/13/hc5661-pandorabox/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/01/13/hc5661-pandorabox/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -379,11 +379,21 @@
 
 
     
-        <section class="youyan" id="comments">
-  <div id="uyan_frame"></div>
-  <script src="http://v2.uyan.cc/code/uyan.js?uid=2129677"></script>
-</section>
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'majunyi'; // required: replace example with your forum shortname
 
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
     
 
 
