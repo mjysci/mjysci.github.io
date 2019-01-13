@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2019/01/08/r6220-relay-bridge/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
-<meta property="og:updated_time" content="2019-01-08T05:05:53.499Z">
+<meta property="og:updated_time" content="2019-01-13T02:35:40.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R6220采用中继桥实现无线桥接">
 <meta name="twitter:description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
@@ -132,7 +132,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/firmware/" style="font-size: 20px;">firmware</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/rpi/" style="font-size: 10px;">rpi</a> <a href="/tags/shopping/" style="font-size: 10px;">shopping</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a>
+                        <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/firmware/" style="font-size: 20px;">firmware</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/router/" style="font-size: 15px;">router</a> <a href="/tags/rpi/" style="font-size: 10px;">rpi</a> <a href="/tags/shopping/" style="font-size: 10px;">shopping</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a>
                     </div>
                 </section>
                 
@@ -234,18 +234,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。<br><a id="more"></a></p>
+        <p>htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。<br><a id="more"></a><br><a href="https://majunyi.top/2019/01/06/r6220-breed-pandora/">前情提要</a>，虽然远程桌面非刚需，但htpc无法直连主路由网段的NAS不能接受。还是需要桥接把副路由连接设备和主路由放在同一网段。  </p>
 <h1 id="安装relay协议"><a href="#安装relay协议" class="headerlink" title="安装relay协议"></a>安装relay协议</h1><p>潘多拉默认未带，不过其应用层是和openwrt及luci兼容的，可装<a href="https://openwrt.org/packages/pkgdata/luci-proto-relay" target="_blank" rel="external">luci-proto-relay</a><br>ssh连上路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.1</div></pre></td></tr></table></figure></p>
 <p>更新并安装luci-proto-relay  </p>
 <pre><code>opkg update
 opkg install luci-proto-relay
-</code></pre><p>注：潘多拉的web ui其实自带软件包管理项，不想输命令可登录web管理——系统——软件包处搜索并安装。  </p>
+</code></pre><p>注：潘多拉的web ui和openwrt基本一样，其实自带软件包管理项，不想输命令可登录web管理——系统——软件包处搜索并安装。  </p>
 <h1 id="设置中继桥"><a href="#设置中继桥" class="headerlink" title="设置中继桥"></a>设置中继桥</h1><h2 id="修改LAN"><a href="#修改LAN" class="headerlink" title="修改LAN"></a>修改LAN</h2><p>接口——LAN，地址修改为和主路由不同的网段，如<code>192.168.2.1</code>。禁用DHCP。<br>将计算机连路由的接口取消自动获取IP, 改成静态IP<code>192.168.2.10</code>，默认网关<code>192.168.2.1</code>。断开与路由的连接然后重连。</p>
 <h2 id="以无线客户端模式加入主路由网络"><a href="#以无线客户端模式加入主路由网络" class="headerlink" title="以无线客户端模式加入主路由网络"></a>以无线客户端模式加入主路由网络</h2><p>无线——扫描——加入网络，填入密码后记得<strong>把防火墙区域改成lan</strong>。    </p>
 <h2 id="添加桥接接口"><a href="#添加桥接接口" class="headerlink" title="添加桥接接口"></a>添加桥接接口</h2><p>接口，添加接口，协议选<code>中继桥</code>（Relay bridge）。<br>在新接口设置界面勾选<code>lan</code>和<code>wwan</code>。<br>重启路由。  </p>
 <p>注：以上步骤参考自官方的<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="external">luci界面设置中继桥教程</a>。</p>
 <h1 id="htpc连NAS"><a href="#htpc连NAS" class="headerlink" title="htpc连NAS"></a>htpc连NAS</h1><p>此步非必须。只是现在网络发现处NAS只出现在多媒体类别下，而不在计算机类别。<br>程序与功能——启用或关闭Windows功能——勾选SMB 1.0，重启win10。  </p>
-<h1 id="备用资料"><a href="#备用资料" class="headerlink" title="备用资料"></a>备用资料</h1><p>附上R6220刷回原版固件资料以备不时之需：<br><a href="https://www.netgear.com/support/product/R6220.aspx#download" target="_blank" rel="external">R6220官方支持页面</a><br><a href="https://kb.netgear.com/24108/How-do-I-configure-my-Nighthawk-router-as-a-wireless-repeater" target="_blank" rel="external">Netgear设置wireless repeater步骤</a><br><a href="http://www.downloads.netgear.com/files/GDC/R6220/R6220-V1.1.0.80_1.0.1.zip" target="_blank" rel="external">R6220官方固件V1.1.0.80_1.0.1</a></p>
+<h1 id="备用资料"><a href="#备用资料" class="headerlink" title="备用资料"></a>备用资料</h1><p>附上R6220原版固件资料以备不时之需：<br><a href="https://www.netgear.com/support/product/R6220.aspx#download" target="_blank" rel="external">R6220官方支持页面</a><br><a href="https://kb.netgear.com/24108/How-do-I-configure-my-Nighthawk-router-as-a-wireless-repeater" target="_blank" rel="external">Netgear设置wireless repeater步骤</a><br><a href="http://www.downloads.netgear.com/files/GDC/R6220/R6220-V1.1.0.80_1.0.1.zip" target="_blank" rel="external">R6220官方固件V1.1.0.80_1.0.1</a></p>
 
       
       
@@ -303,7 +303,7 @@ opkg install luci-proto-relay
         <p><span>本文标题:</span><a href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2019年01月08日 - 11时35分</p>
-        <p><span>最后更新:</span>2019年01月08日 - 13时05分</p>
+        <p><span>最后更新:</span>2019年01月13日 - 10时35分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/01/08/r6220-relay-bridge/" title="R6220采用中继桥实现无线桥接">https://majunyi.top/2019/01/08/r6220-relay-bridge/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/01/08/r6220-relay-bridge/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -318,6 +318,15 @@ opkg install luci-proto-relay
 
 
 <nav id="article-nav">
+  
+    <a href="/2019/01/13/hc5661-pandorabox/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          极1s（hc5661）刷潘多拉固件
+        
+      </div>
+    </a>
   
   
     <a href="/2019/01/06/r6220-breed-pandora/" id="article-nav-older" class="article-nav-link-wrap">
@@ -389,7 +398,9 @@ opkg install luci-proto-relay
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2019/01/13/hc5661-pandorabox/" title="上一篇: 极1s（hc5661）刷潘多拉固件">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -398,7 +409,7 @@ opkg install luci-proto-relay
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/hc5661-pandorabox/">极1s（hc5661）刷潘多拉固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
