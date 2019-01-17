@@ -5,16 +5,16 @@
   
   <title>购买路由注意事项 | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简而言之，选择ARM芯片的千兆LAN路由，按自己需求选高端的高通方案或高性价比的雷凌方案，是否用Merlin(华硕)或OpenWrt（避开博通）。">
+  <meta name="description" content="简而言之，按自己需求选高端的高通方案或高性价比的雷凌方案的千兆LAN路由，是否用Merlin(华硕)或OpenWrt（避开博通），对发热比较敏感SoC选ARM架构。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="购买路由注意事项">
 <meta property="og:url" content="https://majunyi.top/2019/01/05/choose-router/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="简而言之，选择ARM芯片的千兆LAN路由，按自己需求选高端的高通方案或高性价比的雷凌方案，是否用Merlin(华硕)或OpenWrt（避开博通）。">
-<meta property="og:updated_time" content="2019-01-13T03:35:13.887Z">
+<meta property="og:description" content="简而言之，按自己需求选高端的高通方案或高性价比的雷凌方案的千兆LAN路由，是否用Merlin(华硕)或OpenWrt（避开博通），对发热比较敏感SoC选ARM架构。">
+<meta property="og:updated_time" content="2019-01-17T05:58:45.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="购买路由注意事项">
-<meta name="twitter:description" content="简而言之，选择ARM芯片的千兆LAN路由，按自己需求选高端的高通方案或高性价比的雷凌方案，是否用Merlin(华硕)或OpenWrt（避开博通）。">
+<meta name="twitter:description" content="简而言之，按自己需求选高端的高通方案或高性价比的雷凌方案的千兆LAN路由，是否用Merlin(华硕)或OpenWrt（避开博通），对发热比较敏感SoC选ARM架构。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -238,7 +238,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>简而言之，选择ARM芯片的千兆LAN路由，按自己需求选高端的高通方案或高性价比的雷凌方案，是否用Merlin(华硕)或OpenWrt（避开博通）。<br><a id="more"></a></p>
+        <p>简而言之，按自己需求选高端的高通方案或高性价比的雷凌方案的千兆LAN路由，是否用Merlin(华硕)或OpenWrt（避开博通），对发热比较敏感SoC选ARM架构。<br><a id="more"></a></p>
 <h1 id="以下列出我用过的路由及其优缺点"><a href="#以下列出我用过的路由及其优缺点" class="headerlink" title="以下列出我用过的路由及其优缺点"></a>以下列出我用过的路由及其优缺点</h1><h2 id="TP-LINK-TL-WR847N-v3"><a href="#TP-LINK-TL-WR847N-v3" class="headerlink" title="TP-LINK TL-WR847N v3"></a>TP-LINK TL-WR847N v3</h2><p>++ 便宜<br>++ 支持WDS，支持桥接，可作为无线网卡发挥余热<br>– 百兆LAN<br>– 开启WDS作为无线网卡速度不稳定，实际只有11Mbps左右<br>– FLASH太小（2M），刷不了第三方固件<br>很久以前买的无线路由，以当时的需求（ADSL小水管，还没有openwrt）和机器本身的价格来看没什么缺点。但现在看来作为无线网卡都满足不了看网络高清直播，廉颇老矣。<br>其实那个时代有个神器，华为的电信定制路由HG255D，Flash 16M，RAM 32M，SoC是Ralink RT3052@384Mhz，电信原版的u-boot就是不死的，网络页面即可刷openwrt, dd-wrt等等。另外板上还提供了JTAG，有5个GPIO，这样玩法就更多了。想想后来大火的树莓派能做的事情，当时255D就能做到，比如成为WIFI控制的智能小车。  </p>
 <h2 id="极路由-极1S-HC5661"><a href="#极路由-极1S-HC5661" class="headerlink" title="极路由 极1S HC5661"></a>极路由 极1S HC5661</h2><p>++ 便宜<br>++ 可刷openwrt<br>++ RAM 128M够大，FLASH 16M也够用<br>++ 可通过SD卡扩展空间安装插件<br>– LAN是百兆<br>– 官方插件库河蟹后没了去广告，科学上网等等，使得官方的定制系统很鸡肋<br>– 刷第三方固件前需先解锁<br>– 不支持5G<br>– 无USB接口，不方便挂移动硬盘下载和分享<br>这款路由就是用来刷原版openwrt的，方便不能装SS客户端的设备也能科学上网。主板其实有预留USB接口，可以自己焊上，但传输性能感人，且因为是百兆口，又不支持5G不久后被淘汰。另外SoC是MIPS架构的，toolchains相较ARM的比较老旧，不便于二次开发，合适版本的第三方软件不好找，很可能要自己动手。另外SoC用的是雷凌的MT7620A。</p>
 <h2 id="Netgear-R6220"><a href="#Netgear-R6220" class="headerlink" title="Netgear R6220"></a>Netgear R6220</h2><p>++ 购买时较便宜<br>++ 千兆LAN<br>– 有线传输速度稳定在75MB/s上下，跑不满带宽<br>– 官方固件不支持无线桥接<br>– 刷机没有华硕或极路由方便，救砖麻烦<br>这款路由用的时间较长，由于是主路由，所以基于稳定的原因一直用官方的固件。直到买了NAS，NAS内部测试单盘速度达110MB/s，但从台式机复制文件到NAS的实际速度却只在75MB/s上下浮动。台式机源文件在SSD，千兆LAN口，CAT6的仅1.5米的网线，没开QoS，所以瓶颈很可能是在路由上了。SoC是雷凌的MT7621ST（MIPS架构，单核双线程），这和它的小弟MT7620A的感人io性能有点类似，但手头没有其他MT7621ST的机器，所以只是猜测。另外一个缺点则是打算将R6220作为htpc的无线网卡时才发现的问题：这货的官方固件竟然没有无线桥接功能！这可是连老掉牙的白菜价WR847N都带有的，网件居然阉割掉了。<br>要解决这个问题需要刷openwrt，先检查<a href="https://openwrt.org/toh/netgear/netgear_r6220" target="_blank" rel="external">R6220的openwrt官方支持页面</a>：无线完全支持，5G也没问题。但不同版本的Flash Layout有所不同，刷错会造成无线的出厂参数不对，无法正常工作，具体现象是LAN口MAC地址和设备标签不一致。另外用的是NAND的FLASH，编程器不像SPI FLASH的那么常见，救砖不方便：需要替换成SPI FLASH或者<a href="http://forgotfun.org/2016/03/NAND-Programmer.html" target="_blank" rel="external">自制NAND编程器</a>。有空再弄。  </p>
@@ -301,7 +301,7 @@
         <p><span>本文标题:</span><a href="/2019/01/05/choose-router/">购买路由注意事项</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2019年01月05日 - 19时50分</p>
-        <p><span>最后更新:</span>2019年01月13日 - 11时35分</p>
+        <p><span>最后更新:</span>2019年01月17日 - 13时58分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/01/05/choose-router/" title="购买路由注意事项">https://majunyi.top/2019/01/05/choose-router/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/01/05/choose-router/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
