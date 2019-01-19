@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2019/01/13/hc5661-pandorabox/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="折腾了R6220后顺便把吃灰的极1s也更新一下，刷19.01潘多拉，功能和以前一样，以路由客户端形式实现科学上网专用路由。">
-<meta property="og:updated_time" content="2019-01-14T14:31:15.335Z">
+<meta property="og:updated_time" content="2019-01-19T07:29:07.177Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="极1s（hc5661）刷潘多拉固件">
 <meta name="twitter:description" content="折腾了R6220后顺便把吃灰的极1s也更新一下，刷19.01潘多拉，功能和以前一样，以路由客户端形式实现科学上网专用路由。">
@@ -244,10 +244,12 @@
 <h1 id="设置以路由模式桥接"><a href="#设置以路由模式桥接" class="headerlink" title="设置以路由模式桥接"></a>设置以路由模式桥接</h1><p>由于是科学上网专用路由，故无需像<a href="https://majunyi.top/2019/01/08/r6220-relay-bridge/">之前R6220那样</a>弄成中继桥，简单不少。<br>无线——扫描——加入网络，输入主路由密码，其他配置默认并提交。<br>接口，添加接口，协议选AP，设置无线名称和密码，网络选lan，提交。这样方便无线设备也可连上此路由。<br>此时笔记本通过LAN和路由相连，路由通过2.4G无线与主路由连接<a href="http://www.speedtest.cn/" target="_blank" rel="external">测速</a>下行为45.78Mbps。</p>
 <h1 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h1><p>这里主要参考<a href="https://cokebar.info/archives/664" target="_blank" rel="external">cokebar的这篇文章</a>，讲得很详细。但安装部分注意有改动：<br>系统——软件包处搜索并安装<code>luci-app-shadowsocks</code>，opkg会自动解决依赖装上<code>shadowsocks-libev</code>相关包。<br>同理装上<code>luci-app-ChinaDNS</code>。<br>但潘多拉的源里并未包含<code>DNS-forwarder</code>，需要到作者aa65535的<a href="https://github.com/aa65535/openwrt-dns-forwarder" target="_blank" rel="external">项目页面</a> 下载<a href="https://github.com/aa65535/openwrt-dns-forwarder/releases/download/v1.1.1/dns-forwarder_1.1.1-1_ramips_24kec.ipk" target="_blank" rel="external">dns-forwarder</a>和<a href="http://openwrt-dist.sourceforge.net/packages/luci/luci-app-dns-forwarder_1.6.2-1_all.ipk" target="_blank" rel="external">luci-app-dns-forwarder</a><br>scp上传到路由的root文件夹处。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp *.ipk root@192.168.1.1:/root</div></pre></td></tr></table></figure></p>
 <p>ssh连上路由，需注意由于pandorabox改了mt7620的架构名称，直接opkg install会显示架构不支持，需对<code>opkg.conf</code>进行更改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/opkg.conf</div></pre></td></tr></table></figure></p>
-<p>在文件末尾添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">arch all 100</div><div class="line">arch ramips 200</div><div class="line">arch ramips_24kec 300</div><div class="line">arch mipsel_24kec_dsp 400</div></pre></td></tr></table></figure></p>
-<p>安装dns-forwarder。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">opkg update</div><div class="line">opkg install dns-forwarder_1.1.1-1_ramips_24kec.ipk luci-app-dns-forwarder_1.6.2-1_all.ipk</div></pre></td></tr></table></figure></p>
-<p>之后从<code>二、shadowsocks 配置</code>照着配置即可。<br>注：解析文件的默认位置是<code>/tmp/resolv.conf.auto</code>。  </p>
-<p>最后在相同条件下测速下行47.49Mbps，居然比设置科学上网前还稍快，属正常波动范围，可认为开启三个服务后低负载情况下对路由性能影响甚微。<br>高负载目前不好测试，因为影响因素太多。</p>
+<p>在文件末尾添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">arch all 100</div><div class="line">arch ramips 200</div><div class="line">arch ramips_24kec 300</div><div class="line">arch mipsel_24kec_dsp 400</div><div class="line">```  </div><div class="line">安装dns-forwarder。</div></pre></td></tr></table></figure></p>
+<p>opkg update<br>opkg install dns-forwarder_1.1.1-1_ramips_24kec.ipk luci-app-dns-forwarder_1.6.2-1_all.ipk<br><code>``
+之后从</code>二、shadowsocks 配置`照着配置即可。要点如下：  </p>
+<h2 id="Shadowsocks配置"><a href="#Shadowsocks配置" class="headerlink" title="Shadowsocks配置"></a>Shadowsocks配置</h2><p><code>服务-影梭-服务器管理</code>处填写服务器配置。<br><code>访问控制</code>处被忽略IP列表为<code>ChinaDNS路由表</code>。<br><code>常规设置</code>处<code>透明代理-主服务器</code>选择刚才填好的服务器。</p>
+<h2 id="DNS配置"><a href="#DNS配置" class="headerlink" title="DNS配置"></a>DNS配置</h2><p><code>服务-DNS转发</code>处<code>启用</code>，监听端口<code>5311</code>，监听地址<code>127.0.0.1</code>。<br><code>服务-ChinaDNS</code>处<code>启用</code>，本地端口<code>5353</code>，上游服务器<code>223.5.5.5,127.0.0.1#5311</code>。<br><code>网络-DHCP/DNS</code>处DNS转发<code>127.0.0.1#5353</code>，HOSTS和解析文件处<code>忽略解析文件</code><br>注：解析文件的默认位置是<code>/tmp/resolv.conf.auto</code>。    </p>
+<p>最后在相同条件下测速下行47.49Mbps，居然比设置科学上网前还稍快，属正常波动范围，可认为开启三个服务后低负载情况下对路由性能影响甚微。<br>高负载目前不好测试，因为影响因素太多。  </p>
 
       
       
@@ -305,7 +307,7 @@
         <p><span>本文标题:</span><a href="/2019/01/13/hc5661-pandorabox/">极1s（hc5661）刷潘多拉固件</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2019年01月13日 - 10时00分</p>
-        <p><span>最后更新:</span>2019年01月14日 - 22时31分</p>
+        <p><span>最后更新:</span>2019年01月19日 - 15时29分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/01/13/hc5661-pandorabox/" title="极1s（hc5661）刷潘多拉固件">https://majunyi.top/2019/01/13/hc5661-pandorabox/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/01/13/hc5661-pandorabox/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -334,7 +336,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前期准备"><span class="toc-number">1.</span> <span class="toc-text">前期准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#刷潘多拉固件"><span class="toc-number">2.</span> <span class="toc-text">刷潘多拉固件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置以路由模式桥接"><span class="toc-number">3.</span> <span class="toc-text">设置以路由模式桥接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#科学上网"><span class="toc-number">4.</span> <span class="toc-text">科学上网</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前期准备"><span class="toc-number">1.</span> <span class="toc-text">前期准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#刷潘多拉固件"><span class="toc-number">2.</span> <span class="toc-text">刷潘多拉固件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置以路由模式桥接"><span class="toc-number">3.</span> <span class="toc-text">设置以路由模式桥接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#科学上网"><span class="toc-number">4.</span> <span class="toc-text">科学上网</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shadowsocks配置"><span class="toc-number">4.1.</span> <span class="toc-text">Shadowsocks配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS配置"><span class="toc-number">4.2.</span> <span class="toc-text">DNS配置</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 

@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2019/01/06/r6220-breed-pandora/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="刷了Breed后更新固件变得十分简单和安全，采用潘多拉固件不用担心硬件版本不同带来的分区问题。">
-<meta property="og:updated_time" content="2019-01-08T04:40:40.953Z">
+<meta property="og:updated_time" content="2019-01-19T07:19:05.587Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netgear R6220刷Breed和pandorabox固件">
 <meta name="twitter:description" content="刷了Breed后更新固件变得十分简单和安全，采用潘多拉固件不用担心硬件版本不同带来的分区问题。">
@@ -252,9 +252,16 @@
 <ol>
 <li>点“无线”，删掉默认的两个Master  </li>
 <li>用5G无线扫描，加入主路由网络  </li>
-<li>填入密码，其他设置默认<br>应用设置后通过网线连接R6220的htpc可以正常上网，测速达到100Mbps上下，看cbox的直播和爱奇艺的高清电影再无卡顿。<br>如果想让R6220也扩展无线信号可以将没用上的2.4G无线添加个AP接口即可。如果离主路由较远，5G连接不稳定也可以将2.4G用来收，5G用来发，看需求如何了，但不要将同一个无线芯片用来同时收发，否则理论速率减半，降速严重。</li>
+<li>填入密码，其他设置默认  </li>
 </ol>
-<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><p>但这里有个问题，这并非桥接模式，而是隔了个路由组了个子网，其他机器无法直连R6220背后的htpc。潘多拉固件的无线接口模式中，如果不选Client选WDS，则会提示需要两个路由的芯片都是雷凌的才行，而我的主路由是博通的。通过查阅官方文档<a href="https://oldwiki.archive.openwrt.org/doc/howto/clientmode" target="_blank" rel="external">Client Mode Wireless</a>可知，我现有的是Routed Client Mode，而Bridged Client Mode需要博通的芯片……而用着BCM4706的华硕是主路由，且对openwrt兼容性不好，不过测试时作为副路由用merlin的桥接倒是很顺利。<br>剩下只有Bridged Client Mode (with relayd)这一种了，通过中继的方式模拟出桥接的效果。具体操作方式<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="external">见此处</a>。但这种方式一大弊端就是降速。比起现在几乎不用的远程桌面直连htpc，似乎速度更重要。以后再弄吧。</p>
+<p>应用设置后通过网线连接R6220的htpc可以正常上网，测速达到100Mbps上下，看cbox的直播和爱奇艺的高清电影再无卡顿。<br>如果想让R6220也扩展无线信号可以将没用上的2.4G无线添加个AP接口即可。<br>如果离主路由较远，5G连接不稳定也可以将2.4G用来收，5G用来发，看需求如何了，但不要将同一个无线芯片用来同时收发，否则理论速率减半，降速严重。另外某些老旧设备或IoT只有2.4G，考虑兼容性还是推荐用2.4G作为AP。<br>科学上网设置可参考<a href="https://majunyi.top/2019/01/13/hc5661-pandorabox/">极1s这篇文章</a>。不同之处：<br>R6220的SoC是MT7621ST，架构是<a href="https://wikidevi.com/wiki/MIPS32#MIPS32_1004Kc_.2F_1004Kf" target="_blank" rel="external">MIPS32 1004Kc</a>，一开始装了mipsel_mips32的<code>dns-forwarder</code>但并不能正常工作。尝试<a href="https://dl.bintray.com/aa65535/openwrt/dns-forwarder/1.2.1/OpenWrt/ramips/:dns-forwarder_1.2.1-1_ramips_24kec.ipk" target="_blank" rel="external">rampis_24kec</a>可以兼容。需注意要先改<code>opkg.conf</code>添加兼容架构，不想输命令可以在luci中<code>系统-软件包-opkg配置-配置</code>处添加：  </p>
+<pre><code>arch all 100
+arch mipsel_1004kc_dsp 200
+arch ramips 300
+arch mipsel_24kc 400
+arch ramips_24kec 500
+</code></pre><p>其他步骤一致。<br>简单测速下行61.07Mbps，比极1s要好不少。  </p>
+<h1 id="中继桥模式"><a href="#中继桥模式" class="headerlink" title="中继桥模式"></a>中继桥模式</h1><p>但这里有个问题，这并非桥接模式，而是隔了个路由组了个子网，其他机器无法直连R6220背后的htpc。潘多拉固件的无线接口模式中，如果不选Client选WDS，则会提示需要两个路由的芯片都是雷凌的才行，而我的主路由是博通的。通过查阅官方文档<a href="https://oldwiki.archive.openwrt.org/doc/howto/clientmode" target="_blank" rel="external">Client Mode Wireless</a>可知，我现有的是Routed Client Mode，而Bridged Client Mode需要博通的芯片……而用着BCM4706的华硕是主路由，且对openwrt兼容性不好，不过测试时作为副路由用merlin的桥接倒是很顺利。<br>剩下只有Bridged Client Mode (with relayd)这一种了，通过中继的方式模拟出桥接的效果。具体操作方式<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="external">见此处</a>。但这种方式一大弊端就是降速。比起现在几乎不用的远程桌面直连htpc，似乎速度更重要。<a href="https://majunyi.top/2019/01/08/r6220-relay-bridge/">以后再弄吧</a>。  </p>
 
       
       
@@ -312,7 +319,7 @@
         <p><span>本文标题:</span><a href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2019年01月06日 - 22时21分</p>
-        <p><span>最后更新:</span>2019年01月08日 - 12时40分</p>
+        <p><span>最后更新:</span>2019年01月19日 - 15时19分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/01/06/r6220-breed-pandora/" title="Netgear R6220刷Breed和pandorabox固件">https://majunyi.top/2019/01/06/r6220-breed-pandora/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/01/06/r6220-breed-pandora/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -350,7 +357,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前期准备"><span class="toc-number">1.</span> <span class="toc-text">前期准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#刷Breed"><span class="toc-number">2.</span> <span class="toc-text">刷Breed</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#刷PandoraBox固件"><span class="toc-number">3.</span> <span class="toc-text">刷PandoraBox固件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置路由客户端模式"><span class="toc-number">4.</span> <span class="toc-text">设置路由客户端模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TODO"><span class="toc-number">5.</span> <span class="toc-text">TODO</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前期准备"><span class="toc-number">1.</span> <span class="toc-text">前期准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#刷Breed"><span class="toc-number">2.</span> <span class="toc-text">刷Breed</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#刷PandoraBox固件"><span class="toc-number">3.</span> <span class="toc-text">刷PandoraBox固件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置路由客户端模式"><span class="toc-number">4.</span> <span class="toc-text">设置路由客户端模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#中继桥模式"><span class="toc-number">5.</span> <span class="toc-text">中继桥模式</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
