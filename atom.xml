@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-01-19T07:29:07.177Z</updated>
+  <updated>2019-03-04T14:31:46.000Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux Mint 18.2版本升级至19.1</title>
+    <link href="https://majunyi.top/2019/03/04/upgrade-linux-mint/"/>
+    <id>https://majunyi.top/2019/03/04/upgrade-linux-mint/</id>
+    <published>2019-03-04T13:21:42.000Z</published>
+    <updated>2019-03-04T14:31:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>用Update Manager进行逐步升级，timeshift可跳过。<br><a id="more"></a></p>
+<h1 id="升级至18-3"><a href="#升级至18-3" class="headerlink" title="升级至18.3"></a>升级至18.3</h1><p>打开Update Manager，Edit——Upgrade to Linux Mint 18.3 Sylvia。如果是其他版本也是同样的位置，但升级版本不一样，每次升0.1。<br>完成后重启。  </p>
+<h1 id="升级至19"><a href="#升级至19" class="headerlink" title="升级至19"></a>升级至19</h1><h2 id="建立系统快照（可选）"><a href="#建立系统快照（可选）" class="headerlink" title="建立系统快照（可选）"></a>建立系统快照（可选）</h2><p>官方强制要求要建立系统快照，但如果像我这样mint只是备用系统，用来折腾不怕搞坏则此步可跳过。<br>以下附上建立快照的步骤：<br>安装timeshift<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install timeshift</div></pre></td></tr></table></figure></p>
+<p>Menu——Timeshift打开快照安装向导，选择快照类型（默认RSYNC），选择存储位置，完成向导。<br>Create建立快照。</p>
+<h2 id="将显示管理器切换为LightDM"><a href="#将显示管理器切换为LightDM" class="headerlink" title="将显示管理器切换为LightDM"></a>将显示管理器切换为LightDM</h2><p>检查默认显示管理器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /etc/X11/default-display-manager</div></pre></td></tr></table></figure></p>
+<p>如果输出为<code>/usr/sbin/lightdm</code>则可跳过下面安装并切换LightDM的步骤。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install lightdm lightdm-settings slick-greeter</div></pre></td></tr></table></figure></p>
+<p>安装过程中选择默认显示管理器为lightdm。<br>删除MDM。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt remove --purge mdm mint-mdm-themes*</div></pre></td></tr></table></figure></p>
+<p>配置并重启。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo dpkg-reconfigure lightdm</div><div class="line">sudo reboot</div></pre></td></tr></table></figure></p>
+<h2 id="升级系统"><a href="#升级系统" class="headerlink" title="升级系统"></a>升级系统</h2><p>安装mintupgrade。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install mintupgrade</div></pre></td></tr></table></figure></p>
+<p>（可选）如果前面没有创建快照，执行以下命令以跳过timeshift检查。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo touch /etc/timeshift.json</div></pre></td></tr></table></figure></p>
+<p>检查系统。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mintupgrade check</div></pre></td></tr></table></figure></p>
+<p>检查过程中会给出依赖有冲突的包，用<code>apt remove</code>删掉即可，升级后再装回去。值得注意的是我之前还装了ros，删掉ros。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get remove ros-*</div></pre></td></tr></table></figure></p>
+<p>另外建议想装<a href="http://www.ros.org/install/" target="_blank" rel="external">ROS</a>的老老实实在Ubuntu上弄，在Mint上经过一番折腾后也能用，但没必要把时间花在搭建环境的坑上。<br>预先下载好升级所需包。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mintupgrade download</div></pre></td></tr></table></figure></p>
+<p>升级。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mintupgrade upgrade</div></pre></td></tr></table></figure></p>
+<h1 id="升级至19-1"><a href="#升级至19-1" class="headerlink" title="升级至19.1"></a>升级至19.1</h1><p>此时如果是装了第三方显卡驱动可能桌面会崩溃并进入低分辨率安全模式，先不管它。<br>每次升级后源会重置，打开Software Sources改成国内源。<br>打开Update Manager，Edit——Upgrade to Linux Mint 19.1 Tessa。  </p>
+<h1 id="收尾工作"><a href="#收尾工作" class="headerlink" title="收尾工作"></a>收尾工作</h1><p>解决桌面崩溃问题，重装nvidia显卡驱动。</p>
+<pre><code class="bash">apt-get install --reinstall nvidia-415
+</code></pre>
+<p>用的是这个源<code>sudo add-apt-repository ppa:graphics-drivers/ppa</code>。<br>如果还是不行就装<code>nvidia-396</code>。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用Update Manager进行逐步升级，timeshift可跳过。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="linux" scheme="https://majunyi.top/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>极1s（hc5661）刷潘多拉固件</title>
