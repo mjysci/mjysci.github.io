@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>升级cloudatcost的ubuntu至18.04 | 名实合为</title>
+  <title>ubuntu下安装与管理多个Linux内核 | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。">
+  <meta name="description" content="亦适用于Linux Mint。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="升级cloudatcost的ubuntu至18.04">
-<meta property="og:url" content="https://majunyi.top/2018/11/19/cac-upgrade-ubuntu/index.html">
+<meta property="og:title" content="ubuntu下安装与管理多个Linux内核">
+<meta property="og:url" content="https://majunyi.top/2019/03/05/install-manage-linux-kernel-ubuntu/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。">
-<meta property="og:updated_time" content="2018-11-23T01:15:06.993Z">
+<meta property="og:description" content="亦适用于Linux Mint。">
+<meta property="og:updated_time" content="2019-03-05T01:46:37.653Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="升级cloudatcost的ubuntu至18.04">
-<meta name="twitter:description" content="升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。">
+<meta name="twitter:title" content="ubuntu下安装与管理多个Linux内核">
+<meta name="twitter:description" content="亦适用于Linux Mint。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -196,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-cac-upgrade-ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-install-manage-linux-kernel-ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/11/19/cac-upgrade-ubuntu/" class="article-date">
-      <time datetime="2018-11-19T07:10:09.000Z" itemprop="datePublished">2018-11-19</time>
+      <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" class="article-date">
+      <time datetime="2019-03-05T00:37:09.000Z" itemprop="datePublished">2019-03-05</time>
 </a>
     </div>
   
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      升级cloudatcost的ubuntu至18.04
+      ubuntu下安装与管理多个Linux内核
     </h1>
   
 
@@ -228,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vps/">vps</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,15 +238,20 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。<br><a id="more"></a><br>这个<a href="http://t.cn/E2gkWbY" target="_blank" rel="external">cac</a>的vps前一阵抽风，恢复后别说内容了，整个server都消失了。除了数据没保障外服务器也不稳定，io性能很差，且条款随意修改，现在需要年付9刀的管理费（不过收了管理费后服务质量稍有提升，但ticket仍然万年无回复），不知道什么时候会跑路。若不是专用机场部署简单且流量不限的话真不如扔掉，想要稳定又廉价的可以上<a href="http://t.cn/EwLt7Zp" target="_blank" rel="external">搬瓦工</a>年付19.99刀的车。  </p>
-<p>原来为了稳定所以是用centos7的系统只搭机场。现在决定装ubuntu作为测试用服务器玩新东西。但cac只提供了老掉牙的14.04。故需要升级系统。</p>
-<h1 id="升级内核开启bbr"><a href="#升级内核开启bbr" class="headerlink" title="升级内核开启bbr"></a>升级内核开启bbr</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh &amp;&amp; chmod +x bbr.sh</div><div class="line">sudo ./bbr.sh</div></pre></td></tr></table></figure>
-<p>内核选4.15.18。之前升完系统才升内核还选了最新的4.19.2结果翻车了。所以这里先升内核确保系统没挂且能正常开启bbr。升完后一般就会自动开启，运行<code>lsmod | grep bbr</code>查看结果。</p>
-<h1 id="升级发行版"><a href="#升级发行版" class="headerlink" title="升级发行版"></a>升级发行版</h1><p>远程升级需要注意ssh连接的稳定性问题，和本地不一样，需要用神器tmux以便ssh不幸断开后任务仍会继续在后台执行。</p>
-<p>另外一种方法是ssh设置防呆，在服务器端执行命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vi /etc/ssh/sshd_config</div><div class="line">文件末尾添加ClientAliveInterval 60</div><div class="line">systemctl restart ssh     //需注意14.04用的是upstart, 15.04之后才是systemctl</div></pre></td></tr></table></figure></p>
-<p>不过鉴于我国的特殊国情，防呆防不了断开，特别是晚上。所以还是要用tmux：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tmux new-session <span class="_">-s</span> ug</div><div class="line">apt update &amp;&amp; apt dist-upgrade</div><div class="line">apt-get autoremove  //删掉旧的内核免得/boot区满了</div><div class="line"><span class="keyword">do</span>-release-upgrade</div></pre></td></tr></table></figure>
-<p>如果中途断开就用ssh重连，然后<code>tmux a -t ug</code>加载屏幕继续查看。升级完成后用<code>lsb_release -a</code>查看系统版本。</p>
+        <p>亦适用于Linux Mint。<br><a id="more"></a></p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>多系统且系统间/boot独立的需进入BIOS将启动顺序改为准备折腾的系统所在硬盘。没有共享/boot是因为当其中一个损坏而又急着用时可以用备用系统的/boot进入生产力系统。如果只是单系统跳过此步。<br>安装自4.16后linux-headers对<a href="http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4.3_amd64.deb" target="_blank" rel="external">libssl1.1</a>的依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install libssl1.1_1.1.0g-2ubuntu4.3_amd64.deb</div></pre></td></tr></table></figure></p>
+<h1 id="安装Linux内核"><a href="#安装Linux内核" class="headerlink" title="安装Linux内核"></a>安装Linux内核</h1><h2 id="使用工具安装"><a href="#使用工具安装" class="headerlink" title="使用工具安装"></a>使用工具安装</h2><p>不少人都推荐<a href="https://github.com/teejee2008/ukuu" target="_blank" rel="external">ukuu</a>，不过最近该作者<a href="https://teejeetech.in/2019/01/20/ukuu-v19-01/" target="_blank" rel="external">转为收费闭源了</a>，旧的开源版不再更新且<a href="https://github.com/teejee2008/ukuu/issues/49" target="_blank" rel="external">存在连接问题</a>。不推荐使用。<br>这里推荐<a href="https://github.com/pimlie/ubuntu-mainline-kernel.sh" target="_blank" rel="external">ubuntu-mainline-kernel脚本</a>。<br>安装指定版本内核。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ubuntu-mainline-kernel.sh -i 4.19.26</div></pre></td></tr></table></figure></p>
+<p>更新bootloader并重启。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo update-grub2</div><div class="line">sudo reboot</div></pre></td></tr></table></figure></p>
+<h2 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h2><p>在<a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/" target="_blank" rel="external">kernel-ppa</a>处选择自己需要的版本，然后选择架构下载对应的deb包并按页面顺序依次安装headers_all, headers_generic, image, modules包。注意<code>lowlatency</code>是针对低延迟设备的，普通PC选<code>generic</code>即可。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i *.deb</div></pre></td></tr></table></figure></p>
+<p>更新bootloader并重启。</p>
+<h2 id="从源码编译安装"><a href="#从源码编译安装" class="headerlink" title="从源码编译安装"></a>从源码编译安装</h2><p><a href="https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html" target="_blank" rel="external">参考这篇文章</a></p>
+<h1 id="删除多余内核"><a href="#删除多余内核" class="headerlink" title="删除多余内核"></a>删除多余内核</h1><p>注：待删除内核不能为当前使用内核。</p>
+<h2 id="使用工具删除"><a href="#使用工具删除" class="headerlink" title="使用工具删除"></a>使用工具删除</h2><p>推荐<a href="http://byobu.co/" target="_blank" rel="external">byobu</a>里面自带的purge-old-kernels，其中keep参数是指定保留的内核数，默认为2。</p>
+<pre><code class="bash">sudo apt install byobu
+sudo purge-old-kernels --keep 3
+</code></pre>
+<p>也可以使用<code>ubuntu-mainline-kernel.sh -u</code>来指定版本逐个删除。</p>
+<h2 id="手动删除"><a href="#手动删除" class="headerlink" title="手动删除"></a>手动删除</h2><p>用<code>sudo dpkg --purge</code>指定版本headers_all, headers_generic, image, modules的deb包，删除二进制及配置文件。</p>
 
       
       
@@ -301,13 +306,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></p>
+        <p><span>本文标题:</span><a href="/2019/03/05/install-manage-linux-kernel-ubuntu/">ubuntu下安装与管理多个Linux内核</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2018年11月19日 - 15时10分</p>
-        <p><span>最后更新:</span>2018年11月23日 - 09时15分</p>
+        <p><span>发布时间:</span>2019年03月05日 - 08时37分</p>
+        <p><span>最后更新:</span>2019年03月05日 - 09时46分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/11/19/cac-upgrade-ubuntu/" title="升级cloudatcost的ubuntu至18.04">https://majunyi.top/2018/11/19/cac-upgrade-ubuntu/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2018/11/19/cac-upgrade-ubuntu/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/05/install-manage-linux-kernel-ubuntu/" title="ubuntu下安装与管理多个Linux内核">https://majunyi.top/2019/03/05/install-manage-linux-kernel-ubuntu/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/03/05/install-manage-linux-kernel-ubuntu/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -320,18 +325,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/01/05/choose-router/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          购买路由注意事项
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/11/carnd-env/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">无人车开发工程师第一学期环境搭建</div>
+    <a href="/2019/03/04/upgrade-linux-mint/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux Mint 18.2版本升级至19.1</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -342,7 +338,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#升级内核开启bbr"><span class="toc-number">1.</span> <span class="toc-text">升级内核开启bbr</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级发行版"><span class="toc-number">2.</span> <span class="toc-text">升级发行版</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Linux内核"><span class="toc-number">2.</span> <span class="toc-text">安装Linux内核</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用工具安装"><span class="toc-number">2.1.</span> <span class="toc-text">使用工具安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手动安装"><span class="toc-number">2.2.</span> <span class="toc-text">手动安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从源码编译安装"><span class="toc-number">2.3.</span> <span class="toc-text">从源码编译安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#删除多余内核"><span class="toc-number">3.</span> <span class="toc-text">删除多余内核</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用工具删除"><span class="toc-number">3.1.</span> <span class="toc-text">使用工具删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手动删除"><span class="toc-number">3.2.</span> <span class="toc-text">手动删除</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -409,13 +405,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/01/05/choose-router/" title="上一篇: 购买路由注意事项">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/09/11/carnd-env/" title="下一篇: 无人车开发工程师第一学期环境搭建">
+            <a href="/2019/03/04/upgrade-linux-mint/" title="下一篇: Linux Mint 18.2版本升级至19.1">
                 <i class="fa fa-angle-right"></i>
             </a>
         

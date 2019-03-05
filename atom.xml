@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-03-04T14:31:46.000Z</updated>
+  <updated>2019-03-05T01:46:37.653Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ubuntu下安装与管理多个Linux内核</title>
+    <link href="https://majunyi.top/2019/03/05/install-manage-linux-kernel-ubuntu/"/>
+    <id>https://majunyi.top/2019/03/05/install-manage-linux-kernel-ubuntu/</id>
+    <published>2019-03-05T00:37:09.000Z</published>
+    <updated>2019-03-05T01:46:37.653Z</updated>
+    
+    <content type="html"><![CDATA[<p>亦适用于Linux Mint。<br><a id="more"></a></p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>多系统且系统间/boot独立的需进入BIOS将启动顺序改为准备折腾的系统所在硬盘。没有共享/boot是因为当其中一个损坏而又急着用时可以用备用系统的/boot进入生产力系统。如果只是单系统跳过此步。<br>安装自4.16后linux-headers对<a href="http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4.3_amd64.deb" target="_blank" rel="external">libssl1.1</a>的依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install libssl1.1_1.1.0g-2ubuntu4.3_amd64.deb</div></pre></td></tr></table></figure></p>
+<h1 id="安装Linux内核"><a href="#安装Linux内核" class="headerlink" title="安装Linux内核"></a>安装Linux内核</h1><h2 id="使用工具安装"><a href="#使用工具安装" class="headerlink" title="使用工具安装"></a>使用工具安装</h2><p>不少人都推荐<a href="https://github.com/teejee2008/ukuu" target="_blank" rel="external">ukuu</a>，不过最近该作者<a href="https://teejeetech.in/2019/01/20/ukuu-v19-01/" target="_blank" rel="external">转为收费闭源了</a>，旧的开源版不再更新且<a href="https://github.com/teejee2008/ukuu/issues/49" target="_blank" rel="external">存在连接问题</a>。不推荐使用。<br>这里推荐<a href="https://github.com/pimlie/ubuntu-mainline-kernel.sh" target="_blank" rel="external">ubuntu-mainline-kernel脚本</a>。<br>安装指定版本内核。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ubuntu-mainline-kernel.sh -i 4.19.26</div></pre></td></tr></table></figure></p>
+<p>更新bootloader并重启。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo update-grub2</div><div class="line">sudo reboot</div></pre></td></tr></table></figure></p>
+<h2 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h2><p>在<a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/" target="_blank" rel="external">kernel-ppa</a>处选择自己需要的版本，然后选择架构下载对应的deb包并按页面顺序依次安装headers_all, headers_generic, image, modules包。注意<code>lowlatency</code>是针对低延迟设备的，普通PC选<code>generic</code>即可。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i *.deb</div></pre></td></tr></table></figure></p>
+<p>更新bootloader并重启。</p>
+<h2 id="从源码编译安装"><a href="#从源码编译安装" class="headerlink" title="从源码编译安装"></a>从源码编译安装</h2><p><a href="https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html" target="_blank" rel="external">参考这篇文章</a></p>
+<h1 id="删除多余内核"><a href="#删除多余内核" class="headerlink" title="删除多余内核"></a>删除多余内核</h1><p>注：待删除内核不能为当前使用内核。</p>
+<h2 id="使用工具删除"><a href="#使用工具删除" class="headerlink" title="使用工具删除"></a>使用工具删除</h2><p>推荐<a href="http://byobu.co/" target="_blank" rel="external">byobu</a>里面自带的purge-old-kernels，其中keep参数是指定保留的内核数，默认为2。</p>
+<pre><code class="bash">sudo apt install byobu
+sudo purge-old-kernels --keep 3
+</code></pre>
+<p>也可以使用<code>ubuntu-mainline-kernel.sh -u</code>来指定版本逐个删除。</p>
+<h2 id="手动删除"><a href="#手动删除" class="headerlink" title="手动删除"></a>手动删除</h2><p>用<code>sudo dpkg --purge</code>指定版本headers_all, headers_generic, image, modules的deb包，删除二进制及配置文件。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;亦适用于Linux Mint。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="linux" scheme="https://majunyi.top/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux Mint 18.2版本升级至19.1</title>
@@ -194,11 +230,11 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
+      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
+    
       <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
     
       <category term="router" scheme="https://majunyi.top/tags/router/"/>
-    
-      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
     
   </entry>
   
