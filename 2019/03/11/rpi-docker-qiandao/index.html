@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Linux Mint 18.2版本升级至19.1 | 名实合为</title>
+  <title>树莓派（arm32v7）用Docker部署签到站 | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用Update Manager进行逐步升级，timeshift可跳过。">
+  <meta name="description" content="qiandao是基于HAR的自动签到框架，官方提供的docker镜像是x86的，树莓派用不了。所以我build了个arm32v7的镜像，除了树莓派2，3外，亦适用于其他32位的ARM平台。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux Mint 18.2版本升级至19.1">
-<meta property="og:url" content="https://majunyi.top/2019/03/04/upgrade-linux-mint/index.html">
+<meta property="og:title" content="树莓派（arm32v7）用Docker部署签到站">
+<meta property="og:url" content="https://majunyi.top/2019/03/11/rpi-docker-qiandao/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="用Update Manager进行逐步升级，timeshift可跳过。">
-<meta property="og:updated_time" content="2019-03-04T14:31:46.000Z">
+<meta property="og:description" content="qiandao是基于HAR的自动签到框架，官方提供的docker镜像是x86的，树莓派用不了。所以我build了个arm32v7的镜像，除了树莓派2，3外，亦适用于其他32位的ARM平台。">
+<meta property="og:updated_time" content="2019-03-11T13:33:24.205Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux Mint 18.2版本升级至19.1">
-<meta name="twitter:description" content="用Update Manager进行逐步升级，timeshift可跳过。">
+<meta name="twitter:title" content="树莓派（arm32v7）用Docker部署签到站">
+<meta name="twitter:description" content="qiandao是基于HAR的自动签到框架，官方提供的docker镜像是x86的，树莓派用不了。所以我build了个arm32v7的镜像，除了树莓派2，3外，亦适用于其他32位的ARM平台。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -196,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-upgrade-linux-mint" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-rpi-docker-qiandao" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/04/upgrade-linux-mint/" class="article-date">
-      <time datetime="2019-03-04T13:21:42.000Z" itemprop="datePublished">2019-03-04</time>
+      <a href="/2019/03/11/rpi-docker-qiandao/" class="article-date">
+      <time datetime="2019-03-11T13:05:07.000Z" itemprop="datePublished">2019-03-11</time>
 </a>
     </div>
   
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Linux Mint 18.2版本升级至19.1
+      树莓派（arm32v7）用Docker部署签到站
     </h1>
   
 
@@ -228,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpi/">rpi</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,25 +238,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>用Update Manager进行逐步升级，timeshift可跳过。<br><a id="more"></a></p>
-<h1 id="升级至18-3"><a href="#升级至18-3" class="headerlink" title="升级至18.3"></a>升级至18.3</h1><p>打开Update Manager，Edit——Upgrade to Linux Mint 18.3 Sylvia。如果是其他版本也是同样的位置，但升级版本不一样，每次升0.1。<br>完成后重启。  </p>
-<h1 id="升级至19"><a href="#升级至19" class="headerlink" title="升级至19"></a>升级至19</h1><h2 id="建立系统快照（可选）"><a href="#建立系统快照（可选）" class="headerlink" title="建立系统快照（可选）"></a>建立系统快照（可选）</h2><p>官方强制要求要建立系统快照，但如果像我这样mint只是备用系统，用来折腾不怕搞坏则此步可跳过。<br>以下附上建立快照的步骤：<br>安装timeshift<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install timeshift</div></pre></td></tr></table></figure></p>
-<p>Menu——Timeshift打开快照安装向导，选择快照类型（默认RSYNC），选择存储位置，完成向导。<br>Create建立快照。</p>
-<h2 id="将显示管理器切换为LightDM"><a href="#将显示管理器切换为LightDM" class="headerlink" title="将显示管理器切换为LightDM"></a>将显示管理器切换为LightDM</h2><p>检查默认显示管理器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /etc/X11/default-display-manager</div></pre></td></tr></table></figure></p>
-<p>如果输出为<code>/usr/sbin/lightdm</code>则可跳过下面安装并切换LightDM的步骤。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install lightdm lightdm-settings slick-greeter</div></pre></td></tr></table></figure></p>
-<p>安装过程中选择默认显示管理器为lightdm。<br>删除MDM。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt remove --purge mdm mint-mdm-themes*</div></pre></td></tr></table></figure></p>
-<p>配置并重启。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo dpkg-reconfigure lightdm</div><div class="line">sudo reboot</div></pre></td></tr></table></figure></p>
-<h2 id="升级系统"><a href="#升级系统" class="headerlink" title="升级系统"></a>升级系统</h2><p>安装mintupgrade。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install mintupgrade</div></pre></td></tr></table></figure></p>
-<p>（可选）如果前面没有创建快照，执行以下命令以跳过timeshift检查。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo touch /etc/timeshift.json</div></pre></td></tr></table></figure></p>
-<p>检查系统。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mintupgrade check</div></pre></td></tr></table></figure></p>
-<p>检查过程中会给出依赖有冲突的包，用<code>apt remove</code>删掉即可，升级后再装回去。值得注意的是我之前还装了ros，删掉ros。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get remove ros-*</div></pre></td></tr></table></figure></p>
-<p>另外建议想装<a href="http://www.ros.org/install/" target="_blank" rel="external">ROS</a>的老老实实在Ubuntu上弄，在Mint上经过一番折腾后也能用，但没必要把时间花在搭建环境的坑上。<br>预先下载好升级所需包。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mintupgrade download</div></pre></td></tr></table></figure></p>
-<p>升级。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mintupgrade upgrade</div></pre></td></tr></table></figure></p>
-<h1 id="升级至19-1"><a href="#升级至19-1" class="headerlink" title="升级至19.1"></a>升级至19.1</h1><p>此时如果是装了第三方显卡驱动可能桌面会崩溃并进入低分辨率安全模式，先不管它。<br>每次升级后源会重置，打开Software Sources改成国内源。<br>打开Update Manager，Edit——Upgrade to Linux Mint 19.1 Tessa。  </p>
-<h1 id="收尾工作"><a href="#收尾工作" class="headerlink" title="收尾工作"></a>收尾工作</h1><p>解决桌面崩溃问题，重装nvidia显卡驱动。</p>
-<pre><code class="bash">apt-get install --reinstall nvidia-415
-</code></pre>
-<p>用的是这个源<code>sudo add-apt-repository ppa:graphics-drivers/ppa</code>。<br>如果还是不行就装<code>nvidia-396</code>。</p>
+        <p><a href="https://github.com/binux/qiandao" target="_blank" rel="external">qiandao</a>是基于HAR的自动签到框架，官方提供的docker镜像是x86的，树莓派用不了。所以我build了个arm32v7的镜像，除了树莓派2，3外，亦适用于其他32位的ARM平台。<br><a id="more"></a><br>注：树莓派3B之后用<a href="https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2837/README.md" target="_blank" rel="external">BCM2837</a>的板子实际上是64位arm64v8的，但Raspbian为了兼容性问题依旧是32位，故编译环境依旧为32位。<br>关于树莓派的硬件改进历史可以参考<a href="https://elinux.org/RPi_HardwareHistory" target="_blank" rel="external">此处</a>。通过外观基本就能判断版本，如果仍不确定可以通过<code>cat /sys/firmware/devicetree/base/model</code>命令查看型号。</p>
+<h1 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h1><p>安装并启动docker，测试无误后设为自启动。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">curl <span class="_">-s</span>SL https://get.daocloud.io/docker | sh</div><div class="line">sudo service docker start</div><div class="line">sudo systemctl <span class="built_in">enable</span> docker</div></pre></td></tr></table></figure></p>
+<p>将当前用户加入docker组并重新登录，这样就不用sudo来跑docker了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo usermod <span class="_">-a</span>G docker pi</div><div class="line">su - pi</div></pre></td></tr></table></figure></p>
+<h1 id="下载qiandao的镜像"><a href="#下载qiandao的镜像" class="headerlink" title="下载qiandao的镜像"></a>下载qiandao的镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull mjysci/qiandao:arm32v7</div></pre></td></tr></table></figure>
+<h1 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir -p /home/pi/volume</div><div class="line">docker run <span class="_">-d</span> -p 80:80 --name qiandao --restart=on-failure:5 -v /home/pi/volume:/usr/src/app/volume mjysci/qiandao:arm32v7</div></pre></td></tr></table></figure>
+<h1 id="配置站点管理员"><a href="#配置站点管理员" class="headerlink" title="配置站点管理员"></a>配置站点管理员</h1><p>浏览器访问树莓派ip地址并注册一个账户。<br>进入容器管理。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker <span class="built_in">exec</span> -it qiandao /bin/bash</div></pre></td></tr></table></figure></p>
+<p>设置站点管理员。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python ./chrole.py &lt;刚才注册的账户邮箱&gt; admin</div></pre></td></tr></table></figure></p>
+<p>退出容器管理。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">exit</span></div></pre></td></tr></table></figure></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://github.com/binux/qiandao/wiki/Docker%E9%83%A8%E7%BD%B2%E7%AD%BE%E5%88%B0%E7%AB%99%E6%95%99%E7%A8%8B" target="_blank" rel="external">Docker部署签到站教程</a></p>
 
       
       
@@ -311,13 +301,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></p>
+        <p><span>本文标题:</span><a href="/2019/03/11/rpi-docker-qiandao/">树莓派（arm32v7）用Docker部署签到站</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2019年03月04日 - 21时21分</p>
-        <p><span>最后更新:</span>2019年03月04日 - 22时31分</p>
+        <p><span>发布时间:</span>2019年03月11日 - 21时05分</p>
+        <p><span>最后更新:</span>2019年03月11日 - 21时33分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/03/04/upgrade-linux-mint/" title="Linux Mint 18.2版本升级至19.1">https://majunyi.top/2019/03/04/upgrade-linux-mint/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/03/04/upgrade-linux-mint/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/11/rpi-docker-qiandao/" title="树莓派（arm32v7）用Docker部署签到站">https://majunyi.top/2019/03/11/rpi-docker-qiandao/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/03/11/rpi-docker-qiandao/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -330,18 +320,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          ubuntu下安装与管理多个Linux内核
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/01/13/hc5661-pandorabox/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">极1s（hc5661）刷潘多拉固件</div>
+    <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ubuntu下安装与管理多个Linux内核</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -352,7 +333,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至18-3"><span class="toc-number">1.</span> <span class="toc-text">升级至18.3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至19"><span class="toc-number">2.</span> <span class="toc-text">升级至19</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立系统快照（可选）"><span class="toc-number">2.1.</span> <span class="toc-text">建立系统快照（可选）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将显示管理器切换为LightDM"><span class="toc-number">2.2.</span> <span class="toc-text">将显示管理器切换为LightDM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级系统"><span class="toc-number">2.3.</span> <span class="toc-text">升级系统</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至19-1"><span class="toc-number">3.</span> <span class="toc-text">升级至19.1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#收尾工作"><span class="toc-number">4.</span> <span class="toc-text">收尾工作</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装docker"><span class="toc-number">1.</span> <span class="toc-text">安装docker</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下载qiandao的镜像"><span class="toc-number">2.</span> <span class="toc-text">下载qiandao的镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建容器"><span class="toc-number">3.</span> <span class="toc-text">创建容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置站点管理员"><span class="toc-number">4.</span> <span class="toc-text">配置站点管理员</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -419,13 +400,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" title="上一篇: ubuntu下安装与管理多个Linux内核">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2019/01/13/hc5661-pandorabox/" title="下一篇: 极1s（hc5661）刷潘多拉固件">
+            <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" title="下一篇: ubuntu下安装与管理多个Linux内核">
                 <i class="fa fa-angle-right"></i>
             </a>
         
