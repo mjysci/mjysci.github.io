@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2019/03/12/qiandao-docker-qnap-arm/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="亦适用于其他64位的ARM平台（arm64v8）。">
-<meta property="og:updated_time" content="2019-03-12T04:31:42.278Z">
+<meta property="og:updated_time" content="2019-03-12T04:40:27.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ARM平台NAS（qnap TS-212P3）用Docker部署签到站">
 <meta name="twitter:description" content="亦适用于其他64位的ARM平台（arm64v8）。">
@@ -244,7 +244,7 @@
 <h1 id="配置站点管理员"><a href="#配置站点管理员" class="headerlink" title="配置站点管理员"></a>配置站点管理员</h1><p>浏览器访问NAS:<code>&lt;yourip&gt;:3000</code>并注册一个账户。<br>ssh登录NAS。<br>进入容器管理。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker <span class="built_in">exec</span> -it qiandao /bin/bash</div></pre></td></tr></table></figure></p>
 <p>设置站点管理员。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python ./chrole.py &lt;刚才注册的账户邮箱&gt; admin</div></pre></td></tr></table></figure></p>
 <h1 id="配置邮件提醒"><a href="#配置邮件提醒" class="headerlink" title="配置邮件提醒"></a>配置邮件提醒</h1><p>先去<a href="https://www.mailgun.com/" target="_blank" rel="external">mailgun</a>注册免费账户，取得api key。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi config.py</div></pre></td></tr></table></figure></p>
-<p>填写<code>mail_domain</code>和<code>mailgun_key</code>。<br>注：如果只是在内网用，无域名，则<code>mail_domain</code>填写<code>sandbox******.mailgun.org</code>，此域名可在注册完后测试邮件脚本处取得。<br>退出并重启容器。</p>
+<p>填写<code>mail_domain</code>和<code>mailgun_key</code>。<br>注：如果只是在内网用，无域名，则<code>mail_domain</code>填写<code>sandbox******.mailgun.org</code>，此域名可在<code>Messages-&gt;Domains</code>处取得，sandbox域名需指定<code>Authorized Recipients</code>，填自己的收件邮箱即可。<br>退出并重启容器。</p>
 
       
       
@@ -302,7 +302,7 @@
         <p><span>本文标题:</span><a href="/2019/03/12/qiandao-docker-qnap-arm/">ARM平台NAS（qnap TS-212P3）用Docker部署签到站</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2019年03月12日 - 11时44分</p>
-        <p><span>最后更新:</span>2019年03月12日 - 12时31分</p>
+        <p><span>最后更新:</span>2019年03月12日 - 12时40分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/03/12/qiandao-docker-qnap-arm/" title="ARM平台NAS（qnap TS-212P3）用Docker部署签到站">https://majunyi.top/2019/03/12/qiandao-docker-qnap-arm/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/03/12/qiandao-docker-qnap-arm/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
