@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-03-12T03:24:47.427Z</updated>
+  <updated>2019-03-12T04:31:42.278Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ARM平台NAS（qnap TS-212P3）用Docker部署签到站</title>
+    <link href="https://majunyi.top/2019/03/12/qiandao-docker-qnap-arm/"/>
+    <id>https://majunyi.top/2019/03/12/qiandao-docker-qnap-arm/</id>
+    <published>2019-03-12T03:44:42.000Z</published>
+    <updated>2019-03-12T04:31:42.278Z</updated>
+    
+    <content type="html"><![CDATA[<p>亦适用于其他64位的ARM平台（arm64v8）。<br><a id="more"></a></p>
+<h1 id="浏览器登录NAS"><a href="#浏览器登录NAS" class="headerlink" title="浏览器登录NAS"></a>浏览器登录NAS</h1><h1 id="安装Container-Station"><a href="#安装Container-Station" class="headerlink" title="安装Container Station"></a>安装Container Station</h1><p>App Center -&gt; All Apps -&gt; Container Station -&gt; Install</p>
+<h1 id="安装qiandao"><a href="#安装qiandao" class="headerlink" title="安装qiandao"></a>安装qiandao</h1><p>Container Station -&gt; Create -&gt; 搜索qiandao -&gt; Docker Hub -&gt; 选择mjysci/qiandao -&gt; Install -&gt; 选择arm64v8<br>Create Container -&gt; Advanced Settings -&gt; Network -&gt; Port Forwarding<br>其中Host选NAS的空闲端口，如<code>3000</code>，Container则是<code>80</code>,Protocol是默认的<code>TCP</code>。</p>
+<h1 id="配置站点管理员"><a href="#配置站点管理员" class="headerlink" title="配置站点管理员"></a>配置站点管理员</h1><p>浏览器访问NAS:<code>&lt;yourip&gt;:3000</code>并注册一个账户。<br>ssh登录NAS。<br>进入容器管理。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker <span class="built_in">exec</span> -it qiandao /bin/bash</div></pre></td></tr></table></figure></p>
+<p>设置站点管理员。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python ./chrole.py &lt;刚才注册的账户邮箱&gt; admin</div></pre></td></tr></table></figure></p>
+<h1 id="配置邮件提醒"><a href="#配置邮件提醒" class="headerlink" title="配置邮件提醒"></a>配置邮件提醒</h1><p>先去<a href="https://www.mailgun.com/" target="_blank" rel="external">mailgun</a>注册免费账户，取得api key。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi config.py</div></pre></td></tr></table></figure></p>
+<p>填写<code>mail_domain</code>和<code>mailgun_key</code>。<br>注：如果只是在内网用，无域名，则<code>mail_domain</code>填写<code>sandbox******.mailgun.org</code>，此域名可在注册完后测试邮件脚本处取得。<br>退出并重启容器。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;亦适用于其他64位的ARM平台（arm64v8）。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
+    
+      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
+    
+      <category term="nas" scheme="https://majunyi.top/tags/nas/"/>
+    
+  </entry>
   
   <entry>
     <title>通过QEMU在x86计算机上搭建arm64版ubuntu开发环境</title>
@@ -101,9 +134,9 @@
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="rpi" scheme="https://majunyi.top/tags/rpi/"/>
-    
       <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
+    
+      <category term="rpi" scheme="https://majunyi.top/tags/rpi/"/>
     
   </entry>
   
@@ -322,11 +355,11 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
+      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
+    
       <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
     
       <category term="router" scheme="https://majunyi.top/tags/router/"/>
-    
-      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
     
   </entry>
   
