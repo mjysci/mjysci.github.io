@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-03-11T13:33:24.205Z</updated>
+  <updated>2019-03-12T03:24:47.427Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>通过QEMU在x86计算机上搭建arm64版ubuntu开发环境</title>
+    <link href="https://majunyi.top/2019/03/12/qemu-ubuntu-arm64/"/>
+    <id>https://majunyi.top/2019/03/12/qemu-ubuntu-arm64/</id>
+    <published>2019-03-12T02:17:23.000Z</published>
+    <updated>2019-03-12T03:24:47.427Z</updated>
+    
+    <content type="html"><![CDATA[<p>没有arm64板子的临时解决办法。<br><a id="more"></a><br>其实手头上是有个四核A53的树莓派3B的，但raspbian只有32位版且另有他用不方便换系统。而其他的板子SoC都是32位的（全志A20，H8，BCM2835，BCM2836等），只好先用模拟器装arm64版的ubuntu16.04对付一下。  </p>
+<h1 id="安装QEMU"><a href="#安装QEMU" class="headerlink" title="安装QEMU"></a>安装QEMU</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install -y qemu qemu-utils cloud-utils</div></pre></td></tr></table></figure>
+<h1 id="下载镜像和UEFI固件"><a href="#下载镜像和UEFI固件" class="headerlink" title="下载镜像和UEFI固件"></a>下载镜像和UEFI固件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://cloud-images.ubuntu.com/releases/16.04/release/ubuntu-16.04-server-cloudimg-arm64-uefi1.img</div><div class="line">wget https://releases.linaro.org/components/kernel/uefi-linaro/latest/release/qemu64/QEMU_EFI.fd</div></pre></td></tr></table></figure>
+<h1 id="配置虚拟机"><a href="#配置虚拟机" class="headerlink" title="配置虚拟机"></a>配置虚拟机</h1><p>复制本机rsa公钥。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat ~/.ssh/id_rsa.pub</div></pre></td></tr></table></figure></p>
+<p>创建并编辑配置文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi cloud.txt</div></pre></td></tr></table></figure></p>
+<p>填入以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#cloud-config</div><div class="line">users:</div><div class="line">  - name: mjy</div><div class="line">    ssh-authorized-keys:</div><div class="line">      - ssh-rsa AAAAB...</div><div class="line">    sudo: [&apos;ALL=(ALL) NOPASSWD:ALL&apos;]</div><div class="line">    groups: sudo</div><div class="line">    shell: /bin/bash</div></pre></td></tr></table></figure></p>
+<p>其中name为用户名，ssh-rsa为刚才复制的公钥，设置该用户使用sudo时无需输入密码。</p>
+<h1 id="备份原始镜像（可选）"><a href="#备份原始镜像（可选）" class="headerlink" title="备份原始镜像（可选）"></a>备份原始镜像（可选）</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp ubuntu-16.04-server-cloudimg-arm64-uefi1.img ubuntu-16.04-server-cloudimg-arm64-uefi1.img.orig</div></pre></td></tr></table></figure>
+<h1 id="启动虚拟机"><a href="#启动虚拟机" class="headerlink" title="启动虚拟机"></a>启动虚拟机</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">qemu-system-aarch64 \</div><div class="line">    -smp 2 \</div><div class="line">    -m 2048 \</div><div class="line">    -M virt \</div><div class="line">    -cpu cortex<span class="_">-a</span>57 \</div><div class="line">    -bios QEMU_EFI.fd \</div><div class="line">    -nographic \</div><div class="line">    -device virtio-blk-device,drive=image \</div><div class="line">    -drive <span class="keyword">if</span>=none,id=image,file=ubuntu-16.04-server-cloudimg-arm64-uefi1.img \</div><div class="line">    -device virtio-blk-device,drive=cloud \</div><div class="line">    -drive <span class="keyword">if</span>=none,id=cloud,file=cloud.img \</div><div class="line">    -device virtio-net-device,netdev=user0 \</div><div class="line">    -netdev user,id=user0 \</div><div class="line">    -redir tcp:2222::22</div></pre></td></tr></table></figure>
+<p>参数解释</p>
+<ul>
+<li><code>-smp 2</code> - 双核</li>
+<li><code>-m 2048</code> - 2G内存</li>
+<li><code>-M virt</code> - 模拟通用QEMU ARM机器</li>
+<li><code>-cpu cortex-a57</code> - 模拟的CPU型号，这里选择最常见的A57，其他型号可通过<code>qemu-system-aarch64 -M virt -cpu help</code>查询</li>
+<li><code>-bios QEMU_EFI.fd</code> - BIOS固件</li>
+<li><code>-nographic</code> - 无显示，故启动时的警告和花屏不用管，用ssh</li>
+<li><code>-device virtio-blk-device,drive=image</code> - 创建名为”image”的虚拟块设备</li>
+<li><code>-drive if=none,id=image,file=ubuntu-16.04-server-cloudimg-arm64-uefi1.img</code> - 用刚才的”image”设备和cloudimg镜像创建驱动器</li>
+<li><code>-device virtio-blk-device,drive=cloud</code> - 创建名为”cloud”的虚拟块设备</li>
+<li><code>-drive if=none,id=cloud,file=cloud.img</code> - 用刚才的”cloud”设备和配置好的cloud.img镜像创建驱动器</li>
+<li><code>-device virtio-net-device,netdev=user0</code> - 创建名为”user0”的虚拟网络设备</li>
+<li><code>-netdev user,id=user0</code> - 创建名为”user0”的用户模式网络栈</li>
+<li><code>-redir tcp:2222::22</code> - 将虚拟机的22端口映射到本机的2222端口<br>注：第一次启动时间会长一些。  </li>
+</ul>
+<h1 id="ssh连接虚拟机"><a href="#ssh连接虚拟机" class="headerlink" title="ssh连接虚拟机"></a>ssh连接虚拟机</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -p 2222 mjy@localhost</div></pre></td></tr></table></figure>
+<h1 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h1><h2 id="error-no-such-device-root"><a href="#error-no-such-device-root" class="headerlink" title="error: no such device: root"></a>error: no such device: root</h2><p>其实不按键盘也能正常启动，是<a href="https://bugs.launchpad.net/cloud-images/+bug/1726476" target="_blank" rel="external">ubuntu镜像的bug</a>，可通过<code>sudo update-grub</code>解决。</p>
+<h2 id="perl-warning-Please-check-that-your-locale-settings"><a href="#perl-warning-Please-check-that-your-locale-settings" class="headerlink" title="perl: warning: Please check that your locale settings"></a>perl: warning: Please check that your locale settings</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/default/locale</div></pre></td></tr></table></figure>
+<p>添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LANGUAGE=en_US.UTF-8</div><div class="line">LC_ALL=en_US.UTF-8</div></pre></td></tr></table></figure></p>
+<h2 id="unable-to-resolve-host-ubuntu"><a href="#unable-to-resolve-host-ubuntu" class="headerlink" title="unable to resolve host ubuntu"></a>unable to resolve host ubuntu</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/hosts</div></pre></td></tr></table></figure>
+<p>在localhost后面添加ubuntu。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">127.0.0.1 localhost ubuntu</div></pre></td></tr></table></figure></p>
+<h2 id="扩展虚拟机磁盘空间"><a href="#扩展虚拟机磁盘空间" class="headerlink" title="扩展虚拟机磁盘空间"></a>扩展虚拟机磁盘空间</h2><p>默认镜像的2G比较小，在host用<code>qemu-img</code>加多10G。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">qemu-img resize ubuntu-16.04-server-cloudimg-arm64-uefi1.img +10G</div></pre></td></tr></table></figure></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://www.cnx-software.com/2016/05/10/how-to-run-ubuntu-16-04-aarch64-64-bit-arm-cloud-images-on-your-intelamd-linux-computer/" target="_blank" rel="external">How to Run Ubuntu 16.04 Aarch64 (64-bit ARM) Cloud Images on Your Intel/AMD Linux Computer with QEMU</a><br><a href="https://helpmanual.io/help/qemu-system-aarch64/" target="_blank" rel="external">qemu-system-aarch64 -h</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;没有arm64板子的临时解决办法。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
+    
+  </entry>
   
   <entry>
     <title>树莓派（arm32v7）用Docker部署签到站</title>
