@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>无人车开发工程师第一学期环境搭建 | 名实合为</title>
+  <title>ARM平台qnap用Docker部署aria2 | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。">
+  <meta name="description" content="亦适用于其他64位的ARM平台（arm64v8）。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="无人车开发工程师第一学期环境搭建">
-<meta property="og:url" content="https://majunyi.top/2017/09/11/carnd-env/index.html">
+<meta property="og:title" content="ARM平台qnap用Docker部署aria2">
+<meta property="og:url" content="https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。">
-<meta property="og:updated_time" content="2017-09-11T04:26:50.576Z">
+<meta property="og:description" content="亦适用于其他64位的ARM平台（arm64v8）。">
+<meta property="og:updated_time" content="2019-03-12T15:29:07.577Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="无人车开发工程师第一学期环境搭建">
-<meta name="twitter:description" content="第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。">
+<meta name="twitter:title" content="ARM平台qnap用Docker部署aria2">
+<meta name="twitter:description" content="亦适用于其他64位的ARM平台（arm64v8）。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -196,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-carnd-env" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-aria2-docker-arm-qnap" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/09/11/carnd-env/" class="article-date">
-      <time datetime="2017-09-11T03:55:06.000Z" itemprop="datePublished">2017-09-11</time>
+      <a href="/2019/03/12/aria2-docker-arm-qnap/" class="article-date">
+      <time datetime="2019-03-12T15:01:08.000Z" itemprop="datePublished">2019-03-12</time>
 </a>
     </div>
   
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      无人车开发工程师第一学期环境搭建
+      ARM平台qnap用Docker部署aria2
     </h1>
   
 
@@ -228,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/engineering/">engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/udacity/">udacity</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arm/">arm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nas/">nas</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,15 +238,13 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>第一学期项目主要用到python，opencv，tensorflow等，课程中提供的一键安装配置文件中各组件的版本太旧，再加上国内特殊网络环境的限制，故默认搭建方案并不适用。<br><a id="more"></a></p>
-<p>虽然如此，官方的<a href="https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/environment-gpu.yml" target="_blank" rel="external">environment-gpu.yml</a>仍具有重要参考价值。</p>
-<h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><p>OS: Linux Mint 18.2<br>GPU: NVIDIA GeForce GTX 1080 Ti</p>
-<h2 id="建立新环境"><a href="#建立新环境" class="headerlink" title="建立新环境"></a>建立新环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conda create -n carnd-term1 python=3</div></pre></td></tr></table></figure>
-<h2 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">conda install numpy matplotlib jupyter opencv pillow scikit-learn scikit-image scipy h5py flask-socketio seaborn pandas pyqt keras-gpu</div><div class="line">pip install eventlet imageio moviepy</div></pre></td></tr></table></figure>
-<p>注意这里由于网络不畅，menpo通道的opencv3下载时经常掉线。装tuna源的opencv替代。所有包默认最新版，keras选gpu版会自动装上tensorflow-gpu及cuda、cudnn等。</p>
-<h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><p>直接跑<a href="https://github.com/udacity/CarND-Term1-Starter-Kit-Test" target="_blank" rel="external">测试程序</a>会出现以下报错：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ImportError: libopenblasp-r0-39a31c03.2.18.so: cannot open shared object file: No such file or directory</div><div class="line">ImportError: Importing the multiarray numpy extension module failed.</div><div class="line">Most likely you are trying to import a failed build of numpy.</div></pre></td></tr></table></figure></p>
-<p>走了些mkl的弯路后发现解决方法简单粗暴，忽略conda已装的numpy，然后用pip装最新版numpy即可解决问题。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install --ignore-installed numpy</div></pre></td></tr></table></figure></p>
-<h2 id="安装ffmpeg"><a href="#安装ffmpeg" class="headerlink" title="安装ffmpeg"></a>安装ffmpeg</h2><p>在测试notebook里直接执行以下代码下载安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import imageio</div><div class="line">imageio.plugins.ffmpeg.download()</div></pre></td></tr></table></figure></p>
+        <p>亦适用于其他64位的ARM平台（arm64v8）。<br><a id="more"></a><br>注：由于qnap系统自有的文件管理方式，不适合用<code>docker run</code>来设置volume，需在Container Station中创建容器。</p>
+<h1 id="浏览器登录NAS"><a href="#浏览器登录NAS" class="headerlink" title="浏览器登录NAS"></a>浏览器登录NAS</h1><h1 id="安装Container-Station"><a href="#安装Container-Station" class="headerlink" title="安装Container Station"></a>安装Container Station</h1><p>App Center -&gt; All Apps -&gt; Container Station -&gt; Install</p>
+<h1 id="获取arm版aria2镜像"><a href="#获取arm版aria2镜像" class="headerlink" title="获取arm版aria2镜像"></a>获取arm版aria2镜像</h1><p>Container Station -&gt; Create -&gt; 搜索aria2 -&gt; Docker Hub -&gt; 选择mjysci/aria2 -&gt; Install -&gt; 选择arm64v8<br>若搜不到则用ssh登录，执行<code>docker pull mjysci/aria2:arm64v8</code>手动拉取镜像。然后回到Container Station继续设置。  </p>
+<h1 id="Create-Container-gt-Advanced-Settings下设置容器运行参数"><a href="#Create-Container-gt-Advanced-Settings下设置容器运行参数" class="headerlink" title="Create Container -&gt; Advanced Settings下设置容器运行参数"></a>Create Container -&gt; Advanced Settings下设置容器运行参数</h1><h2 id="Evironment"><a href="#Evironment" class="headerlink" title="Evironment"></a>Evironment</h2><p>添加Name为<code>SECRET</code>的环境变量，Value为你连接aria2要用到的RPC令牌，待会有用。</p>
+<h2 id="Network-gt-Port-Forwarding"><a href="#Network-gt-Port-Forwarding" class="headerlink" title="Network -&gt; Port Forwarding"></a>Network -&gt; Port Forwarding</h2><p>Container的端口已自动填好，只需填入Host对应的端口，注意不要占用NAS的<code>80</code>和<code>8080</code>端口，如<code>3080</code>，<code>4080</code>。</p>
+<h2 id="Shared-Folder"><a href="#Shared-Folder" class="headerlink" title="Shared Folder"></a>Shared Folder</h2><p>此处不要用默认的<code>New volume</code>栏，而是从<code>Volume from host</code>选择容器内<code>/data</code>和<code>/config</code>对应NAS的文件夹。</p>
+<h1 id="登录AriaNg"><a href="#登录AriaNg" class="headerlink" title="登录AriaNg"></a>登录AriaNg</h1><p>浏览器访问NAS:<code>&lt;yourip&gt;:4080</code>。<br>第一次登录会提示认证失败。<code>AriaNg 设置 -&gt; RPC -&gt; Aria2 RPC 密钥</code>处填上前面设置的<code>SECRET</code>值并刷新。  </p>
 
       
       
@@ -301,13 +299,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></p>
+        <p><span>本文标题:</span><a href="/2019/03/12/aria2-docker-arm-qnap/">ARM平台qnap用Docker部署aria2</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2017年09月11日 - 11时55分</p>
-        <p><span>最后更新:</span>2017年09月11日 - 12时26分</p>
+        <p><span>发布时间:</span>2019年03月12日 - 23时01分</p>
+        <p><span>最后更新:</span>2019年03月12日 - 23时29分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/09/11/carnd-env/" title="无人车开发工程师第一学期环境搭建">https://majunyi.top/2017/09/11/carnd-env/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2017/09/11/carnd-env/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/12/aria2-docker-arm-qnap/" title="ARM平台qnap用Docker部署aria2">https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -320,18 +318,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2018/11/19/cac-upgrade-ubuntu/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          升级cloudatcost的ubuntu至18.04
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/04/22/rpi-cctv-motion/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">利用树莓派DIY运动检测监控</div>
+    <a href="/2019/03/12/qiandao-docker-qnap-arm/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ARM平台NAS（qnap TS-212P3）用Docker部署签到站</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -342,7 +331,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#系统环境"><span class="toc-number">1.</span> <span class="toc-text">系统环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立新环境"><span class="toc-number">2.</span> <span class="toc-text">建立新环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装依赖包"><span class="toc-number">3.</span> <span class="toc-text">安装依赖包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#报错"><span class="toc-number">4.</span> <span class="toc-text">报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装ffmpeg"><span class="toc-number">5.</span> <span class="toc-text">安装ffmpeg</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#浏览器登录NAS"><span class="toc-number">1.</span> <span class="toc-text">浏览器登录NAS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Container-Station"><span class="toc-number">2.</span> <span class="toc-text">安装Container Station</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#获取arm版aria2镜像"><span class="toc-number">3.</span> <span class="toc-text">获取arm版aria2镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Create-Container-gt-Advanced-Settings下设置容器运行参数"><span class="toc-number">4.</span> <span class="toc-text">Create Container -> Advanced Settings下设置容器运行参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Evironment"><span class="toc-number">4.1.</span> <span class="toc-text">Evironment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-gt-Port-Forwarding"><span class="toc-number">4.2.</span> <span class="toc-text">Network -> Port Forwarding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shared-Folder"><span class="toc-number">4.3.</span> <span class="toc-text">Shared Folder</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#登录AriaNg"><span class="toc-number">5.</span> <span class="toc-text">登录AriaNg</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -409,13 +398,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/11/19/cac-upgrade-ubuntu/" title="上一篇: 升级cloudatcost的ubuntu至18.04">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/04/22/rpi-cctv-motion/" title="下一篇: 利用树莓派DIY运动检测监控">
+            <a href="/2019/03/12/qiandao-docker-qnap-arm/" title="下一篇: ARM平台NAS（qnap TS-212P3）用Docker部署签到站">
                 <i class="fa fa-angle-right"></i>
             </a>
         

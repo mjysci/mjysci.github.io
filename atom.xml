@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-03-12T04:40:27.487Z</updated>
+  <updated>2019-03-12T15:29:07.577Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ARM平台qnap用Docker部署aria2</title>
+    <link href="https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/"/>
+    <id>https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/</id>
+    <published>2019-03-12T15:01:08.000Z</published>
+    <updated>2019-03-12T15:29:07.577Z</updated>
+    
+    <content type="html"><![CDATA[<p>亦适用于其他64位的ARM平台（arm64v8）。<br><a id="more"></a><br>注：由于qnap系统自有的文件管理方式，不适合用<code>docker run</code>来设置volume，需在Container Station中创建容器。</p>
+<h1 id="浏览器登录NAS"><a href="#浏览器登录NAS" class="headerlink" title="浏览器登录NAS"></a>浏览器登录NAS</h1><h1 id="安装Container-Station"><a href="#安装Container-Station" class="headerlink" title="安装Container Station"></a>安装Container Station</h1><p>App Center -&gt; All Apps -&gt; Container Station -&gt; Install</p>
+<h1 id="获取arm版aria2镜像"><a href="#获取arm版aria2镜像" class="headerlink" title="获取arm版aria2镜像"></a>获取arm版aria2镜像</h1><p>Container Station -&gt; Create -&gt; 搜索aria2 -&gt; Docker Hub -&gt; 选择mjysci/aria2 -&gt; Install -&gt; 选择arm64v8<br>若搜不到则用ssh登录，执行<code>docker pull mjysci/aria2:arm64v8</code>手动拉取镜像。然后回到Container Station继续设置。  </p>
+<h1 id="Create-Container-gt-Advanced-Settings下设置容器运行参数"><a href="#Create-Container-gt-Advanced-Settings下设置容器运行参数" class="headerlink" title="Create Container -&gt; Advanced Settings下设置容器运行参数"></a>Create Container -&gt; Advanced Settings下设置容器运行参数</h1><h2 id="Evironment"><a href="#Evironment" class="headerlink" title="Evironment"></a>Evironment</h2><p>添加Name为<code>SECRET</code>的环境变量，Value为你连接aria2要用到的RPC令牌，待会有用。</p>
+<h2 id="Network-gt-Port-Forwarding"><a href="#Network-gt-Port-Forwarding" class="headerlink" title="Network -&gt; Port Forwarding"></a>Network -&gt; Port Forwarding</h2><p>Container的端口已自动填好，只需填入Host对应的端口，注意不要占用NAS的<code>80</code>和<code>8080</code>端口，如<code>3080</code>，<code>4080</code>。</p>
+<h2 id="Shared-Folder"><a href="#Shared-Folder" class="headerlink" title="Shared Folder"></a>Shared Folder</h2><p>此处不要用默认的<code>New volume</code>栏，而是从<code>Volume from host</code>选择容器内<code>/data</code>和<code>/config</code>对应NAS的文件夹。</p>
+<h1 id="登录AriaNg"><a href="#登录AriaNg" class="headerlink" title="登录AriaNg"></a>登录AriaNg</h1><p>浏览器访问NAS:<code>&lt;yourip&gt;:4080</code>。<br>第一次登录会提示认证失败。<code>AriaNg 设置 -&gt; RPC -&gt; Aria2 RPC 密钥</code>处填上前面设置的<code>SECRET</code>值并刷新。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;亦适用于其他64位的ARM平台（arm64v8）。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
+    
+      <category term="nas" scheme="https://majunyi.top/tags/nas/"/>
+    
+  </entry>
   
   <entry>
     <title>ARM平台NAS（qnap TS-212P3）用Docker部署签到站</title>
@@ -40,9 +73,9 @@
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
-    
       <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
       <category term="nas" scheme="https://majunyi.top/tags/nas/"/>
     
@@ -99,11 +132,11 @@
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
+    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
       <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
-    
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
   </entry>
   
@@ -355,11 +388,11 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
-    
       <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
     
       <category term="router" scheme="https://majunyi.top/tags/router/"/>
+    
+      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
     
   </entry>
   
