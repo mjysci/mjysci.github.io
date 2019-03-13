@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-03-12T15:29:07.577Z</updated>
+  <updated>2019-03-13T02:45:09.920Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -20,15 +20,17 @@
     <link href="https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/"/>
     <id>https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/</id>
     <published>2019-03-12T15:01:08.000Z</published>
-    <updated>2019-03-12T15:29:07.577Z</updated>
+    <updated>2019-03-13T02:45:09.920Z</updated>
     
-    <content type="html"><![CDATA[<p>亦适用于其他64位的ARM平台（arm64v8）。<br><a id="more"></a><br>注：由于qnap系统自有的文件管理方式，不适合用<code>docker run</code>来设置volume，需在Container Station中创建容器。</p>
+    <content type="html"><![CDATA[<p>亦适用于其他64位的ARM平台（arm64v8）。<br><a id="more"></a></p>
 <h1 id="浏览器登录NAS"><a href="#浏览器登录NAS" class="headerlink" title="浏览器登录NAS"></a>浏览器登录NAS</h1><h1 id="安装Container-Station"><a href="#安装Container-Station" class="headerlink" title="安装Container Station"></a>安装Container Station</h1><p>App Center -&gt; All Apps -&gt; Container Station -&gt; Install</p>
-<h1 id="获取arm版aria2镜像"><a href="#获取arm版aria2镜像" class="headerlink" title="获取arm版aria2镜像"></a>获取arm版aria2镜像</h1><p>Container Station -&gt; Create -&gt; 搜索aria2 -&gt; Docker Hub -&gt; 选择mjysci/aria2 -&gt; Install -&gt; 选择arm64v8<br>若搜不到则用ssh登录，执行<code>docker pull mjysci/aria2:arm64v8</code>手动拉取镜像。然后回到Container Station继续设置。  </p>
-<h1 id="Create-Container-gt-Advanced-Settings下设置容器运行参数"><a href="#Create-Container-gt-Advanced-Settings下设置容器运行参数" class="headerlink" title="Create Container -&gt; Advanced Settings下设置容器运行参数"></a>Create Container -&gt; Advanced Settings下设置容器运行参数</h1><h2 id="Evironment"><a href="#Evironment" class="headerlink" title="Evironment"></a>Evironment</h2><p>添加Name为<code>SECRET</code>的环境变量，Value为你连接aria2要用到的RPC令牌，待会有用。</p>
-<h2 id="Network-gt-Port-Forwarding"><a href="#Network-gt-Port-Forwarding" class="headerlink" title="Network -&gt; Port Forwarding"></a>Network -&gt; Port Forwarding</h2><p>Container的端口已自动填好，只需填入Host对应的端口，注意不要占用NAS的<code>80</code>和<code>8080</code>端口，如<code>3080</code>，<code>4080</code>。</p>
-<h2 id="Shared-Folder"><a href="#Shared-Folder" class="headerlink" title="Shared Folder"></a>Shared Folder</h2><p>此处不要用默认的<code>New volume</code>栏，而是从<code>Volume from host</code>选择容器内<code>/data</code>和<code>/config</code>对应NAS的文件夹。</p>
-<h1 id="登录AriaNg"><a href="#登录AriaNg" class="headerlink" title="登录AriaNg"></a>登录AriaNg</h1><p>浏览器访问NAS:<code>&lt;yourip&gt;:4080</code>。<br>第一次登录会提示认证失败。<code>AriaNg 设置 -&gt; RPC -&gt; Aria2 RPC 密钥</code>处填上前面设置的<code>SECRET</code>值并刷新。  </p>
+<h1 id="获取arm版aria2镜像"><a href="#获取arm版aria2镜像" class="headerlink" title="获取arm版aria2镜像"></a>获取arm版aria2镜像</h1><p>用ssh登录NAS，然后执行以下命令。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
+<h1 id="运行aria2容器"><a href="#运行aria2容器" class="headerlink" title="运行aria2容器"></a>运行aria2容器</h1><p>将下面命令中的<code>/share/Download/aria2/data</code>和<code>/share/Download/aria2/config</code>换成自己喜欢的位置。<br><code>-u</code>换成自己管理员用户的uid，uid可通过<code>id &lt;username&gt;</code>查询。<br><code>YOUR_RPC_TOKEN</code>换成自用密码。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">docker run <span class="_">-d</span> \</div><div class="line">--name aria2 \</div><div class="line">-u 1000 \</div><div class="line">-p 6800:6800 \</div><div class="line">-p 6880:80 \</div><div class="line">-p 6888:8080 \</div><div class="line">-v /share/Download/aria2/data:/data \</div><div class="line">-v /share/Download/aria2/config:/config \</div><div class="line"><span class="_">-e</span> SECRET=YOUR_RPC_TOKEN \</div><div class="line">--restart=on-failure:5 \</div><div class="line">mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
+<h1 id="登录AriaNg"><a href="#登录AriaNg" class="headerlink" title="登录AriaNg"></a>登录AriaNg</h1><p>浏览器访问NAS:<code>&lt;yourip&gt;:6888</code>。<br>第一次登录会提示认证失败。<code>AriaNg 设置 -&gt; RPC -&gt; Aria2 RPC 密钥</code>处填上前面设置的<code>YOUR_RPC_TOKEN</code>并刷新。  </p>
+<h1 id="备用"><a href="#备用" class="headerlink" title="备用"></a>备用</h1><p>以下为QTS UI设置步骤，但由于不能指定<code>docker run -u</code>的参数，故下载文件权限是<code>admin</code>的，不是很方便。</p>
+<h2 id="Create-Container-gt-Advanced-Settings下设置容器运行参数"><a href="#Create-Container-gt-Advanced-Settings下设置容器运行参数" class="headerlink" title="Create Container -&gt; Advanced Settings下设置容器运行参数"></a>Create Container -&gt; Advanced Settings下设置容器运行参数</h2><h3 id="Evironment"><a href="#Evironment" class="headerlink" title="Evironment"></a>Evironment</h3><p>添加Name为<code>SECRET</code>的环境变量，Value为你连接aria2要用到的RPC令牌，待会有用。</p>
+<h3 id="Network-gt-Port-Forwarding"><a href="#Network-gt-Port-Forwarding" class="headerlink" title="Network -&gt; Port Forwarding"></a>Network -&gt; Port Forwarding</h3><p>Container的端口已自动填好，只需填入Host对应的端口，注意不要占用NAS的<code>80</code>和<code>8080</code>端口，如<code>3080</code>，<code>4080</code>。</p>
+<h3 id="Shared-Folder"><a href="#Shared-Folder" class="headerlink" title="Shared Folder"></a>Shared Folder</h3><p>此处不要用默认的<code>New volume</code>栏，而是从<code>Volume from host</code>选择容器内<code>/data</code>和<code>/config</code>对应NAS的文件夹。</p>
 ]]></content>
     
     <summary type="html">
@@ -388,11 +390,11 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
+      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
+    
       <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
     
       <category term="router" scheme="https://majunyi.top/tags/router/"/>
-    
-      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
     
   </entry>
   
