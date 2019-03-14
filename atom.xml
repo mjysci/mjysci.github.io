@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-03-14T04:44:13.824Z</updated>
+  <updated>2019-03-14T04:49:48.385Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://majunyi.top/2019/03/14/docker-credential-login/"/>
     <id>https://majunyi.top/2019/03/14/docker-credential-login/</id>
     <published>2019-03-14T03:41:20.000Z</published>
-    <updated>2019-03-14T04:44:13.824Z</updated>
+    <updated>2019-03-14T04:49:48.385Z</updated>
     
     <content type="html"><![CDATA[<p>docker默认登录是将密码明文存在本地的<code>~/.docker/config.json</code>，随便找个<a href="https://paulschou.com/tools/xlate/" target="_blank" rel="external">base64的解码器</a>就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。<br><a id="more"></a><br>测试平台：Raspberry Pi 3B with ubuntu 18.04.2 server aarch64<br>由于官方只发布了amd64的helper，所以其他架构需要从源码编译。另外<code>secretservice</code><a href="https://github.com/docker/compose/issues/6023#issuecomment-401089768" target="_blank" rel="external">需要X11</a>，所以没有桌面的server还是用<code>pass</code>。  </p>
 <h1 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install golang-go libsecret-1-dev gpg pass</div></pre></td></tr></table></figure>
@@ -42,6 +42,10 @@
     
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
+    
+      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
   </entry>
   
@@ -420,11 +424,11 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
+      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
+    
       <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
     
       <category term="router" scheme="https://majunyi.top/tags/router/"/>
-    
-      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
     
   </entry>
   
