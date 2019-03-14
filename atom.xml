@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-03-13T02:45:09.920Z</updated>
+  <updated>2019-03-14T04:44:13.824Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -16,21 +16,51 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>通过pass实现更安全的docker登录方式</title>
+    <link href="https://majunyi.top/2019/03/14/docker-credential-login/"/>
+    <id>https://majunyi.top/2019/03/14/docker-credential-login/</id>
+    <published>2019-03-14T03:41:20.000Z</published>
+    <updated>2019-03-14T04:44:13.824Z</updated>
+    
+    <content type="html"><![CDATA[<p>docker默认登录是将密码明文存在本地的<code>~/.docker/config.json</code>，随便找个<a href="https://paulschou.com/tools/xlate/" target="_blank" rel="external">base64的解码器</a>就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。<br><a id="more"></a><br>测试平台：Raspberry Pi 3B with ubuntu 18.04.2 server aarch64<br>由于官方只发布了amd64的helper，所以其他架构需要从源码编译。另外<code>secretservice</code><a href="https://github.com/docker/compose/issues/6023#issuecomment-401089768" target="_blank" rel="external">需要X11</a>，所以没有桌面的server还是用<code>pass</code>。  </p>
+<h1 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install golang-go libsecret-1-dev gpg pass</div></pre></td></tr></table></figure>
+<h1 id="取得源码并编译docker-credential-helpers"><a href="#取得源码并编译docker-credential-helpers" class="headerlink" title="取得源码并编译docker-credential-helpers"></a>取得源码并编译docker-credential-helpers</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">go get github.com/docker/docker-credential-helpers</div><div class="line"><span class="built_in">cd</span> ~/go/src/github.com/docker/docker-credential-helpers</div><div class="line">make pass</div><div class="line"><span class="built_in">cd</span> bin</div><div class="line">chmod +x docker-credential-pass &amp;&amp; sudo mv docker-credential-pass /usr/<span class="built_in">local</span>/bin/</div><div class="line">mkdir ~/.docker</div></pre></td></tr></table></figure>
+<p>编辑docker配置文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir ~/.docker</div><div class="line">vi ~/.docker/config.json</div></pre></td></tr></table></figure></p>
+<p>添加以下内容。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;credsStore&quot;: &quot;pass&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="生成gpg2-key"><a href="#生成gpg2-key" class="headerlink" title="生成gpg2 key"></a>生成gpg2 key</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gpg --generate-key</div></pre></td></tr></table></figure>
+<p>记住你填的全名。</p>
+<h1 id="pass初始化"><a href="#pass初始化" class="headerlink" title="pass初始化"></a>pass初始化</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pass init <span class="string">"你的全名"</span></div></pre></td></tr></table></figure>
+<h1 id="登录docker"><a href="#登录docker" class="headerlink" title="登录docker"></a>登录docker</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker login</div></pre></td></tr></table></figure>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://hackernoon.com/getting-rid-of-docker-plain-text-credentials-88309e07640d" target="_blank" rel="external">Getting rid of Docker plain text credentials</a><br><a href="https://docs.docker.com/engine/reference/commandline/login/#credentials-store" target="_blank" rel="external">docker login credentials-store</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;docker默认登录是将密码明文存在本地的&lt;code&gt;~/.docker/config.json&lt;/code&gt;，随便找个&lt;a href=&quot;https://paulschou.com/tools/xlate/&quot;&gt;base64的解码器&lt;/a&gt;就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>ARM平台qnap用Docker部署aria2</title>
     <link href="https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/"/>
     <id>https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/</id>
     <published>2019-03-12T15:01:08.000Z</published>
-    <updated>2019-03-13T02:45:09.920Z</updated>
+    <updated>2019-03-14T04:00:36.637Z</updated>
     
     <content type="html"><![CDATA[<p>亦适用于其他64位的ARM平台（arm64v8）。<br><a id="more"></a></p>
 <h1 id="浏览器登录NAS"><a href="#浏览器登录NAS" class="headerlink" title="浏览器登录NAS"></a>浏览器登录NAS</h1><h1 id="安装Container-Station"><a href="#安装Container-Station" class="headerlink" title="安装Container Station"></a>安装Container Station</h1><p>App Center -&gt; All Apps -&gt; Container Station -&gt; Install</p>
 <h1 id="获取arm版aria2镜像"><a href="#获取arm版aria2镜像" class="headerlink" title="获取arm版aria2镜像"></a>获取arm版aria2镜像</h1><p>用ssh登录NAS，然后执行以下命令。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
-<h1 id="运行aria2容器"><a href="#运行aria2容器" class="headerlink" title="运行aria2容器"></a>运行aria2容器</h1><p>将下面命令中的<code>/share/Download/aria2/data</code>和<code>/share/Download/aria2/config</code>换成自己喜欢的位置。<br><code>-u</code>换成自己管理员用户的uid，uid可通过<code>id &lt;username&gt;</code>查询。<br><code>YOUR_RPC_TOKEN</code>换成自用密码。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">docker run <span class="_">-d</span> \</div><div class="line">--name aria2 \</div><div class="line">-u 1000 \</div><div class="line">-p 6800:6800 \</div><div class="line">-p 6880:80 \</div><div class="line">-p 6888:8080 \</div><div class="line">-v /share/Download/aria2/data:/data \</div><div class="line">-v /share/Download/aria2/config:/config \</div><div class="line"><span class="_">-e</span> SECRET=YOUR_RPC_TOKEN \</div><div class="line">--restart=on-failure:5 \</div><div class="line">mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
+<h1 id="运行aria2容器"><a href="#运行aria2容器" class="headerlink" title="运行aria2容器"></a>运行aria2容器</h1><p>将下面命令中的<code>/share/Download/aria2/data</code>和<code>/share/Download/aria2/config</code>换成自己喜欢的位置。<br><code>YOUR_RPC_TOKEN</code>换成自用密码。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">docker run <span class="_">-d</span> \</div><div class="line">--name aria2 \</div><div class="line">-p 6800:6800 \</div><div class="line">-p 6880:80 \</div><div class="line">-p 6888:8080 \</div><div class="line">-v /share/Download/aria2/data:/data \</div><div class="line">-v /share/Download/aria2/config:/config \</div><div class="line"><span class="_">-e</span> SECRET=YOUR_RPC_TOKEN \</div><div class="line">--restart=on-failure:5 \</div><div class="line">mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
 <h1 id="登录AriaNg"><a href="#登录AriaNg" class="headerlink" title="登录AriaNg"></a>登录AriaNg</h1><p>浏览器访问NAS:<code>&lt;yourip&gt;:6888</code>。<br>第一次登录会提示认证失败。<code>AriaNg 设置 -&gt; RPC -&gt; Aria2 RPC 密钥</code>处填上前面设置的<code>YOUR_RPC_TOKEN</code>并刷新。  </p>
-<h1 id="备用"><a href="#备用" class="headerlink" title="备用"></a>备用</h1><p>以下为QTS UI设置步骤，但由于不能指定<code>docker run -u</code>的参数，故下载文件权限是<code>admin</code>的，不是很方便。</p>
-<h2 id="Create-Container-gt-Advanced-Settings下设置容器运行参数"><a href="#Create-Container-gt-Advanced-Settings下设置容器运行参数" class="headerlink" title="Create Container -&gt; Advanced Settings下设置容器运行参数"></a>Create Container -&gt; Advanced Settings下设置容器运行参数</h2><h3 id="Evironment"><a href="#Evironment" class="headerlink" title="Evironment"></a>Evironment</h3><p>添加Name为<code>SECRET</code>的环境变量，Value为你连接aria2要用到的RPC令牌，待会有用。</p>
-<h3 id="Network-gt-Port-Forwarding"><a href="#Network-gt-Port-Forwarding" class="headerlink" title="Network -&gt; Port Forwarding"></a>Network -&gt; Port Forwarding</h3><p>Container的端口已自动填好，只需填入Host对应的端口，注意不要占用NAS的<code>80</code>和<code>8080</code>端口，如<code>3080</code>，<code>4080</code>。</p>
+<h1 id="QTS-UI设置步骤（可选）"><a href="#QTS-UI设置步骤（可选）" class="headerlink" title="QTS UI设置步骤（可选）"></a>QTS UI设置步骤（可选）</h1><h2 id="Create-Container-gt-Advanced-Settings下设置容器运行参数"><a href="#Create-Container-gt-Advanced-Settings下设置容器运行参数" class="headerlink" title="Create Container -&gt; Advanced Settings下设置容器运行参数"></a>Create Container -&gt; Advanced Settings下设置容器运行参数</h2><h3 id="Evironment"><a href="#Evironment" class="headerlink" title="Evironment"></a>Evironment</h3><p>添加Name为<code>SECRET</code>的环境变量，Value为你连接aria2要用到的RPC令牌，待会有用。</p>
+<h3 id="Network-gt-Port-Forwarding"><a href="#Network-gt-Port-Forwarding" class="headerlink" title="Network -&gt; Port Forwarding"></a>Network -&gt; Port Forwarding</h3><p>Container的端口已自动填好，只需填入Host对应的端口，注意不要占用NAS的<code>80</code>和<code>8080</code>端口，如<code>6080</code>，<code>6888</code>。</p>
 <h3 id="Shared-Folder"><a href="#Shared-Folder" class="headerlink" title="Shared Folder"></a>Shared Folder</h3><p>此处不要用默认的<code>New volume</code>栏，而是从<code>Volume from host</code>选择容器内<code>/data</code>和<code>/config</code>对应NAS的文件夹。</p>
+<h1 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h1><h2 id="下载文件写权限问题"><a href="#下载文件写权限问题" class="headerlink" title="下载文件写权限问题"></a>下载文件写权限问题</h2><p>如果是<code>admin</code>用户就无此问题，但为了安全我是另建了管理员用户并禁用了<code>admin</code>。docker下创建的文件夹只有owner有写权限，管理员组没有。<br>首先，尝试过<a href="https://www.binss.me/blog/solve-docker-permission-problem-by-using-user-namespace/" target="_blank" rel="external">开启Docker User Namespace</a>，但qnap系统比较特殊，修改<code>subuid</code>和<code>subgid</code>无效，无法开启。此方法适用于主流系统，如raspbian和ubuntu等。<br>然后，尝试了<code>docker run -u &lt;youruid&gt;</code>选项，但从外部通过浏览器访问ariang出问题。权限不对。<br>可以添加<code>owncloud</code>之类的进行文件管理，但我的需求是从下载文件夹直接剪切到其他文件夹，而不是复制再通过文件管理删除。<br>目前解决方案是Container Station -&gt; aria2 -&gt; Terminal -&gt; 运行/bin/sh，为所有已下载文件添加组写权限。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 775 -R /data/_dl/*</div></pre></td></tr></table></figure></p>
 ]]></content>
     
     <summary type="html">
@@ -390,11 +420,11 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
-    
       <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
     
       <category term="router" scheme="https://majunyi.top/tags/router/"/>
+    
+      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
     
   </entry>
   
