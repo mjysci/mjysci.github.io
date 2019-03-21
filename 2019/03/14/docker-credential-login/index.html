@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2019/03/14/docker-credential-login/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="docker默认登录是将密码明文存在本地的~/.docker/config.json，随便找个base64的解码器就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。">
-<meta property="og:updated_time" content="2019-03-14T23:37:07.257Z">
+<meta property="og:updated_time" content="2019-03-21T02:06:51.606Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过pass实现更安全的docker登录方式">
 <meta name="twitter:description" content="docker默认登录是将密码明文存在本地的~/.docker/config.json，随便找个base64的解码器就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。">
@@ -246,7 +246,8 @@
 <h1 id="生成gpg2-key"><a href="#生成gpg2-key" class="headerlink" title="生成gpg2 key"></a>生成gpg2 key</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gpg --generate-key</div></pre></td></tr></table></figure>
 <p>记住你的uid（姓名 <email\>）。</email\></p>
 <h1 id="pass初始化"><a href="#pass初始化" class="headerlink" title="pass初始化"></a>pass初始化</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pass init <span class="string">"你的uid"</span></div></pre></td></tr></table></figure>
-<h1 id="登录docker"><a href="#登录docker" class="headerlink" title="登录docker"></a>登录docker</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">docker login</div><div class="line">```  </div><div class="line"><span class="comment"># debug</span></div><div class="line"><span class="comment">## push fails: 'denied: requested access to the resource is denied'</span></div><div class="line">先检查密码是否正确存储。</div><div class="line">```bash</div><div class="line">docker-credential-pass list</div><div class="line">pass</div><div class="line">pass docker-credential-helpers/&lt;一些字串&gt;/&lt;用户名&gt;</div></pre></td></tr></table></figure>
+<h1 id="登录docker"><a href="#登录docker" class="headerlink" title="登录docker"></a>登录docker</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker login</div></pre></td></tr></table></figure>
+<h1 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h1><h2 id="push-fails-‘denied-requested-access-to-the-resource-is-denied’"><a href="#push-fails-‘denied-requested-access-to-the-resource-is-denied’" class="headerlink" title="push fails: ‘denied: requested access to the resource is denied’"></a>push fails: ‘denied: requested access to the resource is denied’</h2><p>先检查密码是否正确存储。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker-credential-pass list</div><div class="line">pass</div><div class="line">pass docker-credential-helpers/&lt;一些字串&gt;/&lt;用户名&gt;</div></pre></td></tr></table></figure></p>
 <p>第一个命令列出docker端存储的验证信息，格式为<code>&quot;&lt;registry&gt;&quot;:&quot;&lt;username&gt;&quot;</code>。第二个命令列出<code>pass</code>文件夹结构。第三个命令执行后输入passphrase，确保显示的密码正确无误。<br>若都没问题则说明碰上玄学了，pass很可靠，helper则不一定了，等一会儿再试，或者重启机器。</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://hackernoon.com/getting-rid-of-docker-plain-text-credentials-88309e07640d" target="_blank" rel="external">Getting rid of Docker plain text credentials</a><br><a href="https://docs.docker.com/engine/reference/commandline/login/#credentials-store" target="_blank" rel="external">docker login credentials-store</a></p>
 
@@ -306,7 +307,7 @@
         <p><span>本文标题:</span><a href="/2019/03/14/docker-credential-login/">通过pass实现更安全的docker登录方式</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2019年03月14日 - 11时41分</p>
-        <p><span>最后更新:</span>2019年03月15日 - 07时37分</p>
+        <p><span>最后更新:</span>2019年03月21日 - 10时06分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/03/14/docker-credential-login/" title="通过pass实现更安全的docker登录方式">https://majunyi.top/2019/03/14/docker-credential-login/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/03/14/docker-credential-login/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -335,7 +336,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装依赖"><span class="toc-number">1.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#取得源码并编译docker-credential-helpers"><span class="toc-number">2.</span> <span class="toc-text">取得源码并编译docker-credential-helpers</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生成gpg2-key"><span class="toc-number">3.</span> <span class="toc-text">生成gpg2 key</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pass初始化"><span class="toc-number">4.</span> <span class="toc-text">pass初始化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#登录docker"><span class="toc-number">5.</span> <span class="toc-text">登录docker</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装依赖"><span class="toc-number">1.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#取得源码并编译docker-credential-helpers"><span class="toc-number">2.</span> <span class="toc-text">取得源码并编译docker-credential-helpers</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生成gpg2-key"><span class="toc-number">3.</span> <span class="toc-text">生成gpg2 key</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pass初始化"><span class="toc-number">4.</span> <span class="toc-text">pass初始化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#登录docker"><span class="toc-number">5.</span> <span class="toc-text">登录docker</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#debug"><span class="toc-number">6.</span> <span class="toc-text">debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#push-fails-‘denied-requested-access-to-the-resource-is-denied’"><span class="toc-number">6.1.</span> <span class="toc-text">push fails: ‘denied: requested access to the resource is denied’</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
