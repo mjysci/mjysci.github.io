@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-03-21T05:13:56.314Z</updated>
+  <updated>2019-04-23T07:20:48.506Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>解决win10下Ryzen平台间歇性卡顿问题</title>
+    <link href="https://majunyi.top/2019/04/23/fix-win10-ryzen-freeze/"/>
+    <id>https://majunyi.top/2019/04/23/fix-win10-ryzen-freeze/</id>
+    <published>2019-04-23T06:17:10.000Z</published>
+    <updated>2019-04-23T07:20:48.506Z</updated>
+    
+    <content type="html"><![CDATA[<p>具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。<br><a id="more"></a><br>旧的客厅用htpc是J1900的，由于不支持硬解x265，而软解4k又比较卡，所以换成了ryzen apu，轻松播放<a href="http://madvr.com" target="_blank" rel="external">madVR</a>渲染的4k hevc高码率视频。只是换机后碰到播放视频间歇性卡顿的问题。  </p>
+<h1 id="分析与尝试"><a href="#分析与尝试" class="headerlink" title="分析与尝试"></a>分析与尝试</h1><p>注意到卡顿时硬盘读取灯常亮，打开任务管理器观察磁盘占用达100%，但列表中并没有高I/O的程序。  </p>
+<h2 id="安装avast替代Windows-Defender"><a href="#安装avast替代Windows-Defender" class="headerlink" title="安装avast替代Windows Defender"></a>安装avast替代Windows Defender</h2><p>Windows Defender有着空闲时扫描硬盘和CPU占用高的问题，虽然这在SSD和多核时代可以忽略，但我还是先用<a href="https://www.avast.com" target="_blank" rel="external">免费的avast</a>试试看。结果问题依旧。</p>
+<h2 id="更新主板芯片驱动"><a href="#更新主板芯片驱动" class="headerlink" title="更新主板芯片驱动"></a>更新主板芯片驱动</h2><p>故怀疑是驱动问题，am4主板在早期曾爆出由于芯片组外包给祥硕，赶工导致的一些主板问题。主板是华擎的<a href="https://www.asrock.com/mb/AMD/A320M-HDV/index.asp#Download" target="_blank" rel="external">A320M-HDV</a>，官方提供了芯片+显卡的驱动合集包，已经安装，并且升级了显卡驱动。于是去AMD官方下载<a href="https://www.amd.com/en/support/chipsets/amd-socket-am4/a320" target="_blank" rel="external">AMD Chipset Drivers</a>，安装后问题依旧。  </p>
+<h2 id="更新SATA控制器驱动"><a href="#更新SATA控制器驱动" class="headerlink" title="更新SATA控制器驱动"></a>更新SATA控制器驱动</h2><p>查看设备管理器，可见<code>IDE ATA/ATAPI控制器</code>依旧为2006年的<code>标准 SATA AHCI 控制器</code>，AMD官方芯片驱动并未更新此项。于是右键更新驱动程序，选手动，选定解压后的文件夹搜索，没有结果。选<code>可用驱动程序列表中选取</code>，取消<code>显示兼容硬件</code>，厂商<code>AMD</code>，装上<code>AMD SATA 控制器</code>。更新后问题依旧。</p>
+<h2 id="查看事件查看器"><a href="#查看事件查看器" class="headerlink" title="查看事件查看器"></a>查看事件查看器</h2><p>Windows日志——系统，发现来源amdsata有很多<code>事件129</code>的警告。内容为：发出了对设备 \Device\RaidPort0 的重置。<br>故怀疑是SATA电源非正常进入节能模式导致的接口重置。</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h2 id="解锁电源管理隐藏选项"><a href="#解锁电源管理隐藏选项" class="headerlink" title="解锁电源管理隐藏选项"></a>解锁电源管理隐藏选项</h2><p>以管理员模式打开cmd，运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">powercfg -attributes SUB_DISK 0b2d69d7<span class="_">-a</span>2a1-449c-9680<span class="_">-f</span>91c70521c60 -ATTRIB_HIDE</div></pre></td></tr></table></figure></p>
+<h2 id="更改高级电源设置"><a href="#更改高级电源设置" class="headerlink" title="更改高级电源设置"></a>更改高级电源设置</h2><p>电源和睡眠设置——其他电源设置——更改计划设置——更改高级电源设置——更改当前不可用的设置——硬盘——AHCI Link Power Management - HIPM/DIPM<br>设置改为<code>Active</code>。问题解决。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="win" scheme="https://majunyi.top/tags/win/"/>
+    
+  </entry>
   
   <entry>
     <title>通过pass实现更安全的docker登录方式</title>
@@ -49,9 +79,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
-    
       <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
   </entry>
   
@@ -60,15 +90,15 @@ passwd
     <link href="https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/"/>
     <id>https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/</id>
     <published>2019-03-12T15:01:08.000Z</published>
-    <updated>2019-03-30T04:06:31.249Z</updated>
+    <updated>2019-04-23T06:19:14.988Z</updated>
     
     <content type="html"><![CDATA[<p>亦适用于其他64位的ARM平台（arm64v8）。<br><a id="more"></a><br>踩了些坑后发觉还是aria2+浏览器插件的方式更为方便灵活，如果喜欢ariaNg可在客户端运行。</p>
-<h2 id="浏览器登录NAS"><a href="#浏览器登录NAS" class="headerlink" title="浏览器登录NAS"></a>浏览器登录NAS</h2><h2 id="设置aria2-conf"><a href="#设置aria2-conf" class="headerlink" title="设置aria2.conf"></a>设置aria2.conf</h2><p>在NAS中建立容器挂载的文件夹，我是在<code>Download</code>下建立<code>aria2</code>文件夹，然后其中又新建<code>downloads</code>和<code>config</code>。并在config中新建<code>aria2.conf</code>和<code>aria2.session</code>文件。<br>其中<code>aria2.conf</code>内容如下，把<code>YOUR_RPC_TOKEN</code>改成自己的secret，其他按实际情况自行定制，如PT则要把dht关掉，删去<code>enable-dht</code>之后的全部内容。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">save-session=/config/aria2.session</div><div class="line">input-file=/config/aria2.session</div><div class="line">save-session-interval=60</div><div class="line"></div><div class="line">dir=/downloads</div><div class="line"></div><div class="line">file-allocation=prealloc</div><div class="line">disk-cache=128M</div><div class="line"></div><div class="line">enable-rpc=true</div><div class="line">rpc-listen-port=6800</div><div class="line">rpc-allow-origin-all=true</div><div class="line">rpc-listen-all=true</div><div class="line"></div><div class="line">rpc-secret=YOUR_RPC_TOKEN</div><div class="line"></div><div class="line">max-concurrent-downloads=6</div><div class="line">max-connection-per-server=16</div><div class="line">min-split-size=10M</div><div class="line">split=16</div><div class="line">continue=true</div><div class="line">max-overall-download-limit=0</div><div class="line">max-overall-upload-limit=500K</div><div class="line"></div><div class="line">enable-dht=true</div><div class="line">bt-enable-lpd=true</div><div class="line">bt-request-peer-speed-limit=1000K</div><div class="line">bt-save-metadata=true</div><div class="line">bt-max-peers=0</div><div class="line">bt-require-crypto=true</div><div class="line">enable-peer-exchange=true</div><div class="line">listen-port=20000-30000</div><div class="line">dht-listen-port=30000-40000</div><div class="line">dht-file-path=/config/dht.dat</div><div class="line">dht-file-path6=/config/dht6.dat</div><div class="line">bt-tracker=udp://62.138.0.158:6969/announce,http://185.225.17.100:1337/announce,udp://51.15.4.13:1337/announce,udp://208.83.20.20:6969/announce,udp://128.1.203.23:8080/announce,udp://184.105.151.164:6969/announce,http://128.1.203.23:6961/announce,udp://51.15.40.114:80/announce,udp://5.2.79.219:1337/announce,udp://5.2.79.22:6969/announce,udp://51.15.76.199:6969/announce,udp://91.216.110.52:451/announce,udp://5.206.28.90:6969/announce,udp://51.38.184.185:6969/announce,udp://176.31.106.35:80/announce,udp://37.235.174.46:2710/announce,udp://188.246.227.212:80/announce,udp://95.211.168.204:2710/announce,udp://8.9.31.140:2000/announce,udp://212.47.227.58:6969/announce</div></pre></td></tr></table></figure></p>
-<h2 id="安装Container-Station"><a href="#安装Container-Station" class="headerlink" title="安装Container Station"></a>安装Container Station</h2><p>App Center -&gt; All Apps -&gt; Container Station -&gt; Install</p>
-<h2 id="获取arm版aria2镜像"><a href="#获取arm版aria2镜像" class="headerlink" title="获取arm版aria2镜像"></a>获取arm版aria2镜像</h2><p>用ssh登录NAS，然后执行以下命令。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
-<h2 id="获得用户的uid与gid"><a href="#获得用户的uid与gid" class="headerlink" title="获得用户的uid与gid"></a>获得用户的uid与gid</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id &lt;你的用户名&gt;</div></pre></td></tr></table></figure>
-<h2 id="运行aria2容器"><a href="#运行aria2容器" class="headerlink" title="运行aria2容器"></a>运行aria2容器</h2><p>将下面命令中的<code>/share/Download/aria2/downloads</code>和<code>/share/Download/aria2/config</code>换成自己喜欢的位置。<code>-u=1000:100</code>是用户的uid和gid，换成你的id。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">docker run \</div><div class="line">  <span class="_">-d</span> \</div><div class="line">  --name aria2 \</div><div class="line">  -u=1000:100 \</div><div class="line">  -v /share/Download/aria2/config:/config \</div><div class="line">  -v /share/Download/aria2/downloads:/downloads \</div><div class="line">  -p 6800:6800 \</div><div class="line">  --restart=on-failure:5 \</div><div class="line">  mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
-<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>安装<a href="https://chrome.google.com/webstore/detail/yaaw-for-chrome/dennnbdlpgjgbcjfgaohdahloollfgoc" target="_blank" rel="external">YAAW for Chrome</a>。点开图标后将设置中的<code>JSON-RPC Path</code>改成<code>http://token:YOUR_RPC_TOKEN@ip:6800/jsonrpc</code>。右键下载的设置是分开的，右键插件图标-&gt;Options-&gt;JSON-RPC，改成一样的地址。<br>喜欢AriaNg则可以使用<a href="https://github.com/mayswind/AriaNg/releases" target="_blank" rel="external">本地网页版AllInOne</a>或无需浏览器的<a href="https://github.com/mayswind/AriaNg-Native/releases" target="_blank" rel="external">应用版</a>。  </p>
+<h1 id="浏览器登录NAS"><a href="#浏览器登录NAS" class="headerlink" title="浏览器登录NAS"></a>浏览器登录NAS</h1><h1 id="设置aria2-conf"><a href="#设置aria2-conf" class="headerlink" title="设置aria2.conf"></a>设置aria2.conf</h1><p>在NAS中建立容器挂载的文件夹，我是在<code>Download</code>下建立<code>aria2</code>文件夹，然后其中又新建<code>downloads</code>和<code>config</code>。并在config中新建<code>aria2.conf</code>和<code>aria2.session</code>文件。<br>其中<code>aria2.conf</code>内容如下，把<code>YOUR_RPC_TOKEN</code>改成自己的secret，其他按实际情况自行定制，如PT则要把dht关掉，删去<code>enable-dht</code>之后的全部内容。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">save-session=/config/aria2.session</div><div class="line">input-file=/config/aria2.session</div><div class="line">save-session-interval=60</div><div class="line"></div><div class="line">dir=/downloads</div><div class="line"></div><div class="line">file-allocation=prealloc</div><div class="line">disk-cache=128M</div><div class="line"></div><div class="line">enable-rpc=true</div><div class="line">rpc-listen-port=6800</div><div class="line">rpc-allow-origin-all=true</div><div class="line">rpc-listen-all=true</div><div class="line"></div><div class="line">rpc-secret=YOUR_RPC_TOKEN</div><div class="line"></div><div class="line">max-concurrent-downloads=6</div><div class="line">max-connection-per-server=16</div><div class="line">min-split-size=10M</div><div class="line">split=16</div><div class="line">continue=true</div><div class="line">max-overall-download-limit=0</div><div class="line">max-overall-upload-limit=500K</div><div class="line"></div><div class="line">enable-dht=true</div><div class="line">bt-enable-lpd=true</div><div class="line">bt-request-peer-speed-limit=1000K</div><div class="line">bt-save-metadata=true</div><div class="line">bt-max-peers=0</div><div class="line">bt-require-crypto=true</div><div class="line">enable-peer-exchange=true</div><div class="line">listen-port=20000-30000</div><div class="line">dht-listen-port=30000-40000</div><div class="line">dht-file-path=/config/dht.dat</div><div class="line">dht-file-path6=/config/dht6.dat</div><div class="line">bt-tracker=udp://62.138.0.158:6969/announce,http://185.225.17.100:1337/announce,udp://51.15.4.13:1337/announce,udp://208.83.20.20:6969/announce,udp://128.1.203.23:8080/announce,udp://184.105.151.164:6969/announce,http://128.1.203.23:6961/announce,udp://51.15.40.114:80/announce,udp://5.2.79.219:1337/announce,udp://5.2.79.22:6969/announce,udp://51.15.76.199:6969/announce,udp://91.216.110.52:451/announce,udp://5.206.28.90:6969/announce,udp://51.38.184.185:6969/announce,udp://176.31.106.35:80/announce,udp://37.235.174.46:2710/announce,udp://188.246.227.212:80/announce,udp://95.211.168.204:2710/announce,udp://8.9.31.140:2000/announce,udp://212.47.227.58:6969/announce</div></pre></td></tr></table></figure></p>
+<h1 id="安装Container-Station"><a href="#安装Container-Station" class="headerlink" title="安装Container Station"></a>安装Container Station</h1><p>App Center -&gt; All Apps -&gt; Container Station -&gt; Install</p>
+<h1 id="获取arm版aria2镜像"><a href="#获取arm版aria2镜像" class="headerlink" title="获取arm版aria2镜像"></a>获取arm版aria2镜像</h1><p>用ssh登录NAS，然后执行以下命令。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
+<h1 id="获得用户的uid与gid"><a href="#获得用户的uid与gid" class="headerlink" title="获得用户的uid与gid"></a>获得用户的uid与gid</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id &lt;你的用户名&gt;</div></pre></td></tr></table></figure>
+<h1 id="运行aria2容器"><a href="#运行aria2容器" class="headerlink" title="运行aria2容器"></a>运行aria2容器</h1><p>将下面命令中的<code>/share/Download/aria2/downloads</code>和<code>/share/Download/aria2/config</code>换成自己喜欢的位置。<code>-u=1000:100</code>是用户的uid和gid，换成你的id。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">docker run \</div><div class="line">  <span class="_">-d</span> \</div><div class="line">  --name aria2 \</div><div class="line">  -u=1000:100 \</div><div class="line">  -v /share/Download/aria2/config:/config \</div><div class="line">  -v /share/Download/aria2/downloads:/downloads \</div><div class="line">  -p 6800:6800 \</div><div class="line">  --restart=on-failure:5 \</div><div class="line">  mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
+<h1 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h1><p>安装<a href="https://chrome.google.com/webstore/detail/yaaw-for-chrome/dennnbdlpgjgbcjfgaohdahloollfgoc" target="_blank" rel="external">YAAW for Chrome</a>。点开图标后将设置中的<code>JSON-RPC Path</code>改成<code>http://token:YOUR_RPC_TOKEN@ip:6800/jsonrpc</code>。右键下载的设置是分开的，右键插件图标-&gt;Options-&gt;JSON-RPC，改成一样的地址。<br>喜欢AriaNg则可以使用<a href="https://github.com/mayswind/AriaNg/releases" target="_blank" rel="external">本地网页版AllInOne</a>或无需浏览器的<a href="https://github.com/mayswind/AriaNg-Native/releases" target="_blank" rel="external">应用版</a>。  </p>
 <h1 id="过期资料备份"><a href="#过期资料备份" class="headerlink" title="过期资料备份"></a>过期资料备份</h1><h2 id="登录AriaNg"><a href="#登录AriaNg" class="headerlink" title="登录AriaNg"></a>登录AriaNg</h2><p>浏览器访问NAS:<code>&lt;yourip&gt;:6888</code>。<br>第一次登录会提示认证失败。<code>AriaNg 设置 -&gt; RPC -&gt; Aria2 RPC 密钥</code>处填上前面设置的<code>YOUR_RPC_TOKEN</code>并刷新。  </p>
 <h2 id="QTS-UI设置步骤（可选）"><a href="#QTS-UI设置步骤（可选）" class="headerlink" title="QTS UI设置步骤（可选）"></a>QTS UI设置步骤（可选）</h2><h3 id="Create-Container-gt-Advanced-Settings下设置容器运行参数"><a href="#Create-Container-gt-Advanced-Settings下设置容器运行参数" class="headerlink" title="Create Container -&gt; Advanced Settings下设置容器运行参数"></a>Create Container -&gt; Advanced Settings下设置容器运行参数</h3><h4 id="Evironment"><a href="#Evironment" class="headerlink" title="Evironment"></a>Evironment</h4><p>添加Name为<code>SECRET</code>的环境变量，Value为你连接aria2要用到的RPC令牌，待会有用。</p>
 <h4 id="Network-gt-Port-Forwarding"><a href="#Network-gt-Port-Forwarding" class="headerlink" title="Network -&gt; Port Forwarding"></a>Network -&gt; Port Forwarding</h4><p>Container的端口已自动填好，只需填入Host对应的端口，注意不要占用NAS的<code>80</code>和<code>8080</code>端口，如<code>6080</code>，<code>6888</code>。</p>
@@ -177,9 +207,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
-    
       <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
       <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
     
@@ -468,9 +498,9 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="vps" scheme="https://majunyi.top/tags/vps/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="vps" scheme="https://majunyi.top/tags/vps/"/>
     
   </entry>
   

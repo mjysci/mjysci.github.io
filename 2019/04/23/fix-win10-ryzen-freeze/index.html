@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ARM平台qnap用Docker部署aria2 | 名实合为</title>
+  <title>解决win10下Ryzen平台间歇性卡顿问题 | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="亦适用于其他64位的ARM平台（arm64v8）。">
+  <meta name="description" content="具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ARM平台qnap用Docker部署aria2">
-<meta property="og:url" content="https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/index.html">
+<meta property="og:title" content="解决win10下Ryzen平台间歇性卡顿问题">
+<meta property="og:url" content="https://majunyi.top/2019/04/23/fix-win10-ryzen-freeze/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="亦适用于其他64位的ARM平台（arm64v8）。">
-<meta property="og:updated_time" content="2019-04-23T06:19:14.988Z">
+<meta property="og:description" content="具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。">
+<meta property="og:updated_time" content="2019-04-23T07:20:48.506Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ARM平台qnap用Docker部署aria2">
-<meta name="twitter:description" content="亦适用于其他64位的ARM平台（arm64v8）。">
+<meta name="twitter:title" content="解决win10下Ryzen平台间歇性卡顿问题">
+<meta name="twitter:description" content="具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -196,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-aria2-docker-arm-qnap" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-fix-win10-ryzen-freeze" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/12/aria2-docker-arm-qnap/" class="article-date">
-      <time datetime="2019-03-12T15:01:08.000Z" itemprop="datePublished">2019-03-12</time>
+      <a href="/2019/04/23/fix-win10-ryzen-freeze/" class="article-date">
+      <time datetime="2019-04-23T06:17:10.000Z" itemprop="datePublished">2019-04-23</time>
 </a>
     </div>
   
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ARM平台qnap用Docker部署aria2
+      解决win10下Ryzen平台间歇性卡顿问题
     </h1>
   
 
@@ -228,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arm/">arm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nas/">nas</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/win/">win</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,18 +238,14 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>亦适用于其他64位的ARM平台（arm64v8）。<br><a id="more"></a><br>踩了些坑后发觉还是aria2+浏览器插件的方式更为方便灵活，如果喜欢ariaNg可在客户端运行。</p>
-<h1 id="浏览器登录NAS"><a href="#浏览器登录NAS" class="headerlink" title="浏览器登录NAS"></a>浏览器登录NAS</h1><h1 id="设置aria2-conf"><a href="#设置aria2-conf" class="headerlink" title="设置aria2.conf"></a>设置aria2.conf</h1><p>在NAS中建立容器挂载的文件夹，我是在<code>Download</code>下建立<code>aria2</code>文件夹，然后其中又新建<code>downloads</code>和<code>config</code>。并在config中新建<code>aria2.conf</code>和<code>aria2.session</code>文件。<br>其中<code>aria2.conf</code>内容如下，把<code>YOUR_RPC_TOKEN</code>改成自己的secret，其他按实际情况自行定制，如PT则要把dht关掉，删去<code>enable-dht</code>之后的全部内容。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">save-session=/config/aria2.session</div><div class="line">input-file=/config/aria2.session</div><div class="line">save-session-interval=60</div><div class="line"></div><div class="line">dir=/downloads</div><div class="line"></div><div class="line">file-allocation=prealloc</div><div class="line">disk-cache=128M</div><div class="line"></div><div class="line">enable-rpc=true</div><div class="line">rpc-listen-port=6800</div><div class="line">rpc-allow-origin-all=true</div><div class="line">rpc-listen-all=true</div><div class="line"></div><div class="line">rpc-secret=YOUR_RPC_TOKEN</div><div class="line"></div><div class="line">max-concurrent-downloads=6</div><div class="line">max-connection-per-server=16</div><div class="line">min-split-size=10M</div><div class="line">split=16</div><div class="line">continue=true</div><div class="line">max-overall-download-limit=0</div><div class="line">max-overall-upload-limit=500K</div><div class="line"></div><div class="line">enable-dht=true</div><div class="line">bt-enable-lpd=true</div><div class="line">bt-request-peer-speed-limit=1000K</div><div class="line">bt-save-metadata=true</div><div class="line">bt-max-peers=0</div><div class="line">bt-require-crypto=true</div><div class="line">enable-peer-exchange=true</div><div class="line">listen-port=20000-30000</div><div class="line">dht-listen-port=30000-40000</div><div class="line">dht-file-path=/config/dht.dat</div><div class="line">dht-file-path6=/config/dht6.dat</div><div class="line">bt-tracker=udp://62.138.0.158:6969/announce,http://185.225.17.100:1337/announce,udp://51.15.4.13:1337/announce,udp://208.83.20.20:6969/announce,udp://128.1.203.23:8080/announce,udp://184.105.151.164:6969/announce,http://128.1.203.23:6961/announce,udp://51.15.40.114:80/announce,udp://5.2.79.219:1337/announce,udp://5.2.79.22:6969/announce,udp://51.15.76.199:6969/announce,udp://91.216.110.52:451/announce,udp://5.206.28.90:6969/announce,udp://51.38.184.185:6969/announce,udp://176.31.106.35:80/announce,udp://37.235.174.46:2710/announce,udp://188.246.227.212:80/announce,udp://95.211.168.204:2710/announce,udp://8.9.31.140:2000/announce,udp://212.47.227.58:6969/announce</div></pre></td></tr></table></figure></p>
-<h1 id="安装Container-Station"><a href="#安装Container-Station" class="headerlink" title="安装Container Station"></a>安装Container Station</h1><p>App Center -&gt; All Apps -&gt; Container Station -&gt; Install</p>
-<h1 id="获取arm版aria2镜像"><a href="#获取arm版aria2镜像" class="headerlink" title="获取arm版aria2镜像"></a>获取arm版aria2镜像</h1><p>用ssh登录NAS，然后执行以下命令。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
-<h1 id="获得用户的uid与gid"><a href="#获得用户的uid与gid" class="headerlink" title="获得用户的uid与gid"></a>获得用户的uid与gid</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id &lt;你的用户名&gt;</div></pre></td></tr></table></figure>
-<h1 id="运行aria2容器"><a href="#运行aria2容器" class="headerlink" title="运行aria2容器"></a>运行aria2容器</h1><p>将下面命令中的<code>/share/Download/aria2/downloads</code>和<code>/share/Download/aria2/config</code>换成自己喜欢的位置。<code>-u=1000:100</code>是用户的uid和gid，换成你的id。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">docker run \</div><div class="line">  <span class="_">-d</span> \</div><div class="line">  --name aria2 \</div><div class="line">  -u=1000:100 \</div><div class="line">  -v /share/Download/aria2/config:/config \</div><div class="line">  -v /share/Download/aria2/downloads:/downloads \</div><div class="line">  -p 6800:6800 \</div><div class="line">  --restart=on-failure:5 \</div><div class="line">  mjysci/aria2:arm64v8</div></pre></td></tr></table></figure></p>
-<h1 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h1><p>安装<a href="https://chrome.google.com/webstore/detail/yaaw-for-chrome/dennnbdlpgjgbcjfgaohdahloollfgoc" target="_blank" rel="external">YAAW for Chrome</a>。点开图标后将设置中的<code>JSON-RPC Path</code>改成<code>http://token:YOUR_RPC_TOKEN@ip:6800/jsonrpc</code>。右键下载的设置是分开的，右键插件图标-&gt;Options-&gt;JSON-RPC，改成一样的地址。<br>喜欢AriaNg则可以使用<a href="https://github.com/mayswind/AriaNg/releases" target="_blank" rel="external">本地网页版AllInOne</a>或无需浏览器的<a href="https://github.com/mayswind/AriaNg-Native/releases" target="_blank" rel="external">应用版</a>。  </p>
-<h1 id="过期资料备份"><a href="#过期资料备份" class="headerlink" title="过期资料备份"></a>过期资料备份</h1><h2 id="登录AriaNg"><a href="#登录AriaNg" class="headerlink" title="登录AriaNg"></a>登录AriaNg</h2><p>浏览器访问NAS:<code>&lt;yourip&gt;:6888</code>。<br>第一次登录会提示认证失败。<code>AriaNg 设置 -&gt; RPC -&gt; Aria2 RPC 密钥</code>处填上前面设置的<code>YOUR_RPC_TOKEN</code>并刷新。  </p>
-<h2 id="QTS-UI设置步骤（可选）"><a href="#QTS-UI设置步骤（可选）" class="headerlink" title="QTS UI设置步骤（可选）"></a>QTS UI设置步骤（可选）</h2><h3 id="Create-Container-gt-Advanced-Settings下设置容器运行参数"><a href="#Create-Container-gt-Advanced-Settings下设置容器运行参数" class="headerlink" title="Create Container -&gt; Advanced Settings下设置容器运行参数"></a>Create Container -&gt; Advanced Settings下设置容器运行参数</h3><h4 id="Evironment"><a href="#Evironment" class="headerlink" title="Evironment"></a>Evironment</h4><p>添加Name为<code>SECRET</code>的环境变量，Value为你连接aria2要用到的RPC令牌，待会有用。</p>
-<h4 id="Network-gt-Port-Forwarding"><a href="#Network-gt-Port-Forwarding" class="headerlink" title="Network -&gt; Port Forwarding"></a>Network -&gt; Port Forwarding</h4><p>Container的端口已自动填好，只需填入Host对应的端口，注意不要占用NAS的<code>80</code>和<code>8080</code>端口，如<code>6080</code>，<code>6888</code>。</p>
-<h4 id="Shared-Folder"><a href="#Shared-Folder" class="headerlink" title="Shared Folder"></a>Shared Folder</h4><p>此处不要用默认的<code>New volume</code>栏，而是从<code>Volume from host</code>选择容器内<code>/downloads</code>和<code>/config</code>对应NAS的文件夹。</p>
-<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><h3 id="下载文件写权限问题"><a href="#下载文件写权限问题" class="headerlink" title="下载文件写权限问题"></a>下载文件写权限问题</h3><p>如果是<code>admin</code>用户就无此问题，但为了安全我是另建了管理员用户并禁用了<code>admin</code>。docker下创建的文件夹只有owner有写权限，管理员组没有。<br>首先，尝试过<a href="https://www.binss.me/blog/solve-docker-permission-problem-by-using-user-namespace/" target="_blank" rel="external">开启Docker User Namespace</a>，但qnap系统比较特殊，修改<code>subuid</code>和<code>subgid</code>无效，无法开启。此方法适用于主流系统，如raspbian和ubuntu等。<br>然后，尝试了<code>docker run -u &lt;youruid&gt;</code>选项，但从外部通过浏览器访问ariang出问题。权限不对。<br>可以添加<code>owncloud</code>之类的进行文件管理，但我的需求是从下载文件夹直接剪切到其他文件夹，而不是复制再通过文件管理删除。<br>目前解决方案是Container Station -&gt; aria2 -&gt; Terminal -&gt; 运行/bin/sh，为所有已下载文件添加组写权限。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 775 -R /data/_dl/*</div></pre></td></tr></table></figure></p>
+        <p>具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。<br><a id="more"></a><br>旧的客厅用htpc是J1900的，由于不支持硬解x265，而软解4k又比较卡，所以换成了ryzen apu，轻松播放<a href="http://madvr.com" target="_blank" rel="external">madVR</a>渲染的4k hevc高码率视频。只是换机后碰到播放视频间歇性卡顿的问题。  </p>
+<h1 id="分析与尝试"><a href="#分析与尝试" class="headerlink" title="分析与尝试"></a>分析与尝试</h1><p>注意到卡顿时硬盘读取灯常亮，打开任务管理器观察磁盘占用达100%，但列表中并没有高I/O的程序。  </p>
+<h2 id="安装avast替代Windows-Defender"><a href="#安装avast替代Windows-Defender" class="headerlink" title="安装avast替代Windows Defender"></a>安装avast替代Windows Defender</h2><p>Windows Defender有着空闲时扫描硬盘和CPU占用高的问题，虽然这在SSD和多核时代可以忽略，但我还是先用<a href="https://www.avast.com" target="_blank" rel="external">免费的avast</a>试试看。结果问题依旧。</p>
+<h2 id="更新主板芯片驱动"><a href="#更新主板芯片驱动" class="headerlink" title="更新主板芯片驱动"></a>更新主板芯片驱动</h2><p>故怀疑是驱动问题，am4主板在早期曾爆出由于芯片组外包给祥硕，赶工导致的一些主板问题。主板是华擎的<a href="https://www.asrock.com/mb/AMD/A320M-HDV/index.asp#Download" target="_blank" rel="external">A320M-HDV</a>，官方提供了芯片+显卡的驱动合集包，已经安装，并且升级了显卡驱动。于是去AMD官方下载<a href="https://www.amd.com/en/support/chipsets/amd-socket-am4/a320" target="_blank" rel="external">AMD Chipset Drivers</a>，安装后问题依旧。  </p>
+<h2 id="更新SATA控制器驱动"><a href="#更新SATA控制器驱动" class="headerlink" title="更新SATA控制器驱动"></a>更新SATA控制器驱动</h2><p>查看设备管理器，可见<code>IDE ATA/ATAPI控制器</code>依旧为2006年的<code>标准 SATA AHCI 控制器</code>，AMD官方芯片驱动并未更新此项。于是右键更新驱动程序，选手动，选定解压后的文件夹搜索，没有结果。选<code>可用驱动程序列表中选取</code>，取消<code>显示兼容硬件</code>，厂商<code>AMD</code>，装上<code>AMD SATA 控制器</code>。更新后问题依旧。</p>
+<h2 id="查看事件查看器"><a href="#查看事件查看器" class="headerlink" title="查看事件查看器"></a>查看事件查看器</h2><p>Windows日志——系统，发现来源amdsata有很多<code>事件129</code>的警告。内容为：发出了对设备 \Device\RaidPort0 的重置。<br>故怀疑是SATA电源非正常进入节能模式导致的接口重置。</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h2 id="解锁电源管理隐藏选项"><a href="#解锁电源管理隐藏选项" class="headerlink" title="解锁电源管理隐藏选项"></a>解锁电源管理隐藏选项</h2><p>以管理员模式打开cmd，运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">powercfg -attributes SUB_DISK 0b2d69d7<span class="_">-a</span>2a1-449c-9680<span class="_">-f</span>91c70521c60 -ATTRIB_HIDE</div></pre></td></tr></table></figure></p>
+<h2 id="更改高级电源设置"><a href="#更改高级电源设置" class="headerlink" title="更改高级电源设置"></a>更改高级电源设置</h2><p>电源和睡眠设置——其他电源设置——更改计划设置——更改高级电源设置——更改当前不可用的设置——硬盘——AHCI Link Power Management - HIPM/DIPM<br>设置改为<code>Active</code>。问题解决。</p>
 
       
       
@@ -304,13 +300,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/03/12/aria2-docker-arm-qnap/">ARM平台qnap用Docker部署aria2</a></p>
+        <p><span>本文标题:</span><a href="/2019/04/23/fix-win10-ryzen-freeze/">解决win10下Ryzen平台间歇性卡顿问题</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2019年03月12日 - 23时01分</p>
-        <p><span>最后更新:</span>2019年04月23日 - 14时19分</p>
+        <p><span>发布时间:</span>2019年04月23日 - 14时17分</p>
+        <p><span>最后更新:</span>2019年04月23日 - 15时20分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/03/12/aria2-docker-arm-qnap/" title="ARM平台qnap用Docker部署aria2">https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/04/23/fix-win10-ryzen-freeze/" title="解决win10下Ryzen平台间歇性卡顿问题">https://majunyi.top/2019/04/23/fix-win10-ryzen-freeze/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/04/23/fix-win10-ryzen-freeze/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -323,18 +319,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/03/14/docker-credential-login/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          通过pass实现更安全的docker登录方式
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/03/12/qiandao-docker-qnap-arm/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ARM平台NAS（qnap TS-212P3）用Docker部署签到站</div>
+    <a href="/2019/03/14/docker-credential-login/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">通过pass实现更安全的docker登录方式</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -345,7 +332,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#浏览器登录NAS"><span class="toc-number">1.</span> <span class="toc-text">浏览器登录NAS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置aria2-conf"><span class="toc-number">2.</span> <span class="toc-text">设置aria2.conf</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Container-Station"><span class="toc-number">3.</span> <span class="toc-text">安装Container Station</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#获取arm版aria2镜像"><span class="toc-number">4.</span> <span class="toc-text">获取arm版aria2镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#获得用户的uid与gid"><span class="toc-number">5.</span> <span class="toc-text">获得用户的uid与gid</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#运行aria2容器"><span class="toc-number">6.</span> <span class="toc-text">运行aria2容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#客户端"><span class="toc-number">7.</span> <span class="toc-text">客户端</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#过期资料备份"><span class="toc-number">8.</span> <span class="toc-text">过期资料备份</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录AriaNg"><span class="toc-number">8.1.</span> <span class="toc-text">登录AriaNg</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QTS-UI设置步骤（可选）"><span class="toc-number">8.2.</span> <span class="toc-text">QTS UI设置步骤（可选）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Container-gt-Advanced-Settings下设置容器运行参数"><span class="toc-number">8.2.1.</span> <span class="toc-text">Create Container -> Advanced Settings下设置容器运行参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Evironment"><span class="toc-number">8.2.1.1.</span> <span class="toc-text">Evironment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Network-gt-Port-Forwarding"><span class="toc-number">8.2.1.2.</span> <span class="toc-text">Network -> Port Forwarding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shared-Folder"><span class="toc-number">8.2.1.3.</span> <span class="toc-text">Shared Folder</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug"><span class="toc-number">8.3.</span> <span class="toc-text">debug</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载文件写权限问题"><span class="toc-number">8.3.1.</span> <span class="toc-text">下载文件写权限问题</span></a></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分析与尝试"><span class="toc-number">1.</span> <span class="toc-text">分析与尝试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装avast替代Windows-Defender"><span class="toc-number">1.1.</span> <span class="toc-text">安装avast替代Windows Defender</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新主板芯片驱动"><span class="toc-number">1.2.</span> <span class="toc-text">更新主板芯片驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新SATA控制器驱动"><span class="toc-number">1.3.</span> <span class="toc-text">更新SATA控制器驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看事件查看器"><span class="toc-number">1.4.</span> <span class="toc-text">查看事件查看器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决方案"><span class="toc-number">2.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#解锁电源管理隐藏选项"><span class="toc-number">2.1.</span> <span class="toc-text">解锁电源管理隐藏选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更改高级电源设置"><span class="toc-number">2.2.</span> <span class="toc-text">更改高级电源设置</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -412,13 +399,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/03/14/docker-credential-login/" title="上一篇: 通过pass实现更安全的docker登录方式">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2019/03/12/qiandao-docker-qnap-arm/" title="下一篇: ARM平台NAS（qnap TS-212P3）用Docker部署签到站">
+            <a href="/2019/03/14/docker-credential-login/" title="下一篇: 通过pass实现更安全的docker登录方式">
                 <i class="fa fa-angle-right"></i>
             </a>
         
