@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Linux Mint 18.2版本升级至19.1 | 名实合为</title>
+  <title>树莓派3安装arm64版Ubuntu 18.04 Server | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用Update Manager进行逐步升级，timeshift可跳过。">
+  <meta name="description" content="树莓派官方的Raspbian为了保持向下兼容仍然是32位，64位的树莓派3不跑64位系统和咸鱼有什么区别？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux Mint 18.2版本升级至19.1">
-<meta property="og:url" content="https://majunyi.top/2019/03/04/upgrade-linux-mint/index.html">
+<meta property="og:title" content="树莓派3安装arm64版Ubuntu 18.04 Server">
+<meta property="og:url" content="https://majunyi.top/2019/05/20/rpi3-ubuntu-arm64/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="用Update Manager进行逐步升级，timeshift可跳过。">
-<meta property="og:updated_time" content="2019-03-04T14:31:46.000Z">
+<meta property="og:description" content="树莓派官方的Raspbian为了保持向下兼容仍然是32位，64位的树莓派3不跑64位系统和咸鱼有什么区别？">
+<meta property="og:updated_time" content="2019-05-20T02:33:45.711Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux Mint 18.2版本升级至19.1">
-<meta name="twitter:description" content="用Update Manager进行逐步升级，timeshift可跳过。">
+<meta name="twitter:title" content="树莓派3安装arm64版Ubuntu 18.04 Server">
+<meta name="twitter:description" content="树莓派官方的Raspbian为了保持向下兼容仍然是32位，64位的树莓派3不跑64位系统和咸鱼有什么区别？">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -196,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-upgrade-linux-mint" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-rpi3-ubuntu-arm64" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/04/upgrade-linux-mint/" class="article-date">
-      <time datetime="2019-03-04T13:21:42.000Z" itemprop="datePublished">2019-03-04</time>
+      <a href="/2019/05/20/rpi3-ubuntu-arm64/" class="article-date">
+      <time datetime="2019-05-20T02:02:38.000Z" itemprop="datePublished">2019-05-20</time>
 </a>
     </div>
   
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Linux Mint 18.2版本升级至19.1
+      树莓派3安装arm64版Ubuntu 18.04 Server
     </h1>
   
 
@@ -228,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpi/">rpi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,25 +238,16 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>用Update Manager进行逐步升级，timeshift可跳过。<br><a id="more"></a></p>
-<h1 id="升级至18-3"><a href="#升级至18-3" class="headerlink" title="升级至18.3"></a>升级至18.3</h1><p>打开Update Manager，Edit——Upgrade to Linux Mint 18.3 Sylvia。如果是其他版本也是同样的位置，但升级版本不一样，每次升0.1。<br>完成后重启。  </p>
-<h1 id="升级至19"><a href="#升级至19" class="headerlink" title="升级至19"></a>升级至19</h1><h2 id="建立系统快照（可选）"><a href="#建立系统快照（可选）" class="headerlink" title="建立系统快照（可选）"></a>建立系统快照（可选）</h2><p>官方强制要求要建立系统快照，但如果像我这样mint只是备用系统，用来折腾不怕搞坏则此步可跳过。<br>以下附上建立快照的步骤：<br>安装timeshift<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install timeshift</div></pre></td></tr></table></figure></p>
-<p>Menu——Timeshift打开快照安装向导，选择快照类型（默认RSYNC），选择存储位置，完成向导。<br>Create建立快照。</p>
-<h2 id="将显示管理器切换为LightDM"><a href="#将显示管理器切换为LightDM" class="headerlink" title="将显示管理器切换为LightDM"></a>将显示管理器切换为LightDM</h2><p>检查默认显示管理器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /etc/X11/default-display-manager</div></pre></td></tr></table></figure></p>
-<p>如果输出为<code>/usr/sbin/lightdm</code>则可跳过下面安装并切换LightDM的步骤。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install lightdm lightdm-settings slick-greeter</div></pre></td></tr></table></figure></p>
-<p>安装过程中选择默认显示管理器为lightdm。<br>删除MDM。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt remove --purge mdm mint-mdm-themes*</div></pre></td></tr></table></figure></p>
-<p>配置并重启。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo dpkg-reconfigure lightdm</div><div class="line">sudo reboot</div></pre></td></tr></table></figure></p>
-<h2 id="升级系统"><a href="#升级系统" class="headerlink" title="升级系统"></a>升级系统</h2><p>安装mintupgrade。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install mintupgrade</div></pre></td></tr></table></figure></p>
-<p>（可选）如果前面没有创建快照，执行以下命令以跳过timeshift检查。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo touch /etc/timeshift.json</div></pre></td></tr></table></figure></p>
-<p>检查系统。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mintupgrade check</div></pre></td></tr></table></figure></p>
-<p>检查过程中会给出依赖有冲突的包，用<code>apt remove</code>删掉即可，升级后再装回去。值得注意的是我之前还装了ros，删掉ros。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get remove ros-*</div></pre></td></tr></table></figure></p>
-<p>另外建议想装<a href="http://www.ros.org/install/" target="_blank" rel="external">ROS</a>的老老实实在Ubuntu上弄，在Mint上经过一番折腾后也能用，但没必要把时间花在搭建环境的坑上。<br>预先下载好升级所需包。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mintupgrade download</div></pre></td></tr></table></figure></p>
-<p>升级。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mintupgrade upgrade</div></pre></td></tr></table></figure></p>
-<h1 id="升级至19-1"><a href="#升级至19-1" class="headerlink" title="升级至19.1"></a>升级至19.1</h1><p>此时如果是装了第三方显卡驱动可能桌面会崩溃并进入低分辨率安全模式，先不管它。<br>每次升级后源会重置，打开Software Sources改成国内源。<br>打开Update Manager，Edit——Upgrade to Linux Mint 19.1 Tessa。  </p>
-<h1 id="收尾工作"><a href="#收尾工作" class="headerlink" title="收尾工作"></a>收尾工作</h1><p>解决桌面崩溃问题，重装nvidia显卡驱动。</p>
-<pre><code class="bash">apt-get install --reinstall nvidia-415
-</code></pre>
-<p>用的是这个源<code>sudo add-apt-repository ppa:graphics-drivers/ppa</code>。<br>如果还是不行就装<code>nvidia-396</code>。</p>
+        <p>树莓派官方的Raspbian为了保持向下兼容仍然是32位，64位的树莓派3不跑64位系统和咸鱼有什么区别？<br><a id="more"></a></p>
+<h1 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h1><p><a href="https://www.ubuntu.com/download/iot/raspberry-pi-2-3" target="_blank" rel="external">Ubuntu官方</a>已经提供了<a href="http://cdimage.ubuntu.com/releases/bionic/release/ubuntu-18.04.2-preinstalled-server-arm64+raspi3.img.xz" target="_blank" rel="external">树莓派3的镜像</a>，直接下载即可。</p>
+<h1 id="刷TF卡"><a href="#刷TF卡" class="headerlink" title="刷TF卡"></a>刷TF卡</h1><p>如果打算玩docker建议至少32G以上，16G需要在调试的间隙清理掉无用的若干<none>容器和镜像以免空间不足。刷TF卡用<a href="https://www.balena.io/etcher/" target="_blank" rel="external">Etcher</a>即可。<br>默认用户名和密码均为<code>ubuntu</code>。</none></p>
+<h1 id="改源"><a href="#改源" class="headerlink" title="改源"></a>改源</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo vi /etc/apt/sources.list</div><div class="line">```  </div><div class="line">旧的源是`http://ports.ubuntu.com`，批量改成科大源并注释掉`deb-src`。</div><div class="line">```bash</div><div class="line">:%s/http:\/\/ports.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g</div><div class="line">:%s/deb-src/<span class="comment">#deb-src/g</span></div></pre></td></tr></table></figure>
+<h1 id="设置wifi"><a href="#设置wifi" class="headerlink" title="设置wifi"></a>设置wifi</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">sudo apt install network-manager</div><div class="line">sudo service network-manager start</div><div class="line">sudo nmtui</div><div class="line">```  </div><div class="line"><span class="comment"># debug</span></div><div class="line"><span class="comment">## Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?</span></div><div class="line">```bash</div><div class="line">sudo rm /var/lib/dpkg/lock*</div><div class="line">sudo dpkg --configure <span class="_">-a</span></div><div class="line">sudo apt update</div></pre></td></tr></table></figure>
+<h2 id="dpkg-error-parsing-file-‘-var-lib-dpkg-updates-0004’-near-line-0"><a href="#dpkg-error-parsing-file-‘-var-lib-dpkg-updates-0004’-near-line-0" class="headerlink" title="dpkg: error: parsing file ‘/var/lib/dpkg/updates/0004’ near line 0"></a>dpkg: error: parsing file ‘/var/lib/dpkg/updates/0004’ near line 0</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/lib/dpkg/updates &amp;&amp; sudo rm -rf 0004</div><div class="line">sudo dpkg --configure <span class="_">-a</span></div></pre></td></tr></table></figure>
+<h1 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install sysbench</div><div class="line">sysbench --test=cpu --cpu-max-prime=20000 run</div></pre></td></tr></table></figure>
+<p>树莓派3B（BCM2837）测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">sysbench 1.0.11 (using system LuaJIT 2.1.0-beta3)</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line">Initializing random number generator from current time</div><div class="line"></div><div class="line"></div><div class="line">Prime numbers limit: 20000</div><div class="line"></div><div class="line">Initializing worker threads...</div><div class="line"></div><div class="line">Threads started!</div><div class="line"></div><div class="line">CPU speed:</div><div class="line">    events per second:   220.37</div><div class="line"></div><div class="line">General statistics:</div><div class="line">    total time:                          10.0007s</div><div class="line">    total number of events:              2206</div><div class="line"></div><div class="line">Latency (ms):</div><div class="line">         min:                                  4.21</div><div class="line">         avg:                                  4.53</div><div class="line">         max:                                  8.78</div><div class="line">         95th percentile:                      8.58</div><div class="line">         sum:                               9996.78</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           2206.0000/0.00</div><div class="line">    execution time (avg/stddev):   9.9968/0.00</div></pre></td></tr></table></figure></p>
+<p>i5-8400<a href="https://majunyi.top/2019/03/12/qemu-ubuntu-arm64/">用qemu模拟aarch64架构</a>在ubuntu 16.04下测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">sysbench 0.4.12:  multi-threaded system evaluation benchmark</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line"></div><div class="line">Doing CPU performance benchmark</div><div class="line"></div><div class="line">Threads started!</div><div class="line">Done.</div><div class="line"></div><div class="line">Maximum prime number checked in CPU test: 20000</div><div class="line"></div><div class="line"></div><div class="line">Test execution summary:</div><div class="line">    total time:                          45.2990s</div><div class="line">    total number of events:              10000</div><div class="line">    total time taken by event execution: 45.2838</div><div class="line">    per-request statistics:</div><div class="line">         min:                                  4.42ms</div><div class="line">         avg:                                  4.53ms</div><div class="line">         max:                                  5.26ms</div><div class="line">         approx.  95 percentile:               4.62ms</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           10000.0000/0.00</div><div class="line">    execution time (avg/stddev):   45.2838/0.00</div></pre></td></tr></table></figure></p>
+<p>i5-8400在ubuntu 18.04下测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">sysbench 1.0.11 (using system LuaJIT 2.1.0-beta3)</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line">Initializing random number generator from current time</div><div class="line"></div><div class="line"></div><div class="line">Prime numbers limit: 20000</div><div class="line"></div><div class="line">Initializing worker threads...</div><div class="line"></div><div class="line">Threads started!</div><div class="line"></div><div class="line">CPU speed:</div><div class="line">    events per second:   549.44</div><div class="line"></div><div class="line">General statistics:</div><div class="line">    total time:                          10.0018s</div><div class="line">    total number of events:              5496</div><div class="line"></div><div class="line">Latency (ms):</div><div class="line">         min:                                  1.81</div><div class="line">         avg:                                  1.82</div><div class="line">         max:                                  5.85</div><div class="line">         95th percentile:                      1.86</div><div class="line">         sum:                              10000.89</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           5496.0000/0.00</div><div class="line">    execution time (avg/stddev):   10.0009/0.00</div></pre></td></tr></table></figure></p>
 
       
       
@@ -311,13 +302,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></p>
+        <p><span>本文标题:</span><a href="/2019/05/20/rpi3-ubuntu-arm64/">树莓派3安装arm64版Ubuntu 18.04 Server</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2019年03月04日 - 21时21分</p>
-        <p><span>最后更新:</span>2019年03月04日 - 22时31分</p>
+        <p><span>发布时间:</span>2019年05月20日 - 10时02分</p>
+        <p><span>最后更新:</span>2019年05月20日 - 10时33分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/03/04/upgrade-linux-mint/" title="Linux Mint 18.2版本升级至19.1">https://majunyi.top/2019/03/04/upgrade-linux-mint/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/03/04/upgrade-linux-mint/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/05/20/rpi3-ubuntu-arm64/" title="树莓派3安装arm64版Ubuntu 18.04 Server">https://majunyi.top/2019/05/20/rpi3-ubuntu-arm64/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/05/20/rpi3-ubuntu-arm64/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -330,18 +321,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          ubuntu下安装与管理多个Linux内核
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/01/13/hc5661-pandorabox/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">极1s（hc5661）刷潘多拉固件</div>
+    <a href="/2019/04/23/fix-win10-ryzen-freeze/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">解决win10下Ryzen平台间歇性卡顿问题</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -352,7 +334,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至18-3"><span class="toc-number">1.</span> <span class="toc-text">升级至18.3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至19"><span class="toc-number">2.</span> <span class="toc-text">升级至19</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立系统快照（可选）"><span class="toc-number">2.1.</span> <span class="toc-text">建立系统快照（可选）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将显示管理器切换为LightDM"><span class="toc-number">2.2.</span> <span class="toc-text">将显示管理器切换为LightDM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级系统"><span class="toc-number">2.3.</span> <span class="toc-text">升级系统</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至19-1"><span class="toc-number">3.</span> <span class="toc-text">升级至19.1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#收尾工作"><span class="toc-number">4.</span> <span class="toc-text">收尾工作</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#下载镜像"><span class="toc-number">1.</span> <span class="toc-text">下载镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#刷TF卡"><span class="toc-number">2.</span> <span class="toc-text">刷TF卡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#改源"><span class="toc-number">3.</span> <span class="toc-text">改源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置wifi"><span class="toc-number">4.</span> <span class="toc-text">设置wifi</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#dpkg-error-parsing-file-‘-var-lib-dpkg-updates-0004’-near-line-0"><span class="toc-number">4.1.</span> <span class="toc-text">dpkg: error: parsing file ‘/var/lib/dpkg/updates/0004’ near line 0</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单测试"><span class="toc-number">5.</span> <span class="toc-text">简单测试</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -419,13 +401,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" title="上一篇: ubuntu下安装与管理多个Linux内核">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2019/01/13/hc5661-pandorabox/" title="下一篇: 极1s（hc5661）刷潘多拉固件">
+            <a href="/2019/04/23/fix-win10-ryzen-freeze/" title="下一篇: 解决win10下Ryzen平台间歇性卡顿问题">
                 <i class="fa fa-angle-right"></i>
             </a>
         

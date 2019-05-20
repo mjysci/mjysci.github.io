@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2019-04-23T07:20:48.506Z</updated>
+  <updated>2019-05-20T02:33:45.711Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派3安装arm64版Ubuntu 18.04 Server</title>
+    <link href="https://majunyi.top/2019/05/20/rpi3-ubuntu-arm64/"/>
+    <id>https://majunyi.top/2019/05/20/rpi3-ubuntu-arm64/</id>
+    <published>2019-05-20T02:02:38.000Z</published>
+    <updated>2019-05-20T02:33:45.711Z</updated>
+    
+    <content type="html"><![CDATA[<p>树莓派官方的Raspbian为了保持向下兼容仍然是32位，64位的树莓派3不跑64位系统和咸鱼有什么区别？<br><a id="more"></a></p>
+<h1 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h1><p><a href="https://www.ubuntu.com/download/iot/raspberry-pi-2-3" target="_blank" rel="external">Ubuntu官方</a>已经提供了<a href="http://cdimage.ubuntu.com/releases/bionic/release/ubuntu-18.04.2-preinstalled-server-arm64+raspi3.img.xz" target="_blank" rel="external">树莓派3的镜像</a>，直接下载即可。</p>
+<h1 id="刷TF卡"><a href="#刷TF卡" class="headerlink" title="刷TF卡"></a>刷TF卡</h1><p>如果打算玩docker建议至少32G以上，16G需要在调试的间隙清理掉无用的若干<none>容器和镜像以免空间不足。刷TF卡用<a href="https://www.balena.io/etcher/" target="_blank" rel="external">Etcher</a>即可。<br>默认用户名和密码均为<code>ubuntu</code>。</none></p>
+<h1 id="改源"><a href="#改源" class="headerlink" title="改源"></a>改源</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo vi /etc/apt/sources.list</div><div class="line">```  </div><div class="line">旧的源是`http://ports.ubuntu.com`，批量改成科大源并注释掉`deb-src`。</div><div class="line">```bash</div><div class="line">:%s/http:\/\/ports.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g</div><div class="line">:%s/deb-src/<span class="comment">#deb-src/g</span></div></pre></td></tr></table></figure>
+<h1 id="设置wifi"><a href="#设置wifi" class="headerlink" title="设置wifi"></a>设置wifi</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">sudo apt install network-manager</div><div class="line">sudo service network-manager start</div><div class="line">sudo nmtui</div><div class="line">```  </div><div class="line"><span class="comment"># debug</span></div><div class="line"><span class="comment">## Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?</span></div><div class="line">```bash</div><div class="line">sudo rm /var/lib/dpkg/lock*</div><div class="line">sudo dpkg --configure <span class="_">-a</span></div><div class="line">sudo apt update</div></pre></td></tr></table></figure>
+<h2 id="dpkg-error-parsing-file-‘-var-lib-dpkg-updates-0004’-near-line-0"><a href="#dpkg-error-parsing-file-‘-var-lib-dpkg-updates-0004’-near-line-0" class="headerlink" title="dpkg: error: parsing file ‘/var/lib/dpkg/updates/0004’ near line 0"></a>dpkg: error: parsing file ‘/var/lib/dpkg/updates/0004’ near line 0</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/lib/dpkg/updates &amp;&amp; sudo rm -rf 0004</div><div class="line">sudo dpkg --configure <span class="_">-a</span></div></pre></td></tr></table></figure>
+<h1 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install sysbench</div><div class="line">sysbench --test=cpu --cpu-max-prime=20000 run</div></pre></td></tr></table></figure>
+<p>树莓派3B（BCM2837）测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">sysbench 1.0.11 (using system LuaJIT 2.1.0-beta3)</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line">Initializing random number generator from current time</div><div class="line"></div><div class="line"></div><div class="line">Prime numbers limit: 20000</div><div class="line"></div><div class="line">Initializing worker threads...</div><div class="line"></div><div class="line">Threads started!</div><div class="line"></div><div class="line">CPU speed:</div><div class="line">    events per second:   220.37</div><div class="line"></div><div class="line">General statistics:</div><div class="line">    total time:                          10.0007s</div><div class="line">    total number of events:              2206</div><div class="line"></div><div class="line">Latency (ms):</div><div class="line">         min:                                  4.21</div><div class="line">         avg:                                  4.53</div><div class="line">         max:                                  8.78</div><div class="line">         95th percentile:                      8.58</div><div class="line">         sum:                               9996.78</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           2206.0000/0.00</div><div class="line">    execution time (avg/stddev):   9.9968/0.00</div></pre></td></tr></table></figure></p>
+<p>i5-8400<a href="https://majunyi.top/2019/03/12/qemu-ubuntu-arm64/">用qemu模拟aarch64架构</a>在ubuntu 16.04下测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">sysbench 0.4.12:  multi-threaded system evaluation benchmark</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line"></div><div class="line">Doing CPU performance benchmark</div><div class="line"></div><div class="line">Threads started!</div><div class="line">Done.</div><div class="line"></div><div class="line">Maximum prime number checked in CPU test: 20000</div><div class="line"></div><div class="line"></div><div class="line">Test execution summary:</div><div class="line">    total time:                          45.2990s</div><div class="line">    total number of events:              10000</div><div class="line">    total time taken by event execution: 45.2838</div><div class="line">    per-request statistics:</div><div class="line">         min:                                  4.42ms</div><div class="line">         avg:                                  4.53ms</div><div class="line">         max:                                  5.26ms</div><div class="line">         approx.  95 percentile:               4.62ms</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           10000.0000/0.00</div><div class="line">    execution time (avg/stddev):   45.2838/0.00</div></pre></td></tr></table></figure></p>
+<p>i5-8400在ubuntu 18.04下测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">sysbench 1.0.11 (using system LuaJIT 2.1.0-beta3)</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line">Initializing random number generator from current time</div><div class="line"></div><div class="line"></div><div class="line">Prime numbers limit: 20000</div><div class="line"></div><div class="line">Initializing worker threads...</div><div class="line"></div><div class="line">Threads started!</div><div class="line"></div><div class="line">CPU speed:</div><div class="line">    events per second:   549.44</div><div class="line"></div><div class="line">General statistics:</div><div class="line">    total time:                          10.0018s</div><div class="line">    total number of events:              5496</div><div class="line"></div><div class="line">Latency (ms):</div><div class="line">         min:                                  1.81</div><div class="line">         avg:                                  1.82</div><div class="line">         max:                                  5.85</div><div class="line">         95th percentile:                      1.86</div><div class="line">         sum:                              10000.89</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           5496.0000/0.00</div><div class="line">    execution time (avg/stddev):   10.0009/0.00</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;树莓派官方的Raspbian为了保持向下兼容仍然是32位，64位的树莓派3不跑64位系统和咸鱼有什么区别？&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="rpi" scheme="https://majunyi.top/tags/rpi/"/>
+    
+  </entry>
   
   <entry>
     <title>解决win10下Ryzen平台间歇性卡顿问题</title>
@@ -498,9 +532,9 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
-    
       <category term="vps" scheme="https://majunyi.top/tags/vps/"/>
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
   </entry>
   
