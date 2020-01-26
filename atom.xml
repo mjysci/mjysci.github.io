@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2020-01-24T15:12:45.141Z</updated>
+  <updated>2020-01-24T15:25:58.972Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://majunyi.top/2020/01/24/rtorrent-compile/"/>
     <id>https://majunyi.top/2020/01/24/rtorrent-compile/</id>
     <published>2020-01-24T12:04:06.000Z</published>
-    <updated>2020-01-24T15:12:45.141Z</updated>
+    <updated>2020-01-24T15:25:58.972Z</updated>
     
     <content type="html"><![CDATA[<p>ubuntu 18.04官方源的rTorrent 0.9.6会导致误报上传，故从源码编译0.9.7。<br><a id="more"></a></p>
 <h1 id="pt客户端比较"><a href="#pt客户端比较" class="headerlink" title="pt客户端比较"></a>pt客户端比较</h1><h2 id="qBittorrent"><a href="#qBittorrent" class="headerlink" title="qBittorrent"></a>qBittorrent</h2><p>++ GUI实用美观<br>++ 自带web ui且可设密码权限<br>– 体积稍大<br>– 内存占用稍高<br>– 无原生命令行控制<br>由上可知，qB更适合桌面图形环境使用。我的win10 htpc和笔记本装的就是它，必要时还可临时开启web界面远程控制。  </p>
@@ -58,6 +58,7 @@
 <p>上述命令将把工作目录下所有的种子添加校验部分，并在’new’文件夹下生成新种子。没有’-o’选项则会直接修改种子。由于是和指定路径下文件简单比较大小，故比计算哈希值快得多。  </p>
 <h2 id="修改已制作种子校验值和tracker方便多站发布"><a href="#修改已制作种子校验值和tracker方便多站发布" class="headerlink" title="修改已制作种子校验值和tracker方便多站发布"></a>修改已制作种子校验值和tracker方便多站发布</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chtor --reannounce-all=https://pt.site.com/announce.php *.torrent</div></pre></td></tr></table></figure>
 <p>上述命令将把工作目录下所有的种子更改tracker并修改哈希值以免pt软件认为是同样的种子，直接跳过而无法辅种。方便在多个站点同时发布种子而不用重复制作种子。</p>
+<h1 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h1><h2 id="Tracker-Peer-certificate-cannot-be-authenticated-with-given-CA-certificates"><a href="#Tracker-Peer-certificate-cannot-be-authenticated-with-given-CA-certificates" class="headerlink" title="Tracker: [Peer certificate cannot be authenticated with given CA certificates]"></a>Tracker: [Peer certificate cannot be authenticated with given CA certificates]</h2><p>原因是该pt站的ssl证书有问题，想跳过检验可在配置文件’~/.rtorrent.rc’添加这句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">network.http.ssl_verify_peer.set = 0</div></pre></td></tr></table></figure></p>
 ]]></content>
     
     <summary type="html">
