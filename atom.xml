@@ -338,9 +338,9 @@ passwd
     
       <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
-      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
-    
       <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
   </entry>
   
@@ -605,9 +605,9 @@ arch ramips_24kec 500
     <link href="https://majunyi.top/2018/11/19/cac-upgrade-ubuntu/"/>
     <id>https://majunyi.top/2018/11/19/cac-upgrade-ubuntu/</id>
     <published>2018-11-19T07:10:09.000Z</published>
-    <updated>2018-11-23T01:15:06.993Z</updated>
+    <updated>2020-02-09T07:13:00.418Z</updated>
     
-    <content type="html"><![CDATA[<p>升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。<br><a id="more"></a><br>这个<a href="http://t.cn/E2gkWbY" target="_blank" rel="external">cac</a>的vps前一阵抽风，恢复后别说内容了，整个server都消失了。除了数据没保障外服务器也不稳定，io性能很差，且条款随意修改，现在需要年付9刀的管理费（不过收了管理费后服务质量稍有提升，但ticket仍然万年无回复），不知道什么时候会跑路。若不是专用机场部署简单且流量不限的话真不如扔掉，想要稳定又廉价的可以上<a href="http://t.cn/EwLt7Zp" target="_blank" rel="external">搬瓦工</a>年付19.99刀的车。  </p>
+    <content type="html"><![CDATA[<p>升级发行版在本地没什么难度，不过远程通过ssh还是有些坑需要避免。<br><a id="more"></a><br>这个<a href="/go/cac">cac</a>的vps前一阵抽风，恢复后别说内容了，整个server都消失了。除了数据没保障外服务器也不稳定，io性能很差，且条款随意修改，现在需要年付9刀的管理费（不过收了管理费后服务质量稍有提升，但ticket仍然万年无回复），不知道什么时候会跑路。若不是专用机场部署简单且流量不限的话真不如扔掉，想要稳定又廉价的可以上<a href="/go/bwh">搬瓦工</a>年付19.99刀的车。图方便可以试试搬瓦工的官方机场<a href="/go/jms">jms</a>，开袋即用，不用部署。  </p>
 <p>原来为了稳定所以是用centos7的系统只搭机场。现在决定装ubuntu作为测试用服务器玩新东西。但cac只提供了老掉牙的14.04。故需要升级系统。</p>
 <h1 id="升级内核开启bbr"><a href="#升级内核开启bbr" class="headerlink" title="升级内核开启bbr"></a>升级内核开启bbr</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh &amp;&amp; chmod +x bbr.sh</div><div class="line">sudo ./bbr.sh</div></pre></td></tr></table></figure>
 <p>内核选4.15.18。之前升完系统才升内核还选了最新的4.19.2结果翻车了。所以这里先升内核确保系统没挂且能正常开启bbr。升完后一般就会自动开启，运行<code>lsmod | grep bbr</code>查看结果。</p>
@@ -627,9 +627,9 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="vps" scheme="https://majunyi.top/tags/vps/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="vps" scheme="https://majunyi.top/tags/vps/"/>
     
   </entry>
   
