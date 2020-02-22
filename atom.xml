@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2020-01-24T15:25:58.972Z</updated>
+  <updated>2020-02-22T02:42:33.023Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://majunyi.top/2020/01/24/rtorrent-compile/"/>
     <id>https://majunyi.top/2020/01/24/rtorrent-compile/</id>
     <published>2020-01-24T12:04:06.000Z</published>
-    <updated>2020-01-24T15:25:58.972Z</updated>
+    <updated>2020-02-22T02:42:33.023Z</updated>
     
     <content type="html"><![CDATA[<p>ubuntu 18.04官方源的rTorrent 0.9.6会导致误报上传，故从源码编译0.9.7。<br><a id="more"></a></p>
 <h1 id="pt客户端比较"><a href="#pt客户端比较" class="headerlink" title="pt客户端比较"></a>pt客户端比较</h1><h2 id="qBittorrent"><a href="#qBittorrent" class="headerlink" title="qBittorrent"></a>qBittorrent</h2><p>++ GUI实用美观<br>++ 自带web ui且可设密码权限<br>– 体积稍大<br>– 内存占用稍高<br>– 无原生命令行控制<br>由上可知，qB更适合桌面图形环境使用。我的win10 htpc和笔记本装的就是它，必要时还可临时开启web界面远程控制。  </p>
@@ -40,10 +40,10 @@
 <h2 id="修改php上传文件大小上限"><a href="#修改php上传文件大小上限" class="headerlink" title="修改php上传文件大小上限"></a>修改php上传文件大小上限</h2><p>以apache为例，修改<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">upload_max_filesize = 64M</div><div class="line">max_file_uploads = 200</div><div class="line">post_max_size = 128M</div></pre></td></tr></table></figure></p>
 <p>重启apache服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo service apache2 restart</div></pre></td></tr></table></figure></p>
 <h2 id="安装web界面rutorrent"><a href="#安装web界面rutorrent" class="headerlink" title="安装web界面rutorrent"></a>安装web界面<a href="https://github.com/Novik/ruTorrent/wiki/WebSERVER" target="_blank" rel="external">rutorrent</a></h2><p>安装依赖。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install zip unzip zlib1g-dev ffmpeg mediainfo unrar sox</div></pre></td></tr></table></figure></p>
-<p>下载<a href="https://github.com/Novik/ruTorrent/releases" target="_blank" rel="external">ruTorrent</a>并解压。<br>复制到网页文件夹并修改权限。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo cp -r ruTorrent /var/www/your.site.com</div><div class="line">sudo chown -R www-data:www-data /var/www/your.site.com/ruTorrent</div></pre></td></tr></table></figure></p>
+<p>下载<a href="https://github.com/Novik/ruTorrent/releases" target="_blank" rel="external">ruTorrent</a>并解压。<br>复制到网页文件夹并修改权限。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo cp -r ruTorrent /var/www/example.com</div><div class="line">sudo chown -R www-data:www-data /var/www/example.com/ruTorrent</div></pre></td></tr></table></figure></p>
 <p><a href="https://github.com/Novik/ruTorrent/wiki/Plugins#uninstallation" target="_blank" rel="external">禁用不用的插件</a>，修改<code>ruTorrent/conf/plugins.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[_cloudflare]</div><div class="line">enabled = no</div></pre></td></tr></table></figure></p>
 <p>启用访问密码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo htpasswd -c /etc/apache2/.htpasswd yourname</div></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mv /var/www/your.site.com/ruTorrent/htaccess-example /var/www/your.site.com/ruTorrent/.htaccess</div><div class="line">sudo vi /var/www/your.site.com/ruTorrent/.htaccess</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mv /var/www/example.com/ruTorrent/htaccess-example /var/www/example.com/ruTorrent/.htaccess</div><div class="line">sudo vi /var/www/example.com/ruTorrent/.htaccess</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">AuthType Basic</div><div class="line">AuthName &quot;yourname&quot;</div><div class="line">AuthUserFile  &quot;/etc/apache2/.htpasswd&quot;</div><div class="line">require valid-user</div></pre></td></tr></table></figure>
 <h1 id="pyrocore（可选）"><a href="#pyrocore（可选）" class="headerlink" title="pyrocore（可选）"></a><a href="https://github.com/pyroscope/pyrocore" target="_blank" rel="external">pyrocore</a>（可选）</h1><p>强大的种子修改命令行工具集。需要python2的运行环境。</p>
 <h2 id="安装conda"><a href="#安装conda" class="headerlink" title="安装conda"></a>安装conda</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh</div><div class="line">bash Miniconda3-latest-Linux-x86_64.sh</div></pre></td></tr></table></figure>
@@ -59,6 +59,9 @@
 <h2 id="修改已制作种子校验值和tracker方便多站发布"><a href="#修改已制作种子校验值和tracker方便多站发布" class="headerlink" title="修改已制作种子校验值和tracker方便多站发布"></a>修改已制作种子校验值和tracker方便多站发布</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chtor --reannounce-all=https://pt.site.com/announce.php *.torrent</div></pre></td></tr></table></figure>
 <p>上述命令将把工作目录下所有的种子更改tracker并修改哈希值以免pt软件认为是同样的种子，直接跳过而无法辅种。方便在多个站点同时发布种子而不用重复制作种子。</p>
 <h1 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h1><h2 id="Tracker-Peer-certificate-cannot-be-authenticated-with-given-CA-certificates"><a href="#Tracker-Peer-certificate-cannot-be-authenticated-with-given-CA-certificates" class="headerlink" title="Tracker: [Peer certificate cannot be authenticated with given CA certificates]"></a>Tracker: [Peer certificate cannot be authenticated with given CA certificates]</h2><p>原因是该pt站的ssl证书有问题，想跳过检验可在配置文件’~/.rtorrent.rc’添加这句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">network.http.ssl_verify_peer.set = 0</div></pre></td></tr></table></figure></p>
+<h2 id="No-connection-to-rTorrent-Check-if-it-is-really-running-Check-scgi-port-and-scgi-host-settings-in-config-php-and-scgi-port-in-rTorrent-configuration-file"><a href="#No-connection-to-rTorrent-Check-if-it-is-really-running-Check-scgi-port-and-scgi-host-settings-in-config-php-and-scgi-port-in-rTorrent-configuration-file" class="headerlink" title="No connection to rTorrent. Check if it is really running. Check $scgi_port and $scgi_host settings in config.php and scgi_port in rTorrent configuration file."></a>No connection to rTorrent. Check if it is really running. Check $scgi_port and $scgi_host settings in config.php and scgi_port in rTorrent configuration file.</h2><p>首先，运行<code>tmux ls</code>以确定rTorrent服务是否正常运行。若没有相关进程，则执行<code>rtorrent</code>并查看error信息。  </p>
+<h2 id="rtorrent-Could-not-lock-session-directory"><a href="#rtorrent-Could-not-lock-session-directory" class="headerlink" title="rtorrent: Could not lock session directory"></a>rtorrent: Could not lock session directory</h2><p>这种情况通常发生在rtorrent非正常退出的情况。比如通过rutorrent删除大种子及文件。解决办法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd /path/to/pt/rtorrent/.session</div><div class="line">rm -rf rtorrent.lock</div><div class="line">sudo systemctl restart rtorrent.service</div></pre></td></tr></table></figure></p>
+<p>删除内容较多的大种子建议先通过rutorrent仅删除种子，再通过<code>ssh</code>或<code>samba</code>删除文件。  </p>
 ]]></content>
     
     <summary type="html">
@@ -136,9 +139,9 @@
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
       <category term="rpi" scheme="https://majunyi.top/tags/rpi/"/>
     
@@ -208,9 +211,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
     
   </entry>
   
@@ -336,11 +339,11 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
       <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
       <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
-    
-      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
   </entry>
   
@@ -627,9 +630,9 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
-    
       <category term="vps" scheme="https://majunyi.top/tags/vps/"/>
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
   </entry>
   
