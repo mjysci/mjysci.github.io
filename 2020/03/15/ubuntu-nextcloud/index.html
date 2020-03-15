@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>在ubuntu下搭建私人同步云盘nextcloud | 名实合为</title>
+  <title>ubuntu下搭建私人同步云盘nextcloud | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在ubuntu下搭建私人同步云盘nextcloud">
+<meta property="og:title" content="ubuntu下搭建私人同步云盘nextcloud">
 <meta property="og:url" content="https://majunyi.top/2020/03/15/ubuntu-nextcloud/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
-<meta property="og:updated_time" content="2020-03-15T06:32:31.991Z">
+<meta property="og:updated_time" content="2020-03-15T06:43:02.577Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在ubuntu下搭建私人同步云盘nextcloud">
+<meta name="twitter:title" content="ubuntu下搭建私人同步云盘nextcloud">
 <meta name="twitter:description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      在ubuntu下搭建私人同步云盘nextcloud
+      ubuntu下搭建私人同步云盘nextcloud
     </h1>
   
 
@@ -261,6 +261,7 @@
 <p>启用redis服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> redis-server</div></pre></td></tr></table></figure></p>
 <p>重启服务器。  </p>
 <h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>打开nextcloud管理员Overview页面(<a href="https://example.com/nextcloud/index.php/settings/admin/overview" target="_blank" rel="external">https://example.com/nextcloud/index.php/settings/admin/overview</a> )，确保<code>Security &amp; setup warnings</code>测试全部通过。</p>
+<h1 id="移除nextcloud"><a href="#移除nextcloud" class="headerlink" title="移除nextcloud"></a>移除nextcloud</h1><p>删掉源文件，数据文件，数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /var/www/example.com/nextcloud</div><div class="line">sudo rm -rf /srv/hdd1/nextcloud</div><div class="line">DROP DATABASE nextclouddb;</div></pre></td></tr></table></figure></p>
 
       
       
@@ -315,12 +316,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/03/15/ubuntu-nextcloud/">在ubuntu下搭建私人同步云盘nextcloud</a></p>
+        <p><span>本文标题:</span><a href="/2020/03/15/ubuntu-nextcloud/">ubuntu下搭建私人同步云盘nextcloud</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2020年03月15日 - 11时45分</p>
-        <p><span>最后更新:</span>2020年03月15日 - 14时32分</p>
+        <p><span>最后更新:</span>2020年03月15日 - 14时43分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/03/15/ubuntu-nextcloud/" title="在ubuntu下搭建私人同步云盘nextcloud">https://majunyi.top/2020/03/15/ubuntu-nextcloud/</a>
+            <span>原始链接:</span><a class="post-url" href="/2020/03/15/ubuntu-nextcloud/" title="ubuntu下搭建私人同步云盘nextcloud">https://majunyi.top/2020/03/15/ubuntu-nextcloud/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2020/03/15/ubuntu-nextcloud/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
@@ -347,7 +348,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装配置apache"><span class="toc-number">1.</span> <span class="toc-text">安装配置apache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装mysql"><span class="toc-number">2.</span> <span class="toc-text">安装mysql</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql创建nextcloud数据库"><span class="toc-number">3.</span> <span class="toc-text">mysql创建nextcloud数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建数据文件夹"><span class="toc-number">4.</span> <span class="toc-text">创建数据文件夹</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装nextcloud"><span class="toc-number">5.</span> <span class="toc-text">安装nextcloud</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装并启用Redis缓存提升性能（可选）"><span class="toc-number">6.</span> <span class="toc-text">安装并启用Redis缓存提升性能（可选）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debug"><span class="toc-number">7.</span> <span class="toc-text">Debug</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装配置apache"><span class="toc-number">1.</span> <span class="toc-text">安装配置apache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装mysql"><span class="toc-number">2.</span> <span class="toc-text">安装mysql</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql创建nextcloud数据库"><span class="toc-number">3.</span> <span class="toc-text">mysql创建nextcloud数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建数据文件夹"><span class="toc-number">4.</span> <span class="toc-text">创建数据文件夹</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装nextcloud"><span class="toc-number">5.</span> <span class="toc-text">安装nextcloud</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装并启用Redis缓存提升性能（可选）"><span class="toc-number">6.</span> <span class="toc-text">安装并启用Redis缓存提升性能（可选）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debug"><span class="toc-number">7.</span> <span class="toc-text">Debug</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移除nextcloud"><span class="toc-number">8.</span> <span class="toc-text">移除nextcloud</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -423,7 +424,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/15/ubuntu-nextcloud/">在ubuntu下搭建私人同步云盘nextcloud</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/24/rtorrent-compile/">ubuntu下编译配置rTorrent+ruTorrent</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/seafile-docker-arm64/">用Docker部署64位ARM版的seafile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/rpi3-ubuntu-arm64/">树莓派3安装arm64版Ubuntu 18.04 Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/fix-win10-ryzen-freeze/">解决win10下Ryzen平台间歇性卡顿问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/docker-credential-login/">通过pass实现更安全的docker登录方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/aria2-docker-arm-qnap/">ARM平台qnap用Docker部署aria2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qiandao-docker-qnap-arm/">ARM平台NAS（qnap TS-212P3）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qemu-ubuntu-arm64/">通过QEMU在x86计算机上搭建arm64版ubuntu开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/11/rpi-docker-qiandao/">树莓派（arm32v7）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/install-manage-linux-kernel-ubuntu/">ubuntu下安装与管理多个Linux内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/hc5661-pandorabox/">极1s（hc5661）刷潘多拉固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/15/ubuntu-nextcloud/">ubuntu下搭建私人同步云盘nextcloud</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/24/rtorrent-compile/">ubuntu下编译配置rTorrent+ruTorrent</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/seafile-docker-arm64/">用Docker部署64位ARM版的seafile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/rpi3-ubuntu-arm64/">树莓派3安装arm64版Ubuntu 18.04 Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/fix-win10-ryzen-freeze/">解决win10下Ryzen平台间歇性卡顿问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/docker-credential-login/">通过pass实现更安全的docker登录方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/aria2-docker-arm-qnap/">ARM平台qnap用Docker部署aria2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qiandao-docker-qnap-arm/">ARM平台NAS（qnap TS-212P3）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qemu-ubuntu-arm64/">通过QEMU在x86计算机上搭建arm64版ubuntu开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/11/rpi-docker-qiandao/">树莓派（arm32v7）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/install-manage-linux-kernel-ubuntu/">ubuntu下安装与管理多个Linux内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/hc5661-pandorabox/">极1s（hc5661）刷潘多拉固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");

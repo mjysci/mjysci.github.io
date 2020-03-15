@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2020-03-15T06:32:31.991Z</updated>
+  <updated>2020-03-15T06:43:02.577Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>在ubuntu下搭建私人同步云盘nextcloud</title>
+    <title>ubuntu下搭建私人同步云盘nextcloud</title>
     <link href="https://majunyi.top/2020/03/15/ubuntu-nextcloud/"/>
     <id>https://majunyi.top/2020/03/15/ubuntu-nextcloud/</id>
     <published>2020-03-15T03:45:22.000Z</published>
-    <updated>2020-03-15T06:32:31.991Z</updated>
+    <updated>2020-03-15T06:43:02.577Z</updated>
     
     <content type="html"><![CDATA[<p>虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。<br><a id="more"></a><br>最初的动机是为了解决QFile移动端自动上传照片的各种不便：  </p>
 <ol>
@@ -45,6 +45,7 @@
 <p>启用redis服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> redis-server</div></pre></td></tr></table></figure></p>
 <p>重启服务器。  </p>
 <h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>打开nextcloud管理员Overview页面(<a href="https://example.com/nextcloud/index.php/settings/admin/overview" target="_blank" rel="external">https://example.com/nextcloud/index.php/settings/admin/overview</a> )，确保<code>Security &amp; setup warnings</code>测试全部通过。</p>
+<h1 id="移除nextcloud"><a href="#移除nextcloud" class="headerlink" title="移除nextcloud"></a>移除nextcloud</h1><p>删掉源文件，数据文件，数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /var/www/example.com/nextcloud</div><div class="line">sudo rm -rf /srv/hdd1/nextcloud</div><div class="line">DROP DATABASE nextclouddb;</div></pre></td></tr></table></figure></p>
 ]]></content>
     
     <summary type="html">
@@ -186,9 +187,9 @@
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
       <category term="rpi" scheme="https://majunyi.top/tags/rpi/"/>
     
@@ -258,9 +259,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
     
   </entry>
   
@@ -386,9 +387,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
       <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
     
@@ -642,11 +643,11 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
+      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
+    
       <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
     
       <category term="router" scheme="https://majunyi.top/tags/router/"/>
-    
-      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
     
   </entry>
   
