@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>通过pass实现更安全的docker登录方式 | 名实合为</title>
+  <title>在ubuntu下搭建私人同步云盘nextcloud | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="docker默认登录是将密码明文存在本地的~/.docker/config.json，随便找个base64的解码器就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。">
+  <meta name="description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="通过pass实现更安全的docker登录方式">
-<meta property="og:url" content="https://majunyi.top/2019/03/14/docker-credential-login/index.html">
+<meta property="og:title" content="在ubuntu下搭建私人同步云盘nextcloud">
+<meta property="og:url" content="https://majunyi.top/2020/03/15/ubuntu-nextcloud/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="docker默认登录是将密码明文存在本地的~/.docker/config.json，随便找个base64的解码器就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。">
-<meta property="og:updated_time" content="2019-03-21T05:13:56.314Z">
+<meta property="og:description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
+<meta property="og:updated_time" content="2020-03-15T06:32:31.991Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="通过pass实现更安全的docker登录方式">
-<meta name="twitter:description" content="docker默认登录是将密码明文存在本地的~/.docker/config.json，随便找个base64的解码器就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。">
+<meta name="twitter:title" content="在ubuntu下搭建私人同步云盘nextcloud">
+<meta name="twitter:description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -196,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-docker-credential-login" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-ubuntu-nextcloud" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/14/docker-credential-login/" class="article-date">
-      <time datetime="2019-03-14T03:41:20.000Z" itemprop="datePublished">2019-03-14</time>
+      <a href="/2020/03/15/ubuntu-nextcloud/" class="article-date">
+      <time datetime="2020-03-15T03:45:22.000Z" itemprop="datePublished">2020-03-15</time>
 </a>
     </div>
   
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      通过pass实现更安全的docker登录方式
+      在ubuntu下搭建私人同步云盘nextcloud
     </h1>
   
 
@@ -228,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,22 +238,29 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>docker默认登录是将密码明文存在本地的<code>~/.docker/config.json</code>，随便找个<a href="https://paulschou.com/tools/xlate/" target="_blank" rel="external">base64的解码器</a>就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。<br><a id="more"></a><br>测试平台：Raspberry Pi 3B with ubuntu 18.04.2 server aarch64<br>由于官方只发布了amd64的helper，所以其他架构需要从源码编译。另外<code>secretservice</code><a href="https://github.com/docker/compose/issues/6023#issuecomment-401089768" target="_blank" rel="external">需要X11</a>，所以没有桌面的server还是用<code>pass</code>。  </p>
-<h1 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install golang-go libsecret-1-dev gpg pass</div></pre></td></tr></table></figure>
-<h1 id="取得源码并编译docker-credential-helpers"><a href="#取得源码并编译docker-credential-helpers" class="headerlink" title="取得源码并编译docker-credential-helpers"></a>取得源码并编译docker-credential-helpers</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">go get github.com/docker/docker-credential-helpers</div><div class="line"><span class="built_in">cd</span> ~/go/src/github.com/docker/docker-credential-helpers</div><div class="line">make pass</div><div class="line"><span class="built_in">cd</span> bin</div><div class="line">chmod +x docker-credential-pass &amp;&amp; sudo mv docker-credential-pass /usr/<span class="built_in">local</span>/bin/</div></pre></td></tr></table></figure>
-<p>编辑docker配置文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi ~/.docker/config.json</div></pre></td></tr></table></figure></p>
-<p>添加以下内容。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;credsStore&quot;: &quot;pass&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h1 id="生成gpg2-key"><a href="#生成gpg2-key" class="headerlink" title="生成gpg2 key"></a>生成gpg2 key</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gpg --generate-key</div></pre></td></tr></table></figure>
-<p>不要使用passphrase，记住你的uid。</p>
-<h1 id="pass初始化"><a href="#pass初始化" class="headerlink" title="pass初始化"></a>pass初始化</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pass init <span class="string">"你的uid"</span></div></pre></td></tr></table></figure>
-<h1 id="登录docker"><a href="#登录docker" class="headerlink" title="登录docker"></a>登录docker</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker login</div></pre></td></tr></table></figure>
-<h1 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h1><h2 id="push-fails-‘denied-requested-access-to-the-resource-is-denied’"><a href="#push-fails-‘denied-requested-access-to-the-resource-is-denied’" class="headerlink" title="push fails: ‘denied: requested access to the resource is denied’"></a>push fails: ‘denied: requested access to the resource is denied’</h2><p>原因是创建gpg key时使用了passphrase，而helper并不会弹出让你输入passphrase的选项。<br>方法一：登录。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pass</div><div class="line">pass docker-credential-helpers/&lt;一些字串&gt;/&lt;用户名&gt;</div></pre></td></tr></table></figure></p>
-<p>第一个命令列出<code>pass</code>文件夹结构。第二个命令执行后输入passphrase。<br>然后再试。<br>方法二：删掉passphrase。</p>
-<pre><code class="bash">gpg --edit-key <span class="string">"你的uid"</span>
-passwd
-</code></pre>
-<p>输入passphrase，然后设置新passphrase为空。最后<code>quit</code>退出。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://hackernoon.com/getting-rid-of-docker-plain-text-credentials-88309e07640d" target="_blank" rel="external">Getting rid of Docker plain text credentials</a><br><a href="https://docs.docker.com/engine/reference/commandline/login/#credentials-store" target="_blank" rel="external">docker login credentials-store</a></p>
+        <p>虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。<br><a id="more"></a><br>最初的动机是为了解决QFile移动端自动上传照片的各种不便：  </p>
+<ol>
+<li>QFile移动版（包括安卓和iOS）不像群晖那样能设置自动连接，每次都要手动选择连接，所以做不到后台自动上传新拍照片。  </li>
+<li>即便连上后，触发自动上传的时间不定，有时要亮屏放半天才会上传，且没有手动触发检测上传的选项。    </li>
+<li>上传时必须保持亮屏，否则会停止。  </li>
+</ol>
+<p>但搭建好nextcloud后才发觉其软件定位不是备份文件，而是同步与分享。目前暂<strong>不支持单向同步</strong>，即我需要的手机照片自动上传，但不同步下载服务器的照片。后通过免费的<a href="https://www.tacit.dk/foldersync/" target="_blank" rel="external">FolderSync</a>解决这个问题。<br>不过其支持WebDAV协议，故可用来给如Joplin之类的第三方程序做同步用，故仍旧保留了。<br>本文没用<a href="https://hub.docker.com/_/nextcloud/" target="_blank" rel="external">Docker</a>或<a href="https://docs.nextcloud.com/server/17/admin_manual/installation/source_installation.html#example-installation-on-ubuntu-18-04-lts-server" target="_blank" rel="external">官方脚本</a>的方式安装，因为前者对性能有损失且设置有限、不利于调试，而后者适合新装好的系统只跑nextcloud。</p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://majunyi.top/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mysql_secure_installation</div></pre></td></tr></table></figure>
+<p>输入并记好root用户的密码。注意root权限的用户是通过<code>auth_socket</code>而并非密码来验证的，故通过<code>sudo mysql -u root -p</code>登录时不输入密码或任意密码都能成功登录，而不是密码未设置成功。想取消<code>auth_socket</code>可以<a href="https://unix.stackexchange.com/questions/385202/mariadb-accepts-any-password" target="_blank" rel="external">看这里</a>。  </p>
+<h1 id="mysql创建nextcloud数据库"><a href="#mysql创建nextcloud数据库" class="headerlink" title="mysql创建nextcloud数据库"></a>mysql创建nextcloud数据库</h1><p>以root登录。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mysql -u root -p</div></pre></td></tr></table></figure></p>
+<p>创建nextcloud用户和数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CREATE DATABASE nextclouddb;</div><div class="line">CREATE USER &apos;nextcloud&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;PASSWORD&apos;;</div><div class="line">GRANT ALL PRIVILEGES ON nextclouddb.* TO &apos;nextcloud&apos;@&apos;localhost&apos;;</div><div class="line">FLUSH PRIVILEGES;</div><div class="line">exit</div></pre></td></tr></table></figure></p>
+<h1 id="创建数据文件夹"><a href="#创建数据文件夹" class="headerlink" title="创建数据文件夹"></a>创建数据文件夹</h1><p>从数据安全和硬盘空间扩展的角度强烈建议将nextcloud的数据放到别的地方，而不是默认的<code>/var/www/html/nextcloud/data</code>，否则后期想做数据迁移时由于<a href="https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170" target="_blank" rel="external">官方不支持会很麻烦</a>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /srv/hdd1/nextcloud</div><div class="line">sudo chown -R www-data:www-data /srv/hdd1/nextcloud</div></pre></td></tr></table></figure></p>
+<h1 id="安装nextcloud"><a href="#安装nextcloud" class="headerlink" title="安装nextcloud"></a>安装nextcloud</h1><p><a href="https://nextcloud.com/install/#instructions-server" target="_blank" rel="external">下载nextcloud源码</a>，解压并复制到网页服务器位置并修改权限为<code>www-data</code>，否则会报错<code>Internal Server Error</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /var/www/example.com</div><div class="line">sudo cp -r nextcloud /var/www/example.com</div><div class="line">sudo chown -R www-data:www-data /var/www/example.com/nextcloud/</div></pre></td></tr></table></figure></p>
+<p>打开安装页面<code>https://example.com/nextcloud</code>并输入数据库相关配置执行安装初始化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nextcloud</div><div class="line">nextclouddb</div><div class="line">localhost</div></pre></td></tr></table></figure></p>
+<p>如果安装正确则能进入网盘页面。<br>配置可信任域名。打开<code>/var/www/example.com/nextcloud/config/config.php</code>文件，添加域名和内网IP。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">'trusted_domains'</span> =&gt;</div><div class="line">  <span class="keyword">array</span> (</div><div class="line">   <span class="number">0</span> =&gt; <span class="string">'localhost'</span>,</div><div class="line">   <span class="number">1</span> =&gt; <span class="string">'example.com'</span>,</div><div class="line">   <span class="number">2</span> =&gt; <span class="string">'192.168.1.2'</span>,</div><div class="line">),</div></pre></td></tr></table></figure></p>
+<h1 id="安装并启用Redis缓存提升性能（可选）"><a href="#安装并启用Redis缓存提升性能（可选）" class="headerlink" title="安装并启用Redis缓存提升性能（可选）"></a>安装并启用Redis缓存提升性能（可选）</h1><p>如果只是几个人轻度使用没必要用牛刀。<br>安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-apcu redis-server php-redis</div></pre></td></tr></table></figure></p>
+<p>配置Redis。打开<code>/etc/redis/redis.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">port 0</div><div class="line">unixsocket /var/run/redis/redis.sock</div><div class="line">unixsocketperm 770</div></pre></td></tr></table></figure></p>
+<p>添加Apache用户<code>www-data</code>到<code>redis</code>组。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo usermod <span class="_">-a</span> -G redis www-data</div></pre></td></tr></table></figure></p>
+<p>重启apache服务，开始redis服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo service apache2 restart</div><div class="line">sudo service redis-server start</div></pre></td></tr></table></figure></p>
+<p>修改nextcloud配置文件<code>/var/www/example.com/nextcloud/config/config.php</code>，添加以下内容。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="string">'memcache.local'</span> =&gt; <span class="string">'\\OC\\Memcache\\Redis'</span>,</div><div class="line"><span class="string">'memcache.locking'</span> =&gt; <span class="string">'\\OC\\Memcache\\Redis'</span>,</div><div class="line"><span class="string">'filelocking.enabled'</span> =&gt; <span class="string">'true'</span>,</div><div class="line"><span class="string">'redis'</span> =&gt;</div><div class="line"><span class="keyword">array</span> (</div><div class="line"><span class="string">'host'</span> =&gt; <span class="string">'/var/run/redis/redis.sock'</span>,</div><div class="line"><span class="string">'port'</span> =&gt; <span class="number">0</span>,</div><div class="line"><span class="string">'timeout'</span> =&gt; <span class="number">0.0</span>,</div><div class="line">),</div></pre></td></tr></table></figure></p>
+<p>启用redis服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> redis-server</div></pre></td></tr></table></figure></p>
+<p>重启服务器。  </p>
+<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>打开nextcloud管理员Overview页面(<a href="https://example.com/nextcloud/index.php/settings/admin/overview" target="_blank" rel="external">https://example.com/nextcloud/index.php/settings/admin/overview</a> )，确保<code>Security &amp; setup warnings</code>测试全部通过。</p>
 
       
       
@@ -308,13 +315,13 @@ passwd
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/03/14/docker-credential-login/">通过pass实现更安全的docker登录方式</a></p>
+        <p><span>本文标题:</span><a href="/2020/03/15/ubuntu-nextcloud/">在ubuntu下搭建私人同步云盘nextcloud</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2019年03月14日 - 11时41分</p>
-        <p><span>最后更新:</span>2019年03月21日 - 13时13分</p>
+        <p><span>发布时间:</span>2020年03月15日 - 11时45分</p>
+        <p><span>最后更新:</span>2020年03月15日 - 14时32分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/03/14/docker-credential-login/" title="通过pass实现更安全的docker登录方式">https://majunyi.top/2019/03/14/docker-credential-login/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/03/14/docker-credential-login/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/03/15/ubuntu-nextcloud/" title="在ubuntu下搭建私人同步云盘nextcloud">https://majunyi.top/2020/03/15/ubuntu-nextcloud/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2020/03/15/ubuntu-nextcloud/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -327,18 +334,9 @@ passwd
 
 <nav id="article-nav">
   
-    <a href="/2019/04/23/fix-win10-ryzen-freeze/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          解决win10下Ryzen平台间歇性卡顿问题
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/03/12/aria2-docker-arm-qnap/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ARM平台qnap用Docker部署aria2</div>
+    <a href="/2020/01/24/rtorrent-compile/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ubuntu下编译配置rTorrent+ruTorrent</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -349,7 +347,7 @@ passwd
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装依赖"><span class="toc-number">1.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#取得源码并编译docker-credential-helpers"><span class="toc-number">2.</span> <span class="toc-text">取得源码并编译docker-credential-helpers</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生成gpg2-key"><span class="toc-number">3.</span> <span class="toc-text">生成gpg2 key</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pass初始化"><span class="toc-number">4.</span> <span class="toc-text">pass初始化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#登录docker"><span class="toc-number">5.</span> <span class="toc-text">登录docker</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#debug"><span class="toc-number">6.</span> <span class="toc-text">debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#push-fails-‘denied-requested-access-to-the-resource-is-denied’"><span class="toc-number">6.1.</span> <span class="toc-text">push fails: ‘denied: requested access to the resource is denied’</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装配置apache"><span class="toc-number">1.</span> <span class="toc-text">安装配置apache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装mysql"><span class="toc-number">2.</span> <span class="toc-text">安装mysql</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql创建nextcloud数据库"><span class="toc-number">3.</span> <span class="toc-text">mysql创建nextcloud数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建数据文件夹"><span class="toc-number">4.</span> <span class="toc-text">创建数据文件夹</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装nextcloud"><span class="toc-number">5.</span> <span class="toc-text">安装nextcloud</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装并启用Redis缓存提升性能（可选）"><span class="toc-number">6.</span> <span class="toc-text">安装并启用Redis缓存提升性能（可选）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debug"><span class="toc-number">7.</span> <span class="toc-text">Debug</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -416,13 +414,11 @@ passwd
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/04/23/fix-win10-ryzen-freeze/" title="上一篇: 解决win10下Ryzen平台间歇性卡顿问题">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2019/03/12/aria2-docker-arm-qnap/" title="下一篇: ARM平台qnap用Docker部署aria2">
+            <a href="/2020/01/24/rtorrent-compile/" title="下一篇: ubuntu下编译配置rTorrent+ruTorrent">
                 <i class="fa fa-angle-right"></i>
             </a>
         

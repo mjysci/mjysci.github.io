@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2020/01/24/rtorrent-compile/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="ubuntu 18.04官方源的rTorrent 0.9.6会导致误报上传，故从源码编译0.9.7。">
-<meta property="og:updated_time" content="2020-02-22T02:42:33.023Z">
+<meta property="og:updated_time" content="2020-03-15T05:47:51.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu下编译配置rTorrent+ruTorrent">
 <meta name="twitter:description" content="ubuntu 18.04官方源的rTorrent 0.9.6会导致误报上传，故从源码编译0.9.7。">
@@ -132,7 +132,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/arm/" style="font-size: 20px;">arm</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/docker/" style="font-size: 20px;">docker</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/firmware/" style="font-size: 15px;">firmware</a> <a href="/tags/github/" style="font-size: 12.5px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/linux/" style="font-size: 12.5px;">linux</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/nas/" style="font-size: 12.5px;">nas</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/pt/" style="font-size: 10px;">pt</a> <a href="/tags/qemu/" style="font-size: 10px;">qemu</a> <a href="/tags/router/" style="font-size: 12.5px;">router</a> <a href="/tags/rpi/" style="font-size: 15px;">rpi</a> <a href="/tags/shopping/" style="font-size: 10px;">shopping</a> <a href="/tags/ubuntu/" style="font-size: 17.5px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/win/" style="font-size: 10px;">win</a>
+                        <a href="/tags/arm/" style="font-size: 20px;">arm</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/docker/" style="font-size: 20px;">docker</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/firmware/" style="font-size: 16.67px;">firmware</a> <a href="/tags/github/" style="font-size: 13.33px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/nas/" style="font-size: 13.33px;">nas</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/pt/" style="font-size: 10px;">pt</a> <a href="/tags/qemu/" style="font-size: 10px;">qemu</a> <a href="/tags/router/" style="font-size: 13.33px;">router</a> <a href="/tags/rpi/" style="font-size: 16.67px;">rpi</a> <a href="/tags/shopping/" style="font-size: 10px;">shopping</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/win/" style="font-size: 10px;">win</a>
                     </div>
                 </section>
                 
@@ -253,6 +253,8 @@
 <p>启用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> rtorrent.service</div><div class="line">sudo systemctl start rtorrent.service</div></pre></td></tr></table></figure></p>
 <h1 id="ruTorrent"><a href="#ruTorrent" class="headerlink" title="ruTorrent"></a>ruTorrent</h1><h2 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a>安装配置apache</h2><p>选择apache是因为其对SCGI的支持比较好，且个人网站没有处理高并发的需求，故没选Nginx。<br>安装依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install apache2 mariadb-server libapache2-mod-php7.2</div><div class="line">sudo apt-get install php7.2-gd php7.2-json php7.2-mysql php7.2-curl php7.2-mbstring php7.2-intl php-imagick php7.2-xml php7.2-zip libapache2-mod-scgi</div></pre></td></tr></table></figure></p>
 <p>启用<code>.htaccess</code>。修改<code>/etc/apache2/apache2.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Directory /var/www/&gt;</div><div class="line">  AllowOverride All</div></pre></td></tr></table></figure></p>
+<p>复制默认https站点配置并在此基础上修改。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/example.com.conf</div><div class="line">sudo nano /etc/apache2/sites-available/example.com.conf</div></pre></td></tr></table></figure></p>
+<p>启动ssl，禁用默认站点，启用本站配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod ssl</div><div class="line">sudo a2ensite example.com.conf</div><div class="line">sudo a2dissite 000-default.conf</div><div class="line">sudo systemctl reload apache2</div></pre></td></tr></table></figure></p>
 <h2 id="修改php上传文件大小上限"><a href="#修改php上传文件大小上限" class="headerlink" title="修改php上传文件大小上限"></a>修改php上传文件大小上限</h2><p>以apache为例，修改<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">upload_max_filesize = 64M</div><div class="line">max_file_uploads = 200</div><div class="line">post_max_size = 128M</div></pre></td></tr></table></figure></p>
 <p>重启apache服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo service apache2 restart</div></pre></td></tr></table></figure></p>
 <h2 id="安装web界面rutorrent"><a href="#安装web界面rutorrent" class="headerlink" title="安装web界面rutorrent"></a>安装web界面<a href="https://github.com/Novik/ruTorrent/wiki/WebSERVER" target="_blank" rel="external">rutorrent</a></h2><p>安装依赖。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install zip unzip zlib1g-dev ffmpeg mediainfo unrar sox</div></pre></td></tr></table></figure></p>
@@ -335,7 +337,7 @@
         <p><span>本文标题:</span><a href="/2020/01/24/rtorrent-compile/">ubuntu下编译配置rTorrent+ruTorrent</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2020年01月24日 - 20时04分</p>
-        <p><span>最后更新:</span>2020年02月22日 - 10时42分</p>
+        <p><span>最后更新:</span>2020年03月15日 - 13时47分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/01/24/rtorrent-compile/" title="ubuntu下编译配置rTorrent+ruTorrent">https://majunyi.top/2020/01/24/rtorrent-compile/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2020/01/24/rtorrent-compile/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -350,6 +352,15 @@
 
 
 <nav id="article-nav">
+  
+    <a href="/2020/03/15/ubuntu-nextcloud/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          在ubuntu下搭建私人同步云盘nextcloud
+        
+      </div>
+    </a>
   
   
     <a href="/2019/05/20/seafile-docker-arm64/" id="article-nav-older" class="article-nav-link-wrap">
@@ -431,7 +442,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2020/03/15/ubuntu-nextcloud/" title="上一篇: 在ubuntu下搭建私人同步云盘nextcloud">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -440,7 +453,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/24/rtorrent-compile/">ubuntu下编译配置rTorrent+ruTorrent</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/seafile-docker-arm64/">用Docker部署64位ARM版的seafile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/rpi3-ubuntu-arm64/">树莓派3安装arm64版Ubuntu 18.04 Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/fix-win10-ryzen-freeze/">解决win10下Ryzen平台间歇性卡顿问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/docker-credential-login/">通过pass实现更安全的docker登录方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/aria2-docker-arm-qnap/">ARM平台qnap用Docker部署aria2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qiandao-docker-qnap-arm/">ARM平台NAS（qnap TS-212P3）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qemu-ubuntu-arm64/">通过QEMU在x86计算机上搭建arm64版ubuntu开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/11/rpi-docker-qiandao/">树莓派（arm32v7）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/install-manage-linux-kernel-ubuntu/">ubuntu下安装与管理多个Linux内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/hc5661-pandorabox/">极1s（hc5661）刷潘多拉固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/15/ubuntu-nextcloud/">在ubuntu下搭建私人同步云盘nextcloud</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/24/rtorrent-compile/">ubuntu下编译配置rTorrent+ruTorrent</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/seafile-docker-arm64/">用Docker部署64位ARM版的seafile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/rpi3-ubuntu-arm64/">树莓派3安装arm64版Ubuntu 18.04 Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/fix-win10-ryzen-freeze/">解决win10下Ryzen平台间歇性卡顿问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/docker-credential-login/">通过pass实现更安全的docker登录方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/aria2-docker-arm-qnap/">ARM平台qnap用Docker部署aria2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qiandao-docker-qnap-arm/">ARM平台NAS（qnap TS-212P3）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qemu-ubuntu-arm64/">通过QEMU在x86计算机上搭建arm64版ubuntu开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/11/rpi-docker-qiandao/">树莓派（arm32v7）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/install-manage-linux-kernel-ubuntu/">ubuntu下安装与管理多个Linux内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/hc5661-pandorabox/">极1s（hc5661）刷潘多拉固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2020-02-22T02:42:33.023Z</updated>
+  <updated>2020-03-15T06:32:31.991Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -16,11 +16,56 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>在ubuntu下搭建私人同步云盘nextcloud</title>
+    <link href="https://majunyi.top/2020/03/15/ubuntu-nextcloud/"/>
+    <id>https://majunyi.top/2020/03/15/ubuntu-nextcloud/</id>
+    <published>2020-03-15T03:45:22.000Z</published>
+    <updated>2020-03-15T06:32:31.991Z</updated>
+    
+    <content type="html"><![CDATA[<p>虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。<br><a id="more"></a><br>最初的动机是为了解决QFile移动端自动上传照片的各种不便：  </p>
+<ol>
+<li>QFile移动版（包括安卓和iOS）不像群晖那样能设置自动连接，每次都要手动选择连接，所以做不到后台自动上传新拍照片。  </li>
+<li>即便连上后，触发自动上传的时间不定，有时要亮屏放半天才会上传，且没有手动触发检测上传的选项。    </li>
+<li>上传时必须保持亮屏，否则会停止。  </li>
+</ol>
+<p>但搭建好nextcloud后才发觉其软件定位不是备份文件，而是同步与分享。目前暂<strong>不支持单向同步</strong>，即我需要的手机照片自动上传，但不同步下载服务器的照片。后通过免费的<a href="https://www.tacit.dk/foldersync/" target="_blank" rel="external">FolderSync</a>解决这个问题。<br>不过其支持WebDAV协议，故可用来给如Joplin之类的第三方程序做同步用，故仍旧保留了。<br>本文没用<a href="https://hub.docker.com/_/nextcloud/" target="_blank" rel="external">Docker</a>或<a href="https://docs.nextcloud.com/server/17/admin_manual/installation/source_installation.html#example-installation-on-ubuntu-18-04-lts-server" target="_blank" rel="external">官方脚本</a>的方式安装，因为前者对性能有损失且设置有限、不利于调试，而后者适合新装好的系统只跑nextcloud。</p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://majunyi.top/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mysql_secure_installation</div></pre></td></tr></table></figure>
+<p>输入并记好root用户的密码。注意root权限的用户是通过<code>auth_socket</code>而并非密码来验证的，故通过<code>sudo mysql -u root -p</code>登录时不输入密码或任意密码都能成功登录，而不是密码未设置成功。想取消<code>auth_socket</code>可以<a href="https://unix.stackexchange.com/questions/385202/mariadb-accepts-any-password" target="_blank" rel="external">看这里</a>。  </p>
+<h1 id="mysql创建nextcloud数据库"><a href="#mysql创建nextcloud数据库" class="headerlink" title="mysql创建nextcloud数据库"></a>mysql创建nextcloud数据库</h1><p>以root登录。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mysql -u root -p</div></pre></td></tr></table></figure></p>
+<p>创建nextcloud用户和数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CREATE DATABASE nextclouddb;</div><div class="line">CREATE USER &apos;nextcloud&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;PASSWORD&apos;;</div><div class="line">GRANT ALL PRIVILEGES ON nextclouddb.* TO &apos;nextcloud&apos;@&apos;localhost&apos;;</div><div class="line">FLUSH PRIVILEGES;</div><div class="line">exit</div></pre></td></tr></table></figure></p>
+<h1 id="创建数据文件夹"><a href="#创建数据文件夹" class="headerlink" title="创建数据文件夹"></a>创建数据文件夹</h1><p>从数据安全和硬盘空间扩展的角度强烈建议将nextcloud的数据放到别的地方，而不是默认的<code>/var/www/html/nextcloud/data</code>，否则后期想做数据迁移时由于<a href="https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170" target="_blank" rel="external">官方不支持会很麻烦</a>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /srv/hdd1/nextcloud</div><div class="line">sudo chown -R www-data:www-data /srv/hdd1/nextcloud</div></pre></td></tr></table></figure></p>
+<h1 id="安装nextcloud"><a href="#安装nextcloud" class="headerlink" title="安装nextcloud"></a>安装nextcloud</h1><p><a href="https://nextcloud.com/install/#instructions-server" target="_blank" rel="external">下载nextcloud源码</a>，解压并复制到网页服务器位置并修改权限为<code>www-data</code>，否则会报错<code>Internal Server Error</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /var/www/example.com</div><div class="line">sudo cp -r nextcloud /var/www/example.com</div><div class="line">sudo chown -R www-data:www-data /var/www/example.com/nextcloud/</div></pre></td></tr></table></figure></p>
+<p>打开安装页面<code>https://example.com/nextcloud</code>并输入数据库相关配置执行安装初始化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nextcloud</div><div class="line">nextclouddb</div><div class="line">localhost</div></pre></td></tr></table></figure></p>
+<p>如果安装正确则能进入网盘页面。<br>配置可信任域名。打开<code>/var/www/example.com/nextcloud/config/config.php</code>文件，添加域名和内网IP。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">'trusted_domains'</span> =&gt;</div><div class="line">  <span class="keyword">array</span> (</div><div class="line">   <span class="number">0</span> =&gt; <span class="string">'localhost'</span>,</div><div class="line">   <span class="number">1</span> =&gt; <span class="string">'example.com'</span>,</div><div class="line">   <span class="number">2</span> =&gt; <span class="string">'192.168.1.2'</span>,</div><div class="line">),</div></pre></td></tr></table></figure></p>
+<h1 id="安装并启用Redis缓存提升性能（可选）"><a href="#安装并启用Redis缓存提升性能（可选）" class="headerlink" title="安装并启用Redis缓存提升性能（可选）"></a>安装并启用Redis缓存提升性能（可选）</h1><p>如果只是几个人轻度使用没必要用牛刀。<br>安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-apcu redis-server php-redis</div></pre></td></tr></table></figure></p>
+<p>配置Redis。打开<code>/etc/redis/redis.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">port 0</div><div class="line">unixsocket /var/run/redis/redis.sock</div><div class="line">unixsocketperm 770</div></pre></td></tr></table></figure></p>
+<p>添加Apache用户<code>www-data</code>到<code>redis</code>组。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo usermod <span class="_">-a</span> -G redis www-data</div></pre></td></tr></table></figure></p>
+<p>重启apache服务，开始redis服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo service apache2 restart</div><div class="line">sudo service redis-server start</div></pre></td></tr></table></figure></p>
+<p>修改nextcloud配置文件<code>/var/www/example.com/nextcloud/config/config.php</code>，添加以下内容。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="string">'memcache.local'</span> =&gt; <span class="string">'\\OC\\Memcache\\Redis'</span>,</div><div class="line"><span class="string">'memcache.locking'</span> =&gt; <span class="string">'\\OC\\Memcache\\Redis'</span>,</div><div class="line"><span class="string">'filelocking.enabled'</span> =&gt; <span class="string">'true'</span>,</div><div class="line"><span class="string">'redis'</span> =&gt;</div><div class="line"><span class="keyword">array</span> (</div><div class="line"><span class="string">'host'</span> =&gt; <span class="string">'/var/run/redis/redis.sock'</span>,</div><div class="line"><span class="string">'port'</span> =&gt; <span class="number">0</span>,</div><div class="line"><span class="string">'timeout'</span> =&gt; <span class="number">0.0</span>,</div><div class="line">),</div></pre></td></tr></table></figure></p>
+<p>启用redis服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> redis-server</div></pre></td></tr></table></figure></p>
+<p>重启服务器。  </p>
+<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>打开nextcloud管理员Overview页面(<a href="https://example.com/nextcloud/index.php/settings/admin/overview" target="_blank" rel="external">https://example.com/nextcloud/index.php/settings/admin/overview</a> )，确保<code>Security &amp; setup warnings</code>测试全部通过。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
     <title>ubuntu下编译配置rTorrent+ruTorrent</title>
     <link href="https://majunyi.top/2020/01/24/rtorrent-compile/"/>
     <id>https://majunyi.top/2020/01/24/rtorrent-compile/</id>
     <published>2020-01-24T12:04:06.000Z</published>
-    <updated>2020-02-22T02:42:33.023Z</updated>
+    <updated>2020-03-15T05:47:51.468Z</updated>
     
     <content type="html"><![CDATA[<p>ubuntu 18.04官方源的rTorrent 0.9.6会导致误报上传，故从源码编译0.9.7。<br><a id="more"></a></p>
 <h1 id="pt客户端比较"><a href="#pt客户端比较" class="headerlink" title="pt客户端比较"></a>pt客户端比较</h1><h2 id="qBittorrent"><a href="#qBittorrent" class="headerlink" title="qBittorrent"></a>qBittorrent</h2><p>++ GUI实用美观<br>++ 自带web ui且可设密码权限<br>– 体积稍大<br>– 内存占用稍高<br>– 无原生命令行控制<br>由上可知，qB更适合桌面图形环境使用。我的win10 htpc和笔记本装的就是它，必要时还可临时开启web界面远程控制。  </p>
@@ -37,6 +82,8 @@
 <p>启用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> rtorrent.service</div><div class="line">sudo systemctl start rtorrent.service</div></pre></td></tr></table></figure></p>
 <h1 id="ruTorrent"><a href="#ruTorrent" class="headerlink" title="ruTorrent"></a>ruTorrent</h1><h2 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a>安装配置apache</h2><p>选择apache是因为其对SCGI的支持比较好，且个人网站没有处理高并发的需求，故没选Nginx。<br>安装依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install apache2 mariadb-server libapache2-mod-php7.2</div><div class="line">sudo apt-get install php7.2-gd php7.2-json php7.2-mysql php7.2-curl php7.2-mbstring php7.2-intl php-imagick php7.2-xml php7.2-zip libapache2-mod-scgi</div></pre></td></tr></table></figure></p>
 <p>启用<code>.htaccess</code>。修改<code>/etc/apache2/apache2.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Directory /var/www/&gt;</div><div class="line">  AllowOverride All</div></pre></td></tr></table></figure></p>
+<p>复制默认https站点配置并在此基础上修改。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/example.com.conf</div><div class="line">sudo nano /etc/apache2/sites-available/example.com.conf</div></pre></td></tr></table></figure></p>
+<p>启动ssl，禁用默认站点，启用本站配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod ssl</div><div class="line">sudo a2ensite example.com.conf</div><div class="line">sudo a2dissite 000-default.conf</div><div class="line">sudo systemctl reload apache2</div></pre></td></tr></table></figure></p>
 <h2 id="修改php上传文件大小上限"><a href="#修改php上传文件大小上限" class="headerlink" title="修改php上传文件大小上限"></a>修改php上传文件大小上限</h2><p>以apache为例，修改<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">upload_max_filesize = 64M</div><div class="line">max_file_uploads = 200</div><div class="line">post_max_size = 128M</div></pre></td></tr></table></figure></p>
 <p>重启apache服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo service apache2 restart</div></pre></td></tr></table></figure></p>
 <h2 id="安装web界面rutorrent"><a href="#安装web界面rutorrent" class="headerlink" title="安装web界面rutorrent"></a>安装web界面<a href="https://github.com/Novik/ruTorrent/wiki/WebSERVER" target="_blank" rel="external">rutorrent</a></h2><p>安装依赖。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install zip unzip zlib1g-dev ffmpeg mediainfo unrar sox</div></pre></td></tr></table></figure></p>
@@ -139,9 +186,9 @@
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
-    
       <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
       <category term="rpi" scheme="https://majunyi.top/tags/rpi/"/>
     
@@ -211,9 +258,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
-    
       <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
   </entry>
   
@@ -339,9 +386,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
-    
       <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
       <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
     
@@ -595,11 +642,11 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
-    
       <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
     
       <category term="router" scheme="https://majunyi.top/tags/router/"/>
+    
+      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
     
   </entry>
   
@@ -759,38 +806,6 @@ arch ramips_24kec 500
       <category term="github" scheme="https://majunyi.top/tags/github/"/>
     
       <category term="proxy" scheme="https://majunyi.top/tags/proxy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>通过CSS高亮显示已访问链接</title>
-    <link href="https://majunyi.top/2017/04/03/highlight-visited/"/>
-    <id>https://majunyi.top/2017/04/03/highlight-visited/</id>
-    <published>2017-04-02T23:18:07.000Z</published>
-    <updated>2017-04-03T01:31:17.176Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。</p>
-<a id="more"></a>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>最初的解决方案是安装<a href="https://chrome.google.com/webstore/detail/stylish-custom-themes-for/fjnbnpbmkenffdnngjfgmeleoegfcffe" target="_blank" rel="external">Stylish</a>，然后安装全局主题<a href="https://userstyles.org/styles/31267/global-dark-style-changes-everything-to-dark" target="_blank" rel="external">Global dark style</a>。</p>
-<p>但用久了感觉这个主题适合夜晚使用，特别是阅读长文。其他情况下缺乏美感。</p>
-<p>我主要是需要已访问链接高亮显示，于是选择了<a href="https://userstyles.org/styles/17357/red-visited-mark-visited-links-red-dm" target="_blank" rel="external">Red:visited</a>。不过默认的红色实在有点刺眼，我要其比未访问链接低调一些，记忆当中HTML标准的默认浅紫色就不错，完整的推荐设置<a href="https://www.w3.org/TR/html5/rendering.html#the-css-user-agent-style-sheet-and-presentational-hints" target="_blank" rel="external">在这里</a>。把主题里的#CC0000改成#551A8B即可。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>但新的问题产生了：对于背景颜色较深的网站，紫色很难看清，所以还要改下链接的背景色。最终结果如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span>, <span class="selector-class">.fl</span><span class="selector-pseudo">:visited</span> &#123;</div><div class="line">    <span class="attribute">color</span>: <span class="number">#551A8B</span> <span class="meta">!important</span>;</div><div class="line">    <span class="attribute">background-color</span>: <span class="number">#ccc</span> <span class="meta">!important</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>如果背景是图片就无能为力了，去掉!important的话漏网之鱼又太多。想要解决的话应该是读取原有字体颜色，然后用lighten（依赖SASS）或者自己设计一个简单的数学变换来使其变浅。第一步需要javascript来实现。</p>
-<p>去<a href="https://greasyfork.org" target="_blank" rel="external">GreasyFork</a>找了下没有实现类似功能的脚本，准备自己写一个却发现由于安全问题getComputedStyle并<a href="https://hacks.mozilla.org/2010/03/privacy-related-changes-coming-to-css-vistited/" target="_blank" rel="external">不能返回已访问链接颜色的正确结果</a>。这样就不能直接在循环内判断是否visited并根据原来颜色变浅了。js读取颜色后要另外再用CSS来判断并改色。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;原因&quot;&gt;&lt;a href=&quot;#原因&quot; class=&quot;headerlink&quot; title=&quot;原因&quot;&gt;&lt;/a&gt;原因&lt;/h2&gt;&lt;p&gt;不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="css" scheme="https://majunyi.top/tags/css/"/>
-    
-      <category term="javascript" scheme="https://majunyi.top/tags/javascript/"/>
     
   </entry>
   
