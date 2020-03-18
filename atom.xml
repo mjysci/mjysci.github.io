@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2020-03-15T13:11:30.495Z</updated>
+  <updated>2020-03-18T15:18:53.093Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://majunyi.top/2020/03/15/ubuntu-nextcloud/"/>
     <id>https://majunyi.top/2020/03/15/ubuntu-nextcloud/</id>
     <published>2020-03-15T03:45:22.000Z</published>
-    <updated>2020-03-15T13:11:30.495Z</updated>
+    <updated>2020-03-18T15:18:53.093Z</updated>
     
     <content type="html"><![CDATA[<p>虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。<br><a id="more"></a><br>最初的动机是为了解决QFile移动端自动上传照片的各种不便：  </p>
 <ol>
@@ -30,7 +30,7 @@
 </ol>
 <p>但搭建好nextcloud后才发觉其软件定位不是备份文件，而是同步与分享。目前暂<strong>不支持单向同步</strong>，即我需要的手机照片自动上传，但不同步下载服务器的照片。后通过免费的<a href="https://www.tacit.dk/foldersync/" target="_blank" rel="external">FolderSync</a>解决这个问题。<br>不过其支持WebDAV协议，故可用来给如Joplin之类的第三方程序做同步用，故仍旧保留了。<br>本文没用<a href="https://hub.docker.com/_/nextcloud/" target="_blank" rel="external">Docker</a>或<a href="https://docs.nextcloud.com/server/17/admin_manual/installation/source_installation.html#example-installation-on-ubuntu-18-04-lts-server" target="_blank" rel="external">官方脚本</a>的方式安装，因为前者对性能有损失且设置有限、不利于调试，而后者适合新装好的系统只跑nextcloud。</p>
 <h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://majunyi.top/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="php设置"><a href="#php设置" class="headerlink" title="php设置"></a>php设置</h1><p>编辑<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">memory_limit = 1024M</div><div class="line">post_max_size = 1024M</div><div class="line">upload_max_filesize = 1024M</div></pre></td></tr></table></figure></p>
-<h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mysql_secure_installation</div></pre></td></tr></table></figure>
+<h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install mariadb-server php7.2-mysql</div><div class="line">sudo mysql_secure_installation</div></pre></td></tr></table></figure>
 <p>输入并记好root用户的密码。注意root权限的用户是通过<code>auth_socket</code>而并非密码来验证的，故通过<code>sudo mysql -u root -p</code>登录时不输入密码或任意密码都能成功登录，而不是密码未设置成功。想取消<code>auth_socket</code>可以<a href="https://unix.stackexchange.com/questions/385202/mariadb-accepts-any-password" target="_blank" rel="external">看这里</a>。<br>启用4字节字符支持，编辑<code>/etc/mysql/mariadb.cnf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[mysqld]</div><div class="line">innodb_file_per_table=1</div><div class="line">character-set-server=utf8mb4</div></pre></td></tr></table></figure></p>
 <p>重启mysql。  </p>
 <h1 id="mysql创建nextcloud数据库"><a href="#mysql创建nextcloud数据库" class="headerlink" title="mysql创建nextcloud数据库"></a>mysql创建nextcloud数据库</h1><p>以root登录。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mysql -u root</div></pre></td></tr></table></figure></p>
@@ -71,7 +71,7 @@
     <link href="https://majunyi.top/2020/01/24/rtorrent-compile/"/>
     <id>https://majunyi.top/2020/01/24/rtorrent-compile/</id>
     <published>2020-01-24T12:04:06.000Z</published>
-    <updated>2020-03-17T15:59:31.954Z</updated>
+    <updated>2020-03-18T15:15:16.461Z</updated>
     
     <content type="html"><![CDATA[<p>ubuntu 18.04官方源的rTorrent 0.9.6会导致误报上传，故从源码编译0.9.7。<br><a id="more"></a></p>
 <h1 id="pt客户端比较"><a href="#pt客户端比较" class="headerlink" title="pt客户端比较"></a>pt客户端比较</h1><h2 id="qBittorrent"><a href="#qBittorrent" class="headerlink" title="qBittorrent"></a>qBittorrent</h2><p>++ GUI实用美观<br>++ 自带web ui且可设密码权限<br>– 体积稍大<br>– 内存占用稍高<br>– 无原生命令行控制<br>由上可知，qB更适合桌面图形环境使用。我的win10 htpc和笔记本装的就是它，必要时还可临时开启web界面远程控制。  </p>
@@ -86,7 +86,7 @@
 <p>修改后运行<code>rtorrent</code>测试配置文件，无问题后<code>Ctrl+Q</code>退出。  </p>
 <h2 id="设置服务开机运行"><a href="#设置服务开机运行" class="headerlink" title="设置服务开机运行"></a><a href="https://github.com/rakshasa/rtorrent/wiki/Common-Tasks-in-rTorrent#ubuntu-16-04-with-systemd" target="_blank" rel="external">设置服务开机运行</a></h2><p>创建<code>/etc/systemd/system/rtorrent.service</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=rtorrent (in tmux)</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=oneshot</div><div class="line">RemainAfterExit=yes</div><div class="line">User=yourname</div><div class="line">ExecStart=/usr/bin/tmux -2 new-session -d -s rtorrent rtorrent</div><div class="line">ExecStop=/usr/bin/tmux kill-session -t rtorrent</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=default.target</div></pre></td></tr></table></figure></p>
 <p>启用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> rtorrent.service</div><div class="line">sudo systemctl start rtorrent.service</div></pre></td></tr></table></figure></p>
-<h1 id="ruTorrent"><a href="#ruTorrent" class="headerlink" title="ruTorrent"></a>ruTorrent</h1><h2 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a>安装配置apache</h2><p>选择apache是因为其对SCGI的支持比较好，且个人网站没有处理高并发的需求，故没选Nginx。<br>安装依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install apache2 libapache2-mod-php7.2</div><div class="line">sudo apt-get install php7.2-gd php7.2-json php7.2-mysql php7.2-curl php7.2-mbstring php7.2-intl php-imagick php7.2-xml php7.2-zip libapache2-mod-scgi</div></pre></td></tr></table></figure></p>
+<h1 id="ruTorrent"><a href="#ruTorrent" class="headerlink" title="ruTorrent"></a>ruTorrent</h1><h2 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a>安装配置apache</h2><p>选择apache是因为其对SCGI的支持比较好，且个人网站没有处理高并发的需求，故没选Nginx。<br>安装依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install apache2 libapache2-mod-php7.2</div><div class="line">sudo apt-get install php7.2-gd php7.2-json php7.2-curl php7.2-mbstring php7.2-intl php-imagick php7.2-xml php7.2-zip libapache2-mod-scgi</div></pre></td></tr></table></figure></p>
 <p>启用<code>.htaccess</code>。修改<code>/etc/apache2/apache2.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Directory /var/www/&gt;</div><div class="line">  AllowOverride All</div></pre></td></tr></table></figure></p>
 <p>开启headers模块。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod headers</div></pre></td></tr></table></figure></p>
 <p>复制默认https站点配置并在此基础上修改。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/example.com.conf</div><div class="line">sudo vi /etc/apache2/sites-available/example.com.conf</div></pre></td></tr></table></figure></p>
