@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2020-03-22T05:36:03.347Z</updated>
+  <updated>2020-03-22T08:19:13.347Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -20,11 +20,11 @@
     <link href="https://majunyi.top/2020/03/22/ubuntu-ttrss/"/>
     <id>https://majunyi.top/2020/03/22/ubuntu-ttrss/</id>
     <published>2020-03-22T03:35:50.000Z</published>
-    <updated>2020-03-22T05:36:03.347Z</updated>
+    <updated>2020-03-22T08:19:13.347Z</updated>
     
     <content type="html"><![CDATA[<p>rss已死？对占有话语权的内容创作者当然希望这样，但就内容接收者而言，活用合适的rss工具能筛掉无用信息提升效率。本文提供docker之外手动本地搭建ttrss的方法。<br><a id="more"></a></p>
-<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用docker"><a href="#为什么不用docker" class="headerlink" title="为什么不用docker"></a>为什么不用docker</h2><p>对个人用户而言，docker仅适用于一种场合：权限不足的服务器（包括非root的定制linux操作系统，如NAS的系统）。当然docker还有一个好处就是部署方便，但：1.需要大规模部署的场景并不多；2.可通过编写脚本来简化部署。docker的缺点：1.性能损失，对本地无所谓，但购买服务器的话内存需要升一档多花钱了；2.调试不方便(docker exec -it …)，更适合稳定版产品的部署，可玩性差些。<br>当然，图省事的话推荐用docker部署Henry Wang的<a href="https://github.com/HenryQW/Awesome-TTRSS" target="_blank" rel="external">Awesome-TTRSS</a>。<br>注意，由于众所周知的原因，<strong>不建议本地或国内搭建</strong>，当然，下文对如何科学地在国内搭建有所涉及。  </p>
-<h2 id="为什么不用第三方服务"><a href="#为什么不用第三方服务" class="headerlink" title="为什么不用第三方服务"></a>为什么不用第三方服务</h2><p>国外的第三方服务速度慢，连接不畅或直接被墙，国内的有和谐不考虑。且免费服务限制颇多，如无法设置过滤规则，订阅数刷效率有限制，有广告等等。  </p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用docker"><a href="#为什么不用docker" class="headerlink" title="为什么不用docker"></a>为什么不用docker</h2><p>对个人用户而言，docker仅适用于一种场合：权限不足的服务器（包括非root的定制linux操作系统，如NAS的系统）。docker还有一个好处就是部署方便，但：1.需要大规模部署的场景并不多；2.可通过编写脚本来简化部署。docker的缺点：1.性能损失，对本地无所谓，但购买服务器的话内存需要升一档多花钱了；2.调试不方便(docker exec -it …)，更适合稳定版产品的部署，可玩性差些。<br>不过，实在想用docker的话推荐Henry Wang的<a href="https://github.com/HenryQW/Awesome-TTRSS" target="_blank" rel="external">Awesome-TTRSS</a>。<br>注意，由于众所周知的原因，<strong>不建议本地或国内搭建</strong>，下文对如何科学地在国内搭建亦有所涉及。  </p>
+<h2 id="为什么不用第三方服务"><a href="#为什么不用第三方服务" class="headerlink" title="为什么不用第三方服务"></a>为什么不用第三方服务</h2><p>国外的第三方服务速度慢，连接不畅或直接被墙，国内的有和谐不考虑。且免费服务限制颇多，如无法设置过滤规则，订阅数刷新率有限制，有广告等等。  </p>
 <h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://majunyi.top/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a><a href="https://majunyi.top/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a></h1><h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mysql -u root</div><div class="line">CREATE DATABASE ttrss;</div></pre></td></tr></table></figure>
 <h1 id="克隆ttrss源码"><a href="#克隆ttrss源码" class="headerlink" title="克隆ttrss源码"></a>克隆ttrss源码</h1><p>注：若是国内域名建议更改默认文件夹名<code>tt-rss</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://git.tt-rss.org/fox/tt-rss.git</div></pre></td></tr></table></figure></p>
 <p>访问<code>https://example.com/tt-rss/install/</code>执行安装。<br>默认用户名<code>admin</code>，密码<code>password</code>。<br>有个官方不支持但提供的代理选项，编辑<code>/var/www/example.com/tt-rss/config.php</code>并添加一行<code>define (&#39;_CURL_HTTP_PROXY&#39;, &#39;127.0.0.1:8118&#39;);</code>，其中<code>8118</code>端口是通过<code>privoxy</code>设置的http代理，缺点：1.这样所有的更新都全局走代理，影响速度；2.似乎无效。故并未采用。  </p>
