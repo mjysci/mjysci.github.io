@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>解决win10下Ryzen平台间歇性卡顿问题 | 名实合为</title>
+  <title>ubuntu下自建rss阅读器ttrss | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。">
+  <meta name="description" content="rss已死？对占有话语权的内容创作者当然希望这样，但就内容接收者而言，活用合适的rss工具能筛掉无用信息提升效率。本文提供docker之外手动本地搭建ttrss的方法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解决win10下Ryzen平台间歇性卡顿问题">
-<meta property="og:url" content="https://majunyi.top/2019/04/23/fix-win10-ryzen-freeze/index.html">
+<meta property="og:title" content="ubuntu下自建rss阅读器ttrss">
+<meta property="og:url" content="https://majunyi.top/2020/03/22/ubuntu-ttrss/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。">
-<meta property="og:updated_time" content="2019-04-23T07:20:48.506Z">
+<meta property="og:description" content="rss已死？对占有话语权的内容创作者当然希望这样，但就内容接收者而言，活用合适的rss工具能筛掉无用信息提升效率。本文提供docker之外手动本地搭建ttrss的方法。">
+<meta property="og:updated_time" content="2020-03-22T05:22:40.160Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="解决win10下Ryzen平台间歇性卡顿问题">
-<meta name="twitter:description" content="具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。">
+<meta name="twitter:title" content="ubuntu下自建rss阅读器ttrss">
+<meta name="twitter:description" content="rss已死？对占有话语权的内容创作者当然希望这样，但就内容接收者而言，活用合适的rss工具能筛掉无用信息提升效率。本文提供docker之外手动本地搭建ttrss的方法。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -196,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-fix-win10-ryzen-freeze" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-ubuntu-ttrss" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/04/23/fix-win10-ryzen-freeze/" class="article-date">
-      <time datetime="2019-04-23T06:17:10.000Z" itemprop="datePublished">2019-04-23</time>
+      <a href="/2020/03/22/ubuntu-ttrss/" class="article-date">
+      <time datetime="2020-03-22T03:35:50.000Z" itemprop="datePublished">2020-03-22</time>
 </a>
     </div>
   
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      解决win10下Ryzen平台间歇性卡顿问题
+      ubuntu下自建rss阅读器ttrss
     </h1>
   
 
@@ -228,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/win/">win</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,14 +238,19 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>具体现象为几十分钟内会有一次几十秒的卡顿，视频播放停止，鼠标不能动。<br><a id="more"></a><br>旧的客厅用htpc是J1900的，由于不支持硬解x265，而软解4k又比较卡，所以换成了ryzen apu，轻松播放<a href="http://madvr.com" target="_blank" rel="external">madVR</a>渲染的4k hevc高码率视频。只是换机后碰到播放视频间歇性卡顿的问题。  </p>
-<h1 id="分析与尝试"><a href="#分析与尝试" class="headerlink" title="分析与尝试"></a>分析与尝试</h1><p>注意到卡顿时硬盘读取灯常亮，打开任务管理器观察磁盘占用达100%，但列表中并没有高I/O的程序。  </p>
-<h2 id="安装avast替代Windows-Defender"><a href="#安装avast替代Windows-Defender" class="headerlink" title="安装avast替代Windows Defender"></a>安装avast替代Windows Defender</h2><p>Windows Defender有着空闲时扫描硬盘和CPU占用高的问题，虽然这在SSD和多核时代可以忽略，但我还是先用<a href="https://www.avast.com" target="_blank" rel="external">免费的avast</a>试试看。结果问题依旧。</p>
-<h2 id="更新主板芯片驱动"><a href="#更新主板芯片驱动" class="headerlink" title="更新主板芯片驱动"></a>更新主板芯片驱动</h2><p>故怀疑是驱动问题，am4主板在早期曾爆出由于芯片组外包给祥硕，赶工导致的一些主板问题。主板是华擎的<a href="https://www.asrock.com/mb/AMD/A320M-HDV/index.asp#Download" target="_blank" rel="external">A320M-HDV</a>，官方提供了芯片+显卡的驱动合集包，已经安装，并且升级了显卡驱动。于是去AMD官方下载<a href="https://www.amd.com/en/support/chipsets/amd-socket-am4/a320" target="_blank" rel="external">AMD Chipset Drivers</a>，安装后问题依旧。  </p>
-<h2 id="更新SATA控制器驱动"><a href="#更新SATA控制器驱动" class="headerlink" title="更新SATA控制器驱动"></a>更新SATA控制器驱动</h2><p>查看设备管理器，可见<code>IDE ATA/ATAPI控制器</code>依旧为2006年的<code>标准 SATA AHCI 控制器</code>，AMD官方芯片驱动并未更新此项。于是右键更新驱动程序，选手动，选定解压后的文件夹搜索，没有结果。选<code>可用驱动程序列表中选取</code>，取消<code>显示兼容硬件</code>，厂商<code>AMD</code>，装上<code>AMD SATA 控制器</code>。更新后问题依旧。</p>
-<h2 id="查看事件查看器"><a href="#查看事件查看器" class="headerlink" title="查看事件查看器"></a>查看事件查看器</h2><p>Windows日志——系统，发现来源amdsata有很多<code>事件129</code>的警告。内容为：发出了对设备 \Device\RaidPort0 的重置。<br>故怀疑是SATA电源非正常进入节能模式导致的接口重置。</p>
-<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h2 id="解锁电源管理隐藏选项"><a href="#解锁电源管理隐藏选项" class="headerlink" title="解锁电源管理隐藏选项"></a>解锁电源管理隐藏选项</h2><p>以管理员模式打开cmd，运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">powercfg -attributes SUB_DISK 0b2d69d7<span class="_">-a</span>2a1-449c-9680<span class="_">-f</span>91c70521c60 -ATTRIB_HIDE</div></pre></td></tr></table></figure></p>
-<h2 id="更改高级电源设置"><a href="#更改高级电源设置" class="headerlink" title="更改高级电源设置"></a>更改高级电源设置</h2><p>电源和睡眠设置——其他电源设置——更改计划设置——更改高级电源设置——更改当前不可用的设置——硬盘——AHCI Link Power Management - HIPM/DIPM<br>设置改为<code>Active</code>。问题解决。</p>
+        <p>rss已死？对占有话语权的内容创作者当然希望这样，但就内容接收者而言，活用合适的rss工具能筛掉无用信息提升效率。本文提供docker之外手动本地搭建ttrss的方法。<br><a id="more"></a></p>
+<h1 id="为什么不用docker"><a href="#为什么不用docker" class="headerlink" title="为什么不用docker"></a>为什么不用docker</h1><p>对个人用户而言，docker仅适用于一种场合：权限不足的服务器（包括非root的定制linux操作系统，如NAS的系统）。当然docker还有一个好处就是部署方便，但：1.需要大规模部署的场景并不多；2.可通过编写脚本来简化部署。docker的缺点：1.性能损失，对本地无所谓，但购买服务器的话内存需要升一档多花钱了；2.调试不方便(docker exec -it …)，更适合稳定版产品的部署，可玩性差些。<br>当然，图省事的话推荐用docker部署Henry Wang的<a href="https://github.com/HenryQW/Awesome-TTRSS" target="_blank" rel="external">Awesome-TTRSS</a>。<br>注意，由于众所周知的原因，<strong>不建议本地或国内搭建</strong>，当然，下文对如何科学地在国内搭建有所涉及。  </p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://majunyi.top/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a><a href="https://majunyi.top/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a></h1><h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mysql -u root</div><div class="line">CREATE DATABASE ttrss;</div></pre></td></tr></table></figure>
+<h1 id="克隆ttrss源码"><a href="#克隆ttrss源码" class="headerlink" title="克隆ttrss源码"></a>克隆ttrss源码</h1><p>注：若是国内域名建议更改默认文件夹名<code>tt-rss</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://git.tt-rss.org/fox/tt-rss.git</div></pre></td></tr></table></figure></p>
+<p>访问<code>https://example.com/tt-rss/install/</code>执行安装。<br>默认用户名<code>admin</code>，密码<code>password</code>。<br>有个官方不支持但提供的代理选项，编辑<code>/var/www/example.com/tt-rss/config.php</code>并添加一行<code>define (&#39;_CURL_HTTP_PROXY&#39;, &#39;127.0.0.1:8118&#39;);</code>，其中<code>8118</code>端口是通过<code>privoxy</code>设置的http代理，缺点：1.这样所有的更新都全局走代理，影响速度；2.似乎无效。故并未采用。  </p>
+<h1 id="创建feed更新服务"><a href="#创建feed更新服务" class="headerlink" title="创建feed更新服务"></a>创建feed更新服务</h1><p>创建并编辑<code>/etc/systemd/system/ttrss_backend.service</code>文件。有一种科学方法即在此处将php通过<code>proxychains</code>之类的走代理，缺点：1.全局走代理，影响速度；2.易出错导致更新失败。故并未采用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=ttrss_backend</div><div class="line">After=network.target mysql.service</div><div class="line"></div><div class="line">[Service]</div><div class="line">User=www-data</div><div class="line">ExecStart=/var/www/example.com/tt-rss/update_daemon2.php</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
+<p>启用并开始服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> ttrss_backend.service</div><div class="line">sudo systemctl start ttrss_backend.service</div></pre></td></tr></table></figure></p>
+<h1 id="安装feed代理插件options-per-feed"><a href="#安装feed代理插件options-per-feed" class="headerlink" title="安装feed代理插件options_per_feed"></a>安装feed代理插件options_per_feed</h1><p>其中有代理选项，可对单个feed设置走代理线路。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /var/www/example.com/tt-rss/plugins</div><div class="line">sudo -u www-data git clone https://github.com/sergey-dryabzhinsky/options_per_feed</div></pre></td></tr></table></figure></p>
+<p>克隆源码后刷新浏览器，在<code>Preferences-Plugins</code>处激活该插件。<br>此后右键点击feed，<code>编辑feed-Plugins</code>处可启用并设置代理。<br>但对于已经被墙的源是直接添加失败的，这种只能在别处添加并导出，然后tt-rss再导入并设置代理选项才行。  </p>
+<h1 id="安装fever插件以支持更多移动客户端"><a href="#安装fever插件以支持更多移动客户端" class="headerlink" title="安装fever插件以支持更多移动客户端"></a>安装fever插件以支持更多移动客户端</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /var/www/example.com/tt-rss/plugins.local</div><div class="line">sudo -u www-data git clone https://github.com/DigitalDJ/tinytinyrss-fever-plugin fever</div></pre></td></tr></table></figure>
+<p>需要在<code>Preferences-Fever Emulation</code>处设置fever的密码，用于客户端在<code>https://example.com/tt-rss/plugins.local/fever/</code>处登录用。  </p>
+<h1 id="安装feedly主题tt-rss-feedly-theme"><a href="#安装feedly主题tt-rss-feedly-theme" class="headerlink" title="安装feedly主题tt-rss-feedly-theme"></a>安装feedly主题tt-rss-feedly-theme</h1><p>这是看起来比较顺眼，操作也和GR类似的主题。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/levito/tt-rss-feedly-theme/archive/master.zip</div><div class="line">unzip master.zip</div><div class="line"><span class="built_in">cd</span> tt-rss-feedly-theme-master</div><div class="line">sudo -u www-data cp -r feedly* /var/www/example.com/tt-rss/themes.local/</div></pre></td></tr></table></figure></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="取消默认展开文章"><a href="#取消默认展开文章" class="headerlink" title="取消默认展开文章"></a>取消默认展开文章</h2><p><code>Preferences-Articles</code>处取消<code>Always expand articles</code>。</p>
 
       
       
@@ -300,13 +305,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/04/23/fix-win10-ryzen-freeze/">解决win10下Ryzen平台间歇性卡顿问题</a></p>
+        <p><span>本文标题:</span><a href="/2020/03/22/ubuntu-ttrss/">ubuntu下自建rss阅读器ttrss</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2019年04月23日 - 14时17分</p>
-        <p><span>最后更新:</span>2019年04月23日 - 15时20分</p>
+        <p><span>发布时间:</span>2020年03月22日 - 11时35分</p>
+        <p><span>最后更新:</span>2020年03月22日 - 13时22分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/04/23/fix-win10-ryzen-freeze/" title="解决win10下Ryzen平台间歇性卡顿问题">https://majunyi.top/2019/04/23/fix-win10-ryzen-freeze/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/04/23/fix-win10-ryzen-freeze/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/03/22/ubuntu-ttrss/" title="ubuntu下自建rss阅读器ttrss">https://majunyi.top/2020/03/22/ubuntu-ttrss/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2020/03/22/ubuntu-ttrss/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -319,18 +324,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/05/20/rpi3-ubuntu-arm64/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          树莓派3安装arm64版Ubuntu 18.04 Server
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/03/14/docker-credential-login/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">通过pass实现更安全的docker登录方式</div>
+    <a href="/2020/03/15/ubuntu-nextcloud/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ubuntu下搭建私人同步云盘nextcloud</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -341,7 +337,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分析与尝试"><span class="toc-number">1.</span> <span class="toc-text">分析与尝试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装avast替代Windows-Defender"><span class="toc-number">1.1.</span> <span class="toc-text">安装avast替代Windows Defender</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新主板芯片驱动"><span class="toc-number">1.2.</span> <span class="toc-text">更新主板芯片驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新SATA控制器驱动"><span class="toc-number">1.3.</span> <span class="toc-text">更新SATA控制器驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看事件查看器"><span class="toc-number">1.4.</span> <span class="toc-text">查看事件查看器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决方案"><span class="toc-number">2.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#解锁电源管理隐藏选项"><span class="toc-number">2.1.</span> <span class="toc-text">解锁电源管理隐藏选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更改高级电源设置"><span class="toc-number">2.2.</span> <span class="toc-text">更改高级电源设置</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么不用docker"><span class="toc-number">1.</span> <span class="toc-text">为什么不用docker</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装配置apache"><span class="toc-number">2.</span> <span class="toc-text">安装配置apache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装mysql"><span class="toc-number">3.</span> <span class="toc-text">安装mysql</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建数据库"><span class="toc-number">4.</span> <span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#克隆ttrss源码"><span class="toc-number">5.</span> <span class="toc-text">克隆ttrss源码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建feed更新服务"><span class="toc-number">6.</span> <span class="toc-text">创建feed更新服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装feed代理插件options-per-feed"><span class="toc-number">7.</span> <span class="toc-text">安装feed代理插件options_per_feed</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装fever插件以支持更多移动客户端"><span class="toc-number">8.</span> <span class="toc-text">安装fever插件以支持更多移动客户端</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装feedly主题tt-rss-feedly-theme"><span class="toc-number">9.</span> <span class="toc-text">安装feedly主题tt-rss-feedly-theme</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">10.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#取消默认展开文章"><span class="toc-number">10.1.</span> <span class="toc-text">取消默认展开文章</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -408,13 +404,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/05/20/rpi3-ubuntu-arm64/" title="上一篇: 树莓派3安装arm64版Ubuntu 18.04 Server">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2019/03/14/docker-credential-login/" title="下一篇: 通过pass实现更安全的docker登录方式">
+            <a href="/2020/03/15/ubuntu-nextcloud/" title="下一篇: ubuntu下搭建私人同步云盘nextcloud">
                 <i class="fa fa-angle-right"></i>
             </a>
         
