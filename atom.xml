@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2020-03-22T08:19:13.347Z</updated>
+  <updated>2020-03-23T04:06:48.809Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ubuntu下搭建rss全文输出服务full-text-rss</title>
+    <link href="https://majunyi.top/2020/03/23/ubuntu-full-text-rss/"/>
+    <id>https://majunyi.top/2020/03/23/ubuntu-full-text-rss/</id>
+    <published>2020-03-23T02:52:55.000Z</published>
+    <updated>2020-03-23T04:06:48.809Z</updated>
+    
+    <content type="html"><![CDATA[<p>只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。<br><a id="more"></a><br>本文提供了搭建rss全文输出服务<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>的步骤，对国内环境如何科学地抓取全文亦有所涉及，此服务配合<a href="https://majunyi.top/2020/03/22/ubuntu-ttrss/">自建rss阅读器tt-rss</a>使用效果更好。  </p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用mercury-parser-api"><a href="#为什么不用mercury-parser-api" class="headerlink" title="为什么不用mercury-parser-api"></a>为什么不用<a href="https://github.com/postlight/mercury-parser-api" target="_blank" rel="external">mercury-parser-api</a></h2><ol>
+<li>没有权限设置选项<br>这意味者要么限制其和阅读器服务处于同一个服务器中（localhost），要么通过反代开放到公网并通过防火墙限制访问IP，否则就是向全网公开的服务，任何人都能使用。  </li>
+<li>不支持代理<br>国内网络环境你懂的，这样就限制其只能部署在国外服务器才能发挥全部作用。  </li>
+</ol>
+<h2 id="fivefilters在线服务的不足之处"><a href="#fivefilters在线服务的不足之处" class="headerlink" title="fivefilters在线服务的不足之处"></a><a href="https://fivefilters.org/content-only/" target="_blank" rel="external">fivefilters在线服务</a>的不足之处</h2><ol>
+<li>制作的feed链接为http<br>墙连全文都不用看，只检查url中的关键字就能拦截了。自行搭建可以设为全部走https，这样中间人只能知道你访问的域名，全文和域名以外的url是加密的。</li>
+<li>免费服务有限制<br>主要是一次抓取的文章限制为3篇，且文末有一行文字链接的广告。  </li>
+</ol>
+<p>其实轻度使用足够了。本文推荐的<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>比fivefilters的线上版本慢一版，不过自己搭建能使用全功能无限制。  </p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://majunyi.top/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-tidy</div><div class="line">sudo service apache2 reload</div></pre></td></tr></table></figure>
+<h1 id="安装full-text-rss"><a href="#安装full-text-rss" class="headerlink" title="安装full-text-rss"></a>安装full-text-rss</h1><p>克隆源码。国内搭建建议为默认的文件夹<code>full-text-rss</code>改名。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://bitbucket.org/fivefilters/full-text-rss.git</div></pre></td></tr></table></figure></p>
+<p>配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> full-text-rss</div><div class="line">sudo -u www-data cp config.php custom_config.php</div><div class="line">sudo -u www-data vi config.php</div></pre></td></tr></table></figure></p>
+<p>修改以下选项。其中<code>api_keys</code>改成自用密码，设成需密码才能使用此服务，<code>proxy_servers</code>为http代理设置，此处示例为<code>privoxy</code>的默认设置。如此设置后ftr将全局走代理，所以设置<code>allow_proxy_override</code>为<code>true</code>，如果不需代理则在生成的全文feed地址后加上<code>&amp;proxy=0</code>。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$options-&gt;key_required = <span class="keyword">true</span>;</div><div class="line">$options-&gt;api_keys[<span class="number">1</span>] = <span class="string">'your-secret-token'</span>;</div><div class="line">$options-&gt;proxy_servers = <span class="keyword">array</span>(<span class="string">'privoxy'</span>=&gt;<span class="keyword">array</span>(<span class="string">'host'</span>=&gt;<span class="string">'127.0.0.1:8118'</span>));</div><div class="line">$options-&gt;allow_proxy_override = <span class="keyword">true</span>;</div></pre></td></tr></table></figure></p>
+<p>注：国外服务器搭建则无需代理，<code>proxy_servers</code>不要修改，默认即可。  </p>
+<h1 id="更新网站定制抓取规则"><a href="#更新网站定制抓取规则" class="headerlink" title="更新网站定制抓取规则"></a>更新网站定制抓取规则</h1><p>没有规则的ftr和咸鱼一样。克隆官方网站规则集。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com/full-text-rss/site_config</div><div class="line">sudo rm -rf standard</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://github.com/fivefilters/ftr-site-config.git standard</div></pre></td></tr></table></figure></p>
+<h1 id="定制网站抓取规则"><a href="#定制网站抓取规则" class="headerlink" title="定制网站抓取规则"></a>定制网站抓取规则</h1><p>官方网站规则不带的网站可以自行设定抓取规则，好在fivefilters也提供了<a href="http://siteconfig.fivefilters.org/" target="_blank" rel="external">图形化的规则定制工具</a>。<br>输入需定制网站的任意一篇文章，点<code>Go</code>进入新页面，鼠标选定文章的全文范围，然后点击<code>Download Full-Text RSS site config</code>下载定制规则。<br>将规则文件上传到<code>site_config/custom/</code>文件夹下。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="rss" scheme="https://majunyi.top/tags/rss/"/>
+    
+  </entry>
   
   <entry>
     <title>ubuntu下自建rss阅读器ttrss</title>
@@ -236,9 +277,9 @@
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
       <category term="rpi" scheme="https://majunyi.top/tags/rpi/"/>
     
@@ -436,9 +477,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
       <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
     
@@ -727,9 +768,9 @@ arch ramips_24kec 500
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="vps" scheme="https://majunyi.top/tags/vps/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="vps" scheme="https://majunyi.top/tags/vps/"/>
     
   </entry>
   
@@ -763,60 +804,6 @@ arch ramips_24kec 500
       <category term="udacity" scheme="https://majunyi.top/tags/udacity/"/>
     
       <category term="engineering" scheme="https://majunyi.top/tags/engineering/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>利用树莓派DIY运动检测监控</title>
-    <link href="https://majunyi.top/2017/04/22/rpi-cctv-motion/"/>
-    <id>https://majunyi.top/2017/04/22/rpi-cctv-motion/</id>
-    <published>2017-04-22T02:38:56.000Z</published>
-    <updated>2017-04-22T04:36:48.091Z</updated>
-    
-    <content type="html"><![CDATA[<p>出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。</p>
-<a id="more"></a>
-<h2 id="硬件准备"><a href="#硬件准备" class="headerlink" title="硬件准备"></a>硬件准备</h2><ol>
-<li><a href="https://www.raspberrypi.org/products/" target="_blank" rel="external">树莓派Raspberry Pi 3</a></li>
-<li><a href="http://www.waveshare.com/rpi-ir-cut-camera.htm" target="_blank" rel="external">RPi IR-CUT Camera</a></li>
-</ol>
-<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><h3 id="启用摄像头"><a href="#启用摄像头" class="headerlink" title="启用摄像头"></a>启用摄像头</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/modules</div></pre></td></tr></table></figure>
-<p>添加这一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bcm2835-v4l2</div></pre></td></tr></table></figure></p>
-<p>重启后测试摄像头<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">raspistill -o image.jpg -t 10000     <span class="comment">#test camera</span></div></pre></td></tr></table></figure></p>
-<h3 id="安装motionEye"><a href="#安装motionEye" class="headerlink" title="安装motionEye"></a>安装motionEye</h3><p>核心软件是<a href="http://www.lavrsen.dk/foswiki/bin/view/Motion/WebHome" target="_blank" rel="external">Motion</a>，我以前就是用它配合Mutt来实现前言的功能的，但配置稍麻烦，且自带的远程管理界面略简单。后来发现<a href="https://github.com/ccrisan/motioneye/wiki" target="_blank" rel="external">motionEye</a>，是用python写的Motion前端，十分好用。</p>
-<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/ccrisan/motioneye/wiki/precompiled/ffmpeg_3.1.1-1_armhf.deb</div><div class="line">sudo dpkg -i ffmpeg_3.1.1-1_armhf.deb</div><div class="line"><span class="comment">#apt-get remove libavcodec-extra-56 libavformat56 libavresample2 libavutil54</span></div><div class="line">sudo apt-get install python-pip python-dev curl libssl-dev libcurl4-openssl-dev libjpeg-dev libx264-142 libavcodec56 libavformat56 libmysqlclient18 libswscale3 libpq5 v4l-utils</div><div class="line">wget https://github.com/Motion-Project/motion/releases/download/release-4.0.1/pi_jessie_motion_4.0.1-1_armhf.deb</div><div class="line">sudo dpkg -i pi_jessie_motion_4.0.1-1_armhf.deb</div></pre></td></tr></table></figure>
-<h4 id="更改pip源为国内aliyun镜像"><a href="#更改pip源为国内aliyun镜像" class="headerlink" title="更改pip源为国内aliyun镜像"></a>更改pip源为国内aliyun镜像</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir ~/.pip</div><div class="line">nano ~/.pip/pip.conf</div></pre></td></tr></table></figure>
-<p>添加如下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[global]</div><div class="line">trusted-host =  mirrors.aliyun.com</div><div class="line">index-url = http://mirrors.aliyun.com/pypi/simple</div></pre></td></tr></table></figure></p>
-<h4 id="安装motionEye-1"><a href="#安装motionEye-1" class="headerlink" title="安装motionEye"></a>安装motionEye</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo pip install motioneye</div><div class="line">sudo mkdir -p /etc/motioneye</div><div class="line">sudo cp /usr/<span class="built_in">local</span>/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf</div><div class="line"></div><div class="line">sudo cp /usr/<span class="built_in">local</span>/share/motioneye/extra/motioneye.systemd-unit-local /etc/systemd/system/motioneye.service</div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl <span class="built_in">enable</span> motioneye          <span class="comment">#设为开机启动，可选</span></div><div class="line">sudo systemctl start motioneye</div></pre></td></tr></table></figure>
-<h4 id="更新（可选）"><a href="#更新（可选）" class="headerlink" title="更新（可选）"></a>更新（可选）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo pip install motioneye --upgrade</div><div class="line">sudo systemctl restart motioneye</div></pre></td></tr></table></figure>
-<h2 id="配置motionEye"><a href="#配置motionEye" class="headerlink" title="配置motionEye"></a>配置motionEye</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/motioneye/motioneye.conf</div></pre></td></tr></table></figure>
-<p>更改端口（可选）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">port 8765</div><div class="line">motion_control_port 7999</div></pre></td></tr></table></figure></p>
-<p>相关配置文件位置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/motion/motion.conf</div><div class="line">sudo nano /etc/motioneye/thread-1.conf</div></pre></td></tr></table></figure></p>
-<h3 id="通过前端配置邮件提醒"><a href="#通过前端配置邮件提醒" class="headerlink" title="通过前端配置邮件提醒"></a>通过前端配置邮件提醒</h3><p>浏览器打开<br>localhost:8765<br>默认login: admin 密码为空<br>Advanced Settings ON<br>163邮件参数<br>163mail 25 non-TLS</p>
-<h2 id="控制夜视开关"><a href="#控制夜视开关" class="headerlink" title="控制夜视开关"></a>控制夜视开关</h2><p>我选用的摄像头为微雪的RPi IR-CUT Camera，没有led，而是将原来控制led的端口作为夜视开关，官方给出的控制方案为<a href="http://www.waveshare.com/wiki/RPi_IR-CUT_Camera" target="_blank" rel="external">额外接一根线到摄像头模块</a><br><img src="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&amp;width=400" alt=""><br>但这种方案不仅占用了一个外置GPIO端口，还降低了可靠性，特别是摄像头距主控较远的情况。其实<a href="https://www.raspberrypi.org/forums/viewtopic.php?p=891836&amp;sid=66eeecc88aa73bcad4f1f4109bfe54d2#p891836" target="_blank" rel="external">6by9已经指出</a>可以通过GPIO 32 (A+之后，3之前的板子) 或GPIO 5 (树莓派1)来控制camera led。</p>
-<h3 id="RPi2设置"><a href="#RPi2设置" class="headerlink" title="RPi2设置"></a>RPi2设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /boot/config.txt</div></pre></td></tr></table></figure>
-<p>添加以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">disable_camera_led=1</div></pre></td></tr></table></figure></p>
-<p>编译cnv<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/mjysci/rpi-cam-night-vision-control</div><div class="line"><span class="built_in">cd</span> rpi-cam-night-vision-control</div><div class="line">gcc -Wall -o cnv cnv.c -lwiringPi</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cnv</div></pre></td></tr></table></figure></p>
-<h3 id="RPi3设置"><a href="#RPi3设置" class="headerlink" title="RPi3设置"></a>RPi3设置</h3><p>最新的rpi3内置GPIO有变动，disable_camera_led失效，由于是扩展GPIO，并不能直接控制。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/6by9/rpi3-gpiovirtbuf.git</div><div class="line"><span class="built_in">cd</span> rpi3-gpiovirtbuf</div><div class="line">make</div><div class="line">cp rpi3-gpiovirtbuf ~/bin/rpi3-gpiovirtbuf</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpi3-gpiovirtbuf s 134 1 #夜视模式关闭</div><div class="line">rpi3-gpiovirtbuf s 134 0 #夜视模式开启</div></pre></td></tr></table></figure></p>
-<p>清空记录可以直接在前端操作，亦可通过rm实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo rm /var/lib/motioneye/Camera1/*.*</div></pre></td></tr></table></figure></p>
-<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><p>之前在rpi2按以上步骤没问题，但重新部署到rpi3时碰到refused to connect错误<br>查看服务状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl status motioneye.service <span class="_">-l</span></div></pre></td></tr></table></figure></p>
-<p>不知何故安装时并未创建数据文件夹，手动建之<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /var/lib/motioneye</div></pre></td></tr></table></figure></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/ccrisan/motioneye/wiki/Install-On-Raspbian" target="_blank" rel="external">motionEye wiki</a><br><a href="https://www.raspberrypi.org/forums/viewtopic.php?p=891836&amp;sid=66eeecc88aa73bcad4f1f4109bfe54d2#p891836" target="_blank" rel="external">Turning off camera LED</a><br><a href="https://www.raspberrypi.org/forums/viewtopic.php?f=43&amp;t=109137&amp;start=100#p989832" target="_blank" rel="external">Raw sensor access / CSI-2 receiver peripheral</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="rpi" scheme="https://majunyi.top/tags/rpi/"/>
-    
-      <category term="motion" scheme="https://majunyi.top/tags/motion/"/>
     
   </entry>
   

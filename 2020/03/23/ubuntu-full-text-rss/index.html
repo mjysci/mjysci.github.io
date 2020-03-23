@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>R6220采用中继桥实现无线桥接 | 名实合为</title>
+  <title>ubuntu下搭建rss全文输出服务full-text-rss | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
+  <meta name="description" content="只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="R6220采用中继桥实现无线桥接">
-<meta property="og:url" content="https://majunyi.top/2019/01/08/r6220-relay-bridge/index.html">
+<meta property="og:title" content="ubuntu下搭建rss全文输出服务full-text-rss">
+<meta property="og:url" content="https://majunyi.top/2020/03/23/ubuntu-full-text-rss/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
-<meta property="og:updated_time" content="2019-01-13T02:35:40.759Z">
+<meta property="og:description" content="只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。">
+<meta property="og:updated_time" content="2020-03-23T04:06:48.809Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="R6220采用中继桥实现无线桥接">
-<meta name="twitter:description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
+<meta name="twitter:title" content="ubuntu下搭建rss全文输出服务full-text-rss">
+<meta name="twitter:description" content="只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -196,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-r6220-relay-bridge" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-ubuntu-full-text-rss" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/01/08/r6220-relay-bridge/" class="article-date">
-      <time datetime="2019-01-08T03:35:23.000Z" itemprop="datePublished">2019-01-08</time>
+      <a href="/2020/03/23/ubuntu-full-text-rss/" class="article-date">
+      <time datetime="2020-03-23T02:52:55.000Z" itemprop="datePublished">2020-03-23</time>
 </a>
     </div>
   
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      R6220采用中继桥实现无线桥接
+      ubuntu下搭建rss全文输出服务full-text-rss
     </h1>
   
 
@@ -227,6 +227,10 @@
 
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rss/">rss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -234,18 +238,23 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。<br><a id="more"></a><br><a href="https://majunyi.top/2019/01/06/r6220-breed-pandora/">前情提要</a>，虽然远程桌面非刚需，但htpc无法直连主路由网段的NAS不能接受。还是需要桥接把副路由连接设备和主路由放在同一网段。  </p>
-<h1 id="安装relay协议"><a href="#安装relay协议" class="headerlink" title="安装relay协议"></a>安装relay协议</h1><p>潘多拉默认未带，不过其应用层是和openwrt及luci兼容的，可装<a href="https://openwrt.org/packages/pkgdata/luci-proto-relay" target="_blank" rel="external">luci-proto-relay</a><br>ssh连上路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.1</div></pre></td></tr></table></figure></p>
-<p>更新并安装luci-proto-relay  </p>
-<pre><code>opkg update
-opkg install luci-proto-relay
-</code></pre><p>注：潘多拉的web ui和openwrt基本一样，其实自带软件包管理项，不想输命令可登录web管理——系统——软件包处搜索并安装。  </p>
-<h1 id="设置中继桥"><a href="#设置中继桥" class="headerlink" title="设置中继桥"></a>设置中继桥</h1><h2 id="修改LAN"><a href="#修改LAN" class="headerlink" title="修改LAN"></a>修改LAN</h2><p>接口——LAN，地址修改为和主路由不同的网段，如<code>192.168.2.1</code>。禁用DHCP。<br>将计算机连路由的接口取消自动获取IP, 改成静态IP<code>192.168.2.10</code>，默认网关<code>192.168.2.1</code>。断开与路由的连接然后重连。</p>
-<h2 id="以无线客户端模式加入主路由网络"><a href="#以无线客户端模式加入主路由网络" class="headerlink" title="以无线客户端模式加入主路由网络"></a>以无线客户端模式加入主路由网络</h2><p>无线——扫描——加入网络，填入密码后记得<strong>把防火墙区域改成lan</strong>。    </p>
-<h2 id="添加桥接接口"><a href="#添加桥接接口" class="headerlink" title="添加桥接接口"></a>添加桥接接口</h2><p>接口，添加接口，协议选<code>中继桥</code>（Relay bridge）。<br>在新接口设置界面勾选<code>lan</code>和<code>wwan</code>。<br>重启路由。  </p>
-<p>注：以上步骤参考自官方的<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="external">luci界面设置中继桥教程</a>。</p>
-<h1 id="htpc连NAS"><a href="#htpc连NAS" class="headerlink" title="htpc连NAS"></a>htpc连NAS</h1><p>此步非必须。只是现在网络发现处NAS只出现在多媒体类别下，而不在计算机类别。<br>程序与功能——启用或关闭Windows功能——勾选SMB 1.0，重启win10。  </p>
-<h1 id="备用资料"><a href="#备用资料" class="headerlink" title="备用资料"></a>备用资料</h1><p>附上R6220原版固件资料以备不时之需：<br><a href="https://www.netgear.com/support/product/R6220.aspx#download" target="_blank" rel="external">R6220官方支持页面</a><br><a href="https://kb.netgear.com/24108/How-do-I-configure-my-Nighthawk-router-as-a-wireless-repeater" target="_blank" rel="external">Netgear设置wireless repeater步骤</a><br><a href="http://www.downloads.netgear.com/files/GDC/R6220/R6220-V1.1.0.80_1.0.1.zip" target="_blank" rel="external">R6220官方固件V1.1.0.80_1.0.1</a></p>
+        <p>只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。<br><a id="more"></a><br>本文提供了搭建rss全文输出服务<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>的步骤，对国内环境如何科学地抓取全文亦有所涉及，此服务配合<a href="https://majunyi.top/2020/03/22/ubuntu-ttrss/">自建rss阅读器tt-rss</a>使用效果更好。  </p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用mercury-parser-api"><a href="#为什么不用mercury-parser-api" class="headerlink" title="为什么不用mercury-parser-api"></a>为什么不用<a href="https://github.com/postlight/mercury-parser-api" target="_blank" rel="external">mercury-parser-api</a></h2><ol>
+<li>没有权限设置选项<br>这意味者要么限制其和阅读器服务处于同一个服务器中（localhost），要么通过反代开放到公网并通过防火墙限制访问IP，否则就是向全网公开的服务，任何人都能使用。  </li>
+<li>不支持代理<br>国内网络环境你懂的，这样就限制其只能部署在国外服务器才能发挥全部作用。  </li>
+</ol>
+<h2 id="fivefilters在线服务的不足之处"><a href="#fivefilters在线服务的不足之处" class="headerlink" title="fivefilters在线服务的不足之处"></a><a href="https://fivefilters.org/content-only/" target="_blank" rel="external">fivefilters在线服务</a>的不足之处</h2><ol>
+<li>制作的feed链接为http<br>墙连全文都不用看，只检查url中的关键字就能拦截了。自行搭建可以设为全部走https，这样中间人只能知道你访问的域名，全文和域名以外的url是加密的。</li>
+<li>免费服务有限制<br>主要是一次抓取的文章限制为3篇，且文末有一行文字链接的广告。  </li>
+</ol>
+<p>其实轻度使用足够了。本文推荐的<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>比fivefilters的线上版本慢一版，不过自己搭建能使用全功能无限制。  </p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://majunyi.top/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-tidy</div><div class="line">sudo service apache2 reload</div></pre></td></tr></table></figure>
+<h1 id="安装full-text-rss"><a href="#安装full-text-rss" class="headerlink" title="安装full-text-rss"></a>安装full-text-rss</h1><p>克隆源码。国内搭建建议为默认的文件夹<code>full-text-rss</code>改名。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://bitbucket.org/fivefilters/full-text-rss.git</div></pre></td></tr></table></figure></p>
+<p>配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> full-text-rss</div><div class="line">sudo -u www-data cp config.php custom_config.php</div><div class="line">sudo -u www-data vi config.php</div></pre></td></tr></table></figure></p>
+<p>修改以下选项。其中<code>api_keys</code>改成自用密码，设成需密码才能使用此服务，<code>proxy_servers</code>为http代理设置，此处示例为<code>privoxy</code>的默认设置。如此设置后ftr将全局走代理，所以设置<code>allow_proxy_override</code>为<code>true</code>，如果不需代理则在生成的全文feed地址后加上<code>&amp;proxy=0</code>。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$options-&gt;key_required = <span class="keyword">true</span>;</div><div class="line">$options-&gt;api_keys[<span class="number">1</span>] = <span class="string">'your-secret-token'</span>;</div><div class="line">$options-&gt;proxy_servers = <span class="keyword">array</span>(<span class="string">'privoxy'</span>=&gt;<span class="keyword">array</span>(<span class="string">'host'</span>=&gt;<span class="string">'127.0.0.1:8118'</span>));</div><div class="line">$options-&gt;allow_proxy_override = <span class="keyword">true</span>;</div></pre></td></tr></table></figure></p>
+<p>注：国外服务器搭建则无需代理，<code>proxy_servers</code>不要修改，默认即可。  </p>
+<h1 id="更新网站定制抓取规则"><a href="#更新网站定制抓取规则" class="headerlink" title="更新网站定制抓取规则"></a>更新网站定制抓取规则</h1><p>没有规则的ftr和咸鱼一样。克隆官方网站规则集。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com/full-text-rss/site_config</div><div class="line">sudo rm -rf standard</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://github.com/fivefilters/ftr-site-config.git standard</div></pre></td></tr></table></figure></p>
+<h1 id="定制网站抓取规则"><a href="#定制网站抓取规则" class="headerlink" title="定制网站抓取规则"></a>定制网站抓取规则</h1><p>官方网站规则不带的网站可以自行设定抓取规则，好在fivefilters也提供了<a href="http://siteconfig.fivefilters.org/" target="_blank" rel="external">图形化的规则定制工具</a>。<br>输入需定制网站的任意一篇文章，点<code>Go</code>进入新页面，鼠标选定文章的全文范围，然后点击<code>Download Full-Text RSS site config</code>下载定制规则。<br>将规则文件上传到<code>site_config/custom/</code>文件夹下。</p>
 
       
       
@@ -300,13 +309,13 @@ opkg install luci-proto-relay
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></p>
+        <p><span>本文标题:</span><a href="/2020/03/23/ubuntu-full-text-rss/">ubuntu下搭建rss全文输出服务full-text-rss</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2019年01月08日 - 11时35分</p>
-        <p><span>最后更新:</span>2019年01月13日 - 10时35分</p>
+        <p><span>发布时间:</span>2020年03月23日 - 10时52分</p>
+        <p><span>最后更新:</span>2020年03月23日 - 12时06分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/01/08/r6220-relay-bridge/" title="R6220采用中继桥实现无线桥接">https://majunyi.top/2019/01/08/r6220-relay-bridge/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2019/01/08/r6220-relay-bridge/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/03/23/ubuntu-full-text-rss/" title="ubuntu下搭建rss全文输出服务full-text-rss">https://majunyi.top/2020/03/23/ubuntu-full-text-rss/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2020/03/23/ubuntu-full-text-rss/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -319,18 +328,9 @@ opkg install luci-proto-relay
 
 <nav id="article-nav">
   
-    <a href="/2019/01/13/hc5661-pandorabox/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          极1s（hc5661）刷潘多拉固件
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/01/06/r6220-breed-pandora/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Netgear R6220刷Breed和pandorabox固件</div>
+    <a href="/2020/03/22/ubuntu-ttrss/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ubuntu下自建rss阅读器ttrss</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -341,7 +341,7 @@ opkg install luci-proto-relay
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装relay协议"><span class="toc-number">1.</span> <span class="toc-text">安装relay协议</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置中继桥"><span class="toc-number">2.</span> <span class="toc-text">设置中继桥</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改LAN"><span class="toc-number">2.1.</span> <span class="toc-text">修改LAN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#以无线客户端模式加入主路由网络"><span class="toc-number">2.2.</span> <span class="toc-text">以无线客户端模式加入主路由网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加桥接接口"><span class="toc-number">2.3.</span> <span class="toc-text">添加桥接接口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#htpc连NAS"><span class="toc-number">3.</span> <span class="toc-text">htpc连NAS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#备用资料"><span class="toc-number">4.</span> <span class="toc-text">备用资料</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#需求"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么不用mercury-parser-api"><span class="toc-number">1.1.</span> <span class="toc-text">为什么不用mercury-parser-api</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fivefilters在线服务的不足之处"><span class="toc-number">1.2.</span> <span class="toc-text">fivefilters在线服务的不足之处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装配置apache"><span class="toc-number">2.</span> <span class="toc-text">安装配置apache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装依赖包"><span class="toc-number">3.</span> <span class="toc-text">安装依赖包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装full-text-rss"><span class="toc-number">4.</span> <span class="toc-text">安装full-text-rss</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#更新网站定制抓取规则"><span class="toc-number">5.</span> <span class="toc-text">更新网站定制抓取规则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定制网站抓取规则"><span class="toc-number">6.</span> <span class="toc-text">定制网站抓取规则</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -408,13 +408,11 @@ opkg install luci-proto-relay
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/01/13/hc5661-pandorabox/" title="上一篇: 极1s（hc5661）刷潘多拉固件">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2019/01/06/r6220-breed-pandora/" title="下一篇: Netgear R6220刷Breed和pandorabox固件">
+            <a href="/2020/03/22/ubuntu-ttrss/" title="下一篇: ubuntu下自建rss阅读器ttrss">
                 <i class="fa fa-angle-right"></i>
             </a>
         
