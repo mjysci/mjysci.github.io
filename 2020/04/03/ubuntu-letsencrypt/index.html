@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://majunyi.top/2020/04/03/ubuntu-letsencrypt/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="证书常用位置及权限设置，以及用脚本更新阿里云域名（ddns）。">
-<meta property="og:updated_time" content="2020-04-03T02:57:48.900Z">
+<meta property="og:updated_time" content="2020-04-03T03:10:52.927Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu下手动部署Let's Encrypt">
 <meta name="twitter:description" content="证书常用位置及权限设置，以及用脚本更新阿里云域名（ddns）。">
@@ -250,6 +250,7 @@
 <p>在编辑器中添加一行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*/5 * * * * /bin/bash /root/ali_ddns.sh</div></pre></td></tr></table></figure></p>
 <p>其中<code>*</code>依次为每分，每小时，每天，每月，每星期几。此处设置为每5分钟检查一次IP，有改变则上报域名管理更新记录。  </p>
 <h1 id="caddy"><a href="#caddy" class="headerlink" title="caddy"></a><a href="https://caddyserver.com/" target="_blank" rel="external">caddy</a></h1><p>用caddy则比较轻松，会根据CaddyFile中的设置为每个域名自动签发和更新证书，这里仅记录下签发证书的位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/example.com/example.com.crt</div><div class="line">/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/example.com/example.com.key</div></pre></td></tr></table></figure></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://github.com/Neilpang/acme.sh/wiki/说明" target="_blank" rel="external">https://github.com/Neilpang/acme.sh/wiki/说明</a><br><a href="https://github.com/Neilpang/acme.sh/wiki/Options-and-Params" target="_blank" rel="external">https://github.com/Neilpang/acme.sh/wiki/Options-and-Params</a><br><a href="https://github.com/h46incon/AliDDNSBash#使用方法" target="_blank" rel="external">https://github.com/h46incon/AliDDNSBash#使用方法</a><br><a href="http://man7.org/linux/man-pages/man5/crontab.5.html" target="_blank" rel="external">http://man7.org/linux/man-pages/man5/crontab.5.html</a></p>
 
       
       
@@ -307,7 +308,7 @@
         <p><span>本文标题:</span><a href="/2020/04/03/ubuntu-letsencrypt/">ubuntu下手动部署Let&#39;s Encrypt</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2020年04月03日 - 10时11分</p>
-        <p><span>最后更新:</span>2020年04月03日 - 10时57分</p>
+        <p><span>最后更新:</span>2020年04月03日 - 11时10分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/04/03/ubuntu-letsencrypt/" title="ubuntu下手动部署Let&#39;s Encrypt">https://majunyi.top/2020/04/03/ubuntu-letsencrypt/</a>
             <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2020/04/03/ubuntu-letsencrypt/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -336,7 +337,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#letsencrpyt"><span class="toc-number">1.</span> <span class="toc-text">letsencrpyt</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建相关文件夹并设置权限"><span class="toc-number">1.1.</span> <span class="toc-text">创建相关文件夹并设置权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用acme-sh自动签发ssl证书"><span class="toc-number">1.2.</span> <span class="toc-text">用acme.sh自动签发ssl证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卸载"><span class="toc-number">1.3.</span> <span class="toc-text">卸载</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动态域名ddns"><span class="toc-number">2.</span> <span class="toc-text">动态域名ddns</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#caddy"><span class="toc-number">3.</span> <span class="toc-text">caddy</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#letsencrpyt"><span class="toc-number">1.</span> <span class="toc-text">letsencrpyt</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建相关文件夹并设置权限"><span class="toc-number">1.1.</span> <span class="toc-text">创建相关文件夹并设置权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用acme-sh自动签发ssl证书"><span class="toc-number">1.2.</span> <span class="toc-text">用acme.sh自动签发ssl证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卸载"><span class="toc-number">1.3.</span> <span class="toc-text">卸载</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动态域名ddns"><span class="toc-number">2.</span> <span class="toc-text">动态域名ddns</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#caddy"><span class="toc-number">3.</span> <span class="toc-text">caddy</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
