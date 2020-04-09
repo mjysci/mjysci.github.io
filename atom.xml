@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2020-04-03T03:10:52.927Z</updated>
+  <updated>2020-04-09T04:25:15.571Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -14,6 +14,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ubuntu下nginx作为前端配合apache作为后端</title>
+    <link href="https://majunyi.top/2020/04/09/ubuntu-nginx-frontend-apache-backend/"/>
+    <id>https://majunyi.top/2020/04/09/ubuntu-nginx-frontend-apache-backend/</id>
+    <published>2020-04-09T03:10:56.000Z</published>
+    <updated>2020-04-09T04:25:15.571Z</updated>
+    
+    <content type="html"><![CDATA[<p>nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。<br><a id="more"></a><br>注意中转影响效率，并不适合单机，适合多对多服务器。但由于第二点的需求故仍然采用了这个方案。</p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a>安装配置apache</h1><p>安装依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install apache2 libapache2-mod-php7.2</div><div class="line">sudo apt-get install php7.2-gd php7.2-json php7.2-curl php7.2-mbstring php7.2-intl php-imagick php7.2-xml php7.2-zip libapache2-mod-scgi</div></pre></td></tr></table></figure></p>
+<p>启用<code>.htaccess</code>。修改<code>/etc/apache2/apache2.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Directory /var/www/&gt;</div><div class="line">  AllowOverride All</div></pre></td></tr></table></figure></p>
+<p>修改<code>/etc/apache2/ports.conf</code>。将默认的<code>80</code>和<code>443</code>端口改成其他以免和nginx冲突。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Listen 7080</div><div class="line"># 此项可选，若没有就不添加</div><div class="line">&lt;IfModule ssl_module&gt;</div><div class="line">        Listen 7443</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
+<p>新建http站点配置文件<code>/etc/apache2/sites-available/example.com.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># 限制vhost仅</div><div class="line">&lt;VirtualHost 127.0.0.1:7080&gt;</div><div class="line">    Alias / &quot;/var/www/example.com/&quot;</div><div class="line"></div><div class="line">    &lt;Directory /var/www/example.com/&gt;</div><div class="line">        Options +FollowSymlinks</div><div class="line">        AllowOverride All</div><div class="line"></div><div class="line">        &lt;IfModule mod_dav.c&gt;</div><div class="line">            Dav off</div><div class="line">        &lt;/IfModule&gt;</div><div class="line"></div><div class="line">        SetEnv HOME /var/www/example.com</div><div class="line">        SetEnv HTTP_HOME /var/www/example.com</div><div class="line"></div><div class="line">        #此项可选，为nextcloud专用301跳转，没装不用加。</div><div class="line">        Redirect 301 /.well-known/carddav https://example.com/nextcloud/remote.php/dav</div><div class="line">        Redirect 301 /.well-known/caldav  https://example.com/nextcloud/remote.php/dav</div><div class="line">        Redirect 301 /.well-known/webdav  https://example.com/nextcloud/remote.php/dav</div><div class="line">    &lt;/Directory&gt;</div><div class="line"></div><div class="line">    ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log</div><div class="line">    CustomLog $&#123;APACHE_LOG_DIR&#125;/access.log combined</div><div class="line"></div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure></p>
+<p>开启apache相关模块。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod rewrite headers env dir mime</div></pre></td></tr></table></figure></p>
+<p>禁用默认站点，启用本站配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo a2ensite example.com.conf</div><div class="line">sudo a2dissite 000-default.conf</div></pre></td></tr></table></figure></p>
+<h2 id="修改php上传文件大小上限"><a href="#修改php上传文件大小上限" class="headerlink" title="修改php上传文件大小上限"></a>修改php上传文件大小上限</h2><p>以apache为例，修改<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">upload_max_filesize = 64M</div><div class="line">max_file_uploads = 200</div><div class="line">post_max_size = 128M</div></pre></td></tr></table></figure></p>
+<p>重启apache服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl reload apache2</div></pre></td></tr></table></figure></p>
+<h1 id="安装配置nginx"><a href="#安装配置nginx" class="headerlink" title="安装配置nginx"></a>安装配置nginx</h1><p>安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install nginx</div></pre></td></tr></table></figure></p>
+<p>编辑<code>/etc/nginx/nginx.conf</code>。这里只将用户和用户组改为和apache一致的<code>www-data</code>。其他设置可以参考<a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/" target="_blank" rel="external">这里</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">user www-data www-data;</div></pre></td></tr></table></figure></p>
+<p>新建ssl站点配置文件<code>/etc/nginx/sites-available/example.com</code>。这个配置中<code>80</code>端口通过301跳转强制https访问，<code>8443</code>端口为https监听端口，若公网的<code>443</code>端口没封则可用<code>443</code>。然后将请求通过<code>proxy_pass</code>转给apache的<code>7080</code>。<br>关于ssl证书的签发见<a href="https://majunyi.top/2020/04/03/ubuntu-letsencrypt/">部署Let’s Encrypt</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    listen [::]:80;</div><div class="line">    return 301 https://$host$request_uri;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 8443 http2;</div><div class="line">    listen [::]:8443 http2;</div><div class="line">    server_name home.majunyi.top;</div><div class="line"></div><div class="line">    client_max_body_size 0;</div><div class="line">    underscores_in_headers on;</div><div class="line"></div><div class="line">    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">    ssl on;</div><div class="line">    ssl_certificate /etc/apache2/ssl/fullchain.cer;</div><div class="line">    ssl_certificate_key /etc/apache2/ssl/private/home.majunyi.top.key;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_set_header Host $host:$server_port;</div><div class="line">        proxy_set_header X-Real-IP $remote_addr;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">        proxy_set_header  X-Forwarded-Proto   $scheme;</div><div class="line">        add_header Front-End-Https on;</div><div class="line">        add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">        proxy_headers_hash_max_size 512;</div><div class="line">        proxy_headers_hash_bucket_size 64;</div><div class="line"></div><div class="line">        proxy_buffering off;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_max_temp_file_size 0;</div><div class="line">        proxy_pass http://127.0.0.1:7080;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>启用站点。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo ln <span class="_">-s</span> /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/</div><div class="line">sudo systemctl reload nginx</div></pre></td></tr></table></figure></p>
+<h1 id="nextcloud相关设置"><a href="#nextcloud相关设置" class="headerlink" title="nextcloud相关设置"></a>nextcloud相关设置</h1><p>编辑<code>config.php</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;overwritehost&apos; =&gt; &apos;example.com:8443&apos;,</div><div class="line">&apos;overwriteprotocol&apos; =&gt; &apos;https&apos;,</div><div class="line">&apos;overwrite.cli.url&apos; =&gt; &apos;https://example.com:8443/nextcloud/&apos;,</div><div class="line">&apos;trusted_proxies&apos; =&gt; [&apos;127.0.0.1&apos;],</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="web" scheme="https://majunyi.top/tags/web/"/>
+    
+      <category term="nextcloud" scheme="https://majunyi.top/tags/nextcloud/"/>
+    
+  </entry>
   
   <entry>
     <title>ubuntu下手动部署Let&#39;s Encrypt</title>
@@ -160,7 +200,7 @@
     <link href="https://majunyi.top/2020/03/15/ubuntu-nextcloud/"/>
     <id>https://majunyi.top/2020/03/15/ubuntu-nextcloud/</id>
     <published>2020-03-15T03:45:22.000Z</published>
-    <updated>2020-03-18T15:18:53.093Z</updated>
+    <updated>2020-04-09T04:25:01.406Z</updated>
     
     <content type="html"><![CDATA[<p>虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。<br><a id="more"></a><br>最初的动机是为了解决QFile移动端自动上传照片的各种不便：  </p>
 <ol>
@@ -190,6 +230,9 @@
 <h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>打开nextcloud管理员概览页面(<a href="https://example.com/nextcloud/index.php/settings/admin/overview" target="_blank" rel="external">https://example.com/nextcloud/index.php/settings/admin/overview</a> )，确保<code>安全与设置警告</code>测试全部通过。  </p>
 <h2 id="Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”"><a href="#Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”" class="headerlink" title="Your web server is not properly set up to resolve “/.well-known/caldav”"></a>Your web server is not properly set up to resolve “/.well-known/caldav”</h2><p>由于之前并未将nextcloud装在网站根目录，故需通过rewrite进行301跳转。<br>启用rewrite模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod rewrite</div></pre></td></tr></table></figure></p>
 <p>编辑网站<strong>根目录</strong><code>/var/www/example.com/.htaccess</code>文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule mod_rewrite.c&gt;</div><div class="line">  RewriteEngine on</div><div class="line">  RewriteRule ^\.well-known/host-meta /nextcloud/public.php?service=host-meta [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/host-meta\.json /nextcloud/public.php?service=host-meta-json [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/webfinger /nextcloud/public.php?service=webfinger [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/carddav /nextcloud/remote.php/dav/ [R=301,L]</div><div class="line">  RewriteRule ^\.well-known/caldav /nextcloud/remote.php/dav/ [R=301,L]</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
+<p>注，如果用<a href="https://majunyi.top/2020/04/03/ubuntu-nginx-frontend-apache-backend/">nginx+apache方式搭建</a>则需把以上<code>RewriteRule</code>全部注释掉，在<code>example.com.conf</code>中设置301跳转。</p>
+<h2 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500 Internal Server Error"></a>500 Internal Server Error</h2><p>先检查redis-server是否正常工作，必要时注释掉<code>config.php</code>中redis的内容来查错。<br>这多出现于域名改变的情况，若<code>overwrite.cli.url</code>等设置改过仍无法解决，可以考虑重装。  </p>
+<h2 id="重装nextcloud"><a href="#重装nextcloud" class="headerlink" title="重装nextcloud"></a>重装nextcloud</h2><p>在<code>config</code>文件夹下重命名<code>config.php</code>并新建<code>CAN_INSTALL</code>文件。<br>浏览器打开<code>https://example.com/nextcloud</code>会进入安装向导。输入数据库相关配置。<br>注意这里必须新建一个和旧管理员用户名不一样的新管理员，如果输入旧管理员会报错用户已存在。完成设置后注销登录旧管理员把新建的这个删掉即可。    </p>
 <h1 id="移除nextcloud"><a href="#移除nextcloud" class="headerlink" title="移除nextcloud"></a>移除nextcloud</h1><p>删掉源文件，数据文件，数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /var/www/example.com/nextcloud</div><div class="line">sudo rm -rf /srv/hdd1/nextcloud</div><div class="line">DROP DATABASE nextclouddb;</div></pre></td></tr></table></figure></p>
 ]]></content>
     
@@ -338,9 +381,9 @@
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
       <category term="rpi" scheme="https://majunyi.top/tags/rpi/"/>
     
@@ -410,9 +453,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
     
   </entry>
   
@@ -538,9 +581,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
       <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
     
@@ -767,38 +810,6 @@ arch ramips_24kec 500
     
     
       <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>购买路由注意事项</title>
-    <link href="https://majunyi.top/2019/01/05/choose-router/"/>
-    <id>https://majunyi.top/2019/01/05/choose-router/</id>
-    <published>2019-01-05T11:50:58.000Z</published>
-    <updated>2019-01-17T05:58:45.104Z</updated>
-    
-    <content type="html"><![CDATA[<p>简而言之，按自己需求选高端的高通方案或高性价比的雷凌方案的千兆LAN路由，是否用Merlin(华硕)或OpenWrt（避开博通），对发热比较敏感SoC选ARM架构。<br><a id="more"></a></p>
-<h1 id="以下列出我用过的路由及其优缺点"><a href="#以下列出我用过的路由及其优缺点" class="headerlink" title="以下列出我用过的路由及其优缺点"></a>以下列出我用过的路由及其优缺点</h1><h2 id="TP-LINK-TL-WR847N-v3"><a href="#TP-LINK-TL-WR847N-v3" class="headerlink" title="TP-LINK TL-WR847N v3"></a>TP-LINK TL-WR847N v3</h2><p>++ 便宜<br>++ 支持WDS，支持桥接，可作为无线网卡发挥余热<br>– 百兆LAN<br>– 开启WDS作为无线网卡速度不稳定，实际只有11Mbps左右<br>– FLASH太小（2M），刷不了第三方固件<br>很久以前买的无线路由，以当时的需求（ADSL小水管，还没有openwrt）和机器本身的价格来看没什么缺点。但现在看来作为无线网卡都满足不了看网络高清直播，廉颇老矣。<br>其实那个时代有个神器，华为的电信定制路由HG255D，Flash 16M，RAM 32M，SoC是Ralink RT3052@384Mhz，电信原版的u-boot就是不死的，网络页面即可刷openwrt, dd-wrt等等。另外板上还提供了JTAG，有5个GPIO，这样玩法就更多了。想想后来大火的树莓派能做的事情，当时255D就能做到，比如成为WIFI控制的智能小车。  </p>
-<h2 id="极路由-极1S-HC5661"><a href="#极路由-极1S-HC5661" class="headerlink" title="极路由 极1S HC5661"></a>极路由 极1S HC5661</h2><p>++ 便宜<br>++ 可刷openwrt<br>++ RAM 128M够大，FLASH 16M也够用<br>++ 可通过SD卡扩展空间安装插件<br>– LAN是百兆<br>– 官方插件库河蟹后没了去广告，科学上网等等，使得官方的定制系统很鸡肋<br>– 刷第三方固件前需先解锁<br>– 不支持5G<br>– 无USB接口，不方便挂移动硬盘下载和分享<br>这款路由就是用来刷原版openwrt的，方便不能装SS客户端的设备也能科学上网。主板其实有预留USB接口，可以自己焊上，但传输性能感人，且因为是百兆口，又不支持5G不久后被淘汰。另外SoC是MIPS架构的，toolchains相较ARM的比较老旧，不便于二次开发，合适版本的第三方软件不好找，很可能要自己动手。另外SoC用的是雷凌的MT7620A。</p>
-<h2 id="Netgear-R6220"><a href="#Netgear-R6220" class="headerlink" title="Netgear R6220"></a>Netgear R6220</h2><p>++ 购买时较便宜<br>++ 千兆LAN<br>– 有线传输速度稳定在75MB/s上下，跑不满带宽<br>– 官方固件不支持无线桥接<br>– 刷机没有华硕或极路由方便，救砖麻烦<br>这款路由用的时间较长，由于是主路由，所以基于稳定的原因一直用官方的固件。直到买了NAS，NAS内部测试单盘速度达110MB/s，但从台式机复制文件到NAS的实际速度却只在75MB/s上下浮动。台式机源文件在SSD，千兆LAN口，CAT6的仅1.5米的网线，没开QoS，所以瓶颈很可能是在路由上了。SoC是雷凌的MT7621ST（MIPS架构，单核双线程），这和它的小弟MT7620A的感人io性能有点类似，但手头没有其他MT7621ST的机器，所以只是猜测。另外一个缺点则是打算将R6220作为htpc的无线网卡时才发现的问题：这货的官方固件竟然没有无线桥接功能！这可是连老掉牙的白菜价WR847N都带有的，网件居然阉割掉了。<br>要解决这个问题需要刷openwrt，先检查<a href="https://openwrt.org/toh/netgear/netgear_r6220" target="_blank" rel="external">R6220的openwrt官方支持页面</a>：无线完全支持，5G也没问题。但不同版本的Flash Layout有所不同，刷错会造成无线的出厂参数不对，无法正常工作，具体现象是LAN口MAC地址和设备标签不一致。另外用的是NAND的FLASH，编程器不像SPI FLASH的那么常见，救砖不方便：需要替换成SPI FLASH或者<a href="http://forgotfun.org/2016/03/NAND-Programmer.html" target="_blank" rel="external">自制NAND编程器</a>。有空再弄。  </p>
-<h2 id="Asus-RT-AC66U"><a href="#Asus-RT-AC66U" class="headerlink" title="Asus RT-AC66U"></a>Asus RT-AC66U</h2><p>++ 性能强大，千兆LAN基本能跑满<br>++ 可刷<a href="https://sourceforge.net/projects/asuswrt-merlin/files/RT-AC66U/Release/" target="_blank" rel="external">Merlin</a>，在官方固件稳定，高性能的前提下通过脚本实现自动化功能<br>– SoC是博通的MIPS架构BCM4706，第三方软件不好找，Merlin<a href="https://github.com/RMerl/asuswrt-merlin/wiki/Supported-Devices" target="_blank" rel="external">只支持到legacy 380.xx</a><br>– openwrt不支持5G<br>目前在用的主路由，由于：1.已有NAS，下载机由htpc兼任；2.科学上网各常用设备都装了客户端，极少情况下才会使用有无法安装SS客户端的设备再开吃灰的极1S临时使用；3.IPTV走光猫专用接口，迅雷跑满也不影响电视盒子的高清直播，故对QoS无需求。所以只需路由功能，600MHz的单核SoC完全够用。<br>如果需要在路由端实现科学上网的建议上AC66U B1（AC68U马甲），有现成的SS ARM版客户端，双核应对通信加密的压力更轻一些。且多了USB3.0，可以挂移动硬盘用来做轻量级的下载和分享。<br>选择华硕就是选择了梅林固件，稳定高效但可玩性不如openwrt，另外要想得到384新特性和持续更新固件的话还是要选ARM芯片的华硕路由，至少是66U B1。  </p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>如果玩OpenWrt是刚需的话<a href="https://openwrt.org/supported_devices" target="_blank" rel="external">官方推荐配置</a>是8M FLASH, 64M RAM。这个配置现在基本都能达到，所以看中某个型号后仍需去<a href="https://openwrt.org/toh/views/toh_available_864" target="_blank" rel="external">这里</a>查阅兼容性，特别是<strong>Unsupported Functions</strong>这一栏。高通的芯片优先，因其无线驱动开源。雷凌也开源了无线驱动，虽然性能差些，可考虑作为廉价openwrt平台的选择。博通的可用<a href="https://dd-wrt.com/support/router-database/" target="_blank" rel="external">dd-wrt</a>，因其采用了博通的闭源无线驱动，若用openwrt的话即便勉强支持其性能和稳定性也是灾难。各家芯片对开源的支持可<a href="https://en.wikipedia.org/wiki/Comparison_of_open-source_wireless_drivers" target="_blank" rel="external">参照此处</a>，可作为openwrt支持的另一个参考。<br>至于品牌选择，其实就是对官方固件的选择，否则刷了第三方固件就是硬件的比较了。目前来看华硕的官方固件最好用，无阉割，易用性好，响应也快，而且可以不经uboot和Merlin自由切换，方便安全。普联即便是白菜价的低端型号，功能也很全，把硬件性能压榨到极致，官方固件是专业风格，虽不够华硕简洁但熟悉后想找什么功能一目了然，响应速度还行。网件的官方固件则比较糟糕，分成了简易和进阶模式，默认简易模式，找不到还要跑进阶找，而且响应速度很慢，最重要的是一些功能被屏蔽掉了，只在高端型号开启。<br>此外，由于路由比较耐用，本文并未涉及较新的型号。比如普联的某些低端型号有用到VxWorks，由于是实时系统，理论上比linux更适合做路由，但很考验厂商的开发能力，不知功能和易用性如何。华硕的新一代高端路由是带<a href="https://www.asus.com/us/AiMesh/" target="_blank" rel="external">AiMesh</a>的，但Merlin<a href="https://github.com/RMerl/asuswrt-merlin.ng/blob/master/Changelog-NG.txt" target="_blank" rel="external">尚未支持</a>，如有需求则只能用官方固件。网件在高端型号上比同级别华硕要便宜，硬件有时还会稍好一些，部分型号可以刷Merlin，但步骤比华硕要繁琐许多，能忍受官方固件的话作为主路由也蛮不错。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;简而言之，按自己需求选高端的高通方案或高性价比的雷凌方案的千兆LAN路由，是否用Merlin(华硕)或OpenWrt（避开博通），对发热比较敏感SoC选ARM架构。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="shopping" scheme="https://majunyi.top/tags/shopping/"/>
-    
-      <category term="firmware" scheme="https://majunyi.top/tags/firmware/"/>
-    
-      <category term="router" scheme="https://majunyi.top/tags/router/"/>
     
   </entry>
   

@@ -3,20 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>利用树莓派DIY运动检测监控 | 名实合为</title>
+  <title>ubuntu下nginx作为前端配合apache作为后端 | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。">
+  <meta name="description" content="nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用树莓派DIY运动检测监控">
-<meta property="og:url" content="https://majunyi.top/2017/04/22/rpi-cctv-motion/index.html">
+<meta property="og:title" content="ubuntu下nginx作为前端配合apache作为后端">
+<meta property="og:url" content="https://majunyi.top/2020/04/09/ubuntu-nginx-frontend-apache-backend/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。">
-<meta property="og:image" content="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&width=400">
-<meta property="og:updated_time" content="2017-04-22T04:36:48.091Z">
+<meta property="og:description" content="nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。">
+<meta property="og:updated_time" content="2020-04-09T04:25:15.571Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用树莓派DIY运动检测监控">
-<meta name="twitter:description" content="出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。">
-<meta name="twitter:image" content="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&width=400">
+<meta name="twitter:title" content="ubuntu下nginx作为前端配合apache作为后端">
+<meta name="twitter:description" content="nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -198,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-rpi-cctv-motion" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-ubuntu-nginx-frontend-apache-backend" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/04/22/rpi-cctv-motion/" class="article-date">
-      <time datetime="2017-04-22T02:38:56.000Z" itemprop="datePublished">2017-04-22</time>
+      <a href="/2020/04/09/ubuntu-nginx-frontend-apache-backend/" class="article-date">
+      <time datetime="2020-04-09T03:10:56.000Z" itemprop="datePublished">2020-04-09</time>
 </a>
     </div>
   
@@ -215,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      利用树莓派DIY运动检测监控
+      ubuntu下nginx作为前端配合apache作为后端
     </h1>
   
 
@@ -230,7 +228,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/motion/">motion</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpi/">rpi</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nextcloud/">nextcloud</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/">web</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -240,36 +238,20 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>出门在外，难免担心有贼入窃。恰好手头上有闲置的树莓派一件，加上摄像头配合motion可以搭一套带运动检测的监控系统，设置好后若检测到异常可以自动将短片，图像发送到指定邮箱。手机收到邮件提醒可以远程连上摄像头查看情况。即便监控被破坏，由于图像和短片已发送至邮件服务器，仍可用于取证。</p>
-<a id="more"></a>
-<h2 id="硬件准备"><a href="#硬件准备" class="headerlink" title="硬件准备"></a>硬件准备</h2><ol>
-<li><a href="https://www.raspberrypi.org/products/" target="_blank" rel="external">树莓派Raspberry Pi 3</a></li>
-<li><a href="http://www.waveshare.com/rpi-ir-cut-camera.htm" target="_blank" rel="external">RPi IR-CUT Camera</a></li>
-</ol>
-<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><h3 id="启用摄像头"><a href="#启用摄像头" class="headerlink" title="启用摄像头"></a>启用摄像头</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/modules</div></pre></td></tr></table></figure>
-<p>添加这一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bcm2835-v4l2</div></pre></td></tr></table></figure></p>
-<p>重启后测试摄像头<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">raspistill -o image.jpg -t 10000     <span class="comment">#test camera</span></div></pre></td></tr></table></figure></p>
-<h3 id="安装motionEye"><a href="#安装motionEye" class="headerlink" title="安装motionEye"></a>安装motionEye</h3><p>核心软件是<a href="http://www.lavrsen.dk/foswiki/bin/view/Motion/WebHome" target="_blank" rel="external">Motion</a>，我以前就是用它配合Mutt来实现前言的功能的，但配置稍麻烦，且自带的远程管理界面略简单。后来发现<a href="https://github.com/ccrisan/motioneye/wiki" target="_blank" rel="external">motionEye</a>，是用python写的Motion前端，十分好用。</p>
-<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/ccrisan/motioneye/wiki/precompiled/ffmpeg_3.1.1-1_armhf.deb</div><div class="line">sudo dpkg -i ffmpeg_3.1.1-1_armhf.deb</div><div class="line"><span class="comment">#apt-get remove libavcodec-extra-56 libavformat56 libavresample2 libavutil54</span></div><div class="line">sudo apt-get install python-pip python-dev curl libssl-dev libcurl4-openssl-dev libjpeg-dev libx264-142 libavcodec56 libavformat56 libmysqlclient18 libswscale3 libpq5 v4l-utils</div><div class="line">wget https://github.com/Motion-Project/motion/releases/download/release-4.0.1/pi_jessie_motion_4.0.1-1_armhf.deb</div><div class="line">sudo dpkg -i pi_jessie_motion_4.0.1-1_armhf.deb</div></pre></td></tr></table></figure>
-<h4 id="更改pip源为国内aliyun镜像"><a href="#更改pip源为国内aliyun镜像" class="headerlink" title="更改pip源为国内aliyun镜像"></a>更改pip源为国内aliyun镜像</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir ~/.pip</div><div class="line">nano ~/.pip/pip.conf</div></pre></td></tr></table></figure>
-<p>添加如下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[global]</div><div class="line">trusted-host =  mirrors.aliyun.com</div><div class="line">index-url = http://mirrors.aliyun.com/pypi/simple</div></pre></td></tr></table></figure></p>
-<h4 id="安装motionEye-1"><a href="#安装motionEye-1" class="headerlink" title="安装motionEye"></a>安装motionEye</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo pip install motioneye</div><div class="line">sudo mkdir -p /etc/motioneye</div><div class="line">sudo cp /usr/<span class="built_in">local</span>/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf</div><div class="line"></div><div class="line">sudo cp /usr/<span class="built_in">local</span>/share/motioneye/extra/motioneye.systemd-unit-local /etc/systemd/system/motioneye.service</div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl <span class="built_in">enable</span> motioneye          <span class="comment">#设为开机启动，可选</span></div><div class="line">sudo systemctl start motioneye</div></pre></td></tr></table></figure>
-<h4 id="更新（可选）"><a href="#更新（可选）" class="headerlink" title="更新（可选）"></a>更新（可选）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo pip install motioneye --upgrade</div><div class="line">sudo systemctl restart motioneye</div></pre></td></tr></table></figure>
-<h2 id="配置motionEye"><a href="#配置motionEye" class="headerlink" title="配置motionEye"></a>配置motionEye</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/motioneye/motioneye.conf</div></pre></td></tr></table></figure>
-<p>更改端口（可选）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">port 8765</div><div class="line">motion_control_port 7999</div></pre></td></tr></table></figure></p>
-<p>相关配置文件位置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/motion/motion.conf</div><div class="line">sudo nano /etc/motioneye/thread-1.conf</div></pre></td></tr></table></figure></p>
-<h3 id="通过前端配置邮件提醒"><a href="#通过前端配置邮件提醒" class="headerlink" title="通过前端配置邮件提醒"></a>通过前端配置邮件提醒</h3><p>浏览器打开<br>localhost:8765<br>默认login: admin 密码为空<br>Advanced Settings ON<br>163邮件参数<br>163mail 25 non-TLS</p>
-<h2 id="控制夜视开关"><a href="#控制夜视开关" class="headerlink" title="控制夜视开关"></a>控制夜视开关</h2><p>我选用的摄像头为微雪的RPi IR-CUT Camera，没有led，而是将原来控制led的端口作为夜视开关，官方给出的控制方案为<a href="http://www.waveshare.com/wiki/RPi_IR-CUT_Camera" target="_blank" rel="external">额外接一根线到摄像头模块</a><br><img src="http://www.waveshare.com/w/thumb.php?f=Rpi-ir-cut-camera-faq-4.jpg&amp;width=400" alt=""><br>但这种方案不仅占用了一个外置GPIO端口，还降低了可靠性，特别是摄像头距主控较远的情况。其实<a href="https://www.raspberrypi.org/forums/viewtopic.php?p=891836&amp;sid=66eeecc88aa73bcad4f1f4109bfe54d2#p891836" target="_blank" rel="external">6by9已经指出</a>可以通过GPIO 32 (A+之后，3之前的板子) 或GPIO 5 (树莓派1)来控制camera led。</p>
-<h3 id="RPi2设置"><a href="#RPi2设置" class="headerlink" title="RPi2设置"></a>RPi2设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /boot/config.txt</div></pre></td></tr></table></figure>
-<p>添加以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">disable_camera_led=1</div></pre></td></tr></table></figure></p>
-<p>编译cnv<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/mjysci/rpi-cam-night-vision-control</div><div class="line"><span class="built_in">cd</span> rpi-cam-night-vision-control</div><div class="line">gcc -Wall -o cnv cnv.c -lwiringPi</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cnv</div></pre></td></tr></table></figure></p>
-<h3 id="RPi3设置"><a href="#RPi3设置" class="headerlink" title="RPi3设置"></a>RPi3设置</h3><p>最新的rpi3内置GPIO有变动，disable_camera_led失效，由于是扩展GPIO，并不能直接控制。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/6by9/rpi3-gpiovirtbuf.git</div><div class="line"><span class="built_in">cd</span> rpi3-gpiovirtbuf</div><div class="line">make</div><div class="line">cp rpi3-gpiovirtbuf ~/bin/rpi3-gpiovirtbuf</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpi3-gpiovirtbuf s 134 1 #夜视模式关闭</div><div class="line">rpi3-gpiovirtbuf s 134 0 #夜视模式开启</div></pre></td></tr></table></figure></p>
-<p>清空记录可以直接在前端操作，亦可通过rm实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo rm /var/lib/motioneye/Camera1/*.*</div></pre></td></tr></table></figure></p>
-<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><p>之前在rpi2按以上步骤没问题，但重新部署到rpi3时碰到refused to connect错误<br>查看服务状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl status motioneye.service <span class="_">-l</span></div></pre></td></tr></table></figure></p>
-<p>不知何故安装时并未创建数据文件夹，手动建之<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /var/lib/motioneye</div></pre></td></tr></table></figure></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/ccrisan/motioneye/wiki/Install-On-Raspbian" target="_blank" rel="external">motionEye wiki</a><br><a href="https://www.raspberrypi.org/forums/viewtopic.php?p=891836&amp;sid=66eeecc88aa73bcad4f1f4109bfe54d2#p891836" target="_blank" rel="external">Turning off camera LED</a><br><a href="https://www.raspberrypi.org/forums/viewtopic.php?f=43&amp;t=109137&amp;start=100#p989832" target="_blank" rel="external">Raw sensor access / CSI-2 receiver peripheral</a></p>
+        <p>nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。<br><a id="more"></a><br>注意中转影响效率，并不适合单机，适合多对多服务器。但由于第二点的需求故仍然采用了这个方案。</p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a>安装配置apache</h1><p>安装依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install apache2 libapache2-mod-php7.2</div><div class="line">sudo apt-get install php7.2-gd php7.2-json php7.2-curl php7.2-mbstring php7.2-intl php-imagick php7.2-xml php7.2-zip libapache2-mod-scgi</div></pre></td></tr></table></figure></p>
+<p>启用<code>.htaccess</code>。修改<code>/etc/apache2/apache2.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Directory /var/www/&gt;</div><div class="line">  AllowOverride All</div></pre></td></tr></table></figure></p>
+<p>修改<code>/etc/apache2/ports.conf</code>。将默认的<code>80</code>和<code>443</code>端口改成其他以免和nginx冲突。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Listen 7080</div><div class="line"># 此项可选，若没有就不添加</div><div class="line">&lt;IfModule ssl_module&gt;</div><div class="line">        Listen 7443</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
+<p>新建http站点配置文件<code>/etc/apache2/sites-available/example.com.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># 限制vhost仅</div><div class="line">&lt;VirtualHost 127.0.0.1:7080&gt;</div><div class="line">    Alias / &quot;/var/www/example.com/&quot;</div><div class="line"></div><div class="line">    &lt;Directory /var/www/example.com/&gt;</div><div class="line">        Options +FollowSymlinks</div><div class="line">        AllowOverride All</div><div class="line"></div><div class="line">        &lt;IfModule mod_dav.c&gt;</div><div class="line">            Dav off</div><div class="line">        &lt;/IfModule&gt;</div><div class="line"></div><div class="line">        SetEnv HOME /var/www/example.com</div><div class="line">        SetEnv HTTP_HOME /var/www/example.com</div><div class="line"></div><div class="line">        #此项可选，为nextcloud专用301跳转，没装不用加。</div><div class="line">        Redirect 301 /.well-known/carddav https://example.com/nextcloud/remote.php/dav</div><div class="line">        Redirect 301 /.well-known/caldav  https://example.com/nextcloud/remote.php/dav</div><div class="line">        Redirect 301 /.well-known/webdav  https://example.com/nextcloud/remote.php/dav</div><div class="line">    &lt;/Directory&gt;</div><div class="line"></div><div class="line">    ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log</div><div class="line">    CustomLog $&#123;APACHE_LOG_DIR&#125;/access.log combined</div><div class="line"></div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure></p>
+<p>开启apache相关模块。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod rewrite headers env dir mime</div></pre></td></tr></table></figure></p>
+<p>禁用默认站点，启用本站配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo a2ensite example.com.conf</div><div class="line">sudo a2dissite 000-default.conf</div></pre></td></tr></table></figure></p>
+<h2 id="修改php上传文件大小上限"><a href="#修改php上传文件大小上限" class="headerlink" title="修改php上传文件大小上限"></a>修改php上传文件大小上限</h2><p>以apache为例，修改<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">upload_max_filesize = 64M</div><div class="line">max_file_uploads = 200</div><div class="line">post_max_size = 128M</div></pre></td></tr></table></figure></p>
+<p>重启apache服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl reload apache2</div></pre></td></tr></table></figure></p>
+<h1 id="安装配置nginx"><a href="#安装配置nginx" class="headerlink" title="安装配置nginx"></a>安装配置nginx</h1><p>安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install nginx</div></pre></td></tr></table></figure></p>
+<p>编辑<code>/etc/nginx/nginx.conf</code>。这里只将用户和用户组改为和apache一致的<code>www-data</code>。其他设置可以参考<a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/" target="_blank" rel="external">这里</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">user www-data www-data;</div></pre></td></tr></table></figure></p>
+<p>新建ssl站点配置文件<code>/etc/nginx/sites-available/example.com</code>。这个配置中<code>80</code>端口通过301跳转强制https访问，<code>8443</code>端口为https监听端口，若公网的<code>443</code>端口没封则可用<code>443</code>。然后将请求通过<code>proxy_pass</code>转给apache的<code>7080</code>。<br>关于ssl证书的签发见<a href="https://majunyi.top/2020/04/03/ubuntu-letsencrypt/">部署Let’s Encrypt</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    listen [::]:80;</div><div class="line">    return 301 https://$host$request_uri;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 8443 http2;</div><div class="line">    listen [::]:8443 http2;</div><div class="line">    server_name home.majunyi.top;</div><div class="line"></div><div class="line">    client_max_body_size 0;</div><div class="line">    underscores_in_headers on;</div><div class="line"></div><div class="line">    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">    ssl on;</div><div class="line">    ssl_certificate /etc/apache2/ssl/fullchain.cer;</div><div class="line">    ssl_certificate_key /etc/apache2/ssl/private/home.majunyi.top.key;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_set_header Host $host:$server_port;</div><div class="line">        proxy_set_header X-Real-IP $remote_addr;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">        proxy_set_header  X-Forwarded-Proto   $scheme;</div><div class="line">        add_header Front-End-Https on;</div><div class="line">        add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">        proxy_headers_hash_max_size 512;</div><div class="line">        proxy_headers_hash_bucket_size 64;</div><div class="line"></div><div class="line">        proxy_buffering off;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_max_temp_file_size 0;</div><div class="line">        proxy_pass http://127.0.0.1:7080;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>启用站点。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo ln <span class="_">-s</span> /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/</div><div class="line">sudo systemctl reload nginx</div></pre></td></tr></table></figure></p>
+<h1 id="nextcloud相关设置"><a href="#nextcloud相关设置" class="headerlink" title="nextcloud相关设置"></a>nextcloud相关设置</h1><p>编辑<code>config.php</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;overwritehost&apos; =&gt; &apos;example.com:8443&apos;,</div><div class="line">&apos;overwriteprotocol&apos; =&gt; &apos;https&apos;,</div><div class="line">&apos;overwrite.cli.url&apos; =&gt; &apos;https://example.com:8443/nextcloud/&apos;,</div><div class="line">&apos;trusted_proxies&apos; =&gt; [&apos;127.0.0.1&apos;],</div></pre></td></tr></table></figure></p>
 
       
       
@@ -324,13 +306,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></p>
+        <p><span>本文标题:</span><a href="/2020/04/09/ubuntu-nginx-frontend-apache-backend/">ubuntu下nginx作为前端配合apache作为后端</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2017年04月22日 - 10时38分</p>
-        <p><span>最后更新:</span>2017年04月22日 - 12时36分</p>
+        <p><span>发布时间:</span>2020年04月09日 - 11时10分</p>
+        <p><span>最后更新:</span>2020年04月09日 - 12时25分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/04/22/rpi-cctv-motion/" title="利用树莓派DIY运动检测监控">https://majunyi.top/2017/04/22/rpi-cctv-motion/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2017/04/22/rpi-cctv-motion/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/04/09/ubuntu-nginx-frontend-apache-backend/" title="ubuntu下nginx作为前端配合apache作为后端">https://majunyi.top/2020/04/09/ubuntu-nginx-frontend-apache-backend/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2020/04/09/ubuntu-nginx-frontend-apache-backend/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -343,18 +325,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/09/11/carnd-env/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          无人车开发工程师第一学期环境搭建
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/04/05/github-desktop/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">通过proxifier配合代理安装GitHub Desktop</div>
+    <a href="/2020/04/03/ubuntu-letsencrypt/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ubuntu下手动部署Let&#39;s Encrypt</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -365,7 +338,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#硬件准备"><span class="toc-number">1.</span> <span class="toc-text">硬件准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件安装"><span class="toc-number">2.</span> <span class="toc-text">软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启用摄像头"><span class="toc-number">2.1.</span> <span class="toc-text">启用摄像头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装motionEye"><span class="toc-number">2.2.</span> <span class="toc-text">安装motionEye</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装依赖"><span class="toc-number">2.2.1.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更改pip源为国内aliyun镜像"><span class="toc-number">2.2.2.</span> <span class="toc-text">更改pip源为国内aliyun镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装motionEye-1"><span class="toc-number">2.2.3.</span> <span class="toc-text">安装motionEye</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更新（可选）"><span class="toc-number">2.2.4.</span> <span class="toc-text">更新（可选）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置motionEye"><span class="toc-number">3.</span> <span class="toc-text">配置motionEye</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过前端配置邮件提醒"><span class="toc-number">3.1.</span> <span class="toc-text">通过前端配置邮件提醒</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制夜视开关"><span class="toc-number">4.</span> <span class="toc-text">控制夜视开关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RPi2设置"><span class="toc-number">4.1.</span> <span class="toc-text">RPi2设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RPi3设置"><span class="toc-number">4.2.</span> <span class="toc-text">RPi3设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug"><span class="toc-number">5.</span> <span class="toc-text">debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装配置apache"><span class="toc-number">1.</span> <span class="toc-text">安装配置apache</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改php上传文件大小上限"><span class="toc-number">1.1.</span> <span class="toc-text">修改php上传文件大小上限</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装配置nginx"><span class="toc-number">2.</span> <span class="toc-text">安装配置nginx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nextcloud相关设置"><span class="toc-number">3.</span> <span class="toc-text">nextcloud相关设置</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -432,13 +405,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/09/11/carnd-env/" title="上一篇: 无人车开发工程师第一学期环境搭建">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/04/05/github-desktop/" title="下一篇: 通过proxifier配合代理安装GitHub Desktop">
+            <a href="/2020/04/03/ubuntu-letsencrypt/" title="下一篇: ubuntu下手动部署Let&#39;s Encrypt">
                 <i class="fa fa-angle-right"></i>
             </a>
         

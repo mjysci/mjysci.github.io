@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://majunyi.top/2020/04/09/ubuntu-nginx-frontend-apache-backend/</loc>
+    
+    <lastmod>2020-04-09T04:25:15.571Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://majunyi.top/2020/03/15/ubuntu-nextcloud/</loc>
+    
+    <lastmod>2020-04-09T04:25:01.406Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://majunyi.top/2020/04/03/ubuntu-letsencrypt/</loc>
     
     <lastmod>2020-04-03T03:10:52.927Z</lastmod>
@@ -33,13 +47,6 @@
     <loc>https://majunyi.top/2020/03/22/ubuntu-ttrss/</loc>
     
     <lastmod>2020-03-22T08:19:13.347Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majunyi.top/2020/03/15/ubuntu-nextcloud/</loc>
-    
-    <lastmod>2020-03-18T15:18:53.093Z</lastmod>
     
   </url>
   
