@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ubuntu下部署团队协作通讯软件mattermost | 名实合为</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="抗疫期间，网络流量激增，团队协作通讯软件slack也变得很卡，偶尔还会掉线。是时候考虑自己部署一个开源替代品了，在比较了zulip，mattermost，rocketchat后最终选择了mattermost，并放在了子目录中与其他服务共存。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu下部署团队协作通讯软件mattermost">
+<meta property="og:url" content="https://majunyi.top/2020/04/11/ubuntu-mattermost/index.html">
+<meta property="og:site_name" content="名实合为">
+<meta property="og:description" content="抗疫期间，网络流量激增，团队协作通讯软件slack也变得很卡，偶尔还会掉线。是时候考虑自己部署一个开源替代品了，在比较了zulip，mattermost，rocketchat后最终选择了mattermost，并放在了子目录中与其他服务共存。">
+<meta property="og:updated_time" content="2020-04-11T09:01:32.547Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu下部署团队协作通讯软件mattermost">
+<meta name="twitter:description" content="抗疫期间，网络流量激增，团队协作通讯软件slack也变得很卡，偶尔还会掉线。是时候考虑自己部署一个开源替代品了，在比较了zulip，mattermost，rocketchat后最终选择了mattermost，并放在了子目录中与其他服务共存。">
+  
+    <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">mjy</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/arm/" style="font-size: 17.5px;">arm</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/docker/" style="font-size: 17.5px;">docker</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/firmware/" style="font-size: 15px;">firmware</a> <a href="/tags/github/" style="font-size: 12.5px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/linux/" style="font-size: 12.5px;">linux</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/nas/" style="font-size: 12.5px;">nas</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/pt/" style="font-size: 10px;">pt</a> <a href="/tags/qemu/" style="font-size: 10px;">qemu</a> <a href="/tags/router/" style="font-size: 12.5px;">router</a> <a href="/tags/rpi/" style="font-size: 15px;">rpi</a> <a href="/tags/rss/" style="font-size: 12.5px;">rss</a> <a href="/tags/shopping/" style="font-size: 10px;">shopping</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/win/" style="font-size: 10px;">win</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">Valar morghulis</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">mjy</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">mjy</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-ubuntu-mattermost" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/04/11/ubuntu-mattermost/" class="article-date">
+      <time datetime="2020-04-11T06:01:24.000Z" itemprop="datePublished">2020-04-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ubuntu下部署团队协作通讯软件mattermost
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>抗疫期间，网络流量激增，团队协作通讯软件slack也变得很卡，偶尔还会掉线。是时候考虑自己部署一个开源替代品了，在比较了zulip，mattermost，rocketchat后最终选择了mattermost，并放在了子目录中与其他服务共存。<br><a id="more"></a></p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>如果图省事可以选择<a href="https://slack.com/intl/en-cn/pricing" target="_blank" rel="external">slack</a>，或<a href="https://products.office.com/en-us/microsoft-teams/free" target="_blank" rel="external">Microsoft Teams</a>，只是这样你的数据除了团队成员外，服务提供商的工程师亦可查阅，而且特殊时期可能会碰到卡顿的情况（当然巨硬的Teams应该还是很稳健的）。<br>这里简单比较一下三个开源的同类软件zulip，mattermost，rocketchat。  </p>
+<h2 id="zulip"><a href="#zulip" class="headerlink" title="zulip"></a><a href="https://zulipchat.com" target="_blank" rel="external">zulip</a></h2><p>++ 提供<a href="https://zulipchat.com/plans/" target="_blank" rel="external">免费试用</a>，但搜索功能受限制<br>++ 支持中文<br>++ 全平台支持，包括浏览器。但iOS国区未上架。<br>++ <a href="https://zulipchat.com/integrations/" target="_blank" rel="external">插件丰富</a><br>++ 对话可折叠，类论坛形式组织信息流<br>++ 后端为Django(python3)，前端用JS编写，数据库仅支持PostgreSQL<br>– 建议在全新系统上部署，不建议和其他服务共用，没有官方卸载脚本<br>– 必须部署在域名根目录，不支持子目录<br>– <a href="https://github.com/zulip/docker-zulip" target="_blank" rel="external">docker-zulip</a>为试验阶段，不适合生产环境部署<br>其实试用过后我是比较倾向用zulip的，但<a href="https://github.com/zulip/zulip/blob/master/scripts/lib/install" target="_blank" rel="external">官方脚本</a>是设计在全新系统上部署的，无法与其他服务共用，在分析了脚本后手动安装踩了不少坑，能用但今后维护并不方便。  </p>
+<h2 id="Mattermost"><a href="#Mattermost" class="headerlink" title="Mattermost"></a><a href="https://mattermost.com/" target="_blank" rel="external">Mattermost</a></h2><p>++ 提供<a href="https://mattermost.com/demo/" target="_blank" rel="external">demo试用</a>，仅体验普通用户功能<br>++ 支持中文<br>++ 全平台支持，包括浏览器。但iOS国区未上架。<br>++ <a href="https://integrations.mattermost.com/" target="_blank" rel="external">插件丰富</a><br>++ 后端为Go，前端用React(JS)，数据库支持MySQL和PostgreSQL<br>++ <a href="https://github.com/mattermost/mattermost-docker" target="_blank" rel="external">mattermost-docker</a><br>– 对话不可折叠<br>由于用Go编写，没有复杂的依赖关系，部署比较简单，且插件支持亦很丰富，所以选择了这个方案。  </p>
+<h2 id="Rocket-Chat"><a href="#Rocket-Chat" class="headerlink" title="Rocket.Chat"></a><a href="https://rocket.chat/" target="_blank" rel="external">Rocket.Chat</a></h2><p>++ 提供<a href="https://cloud.rocket.chat/trial/bronze?utm_source=header&amp;utm_medium=website&amp;utm_campaign=trials" target="_blank" rel="external">14天免费试用</a><br>++ 支持中文<br>++ 全平台支持，包括浏览器。<br>++ <a href="https://github.com/RocketChat/Rocket.Chat/blob/develop/docker-compose.yml" target="_blank" rel="external">docker-compose</a><br>++ <a href="https://rocket.chat/marketplace" target="_blank" rel="external">插件丰富</a><br>++ 使用Meteor(JS)框架编写，数据库仅支持MongoDB<br>iOS国区可直接安装客户端是一大优势。  </p>
+<p>每个团队的需求都不一样，所以先利用上述软件的在线试用一段时间，看看有无自身急需的特性，必要插件的支持情况，维护人员技术栈是否切合等等再做最终决定。  </p>
+<h1 id="部署Mattermost"><a href="#部署Mattermost" class="headerlink" title="部署Mattermost"></a>部署Mattermost</h1><h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><p><a href="https://majunyi.top/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a>。<br>创建数据库。记得把<code>mmuser-password</code>换掉。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">create user <span class="string">'mmuser'</span>@<span class="string">'localhost'</span> identified by <span class="string">'mmuser-password'</span>;</div><div class="line">create database mattermost;</div><div class="line">grant all privileges on mattermost.* to <span class="string">'mmuser'</span>@<span class="string">'localhost'</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="安装Mattermost服务端"><a href="#安装Mattermost服务端" class="headerlink" title="安装Mattermost服务端"></a>安装Mattermost服务端</h2><p>下载，将<code>5.21.0</code>换成<a href="https://mattermost.com/download/" target="_blank" rel="external">当前最新稳定版</a>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget https://releases.mattermost.com/5.21.0/mattermost-5.21.0-linux-amd64.tar.gz</div><div class="line">tar -xvzf mattermost*.gz</div><div class="line">sudo mv mattermost /opt</div></pre></td></tr></table></figure></p>
+<p>创建数据文件夹，将<code>/opt/mattermost/data</code>换成挂载大容量硬盘的路径。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /opt/mattermost/data</div></pre></td></tr></table></figure></p>
+<p>创建mattermost用户和设定相关文件夹权限。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo useradd --system --user-group mattermost</div><div class="line">sudo chown -R mattermost:mattermost /opt/mattermost</div><div class="line">sudo chmod -R g+w /opt/mattermost</div></pre></td></tr></table></figure></p>
+<p>编辑配置文件<code>/opt/mattermost/config/config.json</code>。这里<code>SiteURL</code>设置的是将mattermost置于非常规端口<code>8443</code>和域名子目录<code>mattermost</code>下，可按需更改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&quot;SiteURL&quot;: &quot;https://example.com:8443/mattermost/&quot;,</div><div class="line">&quot;DriverName&quot;: &quot;mysql&quot;,</div><div class="line">&quot;DataSource&quot;: &quot;mmuser:mmuser-password@tcp(localhost:3306)/mattermost?charset=utf8mb4,utf8\u0026readTimeout=30s\u0026writeTimeout=30s&quot;,</div></pre></td></tr></table></figure></p>
+<h2 id="编写系统服务文件"><a href="#编写系统服务文件" class="headerlink" title="编写系统服务文件"></a>编写系统服务文件</h2><p>测试是否运行正常。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo -u mattermost /opt/mattermost/bin/mattermost</div></pre></td></tr></table></figure></p>
+<p>若无误输出会显示<code>Server is listening on :8065</code>。<br>新建<code>/lib/systemd/system/mattermost.service</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=Mattermost</div><div class="line">After=network.target</div><div class="line">After=mysql.service</div><div class="line">Requires=mysql.service</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=notify</div><div class="line">ExecStart=/opt/mattermost/bin/mattermost</div><div class="line">TimeoutStartSec=3600</div><div class="line">Restart=always</div><div class="line">RestartSec=10</div><div class="line">WorkingDirectory=/opt/mattermost</div><div class="line">User=mattermost</div><div class="line">Group=mattermost</div><div class="line">LimitNOFILE=49152</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=mysql.service</div></pre></td></tr></table></figure></p>
+<p>启用mattermost服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl start mattermost.service</div><div class="line">sudo systemctl <span class="built_in">enable</span> mattermost.service</div></pre></td></tr></table></figure></p>
+<p>这里假定服务器的内网IP为<code>192.168.1.2</code>。浏览器打开<a href="http://192.168.1.2:8065。" target="_blank" rel="external">http://192.168.1.2:8065。</a><br>创建用户，首个用户具有<code>system_admin</code>权限，故先在内网建立确保服务器安全。其他配置等反向代理设好后在公网再设。  </p>
+<h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><p>nginx的安装和配置可参考这篇文章<a href="https://majunyi.top/2020/04/09/ubuntu-nginx-frontend-apache-backend/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEnginx">nginx作为前端配合apache作为后端</a>。<br>我们这里无需用到apache，仅用nginx作为反向代理即可。<br>编辑<code>/etc/nginx/sites-available/example.com</code>。SSL在nginx处配置而不是mattermost服务端。<br>另外反代apache的相关配置已省去，与mattermost并不冲突。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">upstream mattermost &#123;</div><div class="line">   server 192.168.1.2:8065;</div><div class="line">   keepalive 32;</div><div class="line">&#125;</div><div class="line"></div><div class="line">proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=mattermost_cache:10m max_size=3g inactive=120m use_temp_path=off;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    listen [::]:80;</div><div class="line">    return 301 https://$host$request_uri;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 8443 ssl http2;</div><div class="line">    listen [::]:8443 ssl http2;</div><div class="line">    server_name example.com;</div><div class="line"></div><div class="line">    client_max_body_size 0;</div><div class="line">    underscores_in_headers on;</div><div class="line"></div><div class="line">    ssl on;</div><div class="line">    ssl_certificate /etc/apache2/ssl/fullchain.cer;</div><div class="line">    ssl_certificate_key /etc/apache2/ssl/private/example.com.key;</div><div class="line">    ssl_session_timeout 1d;</div><div class="line">    ssl_protocols TLSv1.2;</div><div class="line">    ssl_ciphers &apos;ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256&apos;;</div><div class="line">    ssl_prefer_server_ciphers on;</div><div class="line">    ssl_session_cache shared:SSL:50m;</div><div class="line"></div><div class="line">    # HSTS (ngx_http_headers_module is required) (15768000 seconds = 6 months)</div><div class="line">    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line">    # OCSP Stapling ---</div><div class="line">    # fetch OCSP records from URL in ssl_certificate and cache them</div><div class="line">    ssl_stapling on;</div><div class="line">    ssl_stapling_verify on;</div><div class="line"></div><div class="line">   location ~ /mattermost/api/v[0-9]+/(users/)?websocket$ &#123;</div><div class="line">       proxy_set_header Upgrade $http_upgrade;</div><div class="line">       proxy_set_header Connection &quot;upgrade&quot;;</div><div class="line">       client_max_body_size 50M;</div><div class="line">       proxy_set_header Host $http_host;</div><div class="line">       proxy_set_header X-Real-IP $remote_addr;</div><div class="line">       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">       proxy_set_header X-Forwarded-Proto $scheme;</div><div class="line">       proxy_set_header X-Frame-Options SAMEORIGIN;</div><div class="line">       proxy_buffers 256 16k;</div><div class="line">       proxy_buffer_size 16k;</div><div class="line">       client_body_timeout 60;</div><div class="line">       send_timeout 300;</div><div class="line">       lingering_timeout 5;</div><div class="line">       proxy_connect_timeout 90;</div><div class="line">       proxy_send_timeout 300;</div><div class="line">       proxy_read_timeout 90s;</div><div class="line">       proxy_pass http://mattermost;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   location /mattermost/ &#123;</div><div class="line">       client_max_body_size 50M;</div><div class="line">       proxy_set_header Connection &quot;&quot;;</div><div class="line">       proxy_set_header Host $http_host;</div><div class="line">       proxy_set_header X-Real-IP $remote_addr;</div><div class="line">       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">       proxy_set_header X-Forwarded-Proto $scheme;</div><div class="line">       proxy_set_header X-Frame-Options SAMEORIGIN;</div><div class="line">       proxy_buffers 256 16k;</div><div class="line">       proxy_buffer_size 16k;</div><div class="line">       proxy_read_timeout 600s;</div><div class="line">       proxy_cache mattermost_cache;</div><div class="line">       proxy_cache_revalidate on;</div><div class="line">       proxy_cache_min_uses 2;</div><div class="line">       proxy_cache_use_stale timeout;</div><div class="line">       proxy_cache_lock on;</div><div class="line">       proxy_http_version 1.1;</div><div class="line">       proxy_pass http://mattermost;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="网页配置Mattermost"><a href="#网页配置Mattermost" class="headerlink" title="网页配置Mattermost"></a>网页配置Mattermost</h2><p>浏览器访问<code>https://example.com:8443/mattermost/</code>，登录刚才创建的管理员帐号。进入<code>System Console</code>。<br><code>ENVIRONMENT-Web Server</code>处<code>Connection Security</code>选<code>TLS</code>，并设置好TLS证书和密钥的路径。保存后需重启mattermost服务。<br><code>ENVIRONMENT-SMTP</code>处设置邮件服务器，不要用163邮箱，会被判定为<a href="http://help.163.com/09/1224/17/5RAJ4LMH00753VB8.html" target="_blank" rel="external">垃圾邮件554 DT:SPM</a>。可用阿里云的企业邮箱新建一个子帐号专门用来发信，<a href="https://help.aliyun.com/knowledge_detail/36576.html" target="_blank" rel="external">地址和端口相关设置</a>。保存后才点击<code>Test Connection</code>测试发信，正常的话管理员用户注册邮箱会收到测试邮件。<br><code>ENVIRONMENT-File Storage</code>处设置图片和附件保存位置。  </p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://docs.mattermost.com/install/install-ubuntu-1804.html" target="_blank" rel="external">Installing Mattermost on Ubuntu 18.04 LTS</a><br><a href="https://docs.mattermost.com/guides/administrator.html" target="_blank" rel="external">Mattermost Administrator’s Guide</a>  </p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipayimg.jpg" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/wechatimg.jpg" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2020/04/11/ubuntu-mattermost/">ubuntu下部署团队协作通讯软件mattermost</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
+        <p><span>发布时间:</span>2020年04月11日 - 14时01分</p>
+        <p><span>最后更新:</span>2020年04月11日 - 17时01分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2020/04/11/ubuntu-mattermost/" title="ubuntu下部署团队协作通讯软件mattermost">https://majunyi.top/2020/04/11/ubuntu-mattermost/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2020/04/11/ubuntu-mattermost/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/09/ubuntu-nginx-frontend-apache-backend/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ubuntu下nginx作为前端配合apache作为后端</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#需求"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#zulip"><span class="toc-number">1.1.</span> <span class="toc-text">zulip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mattermost"><span class="toc-number">1.2.</span> <span class="toc-text">Mattermost</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rocket-Chat"><span class="toc-number">1.3.</span> <span class="toc-text">Rocket.Chat</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#部署Mattermost"><span class="toc-number">2.</span> <span class="toc-text">部署Mattermost</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql"><span class="toc-number">2.1.</span> <span class="toc-text">mysql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Mattermost服务端"><span class="toc-number">2.2.</span> <span class="toc-text">安装Mattermost服务端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写系统服务文件"><span class="toc-number">2.3.</span> <span class="toc-text">编写系统服务文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx"><span class="toc-number">2.4.</span> <span class="toc-text">nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页配置Mattermost"><span class="toc-number">2.5.</span> <span class="toc-text">网页配置Mattermost</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">3.</span> <span class="toc-text">参考资料</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'majunyi'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2020/04/09/ubuntu-nginx-frontend-apache-backend/" title="下一篇: ubuntu下nginx作为前端配合apache作为后端">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/11/ubuntu-mattermost/">ubuntu下部署团队协作通讯软件mattermost</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/09/ubuntu-nginx-frontend-apache-backend/">ubuntu下nginx作为前端配合apache作为后端</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/ubuntu-letsencrypt/">ubuntu下手动部署Let's Encrypt</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/29/no-tk/">慎用诸如tk之类的免费域名</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/ubuntu-full-text-rss/">ubuntu下搭建rss全文输出服务full-text-rss</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/22/ubuntu-ttrss/">ubuntu下自建rss阅读器ttrss</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/15/ubuntu-nextcloud/">ubuntu下搭建私人同步云盘nextcloud</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/24/rtorrent-compile/">ubuntu下编译配置rTorrent+ruTorrent</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/seafile-docker-arm64/">用Docker部署64位ARM版的seafile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/rpi3-ubuntu-arm64/">树莓派3安装arm64版Ubuntu 18.04 Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/fix-win10-ryzen-freeze/">解决win10下Ryzen平台间歇性卡顿问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/docker-credential-login/">通过pass实现更安全的docker登录方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/aria2-docker-arm-qnap/">ARM平台qnap用Docker部署aria2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qiandao-docker-qnap-arm/">ARM平台NAS（qnap TS-212P3）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qemu-ubuntu-arm64/">通过QEMU在x86计算机上搭建arm64版ubuntu开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/11/rpi-docker-qiandao/">树莓派（arm32v7）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/install-manage-linux-kernel-ubuntu/">ubuntu下安装与管理多个Linux内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/hc5661-pandorabox/">极1s（hc5661）刷潘多拉固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2020 mjy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
