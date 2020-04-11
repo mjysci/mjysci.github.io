@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majunyi.top/"/>
-  <updated>2020-04-11T10:19:02.405Z</updated>
+  <updated>2020-04-11T13:20:01.284Z</updated>
   <id>https://majunyi.top/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="https://majunyi.top/2020/04/11/ubuntu-mattermost/"/>
     <id>https://majunyi.top/2020/04/11/ubuntu-mattermost/</id>
     <published>2020-04-11T06:01:24.000Z</published>
-    <updated>2020-04-11T10:19:02.405Z</updated>
+    <updated>2020-04-11T13:20:01.284Z</updated>
     
     <content type="html"><![CDATA[<p>抗疫期间，网络流量激增，团队协作通讯软件slack也变得很卡，偶尔还会掉线。是时候考虑自己部署一个开源替代品了，在比较了zulip，mattermost，rocketchat后最终选择了mattermost，并放在了子目录中与其他服务共存。<br><a id="more"></a></p>
 <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>如果图省事可以选择<a href="https://slack.com/intl/en-cn/pricing" target="_blank" rel="external">slack</a>，或<a href="https://products.office.com/en-us/microsoft-teams/free" target="_blank" rel="external">Microsoft Teams</a>，只是这样你的数据除了团队成员外，服务提供商的工程师亦可查阅，而且特殊时期可能会碰到卡顿的情况（当然巨硬的Teams应该还是很稳健的）。<br>这里简单比较一下三个开源的同类软件zulip，mattermost，rocketchat。<br>注：由于是通讯服务，故需选择24*7可靠性较高的服务器。  </p>
-<h2 id="zulip"><a href="#zulip" class="headerlink" title="zulip"></a><a href="https://zulipchat.com" target="_blank" rel="external">zulip</a></h2><p>++ 提供<a href="https://zulipchat.com/plans/" target="_blank" rel="external">免费试用</a>，但搜索功能受限制<br>++ 支持中文<br>++ 全平台支持，包括浏览器。但iOS国区未上架。<br>++ <a href="https://zulipchat.com/integrations/" target="_blank" rel="external">插件丰富</a><br>++ 对话可折叠，类论坛形式组织信息流<br>++ 后端为Django(python3)，前端用JS编写，数据库仅支持PostgreSQL<br>– 建议在全新系统上部署，不建议和其他服务共用，没有官方卸载脚本<br>– 必须部署在域名根目录，不支持子目录<br>– <a href="https://github.com/zulip/docker-zulip" target="_blank" rel="external">docker-zulip</a>为试验阶段，不适合生产环境部署<br>其实试用过后我是比较倾向用zulip的，信息管理逻辑和slack类似，但<a href="https://github.com/zulip/zulip/blob/master/scripts/lib/install" target="_blank" rel="external">官方脚本</a>是设计<strong>在全新系统上部署</strong>的，无法与其他服务共用，跑了脚本后不仅无法正常安装，且已有服务也受影响，逆向操作还原费了点功夫。之后分析了脚本，手动安装踩了不少坑，能用但今后维护并不方便。  </p>
-<h2 id="Mattermost"><a href="#Mattermost" class="headerlink" title="Mattermost"></a><a href="https://mattermost.com/" target="_blank" rel="external">Mattermost</a></h2><p>++ 提供<a href="https://mattermost.com/demo/" target="_blank" rel="external">demo试用</a>，仅体验普通用户功能<br>++ 支持中文<br>++ 全平台支持，包括浏览器。但iOS国区未上架。<br>++ <a href="https://integrations.mattermost.com/" target="_blank" rel="external">插件丰富</a><br>++ 后端为Go，前端用React(JS)，数据库支持MySQL和PostgreSQL<br>++ <a href="https://github.com/mattermost/mattermost-docker" target="_blank" rel="external">mattermost-docker</a><br>– 对话不可折叠<br>由于用Go编写，没有复杂的依赖关系，部署比较简单，且插件支持亦很丰富，所以选择了这个方案。  </p>
-<h2 id="Rocket-Chat"><a href="#Rocket-Chat" class="headerlink" title="Rocket.Chat"></a><a href="https://rocket.chat/" target="_blank" rel="external">Rocket.Chat</a></h2><p>++ 提供<a href="https://cloud.rocket.chat/trial/bronze?utm_source=header&amp;utm_medium=website&amp;utm_campaign=trials" target="_blank" rel="external">14天免费试用</a><br>++ 支持中文<br>++ 全平台支持，包括浏览器。<br>++ <a href="https://github.com/RocketChat/Rocket.Chat/blob/develop/docker-compose.yml" target="_blank" rel="external">docker-compose</a><br>++ <a href="https://rocket.chat/marketplace" target="_blank" rel="external">插件丰富</a><br>++ 使用Meteor(JS)框架编写，数据库仅支持MongoDB<br>iOS国区可直接安装客户端是一大优势。  </p>
+<h2 id="zulip"><a href="#zulip" class="headerlink" title="zulip"></a><a href="https://zulipchat.com" target="_blank" rel="external">zulip</a></h2><p>++ 提供<a href="https://zulipchat.com/plans/" target="_blank" rel="external">免费试用</a>，但搜索功能受限制<br>++ 支持中文<br>++ 全平台支持，包括浏览器。<br>++ <a href="https://zulipchat.com/integrations/" target="_blank" rel="external">插件丰富</a><br>++ 对话可折叠，类论坛形式组织信息流<br>++ 后端为Django(python3)，前端用JS编写，数据库仅支持PostgreSQL<br>– 建议在全新系统上部署，不建议和其他服务共用，没有官方卸载脚本<br>– 必须部署在域名根目录，不支持子目录<br>– <a href="https://github.com/zulip/docker-zulip" target="_blank" rel="external">docker-zulip</a>为试验阶段，不适合生产环境部署<br>其实试用过后我是比较倾向用zulip的，信息管理逻辑和slack类似，但<a href="https://github.com/zulip/zulip/blob/master/scripts/lib/install" target="_blank" rel="external">官方脚本</a>是设计<strong>在全新系统上部署</strong>的，无法与其他服务共用，跑了脚本后不仅无法正常安装，且已有服务也受影响，逆向操作还原费了点功夫。之后分析了脚本，手动安装踩了不少坑，能用但今后维护并不方便。  </p>
+<h2 id="Mattermost"><a href="#Mattermost" class="headerlink" title="Mattermost"></a><a href="https://mattermost.com/" target="_blank" rel="external">Mattermost</a></h2><p>++ 提供<a href="https://mattermost.com/demo/" target="_blank" rel="external">demo试用</a>，仅体验普通用户功能<br>++ 支持中文<br>++ 全平台支持，包括浏览器。<br>++ <a href="https://integrations.mattermost.com/" target="_blank" rel="external">插件丰富</a><br>++ 后端为Go，前端用React(JS)，数据库支持MySQL和PostgreSQL<br>++ <a href="https://github.com/mattermost/mattermost-docker" target="_blank" rel="external">mattermost-docker</a><br>– 对话不可折叠<br>由于用Go编写，没有复杂的依赖关系，部署比较简单，且插件支持亦很丰富，所以选择了这个方案。  </p>
+<h2 id="Rocket-Chat"><a href="#Rocket-Chat" class="headerlink" title="Rocket.Chat"></a><a href="https://rocket.chat/" target="_blank" rel="external">Rocket.Chat</a></h2><p>++ 提供<a href="https://cloud.rocket.chat/trial/bronze?utm_source=header&amp;utm_medium=website&amp;utm_campaign=trials" target="_blank" rel="external">14天免费试用</a><br>++ 支持中文<br>++ 全平台支持，包括浏览器。<br>++ <a href="https://github.com/RocketChat/Rocket.Chat/blob/develop/docker-compose.yml" target="_blank" rel="external">docker-compose</a><br>++ <a href="https://rocket.chat/marketplace" target="_blank" rel="external">插件丰富</a><br>++ 使用Meteor(JS)框架编写，数据库仅支持MongoDB  </p>
 <p>每个团队的需求都不一样，所以先利用上述软件在线试用一段时间，看看有无自身急需的特性，必要插件的支持情况，维护人员技术栈是否切合等等再做最终决定。  </p>
 <h1 id="部署Mattermost"><a href="#部署Mattermost" class="headerlink" title="部署Mattermost"></a>部署Mattermost</h1><h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><p><a href="https://majunyi.top/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a>。<br>创建数据库。记得把<code>mmuser-password</code>换掉。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">create user <span class="string">'mmuser'</span>@<span class="string">'localhost'</span> identified by <span class="string">'mmuser-password'</span>;</div><div class="line">create database mattermost;</div><div class="line">grant all privileges on mattermost.* to <span class="string">'mmuser'</span>@<span class="string">'localhost'</span>;</div></pre></td></tr></table></figure></p>
 <h2 id="安装Mattermost服务端"><a href="#安装Mattermost服务端" class="headerlink" title="安装Mattermost服务端"></a>安装Mattermost服务端</h2><p>下载，将<code>5.21.0</code>换成<a href="https://mattermost.com/download/" target="_blank" rel="external">当前最新稳定版</a>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget https://releases.mattermost.com/5.21.0/mattermost-5.21.0-linux-amd64.tar.gz</div><div class="line">tar -xvzf mattermost*.gz</div><div class="line">sudo mv mattermost /opt</div></pre></td></tr></table></figure></p>
@@ -498,9 +498,9 @@ passwd
       <category term="笔记" scheme="https://majunyi.top/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
-    
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
+    
+      <category term="docker" scheme="https://majunyi.top/tags/docker/"/>
     
   </entry>
   
@@ -628,9 +628,9 @@ passwd
     
       <category term="ubuntu" scheme="https://majunyi.top/tags/ubuntu/"/>
     
-      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
-    
       <category term="qemu" scheme="https://majunyi.top/tags/qemu/"/>
+    
+      <category term="arm" scheme="https://majunyi.top/tags/arm/"/>
     
   </entry>
   
