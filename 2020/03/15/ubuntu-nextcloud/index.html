@@ -8,10 +8,10 @@
   <meta name="description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ubuntu下搭建私人同步云盘nextcloud">
-<meta property="og:url" content="https://majunyi.top/2020/03/15/ubuntu-nextcloud/index.html">
+<meta property="og:url" content="https://mjyai.com/2020/03/15/ubuntu-nextcloud/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
-<meta property="og:updated_time" content="2020-04-09T04:25:01.406Z">
+<meta property="og:updated_time" content="2020-05-03T23:51:48.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu下搭建私人同步云盘nextcloud">
 <meta name="twitter:description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
@@ -245,7 +245,7 @@
 <li>上传时必须保持亮屏，否则会停止。  </li>
 </ol>
 <p>但搭建好nextcloud后才发觉其软件定位不是备份文件，而是同步与分享。目前暂<strong>不支持单向同步</strong>，即我需要的手机照片自动上传，但不同步下载服务器的照片。后通过免费的<a href="https://www.tacit.dk/foldersync/" target="_blank" rel="external">FolderSync</a>解决这个问题。<br>不过其支持WebDAV协议，故可用来给如Joplin之类的第三方程序做同步用，故仍旧保留了。<br>本文没用<a href="https://hub.docker.com/_/nextcloud/" target="_blank" rel="external">Docker</a>或<a href="https://docs.nextcloud.com/server/17/admin_manual/installation/source_installation.html#example-installation-on-ubuntu-18-04-lts-server" target="_blank" rel="external">官方脚本</a>的方式安装，因为前者对性能有损失且设置有限、不利于调试，而后者适合新装好的系统只跑nextcloud。</p>
-<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://majunyi.top/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="php设置"><a href="#php设置" class="headerlink" title="php设置"></a>php设置</h1><p>编辑<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">memory_limit = 1024M</div><div class="line">post_max_size = 1024M</div><div class="line">upload_max_filesize = 1024M</div></pre></td></tr></table></figure></p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="php设置"><a href="#php设置" class="headerlink" title="php设置"></a>php设置</h1><p>编辑<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">memory_limit = 1024M</div><div class="line">post_max_size = 1024M</div><div class="line">upload_max_filesize = 1024M</div></pre></td></tr></table></figure></p>
 <h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install mariadb-server php7.2-mysql</div><div class="line">sudo mysql_secure_installation</div></pre></td></tr></table></figure>
 <p>输入并记好root用户的密码。注意root权限的用户是通过<code>auth_socket</code>而并非密码来验证的，故通过<code>sudo mysql -u root -p</code>登录时不输入密码或任意密码都能成功登录，而不是密码未设置成功。想取消<code>auth_socket</code>可以<a href="https://unix.stackexchange.com/questions/385202/mariadb-accepts-any-password" target="_blank" rel="external">看这里</a>。<br>启用4字节字符支持，编辑<code>/etc/mysql/mariadb.cnf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[mysqld]</div><div class="line">innodb_file_per_table=1</div><div class="line">character-set-server=utf8mb4</div></pre></td></tr></table></figure></p>
 <p>重启mysql。  </p>
@@ -266,7 +266,7 @@
 <h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>打开nextcloud管理员概览页面(<a href="https://example.com/nextcloud/index.php/settings/admin/overview" target="_blank" rel="external">https://example.com/nextcloud/index.php/settings/admin/overview</a> )，确保<code>安全与设置警告</code>测试全部通过。  </p>
 <h2 id="Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”"><a href="#Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”" class="headerlink" title="Your web server is not properly set up to resolve “/.well-known/caldav”"></a>Your web server is not properly set up to resolve “/.well-known/caldav”</h2><p>由于之前并未将nextcloud装在网站根目录，故需通过rewrite进行301跳转。<br>启用rewrite模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod rewrite</div></pre></td></tr></table></figure></p>
 <p>编辑网站<strong>根目录</strong><code>/var/www/example.com/.htaccess</code>文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule mod_rewrite.c&gt;</div><div class="line">  RewriteEngine on</div><div class="line">  RewriteRule ^\.well-known/host-meta /nextcloud/public.php?service=host-meta [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/host-meta\.json /nextcloud/public.php?service=host-meta-json [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/webfinger /nextcloud/public.php?service=webfinger [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/carddav /nextcloud/remote.php/dav/ [R=301,L]</div><div class="line">  RewriteRule ^\.well-known/caldav /nextcloud/remote.php/dav/ [R=301,L]</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
-<p>注，如果用<a href="https://majunyi.top/2020/04/03/ubuntu-nginx-frontend-apache-backend/">nginx+apache方式搭建</a>则需把以上<code>RewriteRule</code>全部注释掉，在<code>example.com.conf</code>中设置301跳转。</p>
+<p>注，如果用<a href="https://mjyai.com/2020/04/03/ubuntu-nginx-frontend-apache-backend/">nginx+apache方式搭建</a>则需把以上<code>RewriteRule</code>全部注释掉，在<code>example.com.conf</code>中设置301跳转。</p>
 <h2 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500 Internal Server Error"></a>500 Internal Server Error</h2><p>先检查redis-server是否正常工作，必要时注释掉<code>config.php</code>中redis的内容来查错。<br>这多出现于域名改变的情况，若<code>overwrite.cli.url</code>等设置改过仍无法解决，可以考虑重装。  </p>
 <h2 id="重装nextcloud"><a href="#重装nextcloud" class="headerlink" title="重装nextcloud"></a>重装nextcloud</h2><p>在<code>config</code>文件夹下重命名<code>config.php</code>并新建<code>CAN_INSTALL</code>文件。<br>浏览器打开<code>https://example.com/nextcloud</code>会进入安装向导。输入数据库相关配置。<br>注意这里必须新建一个和旧管理员用户名不一样的新管理员，如果输入旧管理员会报错用户已存在。完成设置后注销登录旧管理员把新建的这个删掉即可。    </p>
 <h1 id="移除nextcloud"><a href="#移除nextcloud" class="headerlink" title="移除nextcloud"></a>移除nextcloud</h1><p>删掉源文件，数据文件，数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /var/www/example.com/nextcloud</div><div class="line">sudo rm -rf /srv/hdd1/nextcloud</div><div class="line">DROP DATABASE nextclouddb;</div></pre></td></tr></table></figure></p>
@@ -327,10 +327,10 @@
         <p><span>本文标题:</span><a href="/2020/03/15/ubuntu-nextcloud/">ubuntu下搭建私人同步云盘nextcloud</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2020年03月15日 - 11时45分</p>
-        <p><span>最后更新:</span>2020年04月09日 - 12时25分</p>
+        <p><span>最后更新:</span>2020年05月04日 - 07时51分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/03/15/ubuntu-nextcloud/" title="ubuntu下搭建私人同步云盘nextcloud">https://majunyi.top/2020/03/15/ubuntu-nextcloud/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://majunyi.top/2020/03/15/ubuntu-nextcloud/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/03/15/ubuntu-nextcloud/" title="ubuntu下搭建私人同步云盘nextcloud">https://mjyai.com/2020/03/15/ubuntu-nextcloud/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://mjyai.com/2020/03/15/ubuntu-nextcloud/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>

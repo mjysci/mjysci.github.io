@@ -2,196 +2,196 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://majunyi.top/2020/04/11/ubuntu-mattermost/</loc>
+    <loc>https://mjyai.com/2020/03/22/ubuntu-ttrss/</loc>
     
-    <lastmod>2020-04-17T09:06:50.244Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majunyi.top/2020/04/09/ubuntu-nginx-frontend-apache-backend/</loc>
-    
-    <lastmod>2020-04-10T03:10:17.508Z</lastmod>
+    <lastmod>2020-05-03T23:51:48.670Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2020/03/15/ubuntu-nextcloud/</loc>
+    <loc>https://mjyai.com/2019/05/20/rpi3-ubuntu-arm64/</loc>
     
-    <lastmod>2020-04-09T04:25:01.406Z</lastmod>
+    <lastmod>2020-05-03T23:51:48.650Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2020/04/03/ubuntu-letsencrypt/</loc>
+    <loc>https://mjyai.com/2019/01/08/r6220-relay-bridge/</loc>
+    
+    <lastmod>2020-05-03T23:51:48.634Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://mjyai.com/2019/01/13/hc5661-pandorabox/</loc>
+    
+    <lastmod>2020-05-03T23:51:48.626Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://mjyai.com/2020/03/29/no-tk/</loc>
+    
+    <lastmod>2020-05-03T23:51:48.626Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://mjyai.com/2019/01/06/r6220-breed-pandora/</loc>
+    
+    <lastmod>2020-05-03T23:51:48.626Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://mjyai.com/2020/03/23/ubuntu-full-text-rss/</loc>
+    
+    <lastmod>2020-05-03T23:51:48.626Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://mjyai.com/2020/03/15/ubuntu-nextcloud/</loc>
+    
+    <lastmod>2020-05-03T23:51:48.626Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://mjyai.com/2020/04/09/ubuntu-nginx-frontend-apache-backend/</loc>
+    
+    <lastmod>2020-05-03T23:51:48.626Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://mjyai.com/2020/04/11/ubuntu-mattermost/</loc>
+    
+    <lastmod>2020-05-03T23:51:48.626Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://mjyai.com/2020/04/03/ubuntu-letsencrypt/</loc>
     
     <lastmod>2020-04-03T03:10:52.927Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2020/03/29/no-tk/</loc>
-    
-    <lastmod>2020-03-29T15:35:53.710Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majunyi.top/2019/05/20/seafile-docker-arm64/</loc>
+    <loc>https://mjyai.com/2019/05/20/seafile-docker-arm64/</loc>
     
     <lastmod>2020-03-29T14:18:00.650Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2020/03/23/ubuntu-full-text-rss/</loc>
-    
-    <lastmod>2020-03-23T04:06:48.809Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majunyi.top/2020/03/22/ubuntu-ttrss/</loc>
-    
-    <lastmod>2020-03-22T08:19:13.347Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majunyi.top/2020/01/24/rtorrent-compile/</loc>
+    <loc>https://mjyai.com/2020/01/24/rtorrent-compile/</loc>
     
     <lastmod>2020-03-18T15:15:16.461Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2018/11/19/cac-upgrade-ubuntu/</loc>
+    <loc>https://mjyai.com/2018/11/19/cac-upgrade-ubuntu/</loc>
     
     <lastmod>2020-02-09T07:13:00.418Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/01/13/hc5661-pandorabox/</loc>
-    
-    <lastmod>2020-01-24T12:01:03.189Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majunyi.top/2019/05/20/rpi3-ubuntu-arm64/</loc>
-    
-    <lastmod>2019-05-20T02:39:19.087Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majunyi.top/2019/04/23/fix-win10-ryzen-freeze/</loc>
+    <loc>https://mjyai.com/2019/04/23/fix-win10-ryzen-freeze/</loc>
     
     <lastmod>2019-04-23T07:20:48.506Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/03/12/aria2-docker-arm-qnap/</loc>
+    <loc>https://mjyai.com/2019/03/12/aria2-docker-arm-qnap/</loc>
     
     <lastmod>2019-04-23T06:19:14.988Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/03/14/docker-credential-login/</loc>
+    <loc>https://mjyai.com/2019/03/14/docker-credential-login/</loc>
     
     <lastmod>2019-03-21T05:13:56.314Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/03/12/qiandao-docker-qnap-arm/</loc>
+    <loc>https://mjyai.com/2019/03/12/qiandao-docker-qnap-arm/</loc>
     
     <lastmod>2019-03-12T04:40:27.487Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/03/12/qemu-ubuntu-arm64/</loc>
+    <loc>https://mjyai.com/2019/03/12/qemu-ubuntu-arm64/</loc>
     
     <lastmod>2019-03-12T03:24:47.427Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/03/11/rpi-docker-qiandao/</loc>
+    <loc>https://mjyai.com/2019/03/11/rpi-docker-qiandao/</loc>
     
     <lastmod>2019-03-11T13:33:24.205Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/03/05/install-manage-linux-kernel-ubuntu/</loc>
+    <loc>https://mjyai.com/2019/03/05/install-manage-linux-kernel-ubuntu/</loc>
     
     <lastmod>2019-03-05T01:46:37.653Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/03/04/upgrade-linux-mint/</loc>
+    <loc>https://mjyai.com/2019/03/04/upgrade-linux-mint/</loc>
     
     <lastmod>2019-03-04T14:31:46.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/01/06/r6220-breed-pandora/</loc>
-    
-    <lastmod>2019-01-19T07:19:05.587Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majunyi.top/2019/01/05/choose-router/</loc>
+    <loc>https://mjyai.com/2019/01/05/choose-router/</loc>
     
     <lastmod>2019-01-17T05:58:45.104Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2019/01/08/r6220-relay-bridge/</loc>
-    
-    <lastmod>2019-01-13T02:35:40.759Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majunyi.top/2017/04/02/hello-world/</loc>
+    <loc>https://mjyai.com/2017/04/02/hello-world/</loc>
     
     <lastmod>2019-01-05T16:26:09.436Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2017/09/11/carnd-env/</loc>
+    <loc>https://mjyai.com/2017/09/11/carnd-env/</loc>
     
     <lastmod>2017-09-11T04:26:50.576Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2017/04/22/rpi-cctv-motion/</loc>
+    <loc>https://mjyai.com/2017/04/22/rpi-cctv-motion/</loc>
     
     <lastmod>2017-04-22T04:36:48.091Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2017/04/05/github-desktop/</loc>
+    <loc>https://mjyai.com/2017/04/05/github-desktop/</loc>
     
     <lastmod>2017-04-05T03:29:53.798Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://majunyi.top/2017/04/03/highlight-visited/</loc>
+    <loc>https://mjyai.com/2017/04/03/highlight-visited/</loc>
     
     <lastmod>2017-04-03T01:31:17.176Z</lastmod>
     
