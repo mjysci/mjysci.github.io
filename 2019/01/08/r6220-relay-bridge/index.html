@@ -8,10 +8,10 @@
   <meta name="description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="R6220采用中继桥实现无线桥接">
-<meta property="og:url" content="https://mjyai.com/2019/01/08/r6220-relay-bridge/index.html">
+<meta property="og:url" content="https://blog.mjyai.com/2019/01/08/r6220-relay-bridge/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
-<meta property="og:updated_time" content="2020-05-03T23:51:48.634Z">
+<meta property="og:updated_time" content="2020-05-04T04:12:22.985Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R6220采用中继桥实现无线桥接">
 <meta name="twitter:description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
@@ -234,7 +234,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。<br><a id="more"></a><br><a href="https://mjyai.com/2019/01/06/r6220-breed-pandora/">前情提要</a>，虽然远程桌面非刚需，但htpc无法直连主路由网段的NAS不能接受。还是需要桥接把副路由连接设备和主路由放在同一网段。  </p>
+        <p>htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。<br><a id="more"></a><br><a href="https://blog.mjyai.com/2019/01/06/r6220-breed-pandora/">前情提要</a>，虽然远程桌面非刚需，但htpc无法直连主路由网段的NAS不能接受。还是需要桥接把副路由连接设备和主路由放在同一网段。  </p>
 <h1 id="安装relay协议"><a href="#安装relay协议" class="headerlink" title="安装relay协议"></a>安装relay协议</h1><p>潘多拉默认未带，不过其应用层是和openwrt及luci兼容的，可装<a href="https://openwrt.org/packages/pkgdata/luci-proto-relay" target="_blank" rel="external">luci-proto-relay</a><br>ssh连上路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.1</div></pre></td></tr></table></figure></p>
 <p>更新并安装luci-proto-relay  </p>
 <pre><code>opkg update
@@ -303,10 +303,10 @@ opkg install luci-proto-relay
         <p><span>本文标题:</span><a href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2019年01月08日 - 11时35分</p>
-        <p><span>最后更新:</span>2020年05月04日 - 07时51分</p>
+        <p><span>最后更新:</span>2020年05月04日 - 12时12分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/01/08/r6220-relay-bridge/" title="R6220采用中继桥实现无线桥接">https://mjyai.com/2019/01/08/r6220-relay-bridge/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://mjyai.com/2019/01/08/r6220-relay-bridge/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/01/08/r6220-relay-bridge/" title="R6220采用中继桥实现无线桥接">https://blog.mjyai.com/2019/01/08/r6220-relay-bridge/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2019/01/08/r6220-relay-bridge/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>

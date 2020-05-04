@@ -8,10 +8,10 @@
   <meta name="description" content="只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ubuntu下搭建rss全文输出服务full-text-rss">
-<meta property="og:url" content="https://mjyai.com/2020/03/23/ubuntu-full-text-rss/index.html">
+<meta property="og:url" content="https://blog.mjyai.com/2020/03/23/ubuntu-full-text-rss/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。">
-<meta property="og:updated_time" content="2020-05-03T23:51:48.626Z">
+<meta property="og:updated_time" content="2020-05-04T04:12:22.985Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu下搭建rss全文输出服务full-text-rss">
 <meta name="twitter:description" content="只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。">
@@ -238,7 +238,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。<br><a id="more"></a><br>本文提供了搭建rss全文输出服务<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>的步骤，对国内环境如何科学地抓取全文亦有所涉及，此服务配合<a href="https://mjyai.com/2020/03/22/ubuntu-ttrss/">自建rss阅读器tt-rss</a>使用效果更好。  </p>
+        <p>只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。<br><a id="more"></a><br>本文提供了搭建rss全文输出服务<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>的步骤，对国内环境如何科学地抓取全文亦有所涉及，此服务配合<a href="https://blog.mjyai.com/2020/03/22/ubuntu-ttrss/">自建rss阅读器tt-rss</a>使用效果更好。  </p>
 <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用mercury-parser-api"><a href="#为什么不用mercury-parser-api" class="headerlink" title="为什么不用mercury-parser-api"></a>为什么不用<a href="https://github.com/postlight/mercury-parser-api" target="_blank" rel="external">mercury-parser-api</a></h2><ol>
 <li>没有权限设置选项<br>这意味者要么限制其和阅读器服务处于同一个服务器中（localhost），要么通过反代开放到公网并通过防火墙限制访问IP，否则就是向全网公开的服务，任何人都能使用。  </li>
 <li>不支持代理<br>国内网络环境你懂的，这样就限制其只能部署在国外服务器才能发挥全部作用。  </li>
@@ -248,7 +248,7 @@
 <li>免费服务有限制<br>主要是一次抓取的文章限制为3篇，且文末有一行文字链接的广告。  </li>
 </ol>
 <p>其实轻度使用足够了。本文推荐的<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>比fivefilters的线上版本慢一版，不过自己搭建能使用全功能无限制。  </p>
-<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-tidy</div><div class="line">sudo service apache2 reload</div></pre></td></tr></table></figure>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-tidy</div><div class="line">sudo service apache2 reload</div></pre></td></tr></table></figure>
 <h1 id="安装full-text-rss"><a href="#安装full-text-rss" class="headerlink" title="安装full-text-rss"></a>安装full-text-rss</h1><p>克隆源码。国内搭建建议为默认的文件夹<code>full-text-rss</code>改名。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://bitbucket.org/fivefilters/full-text-rss.git</div></pre></td></tr></table></figure></p>
 <p>配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> full-text-rss</div><div class="line">sudo -u www-data cp config.php custom_config.php</div><div class="line">sudo -u www-data vi config.php</div></pre></td></tr></table></figure></p>
 <p>修改以下选项。其中<code>api_keys</code>改成自用密码，设成需密码才能使用此服务，<code>proxy_servers</code>为http代理设置，此处示例为<code>privoxy</code>的默认设置。如此设置后ftr将全局走代理，所以设置<code>allow_proxy_override</code>为<code>true</code>，如果不需代理则在生成的全文feed地址后加上<code>&amp;proxy=0</code>。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$options-&gt;key_required = <span class="keyword">true</span>;</div><div class="line">$options-&gt;api_keys[<span class="number">1</span>] = <span class="string">'your-secret-token'</span>;</div><div class="line">$options-&gt;proxy_servers = <span class="keyword">array</span>(<span class="string">'privoxy'</span>=&gt;<span class="keyword">array</span>(<span class="string">'host'</span>=&gt;<span class="string">'127.0.0.1:8118'</span>));</div><div class="line">$options-&gt;allow_proxy_override = <span class="keyword">true</span>;</div></pre></td></tr></table></figure></p>
@@ -312,10 +312,10 @@
         <p><span>本文标题:</span><a href="/2020/03/23/ubuntu-full-text-rss/">ubuntu下搭建rss全文输出服务full-text-rss</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2020年03月23日 - 10时52分</p>
-        <p><span>最后更新:</span>2020年05月04日 - 07时51分</p>
+        <p><span>最后更新:</span>2020年05月04日 - 12时12分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/03/23/ubuntu-full-text-rss/" title="ubuntu下搭建rss全文输出服务full-text-rss">https://mjyai.com/2020/03/23/ubuntu-full-text-rss/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://mjyai.com/2020/03/23/ubuntu-full-text-rss/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/03/23/ubuntu-full-text-rss/" title="ubuntu下搭建rss全文输出服务full-text-rss">https://blog.mjyai.com/2020/03/23/ubuntu-full-text-rss/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2020/03/23/ubuntu-full-text-rss/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>

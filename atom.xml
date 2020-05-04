@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://mjyai.com/"/>
-  <updated>2020-05-03T23:51:48.626Z</updated>
-  <id>https://mjyai.com/</id>
+  <link href="https://blog.mjyai.com/"/>
+  <updated>2020-05-04T04:12:22.985Z</updated>
+  <id>https://blog.mjyai.com/</id>
   
   <author>
     <name>mjy</name>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>ubuntu下部署团队协作通讯软件mattermost</title>
-    <link href="https://mjyai.com/2020/04/11/ubuntu-mattermost/"/>
-    <id>https://mjyai.com/2020/04/11/ubuntu-mattermost/</id>
+    <link href="https://blog.mjyai.com/2020/04/11/ubuntu-mattermost/"/>
+    <id>https://blog.mjyai.com/2020/04/11/ubuntu-mattermost/</id>
     <published>2020-04-11T06:01:24.000Z</published>
-    <updated>2020-05-03T23:51:48.626Z</updated>
+    <updated>2020-05-04T04:12:22.985Z</updated>
     
     <content type="html"><![CDATA[<p>抗疫期间，网络流量激增，团队协作通讯软件slack也变得很卡，偶尔还会掉线。是时候考虑自己部署一个开源替代品了，在比较了zulip，mattermost，rocketchat后最终选择了mattermost，并放在了子目录中与其他服务共存。<br><a id="more"></a></p>
 <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>如果图省事可以选择<a href="https://slack.com/intl/en-cn/pricing" target="_blank" rel="external">slack</a>，或<a href="https://products.office.com/en-us/microsoft-teams/free" target="_blank" rel="external">Microsoft Teams</a>，只是这样你的数据除了团队成员外，服务提供商的工程师亦可查阅，而且特殊时期可能会碰到卡顿的情况（当然巨硬的Teams应该还是很稳健的）。<br>这里简单比较一下三个开源的同类软件zulip，mattermost，rocketchat。<br>注：由于是通讯服务，故需选择24*7可靠性较高的服务器。  </p>
@@ -28,7 +28,7 @@
 <h2 id="Mattermost"><a href="#Mattermost" class="headerlink" title="Mattermost"></a><a href="https://mattermost.com/" target="_blank" rel="external">Mattermost</a></h2><p>++ 提供<a href="https://mattermost.com/demo/" target="_blank" rel="external">demo试用</a>，仅体验普通用户功能<br>++ 支持中文<br>++ 全平台支持，包括浏览器。<br>++ <a href="https://integrations.mattermost.com/" target="_blank" rel="external">插件丰富</a><br>++ 后端为Go，前端用React(JS)，数据库支持MySQL和PostgreSQL<br>++ <a href="https://github.com/mattermost/mattermost-docker" target="_blank" rel="external">mattermost-docker</a><br>– 对话不可折叠<br>由于用Go编写，没有复杂的依赖关系，部署比较简单，且插件支持亦很丰富，所以选择了这个方案。  </p>
 <h2 id="Rocket-Chat"><a href="#Rocket-Chat" class="headerlink" title="Rocket.Chat"></a><a href="https://rocket.chat/" target="_blank" rel="external">Rocket.Chat</a></h2><p>++ 提供<a href="https://cloud.rocket.chat/trial/bronze?utm_source=header&amp;utm_medium=website&amp;utm_campaign=trials" target="_blank" rel="external">14天免费试用</a><br>++ 支持中文<br>++ 全平台支持，包括浏览器。<br>++ <a href="https://github.com/RocketChat/Rocket.Chat/blob/develop/docker-compose.yml" target="_blank" rel="external">docker-compose</a><br>++ <a href="https://rocket.chat/marketplace" target="_blank" rel="external">插件丰富</a><br>++ 使用Meteor(JS)框架编写，数据库仅支持MongoDB  </p>
 <p>每个团队的需求都不一样，所以先利用上述软件在线试用一段时间，看看有无自身急需的特性，必要插件的支持情况，维护人员技术栈是否切合等等再做最终决定。  </p>
-<h1 id="部署Mattermost"><a href="#部署Mattermost" class="headerlink" title="部署Mattermost"></a>部署Mattermost</h1><h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><p><a href="https://mjyai.com/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a>。<br>创建数据库。记得把<code>mmuser-password</code>换掉。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">create user <span class="string">'mmuser'</span>@<span class="string">'localhost'</span> identified by <span class="string">'mmuser-password'</span>;</div><div class="line">create database mattermost;</div><div class="line">grant all privileges on mattermost.* to <span class="string">'mmuser'</span>@<span class="string">'localhost'</span>;</div></pre></td></tr></table></figure></p>
+<h1 id="部署Mattermost"><a href="#部署Mattermost" class="headerlink" title="部署Mattermost"></a>部署Mattermost</h1><h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><p><a href="https://blog.mjyai.com/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a>。<br>创建数据库。记得把<code>mmuser-password</code>换掉。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">create user <span class="string">'mmuser'</span>@<span class="string">'localhost'</span> identified by <span class="string">'mmuser-password'</span>;</div><div class="line">create database mattermost;</div><div class="line">grant all privileges on mattermost.* to <span class="string">'mmuser'</span>@<span class="string">'localhost'</span>;</div></pre></td></tr></table></figure></p>
 <h2 id="安装Mattermost服务端"><a href="#安装Mattermost服务端" class="headerlink" title="安装Mattermost服务端"></a>安装Mattermost服务端</h2><p>下载，将<code>5.21.0</code>换成<a href="https://mattermost.com/download/" target="_blank" rel="external">当前最新稳定版</a>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget https://releases.mattermost.com/5.21.0/mattermost-5.21.0-linux-amd64.tar.gz</div><div class="line">tar -xvzf mattermost*.gz</div><div class="line">sudo mv mattermost /opt</div></pre></td></tr></table></figure></p>
 <p>创建数据文件夹，将<code>/opt/mattermost/data</code>换成挂载大容量硬盘的路径。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /opt/mattermost/data</div></pre></td></tr></table></figure></p>
 <p>创建mattermost用户和设定相关文件夹权限。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo useradd --system --user-group mattermost</div><div class="line">sudo chown -R mattermost:mattermost /opt/mattermost</div><div class="line">sudo chmod -R g+w /opt/mattermost</div></pre></td></tr></table></figure></p>
@@ -37,7 +37,7 @@
 <p>若无误输出会显示<code>Server is listening on :8065</code>。<br>新建<code>/lib/systemd/system/mattermost.service</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=Mattermost</div><div class="line">After=network.target</div><div class="line">After=mysql.service</div><div class="line">Requires=mysql.service</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=notify</div><div class="line">ExecStart=/opt/mattermost/bin/mattermost</div><div class="line">TimeoutStartSec=3600</div><div class="line">Restart=always</div><div class="line">RestartSec=10</div><div class="line">WorkingDirectory=/opt/mattermost</div><div class="line">User=mattermost</div><div class="line">Group=mattermost</div><div class="line">LimitNOFILE=49152</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=mysql.service</div></pre></td></tr></table></figure></p>
 <p>启用mattermost服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl start mattermost.service</div><div class="line">sudo systemctl <span class="built_in">enable</span> mattermost.service</div></pre></td></tr></table></figure></p>
 <p>这里假定服务器的内网IP为<code>192.168.1.2</code>。浏览器打开<a href="http://192.168.1.2:8065。" target="_blank" rel="external">http://192.168.1.2:8065。</a><br>创建用户，首个用户具有<code>system_admin</code>权限，故先在内网建立确保服务器安全。其他配置等反向代理设好后在公网再设。  </p>
-<h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><p>nginx的安装和配置可参考这篇文章<a href="https://mjyai.com/2020/04/09/ubuntu-nginx-frontend-apache-backend/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEnginx">nginx作为前端配合apache作为后端</a>。<br>我们这里无需用到apache，仅用nginx作为反向代理即可。<br>编辑<code>/etc/nginx/sites-available/example.com</code>。<strong>SSL在nginx处配置而不是mattermost服务端</strong>。<br>另外反代apache的相关配置已省去，与mattermost并不冲突。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">upstream mattermost &#123;</div><div class="line">   server 192.168.1.2:8065;</div><div class="line">   keepalive 32;</div><div class="line">&#125;</div><div class="line"></div><div class="line">proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=mattermost_cache:10m max_size=3g inactive=120m use_temp_path=off;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    listen [::]:80;</div><div class="line">    return 301 https://$host$request_uri;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 8443 ssl http2;</div><div class="line">    listen [::]:8443 ssl http2;</div><div class="line">    server_name example.com;</div><div class="line"></div><div class="line">    client_max_body_size 0;</div><div class="line">    underscores_in_headers on;</div><div class="line"></div><div class="line">    ssl on;</div><div class="line">    ssl_certificate /etc/apache2/ssl/fullchain.cer;</div><div class="line">    ssl_certificate_key /etc/apache2/ssl/private/example.com.key;</div><div class="line">    ssl_session_timeout 1d;</div><div class="line">    ssl_protocols TLSv1.2;</div><div class="line">    ssl_ciphers &apos;ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256&apos;;</div><div class="line">    ssl_prefer_server_ciphers on;</div><div class="line">    ssl_session_cache shared:SSL:50m;</div><div class="line"></div><div class="line">    # HSTS (ngx_http_headers_module is required) (15768000 seconds = 6 months)</div><div class="line">    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line">    # OCSP Stapling ---</div><div class="line">    # fetch OCSP records from URL in ssl_certificate and cache them</div><div class="line">    ssl_stapling on;</div><div class="line">    ssl_stapling_verify on;</div><div class="line"></div><div class="line">   location ~ /mattermost/api/v[0-9]+/(users/)?websocket$ &#123;</div><div class="line">       proxy_set_header Upgrade $http_upgrade;</div><div class="line">       proxy_set_header Connection &quot;upgrade&quot;;</div><div class="line">       client_max_body_size 50M;</div><div class="line">       proxy_set_header Host $http_host;</div><div class="line">       proxy_set_header X-Real-IP $remote_addr;</div><div class="line">       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">       proxy_set_header X-Forwarded-Proto $scheme;</div><div class="line">       proxy_set_header X-Frame-Options SAMEORIGIN;</div><div class="line">       proxy_buffers 256 16k;</div><div class="line">       proxy_buffer_size 16k;</div><div class="line">       client_body_timeout 60;</div><div class="line">       send_timeout 300;</div><div class="line">       lingering_timeout 5;</div><div class="line">       proxy_connect_timeout 90;</div><div class="line">       proxy_send_timeout 300;</div><div class="line">       proxy_read_timeout 90s;</div><div class="line">       proxy_pass http://mattermost;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   location /mattermost/ &#123;</div><div class="line">       client_max_body_size 50M;</div><div class="line">       proxy_set_header Connection &quot;&quot;;</div><div class="line">       proxy_set_header Host $http_host;</div><div class="line">       proxy_set_header X-Real-IP $remote_addr;</div><div class="line">       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">       proxy_set_header X-Forwarded-Proto $scheme;</div><div class="line">       proxy_set_header X-Frame-Options SAMEORIGIN;</div><div class="line">       proxy_buffers 256 16k;</div><div class="line">       proxy_buffer_size 16k;</div><div class="line">       proxy_read_timeout 600s;</div><div class="line">       proxy_cache mattermost_cache;</div><div class="line">       proxy_cache_revalidate on;</div><div class="line">       proxy_cache_min_uses 2;</div><div class="line">       proxy_cache_use_stale timeout;</div><div class="line">       proxy_cache_lock on;</div><div class="line">       proxy_http_version 1.1;</div><div class="line">       proxy_pass http://mattermost;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><p>nginx的安装和配置可参考这篇文章<a href="https://blog.mjyai.com/2020/04/09/ubuntu-nginx-frontend-apache-backend/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEnginx">nginx作为前端配合apache作为后端</a>。<br>我们这里无需用到apache，仅用nginx作为反向代理即可。<br>编辑<code>/etc/nginx/sites-available/example.com</code>。<strong>SSL在nginx处配置而不是mattermost服务端</strong>。<br>另外反代apache的相关配置已省去，与mattermost并不冲突。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">upstream mattermost &#123;</div><div class="line">   server 192.168.1.2:8065;</div><div class="line">   keepalive 32;</div><div class="line">&#125;</div><div class="line"></div><div class="line">proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=mattermost_cache:10m max_size=3g inactive=120m use_temp_path=off;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    listen [::]:80;</div><div class="line">    return 301 https://$host$request_uri;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 8443 ssl http2;</div><div class="line">    listen [::]:8443 ssl http2;</div><div class="line">    server_name example.com;</div><div class="line"></div><div class="line">    client_max_body_size 0;</div><div class="line">    underscores_in_headers on;</div><div class="line"></div><div class="line">    ssl on;</div><div class="line">    ssl_certificate /etc/apache2/ssl/fullchain.cer;</div><div class="line">    ssl_certificate_key /etc/apache2/ssl/private/example.com.key;</div><div class="line">    ssl_session_timeout 1d;</div><div class="line">    ssl_protocols TLSv1.2;</div><div class="line">    ssl_ciphers &apos;ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256&apos;;</div><div class="line">    ssl_prefer_server_ciphers on;</div><div class="line">    ssl_session_cache shared:SSL:50m;</div><div class="line"></div><div class="line">    # HSTS (ngx_http_headers_module is required) (15768000 seconds = 6 months)</div><div class="line">    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line">    # OCSP Stapling ---</div><div class="line">    # fetch OCSP records from URL in ssl_certificate and cache them</div><div class="line">    ssl_stapling on;</div><div class="line">    ssl_stapling_verify on;</div><div class="line"></div><div class="line">   location ~ /mattermost/api/v[0-9]+/(users/)?websocket$ &#123;</div><div class="line">       proxy_set_header Upgrade $http_upgrade;</div><div class="line">       proxy_set_header Connection &quot;upgrade&quot;;</div><div class="line">       client_max_body_size 50M;</div><div class="line">       proxy_set_header Host $http_host;</div><div class="line">       proxy_set_header X-Real-IP $remote_addr;</div><div class="line">       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">       proxy_set_header X-Forwarded-Proto $scheme;</div><div class="line">       proxy_set_header X-Frame-Options SAMEORIGIN;</div><div class="line">       proxy_buffers 256 16k;</div><div class="line">       proxy_buffer_size 16k;</div><div class="line">       client_body_timeout 60;</div><div class="line">       send_timeout 300;</div><div class="line">       lingering_timeout 5;</div><div class="line">       proxy_connect_timeout 90;</div><div class="line">       proxy_send_timeout 300;</div><div class="line">       proxy_read_timeout 90s;</div><div class="line">       proxy_pass http://mattermost;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   location /mattermost/ &#123;</div><div class="line">       client_max_body_size 50M;</div><div class="line">       proxy_set_header Connection &quot;&quot;;</div><div class="line">       proxy_set_header Host $http_host;</div><div class="line">       proxy_set_header X-Real-IP $remote_addr;</div><div class="line">       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">       proxy_set_header X-Forwarded-Proto $scheme;</div><div class="line">       proxy_set_header X-Frame-Options SAMEORIGIN;</div><div class="line">       proxy_buffers 256 16k;</div><div class="line">       proxy_buffer_size 16k;</div><div class="line">       proxy_read_timeout 600s;</div><div class="line">       proxy_cache mattermost_cache;</div><div class="line">       proxy_cache_revalidate on;</div><div class="line">       proxy_cache_min_uses 2;</div><div class="line">       proxy_cache_use_stale timeout;</div><div class="line">       proxy_cache_lock on;</div><div class="line">       proxy_http_version 1.1;</div><div class="line">       proxy_pass http://mattermost;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="网页配置Mattermost"><a href="#网页配置Mattermost" class="headerlink" title="网页配置Mattermost"></a>网页配置Mattermost</h2><p>浏览器访问<code>https://example.com:8443/mattermost/</code>，登录刚才创建的管理员帐号。进入<code>System Console</code>。<br><code>ENVIRONMENT-SMTP</code>处设置邮件服务器，不要用163邮箱，会被判定为<a href="http://help.163.com/09/1224/17/5RAJ4LMH00753VB8.html" target="_blank" rel="external">垃圾邮件554 DT:SPM</a>。可用阿里云的企业邮箱新建一个子帐号专门用来发信，<a href="https://help.aliyun.com/knowledge_detail/36576.html" target="_blank" rel="external">地址和端口相关设置</a>。保存后才点击<code>Test Connection</code>测试发信，正常的话管理员用户注册邮箱会收到测试邮件。<br><code>ENVIRONMENT-File Storage</code>处设置图片和附件保存位置。  </p>
 <h1 id="卸载Mattermost"><a href="#卸载Mattermost" class="headerlink" title="卸载Mattermost"></a>卸载Mattermost</h1><p>停止并禁用mattermost服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo service mattermost stop</div><div class="line">sudo systemctl <span class="built_in">disable</span> mattermost</div><div class="line">sudo rm /lib/systemd/system/mattermost.service</div></pre></td></tr></table></figure></p>
 <p>（可选）删除文件夹，删掉数据库。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /opt/mattermost</div><div class="line">sudo mysql</div><div class="line">DROP DATABASE mattermost;</div></pre></td></tr></table></figure></p>
@@ -50,21 +50,21 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://mjyai.com/tags/ubuntu/"/>
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
-      <category term="im" scheme="https://mjyai.com/tags/im/"/>
+      <category term="im" scheme="https://blog.mjyai.com/tags/im/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu下nginx作为前端配合apache作为后端</title>
-    <link href="https://mjyai.com/2020/04/09/ubuntu-nginx-frontend-apache-backend/"/>
-    <id>https://mjyai.com/2020/04/09/ubuntu-nginx-frontend-apache-backend/</id>
+    <link href="https://blog.mjyai.com/2020/04/09/ubuntu-nginx-frontend-apache-backend/"/>
+    <id>https://blog.mjyai.com/2020/04/09/ubuntu-nginx-frontend-apache-backend/</id>
     <published>2020-04-09T03:10:56.000Z</published>
-    <updated>2020-05-03T23:51:48.626Z</updated>
+    <updated>2020-05-04T04:12:22.985Z</updated>
     
     <content type="html"><![CDATA[<p>nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。<br><a id="more"></a><br>注意中转影响效率，并不适合单机，适合多对多服务器。但由于第二点的需求故仍然采用了这个方案。</p>
 <h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a>安装配置apache</h1><p>安装依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install apache2 libapache2-mod-php7.2</div><div class="line">sudo apt-get install php7.2-gd php7.2-json php7.2-curl php7.2-mbstring php7.2-intl php-imagick php7.2-xml php7.2-zip libapache2-mod-scgi</div></pre></td></tr></table></figure></p>
@@ -77,7 +77,7 @@
 <p>重启apache服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl reload apache2</div></pre></td></tr></table></figure></p>
 <h1 id="安装配置nginx"><a href="#安装配置nginx" class="headerlink" title="安装配置nginx"></a>安装配置nginx</h1><p>安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install nginx</div></pre></td></tr></table></figure></p>
 <p>编辑<code>/etc/nginx/nginx.conf</code>。这里只将用户和用户组改为和apache一致的<code>www-data</code>。其他设置可以参考<a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/" target="_blank" rel="external">这里</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">user www-data www-data;</div></pre></td></tr></table></figure></p>
-<p>新建ssl站点配置文件<code>/etc/nginx/sites-available/example.com</code>。这个配置中<code>80</code>端口通过301跳转强制https访问，<code>8443</code>端口为https监听端口，若公网的<code>443</code>端口没封则可用<code>443</code>。然后将请求通过<code>proxy_pass</code>转给apache的<code>7080</code>。<br>关于ssl证书的签发见<a href="https://mjyai.com/2020/04/03/ubuntu-letsencrypt/">部署Let’s Encrypt</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    listen [::]:80;</div><div class="line">    return 301 https://$host$request_uri;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 8443 http2;</div><div class="line">    listen [::]:8443 http2;</div><div class="line">    server_name example.com;</div><div class="line"></div><div class="line">    client_max_body_size 0;</div><div class="line">    underscores_in_headers on;</div><div class="line"></div><div class="line">    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">    ssl on;</div><div class="line">    ssl_certificate /etc/apache2/ssl/fullchain.cer;</div><div class="line">    ssl_certificate_key /etc/apache2/ssl/private/example.com.key;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_set_header Host $host:$server_port;</div><div class="line">        proxy_set_header X-Real-IP $remote_addr;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">        proxy_set_header  X-Forwarded-Proto   $scheme;</div><div class="line">        add_header Front-End-Https on;</div><div class="line">        add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">        proxy_headers_hash_max_size 512;</div><div class="line">        proxy_headers_hash_bucket_size 64;</div><div class="line"></div><div class="line">        proxy_buffering off;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_max_temp_file_size 0;</div><div class="line">        proxy_pass http://127.0.0.1:7080;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>新建ssl站点配置文件<code>/etc/nginx/sites-available/example.com</code>。这个配置中<code>80</code>端口通过301跳转强制https访问，<code>8443</code>端口为https监听端口，若公网的<code>443</code>端口没封则可用<code>443</code>。然后将请求通过<code>proxy_pass</code>转给apache的<code>7080</code>。<br>关于ssl证书的签发见<a href="https://blog.mjyai.com/2020/04/03/ubuntu-letsencrypt/">部署Let’s Encrypt</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    listen [::]:80;</div><div class="line">    return 301 https://$host$request_uri;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 8443 http2;</div><div class="line">    listen [::]:8443 http2;</div><div class="line">    server_name example.com;</div><div class="line"></div><div class="line">    client_max_body_size 0;</div><div class="line">    underscores_in_headers on;</div><div class="line"></div><div class="line">    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">    ssl on;</div><div class="line">    ssl_certificate /etc/apache2/ssl/fullchain.cer;</div><div class="line">    ssl_certificate_key /etc/apache2/ssl/private/example.com.key;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_set_header Host $host:$server_port;</div><div class="line">        proxy_set_header X-Real-IP $remote_addr;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">        proxy_set_header  X-Forwarded-Proto   $scheme;</div><div class="line">        add_header Front-End-Https on;</div><div class="line">        add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">        proxy_headers_hash_max_size 512;</div><div class="line">        proxy_headers_hash_bucket_size 64;</div><div class="line"></div><div class="line">        proxy_buffering off;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_max_temp_file_size 0;</div><div class="line">        proxy_pass http://127.0.0.1:7080;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>启用站点。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo ln <span class="_">-s</span> /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/</div><div class="line">sudo systemctl reload nginx</div></pre></td></tr></table></figure></p>
 <h1 id="nextcloud相关设置"><a href="#nextcloud相关设置" class="headerlink" title="nextcloud相关设置"></a>nextcloud相关设置</h1><p>编辑<code>config.php</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;overwritehost&apos; =&gt; &apos;example.com:8443&apos;,</div><div class="line">&apos;overwriteprotocol&apos; =&gt; &apos;https&apos;,</div><div class="line">&apos;overwrite.cli.url&apos; =&gt; &apos;https://example.com:8443/nextcloud/&apos;,</div><div class="line">&apos;trusted_proxies&apos; =&gt; [&apos;127.0.0.1&apos;],</div></pre></td></tr></table></figure></p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://docs.nextcloud.com/server/15/admin_manual/configuration_server/reverse_proxy_configuration.html" target="_blank" rel="external">Nextcloud configuration » Reverse proxy</a><br><a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/" target="_blank" rel="external">Nginx Full Example Configuration</a><br><a href="http://tengine.taobao.org/book/index.html" target="_blank" rel="external">Nginx开发从入门到精通</a>  </p>
@@ -89,21 +89,21 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://mjyai.com/tags/ubuntu/"/>
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
-      <category term="web" scheme="https://mjyai.com/tags/web/"/>
+      <category term="web" scheme="https://blog.mjyai.com/tags/web/"/>
     
-      <category term="nextcloud" scheme="https://mjyai.com/tags/nextcloud/"/>
+      <category term="nextcloud" scheme="https://blog.mjyai.com/tags/nextcloud/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu下手动部署Let&#39;s Encrypt</title>
-    <link href="https://mjyai.com/2020/04/03/ubuntu-letsencrypt/"/>
-    <id>https://mjyai.com/2020/04/03/ubuntu-letsencrypt/</id>
+    <link href="https://blog.mjyai.com/2020/04/03/ubuntu-letsencrypt/"/>
+    <id>https://blog.mjyai.com/2020/04/03/ubuntu-letsencrypt/</id>
     <published>2020-04-03T02:11:49.000Z</published>
     <updated>2020-04-03T03:10:52.927Z</updated>
     
@@ -128,47 +128,47 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://mjyai.com/tags/ubuntu/"/>
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
-      <category term="ssl" scheme="https://mjyai.com/tags/ssl/"/>
+      <category term="ssl" scheme="https://blog.mjyai.com/tags/ssl/"/>
     
   </entry>
   
   <entry>
     <title>慎用诸如tk之类的免费域名</title>
-    <link href="https://mjyai.com/2020/03/29/no-tk/"/>
-    <id>https://mjyai.com/2020/03/29/no-tk/</id>
+    <link href="https://blog.mjyai.com/2020/03/29/no-tk/"/>
+    <id>https://blog.mjyai.com/2020/03/29/no-tk/</id>
     <published>2020-03-29T14:19:32.000Z</published>
-    <updated>2020-05-03T23:51:48.626Z</updated>
+    <updated>2020-05-04T04:12:22.985Z</updated>
     
-    <content type="html"><![CDATA[<p>免费的是最贵的，结果是要么浪费时间要么浪费金钱。真有非主站的短期需求不如去廉价域名供应商如<a href="https://mjyai.com/go/namesilo">namesilo</a>之类的，最低$0.99省时省心。<br><a id="more"></a><br>免费域名tk的坑主要有三个，前两个我已经有准备了，故只是用来放一个自用的在线工具集的站点。没想到第三点让人无法忍受，所以费了点时间全迁走了。  </p>
+    <content type="html"><![CDATA[<p>免费的是最贵的，结果是要么浪费时间要么浪费金钱。真有非主站的短期需求不如去廉价域名供应商如<a href="https://blog.mjyai.com/go/namesilo">namesilo</a>之类的，最低$0.99省时省心。<br><a id="more"></a><br>免费域名tk的坑主要有三个，前两个我已经有准备了，故只是用来放一个自用的在线工具集的站点。没想到第三点让人无法忍受，所以费了点时间全迁走了。  </p>
 <h1 id="SEO负优化"><a href="#SEO负优化" class="headerlink" title="SEO负优化"></a>SEO负优化</h1><p>这是老生常谈了，由于其免费，所以很多钓鱼网站也用这个域名，造成浏览器用户都对tk域名的网站第一印象很差，进而搜索引擎对这类网站的搜索结果排位不高。因此我的博客并没有使用，而是用来给一个服务器提供一个域名进而可开启SSL来安全地中转数据。  </p>
 <h1 id="90天内至少25个独立访问者"><a href="#90天内至少25个独立访问者" class="headerlink" title="90天内至少25个独立访问者"></a>90天内至少25个独立访问者</h1><p>免费档似乎有限制90天内至少25个独立访问者，否则该域名会被回收。这个很容易达到，因为国内的环境基本每天IP都会变，只要正常使用就行。而且我还放了一些在线工具集，居然被google爬到了，根据站点统计远超了这个限制，但站养肥了点就触发了第三个坑。其实事后我搜了下这点限制<a href="http://dot-tk.wikidot.com/25-unique-visitor-requirement-explained" target="_blank" rel="external">似乎被取消了</a>。  </p>
-<h1 id="域名会被强制收回，再用要付费"><a href="#域名会被强制收回，再用要付费" class="headerlink" title="域名会被强制收回，再用要付费"></a>域名会被强制收回，再用要付费</h1><p>站点小有名气后突然无法访问，去控制台发现域名被删，然后重新注册吧，结果我当时随意弄的名称被定为了<code>Special</code>组（<a href="https://www.freenom.com/en/freeandpaiddomains.html" target="_blank" rel="external">免费、付费、特别组的区别</a>），想继续用的话必须每年付$9.9。我看<code>ml</code>那里还可用于是就注册了这个，当然费了点时间把服务器端的相应域名改了，还好用的是caddy，所以证书也一并自动改签，还有几个客户端的设置没花多少时间。过了几天出于好奇，我去主页又搜了下那个名称，发现了他们的骚操作，其在<code>tk</code>下的域名又不是<code>Special</code>了，似乎是看我没上钩所以恢复免费。google了下还有不少类似案例，比如<a href="https://www.techelex.org/why-not-use-dot-tk-domain/" target="_blank" rel="external">这个哥们</a>，把<code>tk</code>用在了主站上，损失惨重。<br>鉴于其吃相太难看，我去<a href="https://mjyai.com/go/namesilo">namesilo</a>那弄了个域名迁过去，把freenom剩下没波及的免费域名直接删掉图个清净。  </p>
+<h1 id="域名会被强制收回，再用要付费"><a href="#域名会被强制收回，再用要付费" class="headerlink" title="域名会被强制收回，再用要付费"></a>域名会被强制收回，再用要付费</h1><p>站点小有名气后突然无法访问，去控制台发现域名被删，然后重新注册吧，结果我当时随意弄的名称被定为了<code>Special</code>组（<a href="https://www.freenom.com/en/freeandpaiddomains.html" target="_blank" rel="external">免费、付费、特别组的区别</a>），想继续用的话必须每年付$9.9。我看<code>ml</code>那里还可用于是就注册了这个，当然费了点时间把服务器端的相应域名改了，还好用的是caddy，所以证书也一并自动改签，还有几个客户端的设置没花多少时间。过了几天出于好奇，我去主页又搜了下那个名称，发现了他们的骚操作，其在<code>tk</code>下的域名又不是<code>Special</code>了，似乎是看我没上钩所以恢复免费。google了下还有不少类似案例，比如<a href="https://www.techelex.org/why-not-use-dot-tk-domain/" target="_blank" rel="external">这个哥们</a>，把<code>tk</code>用在了主站上，损失惨重。<br>鉴于其吃相太难看，我去<a href="https://blog.mjyai.com/go/namesilo">namesilo</a>那弄了个域名迁过去，把freenom剩下没波及的免费域名直接删掉图个清净。  </p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;免费的是最贵的，结果是要么浪费时间要么浪费金钱。真有非主站的短期需求不如去廉价域名供应商如&lt;a href=&quot;https://mjyai.com/go/namesilo&quot;&gt;namesilo&lt;/a&gt;之类的，最低$0.99省时省心。&lt;br&gt;
+      &lt;p&gt;免费的是最贵的，结果是要么浪费时间要么浪费金钱。真有非主站的短期需求不如去廉价域名供应商如&lt;a href=&quot;https://blog.mjyai.com/go/namesilo&quot;&gt;namesilo&lt;/a&gt;之类的，最低$0.99省时省心。&lt;br&gt;
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
   </entry>
   
   <entry>
     <title>ubuntu下搭建rss全文输出服务full-text-rss</title>
-    <link href="https://mjyai.com/2020/03/23/ubuntu-full-text-rss/"/>
-    <id>https://mjyai.com/2020/03/23/ubuntu-full-text-rss/</id>
+    <link href="https://blog.mjyai.com/2020/03/23/ubuntu-full-text-rss/"/>
+    <id>https://blog.mjyai.com/2020/03/23/ubuntu-full-text-rss/</id>
     <published>2020-03-23T02:52:55.000Z</published>
-    <updated>2020-05-03T23:51:48.626Z</updated>
+    <updated>2020-05-04T04:12:22.985Z</updated>
     
-    <content type="html"><![CDATA[<p>只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。<br><a id="more"></a><br>本文提供了搭建rss全文输出服务<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>的步骤，对国内环境如何科学地抓取全文亦有所涉及，此服务配合<a href="https://mjyai.com/2020/03/22/ubuntu-ttrss/">自建rss阅读器tt-rss</a>使用效果更好。  </p>
+    <content type="html"><![CDATA[<p>只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。<br><a id="more"></a><br>本文提供了搭建rss全文输出服务<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>的步骤，对国内环境如何科学地抓取全文亦有所涉及，此服务配合<a href="https://blog.mjyai.com/2020/03/22/ubuntu-ttrss/">自建rss阅读器tt-rss</a>使用效果更好。  </p>
 <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用mercury-parser-api"><a href="#为什么不用mercury-parser-api" class="headerlink" title="为什么不用mercury-parser-api"></a>为什么不用<a href="https://github.com/postlight/mercury-parser-api" target="_blank" rel="external">mercury-parser-api</a></h2><ol>
 <li>没有权限设置选项<br>这意味者要么限制其和阅读器服务处于同一个服务器中（localhost），要么通过反代开放到公网并通过防火墙限制访问IP，否则就是向全网公开的服务，任何人都能使用。  </li>
 <li>不支持代理<br>国内网络环境你懂的，这样就限制其只能部署在国外服务器才能发挥全部作用。  </li>
@@ -178,7 +178,7 @@
 <li>免费服务有限制<br>主要是一次抓取的文章限制为3篇，且文末有一行文字链接的广告。  </li>
 </ol>
 <p>其实轻度使用足够了。本文推荐的<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>比fivefilters的线上版本慢一版，不过自己搭建能使用全功能无限制。  </p>
-<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-tidy</div><div class="line">sudo service apache2 reload</div></pre></td></tr></table></figure>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-tidy</div><div class="line">sudo service apache2 reload</div></pre></td></tr></table></figure>
 <h1 id="安装full-text-rss"><a href="#安装full-text-rss" class="headerlink" title="安装full-text-rss"></a>安装full-text-rss</h1><p>克隆源码。国内搭建建议为默认的文件夹<code>full-text-rss</code>改名。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://bitbucket.org/fivefilters/full-text-rss.git</div></pre></td></tr></table></figure></p>
 <p>配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> full-text-rss</div><div class="line">sudo -u www-data cp config.php custom_config.php</div><div class="line">sudo -u www-data vi config.php</div></pre></td></tr></table></figure></p>
 <p>修改以下选项。其中<code>api_keys</code>改成自用密码，设成需密码才能使用此服务，<code>proxy_servers</code>为http代理设置，此处示例为<code>privoxy</code>的默认设置。如此设置后ftr将全局走代理，所以设置<code>allow_proxy_override</code>为<code>true</code>，如果不需代理则在生成的全文feed地址后加上<code>&amp;proxy=0</code>。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$options-&gt;key_required = <span class="keyword">true</span>;</div><div class="line">$options-&gt;api_keys[<span class="number">1</span>] = <span class="string">'your-secret-token'</span>;</div><div class="line">$options-&gt;proxy_servers = <span class="keyword">array</span>(<span class="string">'privoxy'</span>=&gt;<span class="keyword">array</span>(<span class="string">'host'</span>=&gt;<span class="string">'127.0.0.1:8118'</span>));</div><div class="line">$options-&gt;allow_proxy_override = <span class="keyword">true</span>;</div></pre></td></tr></table></figure></p>
@@ -193,26 +193,26 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://mjyai.com/tags/ubuntu/"/>
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
-      <category term="rss" scheme="https://mjyai.com/tags/rss/"/>
+      <category term="rss" scheme="https://blog.mjyai.com/tags/rss/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu下自建rss阅读器ttrss</title>
-    <link href="https://mjyai.com/2020/03/22/ubuntu-ttrss/"/>
-    <id>https://mjyai.com/2020/03/22/ubuntu-ttrss/</id>
+    <link href="https://blog.mjyai.com/2020/03/22/ubuntu-ttrss/"/>
+    <id>https://blog.mjyai.com/2020/03/22/ubuntu-ttrss/</id>
     <published>2020-03-22T03:35:50.000Z</published>
-    <updated>2020-05-03T23:51:48.670Z</updated>
+    <updated>2020-05-04T04:12:22.985Z</updated>
     
     <content type="html"><![CDATA[<p>rss已死？对占有话语权的内容创作者当然希望这样，但就内容接收者而言，活用合适的rss工具能筛掉无用信息提升效率。本文提供docker之外手动本地搭建ttrss的方法。<br><a id="more"></a></p>
 <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用docker"><a href="#为什么不用docker" class="headerlink" title="为什么不用docker"></a>为什么不用docker</h2><p>对个人用户而言，docker仅适用于一种场合：权限不足的服务器（包括非root的定制linux操作系统，如NAS的系统）。docker还有一个好处就是部署方便，但：1.需要大规模部署的场景并不多；2.可通过编写脚本来简化部署。docker的缺点：1.性能损失，对本地无所谓，但购买服务器的话内存需要升一档多花钱了；2.调试不方便(docker exec -it …)，更适合稳定版产品的部署，可玩性差些。<br>不过，实在想用docker的话推荐Henry Wang的<a href="https://github.com/HenryQW/Awesome-TTRSS" target="_blank" rel="external">Awesome-TTRSS</a>。<br>注意，由于众所周知的原因，<strong>不建议本地或国内搭建</strong>，下文对如何科学地在国内搭建亦有所涉及。  </p>
 <h2 id="为什么不用第三方服务"><a href="#为什么不用第三方服务" class="headerlink" title="为什么不用第三方服务"></a>为什么不用第三方服务</h2><p>国外的第三方服务速度慢，连接不畅或直接被墙，国内的有和谐不考虑。且免费服务限制颇多，如无法设置过滤规则，订阅数刷新率有限制，有广告等等。  </p>
-<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a><a href="https://mjyai.com/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a></h1><h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mysql -u root</div><div class="line">CREATE DATABASE ttrss;</div></pre></td></tr></table></figure>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a><a href="https://blog.mjyai.com/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a></h1><h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mysql -u root</div><div class="line">CREATE DATABASE ttrss;</div></pre></td></tr></table></figure>
 <h1 id="克隆ttrss源码"><a href="#克隆ttrss源码" class="headerlink" title="克隆ttrss源码"></a>克隆ttrss源码</h1><p>注：若是国内域名建议更改默认文件夹名<code>tt-rss</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://git.tt-rss.org/fox/tt-rss.git</div></pre></td></tr></table></figure></p>
 <p>访问<code>https://example.com/tt-rss/install/</code>执行安装。<br>默认用户名<code>admin</code>，密码<code>password</code>。<br>有个官方不支持但提供的代理选项，编辑<code>/var/www/example.com/tt-rss/config.php</code>并添加一行<code>define (&#39;_CURL_HTTP_PROXY&#39;, &#39;127.0.0.1:8118&#39;);</code>，其中<code>8118</code>端口是通过<code>privoxy</code>设置的http代理，缺点：1.这样所有的更新都全局走代理，影响速度；2.似乎无效。故并未采用。  </p>
 <h1 id="创建feed更新服务"><a href="#创建feed更新服务" class="headerlink" title="创建feed更新服务"></a>创建feed更新服务</h1><p>创建并编辑<code>/etc/systemd/system/ttrss_backend.service</code>文件。有一种科学方法即在此处将php通过<code>proxychains</code>之类的走代理，缺点：1.全局走代理，影响速度；2.易出错导致更新失败。故并未采用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=ttrss_backend</div><div class="line">After=network.target mysql.service</div><div class="line"></div><div class="line">[Service]</div><div class="line">User=www-data</div><div class="line">ExecStart=/var/www/example.com/tt-rss/update_daemon2.php</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
@@ -231,21 +231,21 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://mjyai.com/tags/ubuntu/"/>
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
-      <category term="rss" scheme="https://mjyai.com/tags/rss/"/>
+      <category term="rss" scheme="https://blog.mjyai.com/tags/rss/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu下搭建私人同步云盘nextcloud</title>
-    <link href="https://mjyai.com/2020/03/15/ubuntu-nextcloud/"/>
-    <id>https://mjyai.com/2020/03/15/ubuntu-nextcloud/</id>
+    <link href="https://blog.mjyai.com/2020/03/15/ubuntu-nextcloud/"/>
+    <id>https://blog.mjyai.com/2020/03/15/ubuntu-nextcloud/</id>
     <published>2020-03-15T03:45:22.000Z</published>
-    <updated>2020-05-03T23:51:48.626Z</updated>
+    <updated>2020-05-04T04:12:22.985Z</updated>
     
     <content type="html"><![CDATA[<p>虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。<br><a id="more"></a><br>最初的动机是为了解决QFile移动端自动上传照片的各种不便：  </p>
 <ol>
@@ -254,7 +254,7 @@
 <li>上传时必须保持亮屏，否则会停止。  </li>
 </ol>
 <p>但搭建好nextcloud后才发觉其软件定位不是备份文件，而是同步与分享。目前暂<strong>不支持单向同步</strong>，即我需要的手机照片自动上传，但不同步下载服务器的照片。后通过免费的<a href="https://www.tacit.dk/foldersync/" target="_blank" rel="external">FolderSync</a>解决这个问题。<br>不过其支持WebDAV协议，故可用来给如Joplin之类的第三方程序做同步用，故仍旧保留了。<br>本文没用<a href="https://hub.docker.com/_/nextcloud/" target="_blank" rel="external">Docker</a>或<a href="https://docs.nextcloud.com/server/17/admin_manual/installation/source_installation.html#example-installation-on-ubuntu-18-04-lts-server" target="_blank" rel="external">官方脚本</a>的方式安装，因为前者对性能有损失且设置有限、不利于调试，而后者适合新装好的系统只跑nextcloud。</p>
-<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="php设置"><a href="#php设置" class="headerlink" title="php设置"></a>php设置</h1><p>编辑<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">memory_limit = 1024M</div><div class="line">post_max_size = 1024M</div><div class="line">upload_max_filesize = 1024M</div></pre></td></tr></table></figure></p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="php设置"><a href="#php设置" class="headerlink" title="php设置"></a>php设置</h1><p>编辑<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">memory_limit = 1024M</div><div class="line">post_max_size = 1024M</div><div class="line">upload_max_filesize = 1024M</div></pre></td></tr></table></figure></p>
 <h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install mariadb-server php7.2-mysql</div><div class="line">sudo mysql_secure_installation</div></pre></td></tr></table></figure>
 <p>输入并记好root用户的密码。注意root权限的用户是通过<code>auth_socket</code>而并非密码来验证的，故通过<code>sudo mysql -u root -p</code>登录时不输入密码或任意密码都能成功登录，而不是密码未设置成功。想取消<code>auth_socket</code>可以<a href="https://unix.stackexchange.com/questions/385202/mariadb-accepts-any-password" target="_blank" rel="external">看这里</a>。<br>启用4字节字符支持，编辑<code>/etc/mysql/mariadb.cnf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[mysqld]</div><div class="line">innodb_file_per_table=1</div><div class="line">character-set-server=utf8mb4</div></pre></td></tr></table></figure></p>
 <p>重启mysql。  </p>
@@ -275,7 +275,7 @@
 <h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>打开nextcloud管理员概览页面(<a href="https://example.com/nextcloud/index.php/settings/admin/overview" target="_blank" rel="external">https://example.com/nextcloud/index.php/settings/admin/overview</a> )，确保<code>安全与设置警告</code>测试全部通过。  </p>
 <h2 id="Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”"><a href="#Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”" class="headerlink" title="Your web server is not properly set up to resolve “/.well-known/caldav”"></a>Your web server is not properly set up to resolve “/.well-known/caldav”</h2><p>由于之前并未将nextcloud装在网站根目录，故需通过rewrite进行301跳转。<br>启用rewrite模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod rewrite</div></pre></td></tr></table></figure></p>
 <p>编辑网站<strong>根目录</strong><code>/var/www/example.com/.htaccess</code>文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule mod_rewrite.c&gt;</div><div class="line">  RewriteEngine on</div><div class="line">  RewriteRule ^\.well-known/host-meta /nextcloud/public.php?service=host-meta [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/host-meta\.json /nextcloud/public.php?service=host-meta-json [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/webfinger /nextcloud/public.php?service=webfinger [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/carddav /nextcloud/remote.php/dav/ [R=301,L]</div><div class="line">  RewriteRule ^\.well-known/caldav /nextcloud/remote.php/dav/ [R=301,L]</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
-<p>注，如果用<a href="https://mjyai.com/2020/04/03/ubuntu-nginx-frontend-apache-backend/">nginx+apache方式搭建</a>则需把以上<code>RewriteRule</code>全部注释掉，在<code>example.com.conf</code>中设置301跳转。</p>
+<p>注，如果用<a href="https://blog.mjyai.com/2020/04/03/ubuntu-nginx-frontend-apache-backend/">nginx+apache方式搭建</a>则需把以上<code>RewriteRule</code>全部注释掉，在<code>example.com.conf</code>中设置301跳转。</p>
 <h2 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500 Internal Server Error"></a>500 Internal Server Error</h2><p>先检查redis-server是否正常工作，必要时注释掉<code>config.php</code>中redis的内容来查错。<br>这多出现于域名改变的情况，若<code>overwrite.cli.url</code>等设置改过仍无法解决，可以考虑重装。  </p>
 <h2 id="重装nextcloud"><a href="#重装nextcloud" class="headerlink" title="重装nextcloud"></a>重装nextcloud</h2><p>在<code>config</code>文件夹下重命名<code>config.php</code>并新建<code>CAN_INSTALL</code>文件。<br>浏览器打开<code>https://example.com/nextcloud</code>会进入安装向导。输入数据库相关配置。<br>注意这里必须新建一个和旧管理员用户名不一样的新管理员，如果输入旧管理员会报错用户已存在。完成设置后注销登录旧管理员把新建的这个删掉即可。    </p>
 <h1 id="移除nextcloud"><a href="#移除nextcloud" class="headerlink" title="移除nextcloud"></a>移除nextcloud</h1><p>删掉源文件，数据文件，数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /var/www/example.com/nextcloud</div><div class="line">sudo rm -rf /srv/hdd1/nextcloud</div><div class="line">DROP DATABASE nextclouddb;</div></pre></td></tr></table></figure></p>
@@ -287,17 +287,17 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://mjyai.com/tags/ubuntu/"/>
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu下编译配置rTorrent+ruTorrent</title>
-    <link href="https://mjyai.com/2020/01/24/rtorrent-compile/"/>
-    <id>https://mjyai.com/2020/01/24/rtorrent-compile/</id>
+    <link href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/"/>
+    <id>https://blog.mjyai.com/2020/01/24/rtorrent-compile/</id>
     <published>2020-01-24T12:04:06.000Z</published>
     <updated>2020-03-18T15:15:16.461Z</updated>
     
@@ -357,17 +357,17 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="pt" scheme="https://mjyai.com/tags/pt/"/>
+      <category term="pt" scheme="https://blog.mjyai.com/tags/pt/"/>
     
   </entry>
   
   <entry>
     <title>用Docker部署64位ARM版的seafile</title>
-    <link href="https://mjyai.com/2019/05/20/seafile-docker-arm64/"/>
-    <id>https://mjyai.com/2019/05/20/seafile-docker-arm64/</id>
+    <link href="https://blog.mjyai.com/2019/05/20/seafile-docker-arm64/"/>
+    <id>https://blog.mjyai.com/2019/05/20/seafile-docker-arm64/</id>
     <published>2019-05-20T02:39:33.000Z</published>
     <updated>2020-03-29T14:18:00.650Z</updated>
     
@@ -387,21 +387,21 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="docker" scheme="https://mjyai.com/tags/docker/"/>
+      <category term="docker" scheme="https://blog.mjyai.com/tags/docker/"/>
     
-      <category term="arm" scheme="https://mjyai.com/tags/arm/"/>
+      <category term="arm" scheme="https://blog.mjyai.com/tags/arm/"/>
     
   </entry>
   
   <entry>
     <title>树莓派3安装arm64版Ubuntu 18.04 Server</title>
-    <link href="https://mjyai.com/2019/05/20/rpi3-ubuntu-arm64/"/>
-    <id>https://mjyai.com/2019/05/20/rpi3-ubuntu-arm64/</id>
+    <link href="https://blog.mjyai.com/2019/05/20/rpi3-ubuntu-arm64/"/>
+    <id>https://blog.mjyai.com/2019/05/20/rpi3-ubuntu-arm64/</id>
     <published>2019-05-20T02:02:38.000Z</published>
-    <updated>2020-05-03T23:51:48.650Z</updated>
+    <updated>2020-05-04T04:12:22.985Z</updated>
     
     <content type="html"><![CDATA[<p>树莓派官方的Raspbian为了保持向下兼容仍然是32位，64位的树莓派3不跑64位系统和咸鱼有什么区别？<br><a id="more"></a></p>
 <h1 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h1><p><a href="https://www.ubuntu.com/download/iot/raspberry-pi-2-3" target="_blank" rel="external">Ubuntu官方</a>已经提供了<a href="http://cdimage.ubuntu.com/releases/bionic/release/ubuntu-18.04.2-preinstalled-server-arm64+raspi3.img.xz" target="_blank" rel="external">树莓派3的镜像</a>，直接下载即可。</p>
@@ -413,7 +413,7 @@
 <h2 id="dpkg-error-parsing-file-‘-var-lib-dpkg-updates-0004’-near-line-0"><a href="#dpkg-error-parsing-file-‘-var-lib-dpkg-updates-0004’-near-line-0" class="headerlink" title="dpkg: error: parsing file ‘/var/lib/dpkg/updates/0004’ near line 0"></a>dpkg: error: parsing file ‘/var/lib/dpkg/updates/0004’ near line 0</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/lib/dpkg/updates &amp;&amp; sudo rm -rf 0004</div><div class="line">sudo dpkg --configure <span class="_">-a</span></div></pre></td></tr></table></figure>
 <h1 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install sysbench</div><div class="line">sysbench --test=cpu --cpu-max-prime=20000 run</div></pre></td></tr></table></figure>
 <p>树莓派3B（BCM2837）测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">sysbench 1.0.11 (using system LuaJIT 2.1.0-beta3)</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line">Initializing random number generator from current time</div><div class="line"></div><div class="line"></div><div class="line">Prime numbers limit: 20000</div><div class="line"></div><div class="line">Initializing worker threads...</div><div class="line"></div><div class="line">Threads started!</div><div class="line"></div><div class="line">CPU speed:</div><div class="line">    events per second:   220.37</div><div class="line"></div><div class="line">General statistics:</div><div class="line">    total time:                          10.0007s</div><div class="line">    total number of events:              2206</div><div class="line"></div><div class="line">Latency (ms):</div><div class="line">         min:                                  4.21</div><div class="line">         avg:                                  4.53</div><div class="line">         max:                                  8.78</div><div class="line">         95th percentile:                      8.58</div><div class="line">         sum:                               9996.78</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           2206.0000/0.00</div><div class="line">    execution time (avg/stddev):   9.9968/0.00</div></pre></td></tr></table></figure></p>
-<p>i5-8400<a href="https://mjyai.com/2019/03/12/qemu-ubuntu-arm64/">用qemu模拟aarch64架构</a>在ubuntu 16.04下测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">sysbench 0.4.12:  multi-threaded system evaluation benchmark</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line"></div><div class="line">Doing CPU performance benchmark</div><div class="line"></div><div class="line">Threads started!</div><div class="line">Done.</div><div class="line"></div><div class="line">Maximum prime number checked in CPU test: 20000</div><div class="line"></div><div class="line"></div><div class="line">Test execution summary:</div><div class="line">    total time:                          45.2990s</div><div class="line">    total number of events:              10000</div><div class="line">    total time taken by event execution: 45.2838</div><div class="line">    per-request statistics:</div><div class="line">         min:                                  4.42ms</div><div class="line">         avg:                                  4.53ms</div><div class="line">         max:                                  5.26ms</div><div class="line">         approx.  95 percentile:               4.62ms</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           10000.0000/0.00</div><div class="line">    execution time (avg/stddev):   45.2838/0.00</div></pre></td></tr></table></figure></p>
+<p>i5-8400<a href="https://blog.mjyai.com/2019/03/12/qemu-ubuntu-arm64/">用qemu模拟aarch64架构</a>在ubuntu 16.04下测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">sysbench 0.4.12:  multi-threaded system evaluation benchmark</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line"></div><div class="line">Doing CPU performance benchmark</div><div class="line"></div><div class="line">Threads started!</div><div class="line">Done.</div><div class="line"></div><div class="line">Maximum prime number checked in CPU test: 20000</div><div class="line"></div><div class="line"></div><div class="line">Test execution summary:</div><div class="line">    total time:                          45.2990s</div><div class="line">    total number of events:              10000</div><div class="line">    total time taken by event execution: 45.2838</div><div class="line">    per-request statistics:</div><div class="line">         min:                                  4.42ms</div><div class="line">         avg:                                  4.53ms</div><div class="line">         max:                                  5.26ms</div><div class="line">         approx.  95 percentile:               4.62ms</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           10000.0000/0.00</div><div class="line">    execution time (avg/stddev):   45.2838/0.00</div></pre></td></tr></table></figure></p>
 <p>i5-8400在ubuntu 18.04下测试结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">sysbench 1.0.11 (using system LuaJIT 2.1.0-beta3)</div><div class="line"></div><div class="line">Running the test with following options:</div><div class="line">Number of threads: 1</div><div class="line">Initializing random number generator from current time</div><div class="line"></div><div class="line"></div><div class="line">Prime numbers limit: 20000</div><div class="line"></div><div class="line">Initializing worker threads...</div><div class="line"></div><div class="line">Threads started!</div><div class="line"></div><div class="line">CPU speed:</div><div class="line">    events per second:   549.44</div><div class="line"></div><div class="line">General statistics:</div><div class="line">    total time:                          10.0018s</div><div class="line">    total number of events:              5496</div><div class="line"></div><div class="line">Latency (ms):</div><div class="line">         min:                                  1.81</div><div class="line">         avg:                                  1.82</div><div class="line">         max:                                  5.85</div><div class="line">         95th percentile:                      1.86</div><div class="line">         sum:                              10000.89</div><div class="line"></div><div class="line">Threads fairness:</div><div class="line">    events (avg/stddev):           5496.0000/0.00</div><div class="line">    execution time (avg/stddev):   10.0009/0.00</div></pre></td></tr></table></figure></p>
 ]]></content>
     
@@ -423,21 +423,21 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://mjyai.com/tags/arm/"/>
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
-      <category term="ubuntu" scheme="https://mjyai.com/tags/ubuntu/"/>
+      <category term="arm" scheme="https://blog.mjyai.com/tags/arm/"/>
     
-      <category term="rpi" scheme="https://mjyai.com/tags/rpi/"/>
+      <category term="rpi" scheme="https://blog.mjyai.com/tags/rpi/"/>
     
   </entry>
   
   <entry>
     <title>解决win10下Ryzen平台间歇性卡顿问题</title>
-    <link href="https://mjyai.com/2019/04/23/fix-win10-ryzen-freeze/"/>
-    <id>https://mjyai.com/2019/04/23/fix-win10-ryzen-freeze/</id>
+    <link href="https://blog.mjyai.com/2019/04/23/fix-win10-ryzen-freeze/"/>
+    <id>https://blog.mjyai.com/2019/04/23/fix-win10-ryzen-freeze/</id>
     <published>2019-04-23T06:17:10.000Z</published>
     <updated>2019-04-23T07:20:48.506Z</updated>
     
@@ -457,17 +457,17 @@
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="win" scheme="https://mjyai.com/tags/win/"/>
+      <category term="win" scheme="https://blog.mjyai.com/tags/win/"/>
     
   </entry>
   
   <entry>
     <title>通过pass实现更安全的docker登录方式</title>
-    <link href="https://mjyai.com/2019/03/14/docker-credential-login/"/>
-    <id>https://mjyai.com/2019/03/14/docker-credential-login/</id>
+    <link href="https://blog.mjyai.com/2019/03/14/docker-credential-login/"/>
+    <id>https://blog.mjyai.com/2019/03/14/docker-credential-login/</id>
     <published>2019-03-14T03:41:20.000Z</published>
     <updated>2019-03-21T05:13:56.314Z</updated>
     
@@ -495,19 +495,19 @@ passwd
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="docker" scheme="https://mjyai.com/tags/docker/"/>
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
-      <category term="ubuntu" scheme="https://mjyai.com/tags/ubuntu/"/>
+      <category term="docker" scheme="https://blog.mjyai.com/tags/docker/"/>
     
   </entry>
   
   <entry>
     <title>ARM平台qnap用Docker部署aria2</title>
-    <link href="https://mjyai.com/2019/03/12/aria2-docker-arm-qnap/"/>
-    <id>https://mjyai.com/2019/03/12/aria2-docker-arm-qnap/</id>
+    <link href="https://blog.mjyai.com/2019/03/12/aria2-docker-arm-qnap/"/>
+    <id>https://blog.mjyai.com/2019/03/12/aria2-docker-arm-qnap/</id>
     <published>2019-03-12T15:01:08.000Z</published>
     <updated>2019-04-23T06:19:14.988Z</updated>
     
@@ -531,21 +531,21 @@ passwd
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="docker" scheme="https://mjyai.com/tags/docker/"/>
+      <category term="docker" scheme="https://blog.mjyai.com/tags/docker/"/>
     
-      <category term="arm" scheme="https://mjyai.com/tags/arm/"/>
+      <category term="arm" scheme="https://blog.mjyai.com/tags/arm/"/>
     
-      <category term="nas" scheme="https://mjyai.com/tags/nas/"/>
+      <category term="nas" scheme="https://blog.mjyai.com/tags/nas/"/>
     
   </entry>
   
   <entry>
     <title>ARM平台NAS（qnap TS-212P3）用Docker部署签到站</title>
-    <link href="https://mjyai.com/2019/03/12/qiandao-docker-qnap-arm/"/>
-    <id>https://mjyai.com/2019/03/12/qiandao-docker-qnap-arm/</id>
+    <link href="https://blog.mjyai.com/2019/03/12/qiandao-docker-qnap-arm/"/>
+    <id>https://blog.mjyai.com/2019/03/12/qiandao-docker-qnap-arm/</id>
     <published>2019-03-12T03:44:42.000Z</published>
     <updated>2019-03-12T04:40:27.487Z</updated>
     
@@ -564,21 +564,21 @@ passwd
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="docker" scheme="https://mjyai.com/tags/docker/"/>
+      <category term="docker" scheme="https://blog.mjyai.com/tags/docker/"/>
     
-      <category term="arm" scheme="https://mjyai.com/tags/arm/"/>
+      <category term="arm" scheme="https://blog.mjyai.com/tags/arm/"/>
     
-      <category term="nas" scheme="https://mjyai.com/tags/nas/"/>
+      <category term="nas" scheme="https://blog.mjyai.com/tags/nas/"/>
     
   </entry>
   
   <entry>
     <title>通过QEMU在x86计算机上搭建arm64版ubuntu开发环境</title>
-    <link href="https://mjyai.com/2019/03/12/qemu-ubuntu-arm64/"/>
-    <id>https://mjyai.com/2019/03/12/qemu-ubuntu-arm64/</id>
+    <link href="https://blog.mjyai.com/2019/03/12/qemu-ubuntu-arm64/"/>
+    <id>https://blog.mjyai.com/2019/03/12/qemu-ubuntu-arm64/</id>
     <published>2019-03-12T02:17:23.000Z</published>
     <updated>2019-03-12T03:24:47.427Z</updated>
     
@@ -623,21 +623,21 @@ passwd
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="arm" scheme="https://mjyai.com/tags/arm/"/>
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
-      <category term="ubuntu" scheme="https://mjyai.com/tags/ubuntu/"/>
+      <category term="arm" scheme="https://blog.mjyai.com/tags/arm/"/>
     
-      <category term="qemu" scheme="https://mjyai.com/tags/qemu/"/>
+      <category term="qemu" scheme="https://blog.mjyai.com/tags/qemu/"/>
     
   </entry>
   
   <entry>
     <title>树莓派（arm32v7）用Docker部署签到站</title>
-    <link href="https://mjyai.com/2019/03/11/rpi-docker-qiandao/"/>
-    <id>https://mjyai.com/2019/03/11/rpi-docker-qiandao/</id>
+    <link href="https://blog.mjyai.com/2019/03/11/rpi-docker-qiandao/"/>
+    <id>https://blog.mjyai.com/2019/03/11/rpi-docker-qiandao/</id>
     <published>2019-03-11T13:05:07.000Z</published>
     <updated>2019-03-11T13:33:24.205Z</updated>
     
@@ -658,19 +658,19 @@ passwd
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="docker" scheme="https://mjyai.com/tags/docker/"/>
+      <category term="docker" scheme="https://blog.mjyai.com/tags/docker/"/>
     
-      <category term="rpi" scheme="https://mjyai.com/tags/rpi/"/>
+      <category term="rpi" scheme="https://blog.mjyai.com/tags/rpi/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu下安装与管理多个Linux内核</title>
-    <link href="https://mjyai.com/2019/03/05/install-manage-linux-kernel-ubuntu/"/>
-    <id>https://mjyai.com/2019/03/05/install-manage-linux-kernel-ubuntu/</id>
+    <link href="https://blog.mjyai.com/2019/03/05/install-manage-linux-kernel-ubuntu/"/>
+    <id>https://blog.mjyai.com/2019/03/05/install-manage-linux-kernel-ubuntu/</id>
     <published>2019-03-05T00:37:09.000Z</published>
     <updated>2019-03-05T01:46:37.653Z</updated>
     
@@ -696,17 +696,17 @@ sudo purge-old-kernels --keep 3
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="linux" scheme="https://mjyai.com/tags/linux/"/>
+      <category term="linux" scheme="https://blog.mjyai.com/tags/linux/"/>
     
   </entry>
   
   <entry>
     <title>Linux Mint 18.2版本升级至19.1</title>
-    <link href="https://mjyai.com/2019/03/04/upgrade-linux-mint/"/>
-    <id>https://mjyai.com/2019/03/04/upgrade-linux-mint/</id>
+    <link href="https://blog.mjyai.com/2019/03/04/upgrade-linux-mint/"/>
+    <id>https://blog.mjyai.com/2019/03/04/upgrade-linux-mint/</id>
     <published>2019-03-04T13:21:42.000Z</published>
     <updated>2019-03-04T14:31:46.000Z</updated>
     
@@ -737,24 +737,24 @@ sudo purge-old-kernels --keep 3
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="linux" scheme="https://mjyai.com/tags/linux/"/>
+      <category term="linux" scheme="https://blog.mjyai.com/tags/linux/"/>
     
   </entry>
   
   <entry>
     <title>极1s（hc5661）刷潘多拉固件</title>
-    <link href="https://mjyai.com/2019/01/13/hc5661-pandorabox/"/>
-    <id>https://mjyai.com/2019/01/13/hc5661-pandorabox/</id>
+    <link href="https://blog.mjyai.com/2019/01/13/hc5661-pandorabox/"/>
+    <id>https://blog.mjyai.com/2019/01/13/hc5661-pandorabox/</id>
     <published>2019-01-13T02:00:49.000Z</published>
-    <updated>2020-05-03T23:51:48.626Z</updated>
+    <updated>2020-05-04T04:12:22.985Z</updated>
     
     <content type="html"><![CDATA[<p>折腾了R6220后顺便把吃灰的极1s也更新一下，刷19.01潘多拉，功能和以前一样，以路由客户端形式实现科学上网专用路由。<br><a id="more"></a></p>
 <h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>由于之前已经申请root并刷了<a href="https://breed.hackpascal.net/breed-mt7620-hiwifi-hc5761.bin" target="_blank" rel="external">Breed</a>，目前在用的是<a href="https://github.com/rssnsj/openwrt-hc5x61/tree/chaos_calmer" target="_blank" rel="external">rssnsj</a>的<a href="http://rssn.cn/roms/" target="_blank" rel="external">固件</a>，所以准备工作省了。<br>需注意极1s先后有两个版本，早期和极2芯片一致用<a href="https://www.mediatek.com/products/homeNetworking/mt7620n-a" target="_blank" rel="external">MT7620A</a>的hc5661和后续缩水用<a href="https://www.mediatek.com/products/homeNetworking/mt7628k-n-a" target="_blank" rel="external">MT7628</a>的hc5661a，从MTK官方介绍可知主要是缩掉了硬件网络加速(HWNAT)和存储加速，但软件上增加了AES128/256的加速。二者uboot和固件均不一样，不能混用。想确定版本见路由底部标签，另外ssh登录路由后通过<code>cat /proc/cpuinfo</code>也可进一步确认。  </p>
 <h1 id="刷潘多拉固件"><a href="#刷潘多拉固件" class="headerlink" title="刷潘多拉固件"></a>刷潘多拉固件</h1><p>长按reset并开机，访问<code>192.168.1.1</code>进入breed。<br>选择<a href="https://downloads.pangubox.com/pandorabox/19.01/targets/ralink/mt7620/PandoraBox-ralink-mt7620-hc5661-2018-12-31-git-4b6a3d5ca-squashfs-sysupgrade.bin" target="_blank" rel="external">潘多拉19.01固件</a>并上传即可。</p>
-<h1 id="设置以路由模式桥接"><a href="#设置以路由模式桥接" class="headerlink" title="设置以路由模式桥接"></a>设置以路由模式桥接</h1><p>由于是科学上网专用路由，故无需像<a href="https://mjyai.com/2019/01/08/r6220-relay-bridge/">之前R6220那样</a>弄成中继桥，简单不少。<br>无线——扫描——加入网络，输入主路由密码，其他配置默认并提交。<br>接口，添加接口，协议选AP，设置无线名称和密码，网络选lan，提交。这样方便无线设备也可连上此路由。<br>此时笔记本通过LAN和路由相连，路由通过2.4G无线与主路由连接<a href="http://www.speedtest.cn/" target="_blank" rel="external">测速</a>下行为45.78Mbps。</p>
+<h1 id="设置以路由模式桥接"><a href="#设置以路由模式桥接" class="headerlink" title="设置以路由模式桥接"></a>设置以路由模式桥接</h1><p>由于是科学上网专用路由，故无需像<a href="https://blog.mjyai.com/2019/01/08/r6220-relay-bridge/">之前R6220那样</a>弄成中继桥，简单不少。<br>无线——扫描——加入网络，输入主路由密码，其他配置默认并提交。<br>接口，添加接口，协议选AP，设置无线名称和密码，网络选lan，提交。这样方便无线设备也可连上此路由。<br>此时笔记本通过LAN和路由相连，路由通过2.4G无线与主路由连接<a href="http://www.speedtest.cn/" target="_blank" rel="external">测速</a>下行为45.78Mbps。</p>
 <h1 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h1><p>这里主要参考<a href="https://cokebar.info/archives/664" target="_blank" rel="external">cokebar的这篇文章</a>，讲得很详细。但安装部分注意有改动：<br>系统——软件包处搜索并安装<code>luci-app-shadowsocks</code>，opkg会自动解决依赖装上<code>shadowsocks-libev</code>相关包。<br>同理装上<code>luci-app-ChinaDNS</code>。<br>但潘多拉的源里并未包含<code>DNS-forwarder</code>，需要到作者aa65535的<a href="https://github.com/aa65535/openwrt-dns-forwarder" target="_blank" rel="external">项目页面</a> 下载<a href="https://github.com/aa65535/openwrt-dns-forwarder/releases/download/v1.1.1/dns-forwarder_1.1.1-1_ramips_24kec.ipk" target="_blank" rel="external">dns-forwarder</a>和<a href="http://openwrt-dist.sourceforge.net/packages/luci/luci-app-dns-forwarder_1.6.2-1_all.ipk" target="_blank" rel="external">luci-app-dns-forwarder</a><br>scp上传到路由的root文件夹处。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp *.ipk root@192.168.1.1:/root</div></pre></td></tr></table></figure></p>
 <p>ssh连上路由，需注意由于pandorabox改了mt7620的架构名称，直接opkg install会显示架构不支持，需对<code>opkg.conf</code>进行更改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/opkg.conf</div></pre></td></tr></table></figure></p>
 <p>在文件末尾添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">arch all 100</div><div class="line">arch ramips 200</div><div class="line">arch ramips_24kec 300</div><div class="line">arch mipsel_24kec_dsp 400</div></pre></td></tr></table></figure></p>
@@ -771,23 +771,23 @@ sudo purge-old-kernels --keep 3
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="firmware" scheme="https://mjyai.com/tags/firmware/"/>
+      <category term="firmware" scheme="https://blog.mjyai.com/tags/firmware/"/>
     
-      <category term="router" scheme="https://mjyai.com/tags/router/"/>
+      <category term="router" scheme="https://blog.mjyai.com/tags/router/"/>
     
   </entry>
   
   <entry>
     <title>R6220采用中继桥实现无线桥接</title>
-    <link href="https://mjyai.com/2019/01/08/r6220-relay-bridge/"/>
-    <id>https://mjyai.com/2019/01/08/r6220-relay-bridge/</id>
+    <link href="https://blog.mjyai.com/2019/01/08/r6220-relay-bridge/"/>
+    <id>https://blog.mjyai.com/2019/01/08/r6220-relay-bridge/</id>
     <published>2019-01-08T03:35:23.000Z</published>
-    <updated>2020-05-03T23:51:48.634Z</updated>
+    <updated>2020-05-04T04:12:22.985Z</updated>
     
-    <content type="html"><![CDATA[<p>htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。<br><a id="more"></a><br><a href="https://mjyai.com/2019/01/06/r6220-breed-pandora/">前情提要</a>，虽然远程桌面非刚需，但htpc无法直连主路由网段的NAS不能接受。还是需要桥接把副路由连接设备和主路由放在同一网段。  </p>
+    <content type="html"><![CDATA[<p>htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。<br><a id="more"></a><br><a href="https://blog.mjyai.com/2019/01/06/r6220-breed-pandora/">前情提要</a>，虽然远程桌面非刚需，但htpc无法直连主路由网段的NAS不能接受。还是需要桥接把副路由连接设备和主路由放在同一网段。  </p>
 <h1 id="安装relay协议"><a href="#安装relay协议" class="headerlink" title="安装relay协议"></a>安装relay协议</h1><p>潘多拉默认未带，不过其应用层是和openwrt及luci兼容的，可装<a href="https://openwrt.org/packages/pkgdata/luci-proto-relay" target="_blank" rel="external">luci-proto-relay</a><br>ssh连上路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.1</div></pre></td></tr></table></figure></p>
 <p>更新并安装luci-proto-relay  </p>
 <pre><code>opkg update
@@ -807,7 +807,7 @@ opkg install luci-proto-relay
     
     </summary>
     
-      <category term="笔记" scheme="https://mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
   </entry>
