@@ -426,9 +426,9 @@
       <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
-    
       <category term="arm" scheme="https://blog.mjyai.com/tags/arm/"/>
+    
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
       <category term="rpi" scheme="https://blog.mjyai.com/tags/rpi/"/>
     
@@ -498,9 +498,9 @@ passwd
       <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
-    
       <category term="docker" scheme="https://blog.mjyai.com/tags/docker/"/>
+    
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
   </entry>
   
@@ -626,9 +626,9 @@ passwd
       <category term="笔记" scheme="https://blog.mjyai.com/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
-    
       <category term="arm" scheme="https://blog.mjyai.com/tags/arm/"/>
+    
+      <category term="ubuntu" scheme="https://blog.mjyai.com/tags/ubuntu/"/>
     
       <category term="qemu" scheme="https://blog.mjyai.com/tags/qemu/"/>
     
