@@ -11,10 +11,13 @@
 <meta property="og:url" content="https://blog.mjyai.com/2020/03/22/ubuntu-ttrss/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="rss已死？对占有话语权的内容创作者当然希望这样，但就内容接收者而言，活用合适的rss工具能筛掉无用信息提升效率。本文提供docker之外手动本地搭建ttrss的方法。">
-<meta property="og:updated_time" content="2020-05-04T04:12:22.985Z">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-22T03:35:50.000Z">
+<meta property="article:modified_time" content="2020-05-04T04:12:22.985Z">
+<meta property="article:author" content="mjy">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="rss">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu下自建rss阅读器ttrss">
-<meta name="twitter:description" content="rss已死？对占有话语权的内容创作者当然希望这样，但就内容接收者而言，活用合适的rss工具能筛掉无用信息提升效率。本文提供docker之外手动本地搭建ttrss的方法。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -22,9 +25,13 @@
     <link rel="icon" href="/img/favicon.png">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -47,7 +54,7 @@
           open_in_new: false
       }
   </script>
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -121,7 +128,7 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                                <a class="fl mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                             
                                 <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                             
@@ -141,7 +148,7 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/news/">Hexo</a>
                     
                     </div>
                 </section>
@@ -187,7 +194,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                        <a class="mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                     
                         <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                     
@@ -222,13 +229,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rss/">rss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rss/" rel="tag">rss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -239,20 +246,17 @@
       
           
         <p>rss已死？对占有话语权的内容创作者当然希望这样，但就内容接收者而言，活用合适的rss工具能筛掉无用信息提升效率。本文提供docker之外手动本地搭建ttrss的方法。<br><a id="more"></a></p>
-<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用docker"><a href="#为什么不用docker" class="headerlink" title="为什么不用docker"></a>为什么不用docker</h2><p>对个人用户而言，docker仅适用于一种场合：权限不足的服务器（包括非root的定制linux操作系统，如NAS的系统）。docker还有一个好处就是部署方便，但：1.需要大规模部署的场景并不多；2.可通过编写脚本来简化部署。docker的缺点：1.性能损失，对本地无所谓，但购买服务器的话内存需要升一档多花钱了；2.调试不方便(docker exec -it …)，更适合稳定版产品的部署，可玩性差些。<br>不过，实在想用docker的话推荐Henry Wang的<a href="https://github.com/HenryQW/Awesome-TTRSS" target="_blank" rel="external">Awesome-TTRSS</a>。<br>注意，由于众所周知的原因，<strong>不建议本地或国内搭建</strong>，下文对如何科学地在国内搭建亦有所涉及。  </p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用docker"><a href="#为什么不用docker" class="headerlink" title="为什么不用docker"></a>为什么不用docker</h2><p>对个人用户而言，docker仅适用于一种场合：权限不足的服务器（包括非root的定制linux操作系统，如NAS的系统）。docker还有一个好处就是部署方便，但：1.需要大规模部署的场景并不多；2.可通过编写脚本来简化部署。docker的缺点：1.性能损失，对本地无所谓，但购买服务器的话内存需要升一档多花钱了；2.调试不方便(docker exec -it …)，更适合稳定版产品的部署，可玩性差些。<br>不过，实在想用docker的话推荐Henry Wang的<a href="https://github.com/HenryQW/Awesome-TTRSS" target="_blank" rel="noopener">Awesome-TTRSS</a>。<br>注意，由于众所周知的原因，<strong>不建议本地或国内搭建</strong>，下文对如何科学地在国内搭建亦有所涉及。  </p>
 <h2 id="为什么不用第三方服务"><a href="#为什么不用第三方服务" class="headerlink" title="为什么不用第三方服务"></a>为什么不用第三方服务</h2><p>国外的第三方服务速度慢，连接不畅或直接被墙，国内的有和谐不考虑。且免费服务限制颇多，如无法设置过滤规则，订阅数刷新率有限制，有广告等等。  </p>
-<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a><a href="https://blog.mjyai.com/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a></h1><h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mysql -u root</div><div class="line">CREATE DATABASE ttrss;</div></pre></td></tr></table></figure>
-<h1 id="克隆ttrss源码"><a href="#克隆ttrss源码" class="headerlink" title="克隆ttrss源码"></a>克隆ttrss源码</h1><p>注：若是国内域名建议更改默认文件夹名<code>tt-rss</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://git.tt-rss.org/fox/tt-rss.git</div></pre></td></tr></table></figure></p>
-<p>访问<code>https://example.com/tt-rss/install/</code>执行安装。<br>默认用户名<code>admin</code>，密码<code>password</code>。<br>有个官方不支持但提供的代理选项，编辑<code>/var/www/example.com/tt-rss/config.php</code>并添加一行<code>define (&#39;_CURL_HTTP_PROXY&#39;, &#39;127.0.0.1:8118&#39;);</code>，其中<code>8118</code>端口是通过<code>privoxy</code>设置的http代理，缺点：1.这样所有的更新都全局走代理，影响速度；2.似乎无效。故并未采用。  </p>
-<h1 id="创建feed更新服务"><a href="#创建feed更新服务" class="headerlink" title="创建feed更新服务"></a>创建feed更新服务</h1><p>创建并编辑<code>/etc/systemd/system/ttrss_backend.service</code>文件。有一种科学方法即在此处将php通过<code>proxychains</code>之类的走代理，缺点：1.全局走代理，影响速度；2.易出错导致更新失败。故并未采用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=ttrss_backend</div><div class="line">After=network.target mysql.service</div><div class="line"></div><div class="line">[Service]</div><div class="line">User=www-data</div><div class="line">ExecStart=/var/www/example.com/tt-rss/update_daemon2.php</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
-<p>启用并开始服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> ttrss_backend.service</div><div class="line">sudo systemctl start ttrss_backend.service</div></pre></td></tr></table></figure></p>
-<h1 id="安装feed代理插件options-per-feed"><a href="#安装feed代理插件options-per-feed" class="headerlink" title="安装feed代理插件options_per_feed"></a>安装feed代理插件options_per_feed</h1><p>其中有代理选项，可对单个feed设置走代理线路。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /var/www/example.com/tt-rss/plugins</div><div class="line">sudo -u www-data git clone https://github.com/sergey-dryabzhinsky/options_per_feed</div></pre></td></tr></table></figure></p>
-<p>克隆源码后刷新浏览器，在<code>Preferences-Plugins</code>处激活该插件。<br>此后右键点击feed，<code>编辑feed-Plugins</code>处可启用并设置代理。<br>但由于添加feed时是直连的，对于已经被墙的feed会添加失败，无法进入编辑页面设置代理，这种只能在别处添加并导出，然后tt-rss再导入并设置代理选项才行。  </p>
-<h1 id="安装fever插件以支持更多移动客户端"><a href="#安装fever插件以支持更多移动客户端" class="headerlink" title="安装fever插件以支持更多移动客户端"></a>安装fever插件以支持更多移动客户端</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /var/www/example.com/tt-rss/plugins.local</div><div class="line">sudo -u www-data git clone https://github.com/DigitalDJ/tinytinyrss-fever-plugin fever</div></pre></td></tr></table></figure>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a><a href="https://blog.mjyai.com/2020/03/15/ubuntu-nextcloud/#%E5%AE%89%E8%A3%85mysql">安装mysql</a></h1><h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql -u root</span><br><span class="line">CREATE DATABASE ttrss;</span><br></pre></td></tr></table></figure>
+<h1 id="克隆ttrss源码"><a href="#克隆ttrss源码" class="headerlink" title="克隆ttrss源码"></a>克隆ttrss源码</h1><p>注：若是国内域名建议更改默认文件夹名<code>tt-rss</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/www/example.com</span><br><span class="line">sudo -u www-data git <span class="built_in">clone</span> https://git.tt-rss.org/fox/tt-rss.git</span><br></pre></td></tr></table></figure><br>访问<code>https://example.com/tt-rss/install/</code>执行安装。<br>默认用户名<code>admin</code>，密码<code>password</code>。<br>有个官方不支持但提供的代理选项，编辑<code>/var/www/example.com/tt-rss/config.php</code>并添加一行<code>define (&#39;_CURL_HTTP_PROXY&#39;, &#39;127.0.0.1:8118&#39;);</code>，其中<code>8118</code>端口是通过<code>privoxy</code>设置的http代理，缺点：1.这样所有的更新都全局走代理，影响速度；2.似乎无效。故并未采用。  </p>
+<h1 id="创建feed更新服务"><a href="#创建feed更新服务" class="headerlink" title="创建feed更新服务"></a>创建feed更新服务</h1><p>创建并编辑<code>/etc/systemd/system/ttrss_backend.service</code>文件。有一种科学方法即在此处将php通过<code>proxychains</code>之类的走代理，缺点：1.全局走代理，影响速度；2.易出错导致更新失败。故并未采用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;ttrss_backend</span><br><span class="line">After&#x3D;network.target mysql.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User&#x3D;www-data</span><br><span class="line">ExecStart&#x3D;&#x2F;var&#x2F;www&#x2F;example.com&#x2F;tt-rss&#x2F;update_daemon2.php</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure><br>启用并开始服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> ttrss_backend.service</span><br><span class="line">sudo systemctl start ttrss_backend.service</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装feed代理插件options-per-feed"><a href="#安装feed代理插件options-per-feed" class="headerlink" title="安装feed代理插件options_per_feed"></a>安装feed代理插件options_per_feed</h1><p>其中有代理选项，可对单个feed设置走代理线路。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;var&#x2F;www&#x2F;example.com&#x2F;tt-rss&#x2F;plugins</span><br><span class="line">sudo -u www-data git clone https:&#x2F;&#x2F;github.com&#x2F;sergey-dryabzhinsky&#x2F;options_per_feed</span><br></pre></td></tr></table></figure><br>克隆源码后刷新浏览器，在<code>Preferences-Plugins</code>处激活该插件。<br>此后右键点击feed，<code>编辑feed-Plugins</code>处可启用并设置代理。<br>但由于添加feed时是直连的，对于已经被墙的feed会添加失败，无法进入编辑页面设置代理，这种只能在别处添加并导出，然后tt-rss再导入并设置代理选项才行。  </p>
+<h1 id="安装fever插件以支持更多移动客户端"><a href="#安装fever插件以支持更多移动客户端" class="headerlink" title="安装fever插件以支持更多移动客户端"></a>安装fever插件以支持更多移动客户端</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;var&#x2F;www&#x2F;example.com&#x2F;tt-rss&#x2F;plugins.local</span><br><span class="line">sudo -u www-data git clone https:&#x2F;&#x2F;github.com&#x2F;DigitalDJ&#x2F;tinytinyrss-fever-plugin fever</span><br></pre></td></tr></table></figure>
 <p>需要在<code>Preferences-Fever Emulation</code>处设置fever的密码，用于客户端在<code>https://example.com/tt-rss/plugins.local/fever/</code>处登录用。  </p>
-<h1 id="安装feedly主题tt-rss-feedly-theme"><a href="#安装feedly主题tt-rss-feedly-theme" class="headerlink" title="安装feedly主题tt-rss-feedly-theme"></a>安装feedly主题tt-rss-feedly-theme</h1><p>这是看起来比较顺眼，操作也和GR类似的主题。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/levito/tt-rss-feedly-theme/archive/master.zip</div><div class="line">unzip master.zip</div><div class="line"><span class="built_in">cd</span> tt-rss-feedly-theme-master</div><div class="line">sudo -u www-data cp -r feedly* /var/www/example.com/tt-rss/themes.local/</div></pre></td></tr></table></figure></p>
+<h1 id="安装feedly主题tt-rss-feedly-theme"><a href="#安装feedly主题tt-rss-feedly-theme" class="headerlink" title="安装feedly主题tt-rss-feedly-theme"></a>安装feedly主题tt-rss-feedly-theme</h1><p>这是看起来比较顺眼，操作也和GR类似的主题。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/levito/tt-rss-feedly-theme/archive/master.zip</span><br><span class="line">unzip master.zip</span><br><span class="line"><span class="built_in">cd</span> tt-rss-feedly-theme-master</span><br><span class="line">sudo -u www-data cp -r feedly* /var/www/example.com/tt-rss/themes.local/</span><br></pre></td></tr></table></figure></p>
 <h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="取消默认展开文章"><a href="#取消默认展开文章" class="headerlink" title="取消默认展开文章"></a>取消默认展开文章</h2><p><code>Preferences-Articles</code>处取消<code>Always expand articles</code>。  </p>
-<h2 id="其他主题"><a href="#其他主题" class="headerlink" title="其他主题"></a><a href="https://git.tt-rss.org/fox/tt-rss/wiki/Themes" target="_blank" rel="external">其他主题</a></h2><h2 id="其他插件"><a href="#其他插件" class="headerlink" title="其他插件"></a><a href="https://git.tt-rss.org/fox/tt-rss/wiki/Plugins" target="_blank" rel="external">其他插件</a></h2>
+<h2 id="其他主题"><a href="#其他主题" class="headerlink" title="其他主题"></a><a href="https://git.tt-rss.org/fox/tt-rss/wiki/Themes" target="_blank" rel="noopener">其他主题</a></h2><h2 id="其他插件"><a href="#其他插件" class="headerlink" title="其他插件"></a><a href="https://git.tt-rss.org/fox/tt-rss/wiki/Plugins" target="_blank" rel="noopener">其他插件</a></h2>
       
       
         <div class="page-reward">
@@ -317,7 +321,7 @@
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -351,7 +355,9 @@
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -406,7 +412,7 @@
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 </section>
     
 
@@ -486,8 +492,12 @@
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -536,7 +546,7 @@ MathJax.Hub.Queue(function() {
     })
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
   <script language="javascript">
@@ -564,6 +574,7 @@ MathJax.Hub.Queue(function() {
         });
     });
 </script>
+
 
 
   </div>

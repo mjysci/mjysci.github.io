@@ -7,14 +7,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="证书常用位置及权限设置，以及用脚本更新阿里云域名（ddns）。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ubuntu下手动部署Let's Encrypt">
+<meta property="og:title" content="ubuntu下手动部署Let&#39;s Encrypt">
 <meta property="og:url" content="https://blog.mjyai.com/2020/04/03/ubuntu-letsencrypt/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="证书常用位置及权限设置，以及用脚本更新阿里云域名（ddns）。">
-<meta property="og:updated_time" content="2020-04-03T03:10:52.927Z">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-04-03T02:11:49.000Z">
+<meta property="article:modified_time" content="2020-04-03T03:10:52.927Z">
+<meta property="article:author" content="mjy">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="ssl">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu下手动部署Let's Encrypt">
-<meta name="twitter:description" content="证书常用位置及权限设置，以及用脚本更新阿里云域名（ddns）。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -22,9 +25,13 @@
     <link rel="icon" href="/img/favicon.png">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -47,7 +54,7 @@
           open_in_new: false
       }
   </script>
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -121,7 +128,7 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                                <a class="fl mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                             
                                 <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                             
@@ -141,7 +148,7 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/news/">Hexo</a>
                     
                     </div>
                 </section>
@@ -187,7 +194,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                        <a class="mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                     
                         <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                     
@@ -222,13 +229,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssl/">ssl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssl/" rel="tag">ssl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -239,18 +246,12 @@
       
           
         <p>证书常用位置及权限设置，以及用脚本更新阿里云域名（ddns）。<br><a id="more"></a></p>
-<h1 id="letsencrpyt"><a href="#letsencrpyt" class="headerlink" title="letsencrpyt"></a>letsencrpyt</h1><h2 id="创建相关文件夹并设置权限"><a href="#创建相关文件夹并设置权限" class="headerlink" title="创建相关文件夹并设置权限"></a>创建相关文件夹并设置权限</h2><p>不建议直接放到<code>/etc/ssl</code>文件夹，因为letsencrypt三个月就要改一次，而此处是设计放置长期证书的。这里以apache为例，若是nginx则可在<code>/etc/nginx</code>下新建。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /etc/apache2/ssl</div><div class="line">sudo mkdir /etc/apache2/ssl/private</div><div class="line">sudo chmod 755 /etc/apache2/ssl</div><div class="line">sudo chmod 710 /etc/apache2/ssl/private</div><div class="line">sudo chown -R root:root /etc/apache2/ssl/</div><div class="line">sudo chown -R root:ssl-cert /etc/apache2/ssl/private/</div></pre></td></tr></table></figure></p>
-<h2 id="用acme-sh自动签发ssl证书"><a href="#用acme-sh自动签发ssl证书" class="headerlink" title="用acme.sh自动签发ssl证书"></a>用acme.sh自动签发ssl证书</h2><p>下载脚本。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo su</div><div class="line">curl https://get.acme.sh | sh</div></pre></td></tr></table></figure></p>
-<p>设置阿里云域名相关API。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> Ali_Key=<span class="string">"AccessKeyId"</span></div><div class="line"><span class="built_in">export</span> Ali_Secret=<span class="string">"AccessKeySecret"</span></div></pre></td></tr></table></figure></p>
-<p>以DNS API模式通过验证。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">acme.sh --issue --dns dns_ali <span class="_">-d</span> example.com</div></pre></td></tr></table></figure></p>
-<p>安装证书。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">acme.sh --installcert <span class="_">-d</span> example.com</div><div class="line">--key-file /etc/apache2/ssl/private/example.com.key</div><div class="line">--fullchain-file /etc/apache2/ssl/fullchain.cer</div><div class="line">--reloadcmd <span class="string">"service apache2 force-reload"</span></div></pre></td></tr></table></figure></p>
-<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">acme.sh --uninstall</div></pre></td></tr></table></figure>
-<h1 id="动态域名ddns"><a href="#动态域名ddns" class="headerlink" title="动态域名ddns"></a>动态域名ddns</h1><p>如果公网IP定期改变，则需定时去域名管理处更新IP。<br>切换为root并下载脚本。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo su</div><div class="line"><span class="built_in">cd</span> ~</div><div class="line">wget https://raw.githubusercontent.com/h46incon/AliDDNSBash/master/ali_ddns.sh</div></pre></td></tr></table></figure></p>
-<p>按<a href="https://github.com/h46incon/AliDDNSBash#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95" target="_blank" rel="external">官方教程</a>编辑<code>ali_ddns.sh</code>。<br>启用并设置定时任务<code>cron</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/cron enable</div><div class="line">crontab -e</div></pre></td></tr></table></figure></p>
-<p>在编辑器中添加一行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*/5 * * * * /bin/bash /root/ali_ddns.sh</div></pre></td></tr></table></figure></p>
-<p>其中<code>*</code>依次为每分，每小时，每天，每月，每星期几。此处设置为每5分钟检查一次IP，有改变则上报域名管理更新记录。  </p>
-<h1 id="caddy"><a href="#caddy" class="headerlink" title="caddy"></a><a href="https://caddyserver.com/" target="_blank" rel="external">caddy</a></h1><p>用caddy则比较轻松，会根据CaddyFile中的设置为每个域名自动签发和更新证书，这里仅记录下签发证书的位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/example.com/example.com.crt</div><div class="line">/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/example.com/example.com.key</div></pre></td></tr></table></figure></p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://github.com/Neilpang/acme.sh/wiki/说明" target="_blank" rel="external">https://github.com/Neilpang/acme.sh/wiki/说明</a><br><a href="https://github.com/Neilpang/acme.sh/wiki/Options-and-Params" target="_blank" rel="external">https://github.com/Neilpang/acme.sh/wiki/Options-and-Params</a><br><a href="https://github.com/h46incon/AliDDNSBash#使用方法" target="_blank" rel="external">https://github.com/h46incon/AliDDNSBash#使用方法</a><br><a href="http://man7.org/linux/man-pages/man5/crontab.5.html" target="_blank" rel="external">http://man7.org/linux/man-pages/man5/crontab.5.html</a></p>
+<h1 id="letsencrpyt"><a href="#letsencrpyt" class="headerlink" title="letsencrpyt"></a>letsencrpyt</h1><h2 id="创建相关文件夹并设置权限"><a href="#创建相关文件夹并设置权限" class="headerlink" title="创建相关文件夹并设置权限"></a>创建相关文件夹并设置权限</h2><p>不建议直接放到<code>/etc/ssl</code>文件夹，因为letsencrypt三个月就要改一次，而此处是设计放置长期证书的。这里以apache为例，若是nginx则可在<code>/etc/nginx</code>下新建。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /etc/apache2/ssl</span><br><span class="line">sudo mkdir /etc/apache2/ssl/private</span><br><span class="line">sudo chmod 755 /etc/apache2/ssl</span><br><span class="line">sudo chmod 710 /etc/apache2/ssl/private</span><br><span class="line">sudo chown -R root:root /etc/apache2/ssl/</span><br><span class="line">sudo chown -R root:ssl-cert /etc/apache2/ssl/private/</span><br></pre></td></tr></table></figure></p>
+<h2 id="用acme-sh自动签发ssl证书"><a href="#用acme-sh自动签发ssl证书" class="headerlink" title="用acme.sh自动签发ssl证书"></a>用acme.sh自动签发ssl证书</h2><p>下载脚本。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">curl https://get.acme.sh | sh</span><br></pre></td></tr></table></figure><br>设置阿里云域名相关API。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> Ali_Key=<span class="string">"AccessKeyId"</span></span><br><span class="line"><span class="built_in">export</span> Ali_Secret=<span class="string">"AccessKeySecret"</span></span><br></pre></td></tr></table></figure><br>以DNS API模式通过验证。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --issue --dns dns_ali -d example.com</span><br></pre></td></tr></table></figure><br>安装证书。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --installcert -d example.com</span><br><span class="line">--key-file /etc/apache2/ssl/private/example.com.key</span><br><span class="line">--fullchain-file /etc/apache2/ssl/fullchain.cer</span><br><span class="line">--reloadcmd <span class="string">"service apache2 force-reload"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --uninstall</span><br></pre></td></tr></table></figure>
+<h1 id="动态域名ddns"><a href="#动态域名ddns" class="headerlink" title="动态域名ddns"></a>动态域名ddns</h1><p>如果公网IP定期改变，则需定时去域名管理处更新IP。<br>切换为root并下载脚本。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">wget https://raw.githubusercontent.com/h46incon/AliDDNSBash/master/ali_ddns.sh</span><br></pre></td></tr></table></figure><br>按<a href="https://github.com/h46incon/AliDDNSBash#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95" target="_blank" rel="noopener">官方教程</a>编辑<code>ali_ddns.sh</code>。<br>启用并设置定时任务<code>cron</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;cron enable</span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure><br>在编辑器中添加一行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 * * * * &#x2F;bin&#x2F;bash &#x2F;root&#x2F;ali_ddns.sh</span><br></pre></td></tr></table></figure><br>其中<code>*</code>依次为每分，每小时，每天，每月，每星期几。此处设置为每5分钟检查一次IP，有改变则上报域名管理更新记录。  </p>
+<h1 id="caddy"><a href="#caddy" class="headerlink" title="caddy"></a><a href="https://caddyserver.com/" target="_blank" rel="noopener">caddy</a></h1><p>用caddy则比较轻松，会根据CaddyFile中的设置为每个域名自动签发和更新证书，这里仅记录下签发证书的位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;root&#x2F;.caddy&#x2F;acme&#x2F;acme-v02.api.letsencrypt.org&#x2F;sites&#x2F;example.com&#x2F;example.com.crt</span><br><span class="line">&#x2F;root&#x2F;.caddy&#x2F;acme&#x2F;acme-v02.api.letsencrypt.org&#x2F;sites&#x2F;example.com&#x2F;example.com.key</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://github.com/Neilpang/acme.sh/wiki/说明" target="_blank" rel="noopener">https://github.com/Neilpang/acme.sh/wiki/说明</a><br><a href="https://github.com/Neilpang/acme.sh/wiki/Options-and-Params" target="_blank" rel="noopener">https://github.com/Neilpang/acme.sh/wiki/Options-and-Params</a><br><a href="https://github.com/h46incon/AliDDNSBash#使用方法" target="_blank" rel="noopener">https://github.com/h46incon/AliDDNSBash#使用方法</a><br><a href="http://man7.org/linux/man-pages/man5/crontab.5.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man5/crontab.5.html</a></p>
 
       
       
@@ -316,7 +317,7 @@
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -350,7 +351,9 @@
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -405,7 +408,7 @@
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 </section>
     
 
@@ -485,8 +488,12 @@
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -535,7 +542,7 @@ MathJax.Hub.Queue(function() {
     })
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
   <script language="javascript">
@@ -563,6 +570,7 @@ MathJax.Hub.Queue(function() {
         });
     });
 </script>
+
 
 
   </div>

@@ -11,10 +11,12 @@
 <meta property="og:url" content="https://blog.mjyai.com/2019/03/05/install-manage-linux-kernel-ubuntu/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="亦适用于Linux Mint。">
-<meta property="og:updated_time" content="2019-03-05T01:46:37.653Z">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2019-03-05T00:37:09.000Z">
+<meta property="article:modified_time" content="2019-03-05T01:46:37.653Z">
+<meta property="article:author" content="mjy">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu下安装与管理多个Linux内核">
-<meta name="twitter:description" content="亦适用于Linux Mint。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -22,9 +24,13 @@
     <link rel="icon" href="/img/favicon.png">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -47,7 +53,7 @@
           open_in_new: false
       }
   </script>
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -121,7 +127,7 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                                <a class="fl mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                             
                                 <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                             
@@ -141,7 +147,7 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/news/">Hexo</a>
                     
                     </div>
                 </section>
@@ -187,7 +193,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                        <a class="mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                     
                         <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                     
@@ -222,13 +228,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -239,14 +245,12 @@
       
           
         <p>亦适用于Linux Mint。<br><a id="more"></a></p>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>多系统且系统间/boot独立的需进入BIOS将启动顺序改为准备折腾的系统所在硬盘。没有共享/boot是因为当其中一个损坏而又急着用时可以用备用系统的/boot进入生产力系统。如果只是单系统跳过此步。<br>安装自4.16后linux-headers对<a href="http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4.3_amd64.deb" target="_blank" rel="external">libssl1.1</a>的依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install libssl1.1_1.1.0g-2ubuntu4.3_amd64.deb</div></pre></td></tr></table></figure></p>
-<h1 id="安装Linux内核"><a href="#安装Linux内核" class="headerlink" title="安装Linux内核"></a>安装Linux内核</h1><h2 id="使用工具安装"><a href="#使用工具安装" class="headerlink" title="使用工具安装"></a>使用工具安装</h2><p>不少人都推荐<a href="https://github.com/teejee2008/ukuu" target="_blank" rel="external">ukuu</a>，不过最近该作者<a href="https://teejeetech.in/2019/01/20/ukuu-v19-01/" target="_blank" rel="external">转为收费闭源了</a>，旧的开源版不再更新且<a href="https://github.com/teejee2008/ukuu/issues/49" target="_blank" rel="external">存在连接问题</a>。不推荐使用。<br>这里推荐<a href="https://github.com/pimlie/ubuntu-mainline-kernel.sh" target="_blank" rel="external">ubuntu-mainline-kernel脚本</a>。<br>安装指定版本内核。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ubuntu-mainline-kernel.sh -i 4.19.26</div></pre></td></tr></table></figure></p>
-<p>更新bootloader并重启。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo update-grub2</div><div class="line">sudo reboot</div></pre></td></tr></table></figure></p>
-<h2 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h2><p>在<a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/" target="_blank" rel="external">kernel-ppa</a>处选择自己需要的版本，然后选择架构下载对应的deb包并按页面顺序依次安装headers_all, headers_generic, image, modules包。注意<code>lowlatency</code>是针对低延迟设备的，普通PC选<code>generic</code>即可。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i *.deb</div></pre></td></tr></table></figure></p>
-<p>更新bootloader并重启。</p>
-<h2 id="从源码编译安装"><a href="#从源码编译安装" class="headerlink" title="从源码编译安装"></a>从源码编译安装</h2><p><a href="https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html" target="_blank" rel="external">参考这篇文章</a></p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>多系统且系统间/boot独立的需进入BIOS将启动顺序改为准备折腾的系统所在硬盘。没有共享/boot是因为当其中一个损坏而又急着用时可以用备用系统的/boot进入生产力系统。如果只是单系统跳过此步。<br>安装自4.16后linux-headers对<a href="http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4.3_amd64.deb" target="_blank" rel="noopener">libssl1.1</a>的依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libssl1.1_1.1.0g-2ubuntu4.3_amd64.deb</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装Linux内核"><a href="#安装Linux内核" class="headerlink" title="安装Linux内核"></a>安装Linux内核</h1><h2 id="使用工具安装"><a href="#使用工具安装" class="headerlink" title="使用工具安装"></a>使用工具安装</h2><p>不少人都推荐<a href="https://github.com/teejee2008/ukuu" target="_blank" rel="noopener">ukuu</a>，不过最近该作者<a href="https://teejeetech.in/2019/01/20/ukuu-v19-01/" target="_blank" rel="noopener">转为收费闭源了</a>，旧的开源版不再更新且<a href="https://github.com/teejee2008/ukuu/issues/49" target="_blank" rel="noopener">存在连接问题</a>。不推荐使用。<br>这里推荐<a href="https://github.com/pimlie/ubuntu-mainline-kernel.sh" target="_blank" rel="noopener">ubuntu-mainline-kernel脚本</a>。<br>安装指定版本内核。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ubuntu-mainline-kernel.sh -i 4.19.26</span><br></pre></td></tr></table></figure><br>更新bootloader并重启。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo update-grub2</span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure></p>
+<h2 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h2><p>在<a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/" target="_blank" rel="noopener">kernel-ppa</a>处选择自己需要的版本，然后选择架构下载对应的deb包并按页面顺序依次安装headers_all, headers_generic, image, modules包。注意<code>lowlatency</code>是针对低延迟设备的，普通PC选<code>generic</code>即可。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i *.deb</span><br></pre></td></tr></table></figure><br>更新bootloader并重启。</p>
+<h2 id="从源码编译安装"><a href="#从源码编译安装" class="headerlink" title="从源码编译安装"></a>从源码编译安装</h2><p><a href="https://www.cyberciti.biz/tips/compiling-linux-kernel-26.html" target="_blank" rel="noopener">参考这篇文章</a></p>
 <h1 id="删除多余内核"><a href="#删除多余内核" class="headerlink" title="删除多余内核"></a>删除多余内核</h1><p>注：待删除内核不能为当前使用内核。</p>
-<h2 id="使用工具删除"><a href="#使用工具删除" class="headerlink" title="使用工具删除"></a>使用工具删除</h2><p>推荐<a href="http://byobu.co/" target="_blank" rel="external">byobu</a>里面自带的purge-old-kernels，其中keep参数是指定保留的内核数，默认为2。</p>
+<h2 id="使用工具删除"><a href="#使用工具删除" class="headerlink" title="使用工具删除"></a>使用工具删除</h2><p>推荐<a href="http://byobu.co/" target="_blank" rel="noopener">byobu</a>里面自带的purge-old-kernels，其中keep参数是指定保留的内核数，默认为2。</p>
 <pre><code class="bash">sudo apt install byobu
 sudo purge-old-kernels --keep 3
 </code></pre>
@@ -317,7 +321,7 @@ sudo purge-old-kernels --keep 3
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -351,7 +355,9 @@ sudo purge-old-kernels --keep 3
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -406,7 +412,7 @@ sudo purge-old-kernels --keep 3
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 </section>
     
 
@@ -486,8 +492,12 @@ sudo purge-old-kernels --keep 3
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -536,7 +546,7 @@ MathJax.Hub.Queue(function() {
     })
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
   <script language="javascript">
@@ -564,6 +574,7 @@ MathJax.Hub.Queue(function() {
         });
     });
 </script>
+
 
 
   </div>

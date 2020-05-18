@@ -11,10 +11,13 @@
 <meta property="og:url" content="https://blog.mjyai.com/2019/05/20/seafile-docker-arm64/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="seafile是开源的企业私有网盘，用法类似于百度网盘，但数据都是自己的，且上传下载仅限于带宽。但官方并未提供arm64的支持，所以我从源码编译了arm64版并制成docker镜像方便部署。">
-<meta property="og:updated_time" content="2020-03-29T14:18:00.650Z">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2019-05-20T02:39:33.000Z">
+<meta property="article:modified_time" content="2020-03-29T14:18:00.650Z">
+<meta property="article:author" content="mjy">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="arm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用Docker部署64位ARM版的seafile">
-<meta name="twitter:description" content="seafile是开源的企业私有网盘，用法类似于百度网盘，但数据都是自己的，且上传下载仅限于带宽。但官方并未提供arm64的支持，所以我从源码编译了arm64版并制成docker镜像方便部署。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -22,9 +25,13 @@
     <link rel="icon" href="/img/favicon.png">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -47,7 +54,7 @@
           open_in_new: false
       }
   </script>
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -121,7 +128,7 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                                <a class="fl mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                             
                                 <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                             
@@ -141,7 +148,7 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/news/">Hexo</a>
                     
                     </div>
                 </section>
@@ -187,7 +194,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                        <a class="mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                     
                         <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                     
@@ -222,13 +229,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arm/">arm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arm/" rel="tag">arm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,14 +245,13 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><a href="https://www.seafile.com/home/" target="_blank" rel="external">seafile</a>是开源的企业私有网盘，用法类似于百度网盘，但数据都是自己的，且上传下载仅限于带宽。但官方并未提供arm64的支持，所以我从源码编译了arm64版并制成docker镜像方便部署。<br><a id="more"></a>  </p>
-<h1 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h1><p>从<a href="https://www.seafile.com/download/" target="_blank" rel="external">官方下载页面</a>可见服务器端没有arm64，倒是有armhf(arm32v7)，但目前市面上用ARM的NAS基本上都是arm64的，且NAS的系统通常比较特殊，并不能像常见linux系统那样<a href="https://manual-cn.seafile.com/deploy/using_mysql.html" target="_blank" rel="external">部署Seafile服务器</a>，而<a href="https://hub.docker.com/r/seafileltd/seafile/tags" target="_blank" rel="external">官方提供的Docker镜像</a>只支持x86架构。<br>故需要做的工作有两件：  </p>
+        <p><a href="https://www.seafile.com/home/" target="_blank" rel="noopener">seafile</a>是开源的企业私有网盘，用法类似于百度网盘，但数据都是自己的，且上传下载仅限于带宽。但官方并未提供arm64的支持，所以我从源码编译了arm64版并制成docker镜像方便部署。<br><a id="more"></a>  </p>
+<h1 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h1><p>从<a href="https://www.seafile.com/download/" target="_blank" rel="noopener">官方下载页面</a>可见服务器端没有arm64，倒是有armhf(arm32v7)，但目前市面上用ARM的NAS基本上都是arm64的，且NAS的系统通常比较特殊，并不能像常见linux系统那样<a href="https://manual-cn.seafile.com/deploy/using_mysql.html" target="_blank" rel="noopener">部署Seafile服务器</a>，而<a href="https://hub.docker.com/r/seafileltd/seafile/tags" target="_blank" rel="noopener">官方提供的Docker镜像</a>只支持x86架构。<br>故需要做的工作有两件：  </p>
 <ol>
-<li>从<a href="https://github.com/haiwen/seafile-server" target="_blank" rel="external">源码</a>编译seafile的arm64架构服务器端。</li>
+<li>从<a href="https://github.com/haiwen/seafile-server" target="_blank" rel="noopener">源码</a>编译seafile的arm64架构服务器端。</li>
 <li>制成docker镜像方便部署。</li>
 </ol>
-<h1 id="部署docker镜像"><a href="#部署docker镜像" class="headerlink" title="部署docker镜像"></a>部署docker镜像</h1><p>将<code>/opt/seafile</code>改成你的路径。端口<code>8000</code>用来访问seafile，<code>8080</code>用于WebDAV（需要<a href="https://manual-cn.seafile.com/extension/webdav.html" target="_blank" rel="external">启用</a>），<code>8082</code>用来访问管理页面seahub。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">docker run --name seafile \</div><div class="line">  -v /opt/seafile:/home/seafile \</div><div class="line">  -p 8000:8000 \</div><div class="line">  -p 8080:8080 \</div><div class="line">  -p 8082:8082 \</div><div class="line">  -ti mjysci/seafile:arm64v8</div></pre></td></tr></table></figure></p>
-<p>第一次运行需要设置domain，管理员账户等。设置完毕后通过<code>Ctrl+P</code>和<code>Ctrl+Q</code>退出tty界面。</p>
+<h1 id="部署docker镜像"><a href="#部署docker镜像" class="headerlink" title="部署docker镜像"></a>部署docker镜像</h1><p>将<code>/opt/seafile</code>改成你的路径。端口<code>8000</code>用来访问seafile，<code>8080</code>用于WebDAV（需要<a href="https://manual-cn.seafile.com/extension/webdav.html" target="_blank" rel="noopener">启用</a>），<code>8082</code>用来访问管理页面seahub。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --name seafile \</span><br><span class="line">  -v /opt/seafile:/home/seafile \</span><br><span class="line">  -p 8000:8000 \</span><br><span class="line">  -p 8080:8080 \</span><br><span class="line">  -p 8082:8082 \</span><br><span class="line">  -ti mjysci/seafile:arm64v8</span><br></pre></td></tr></table></figure><br>第一次运行需要设置domain，管理员账户等。设置完毕后通过<code>Ctrl+P</code>和<code>Ctrl+Q</code>退出tty界面。</p>
 
       
       
@@ -311,7 +317,7 @@
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -345,7 +351,9 @@
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -400,7 +408,7 @@
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 </section>
     
 
@@ -480,8 +488,12 @@
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -530,7 +542,7 @@ MathJax.Hub.Queue(function() {
     })
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
   <script language="javascript">
@@ -558,6 +570,7 @@ MathJax.Hub.Queue(function() {
         });
     });
 </script>
+
 
 
   </div>

@@ -11,10 +11,12 @@
 <meta property="og:url" content="https://blog.mjyai.com/2020/03/15/ubuntu-nextcloud/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
-<meta property="og:updated_time" content="2020-05-04T04:12:22.985Z">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-15T03:45:22.000Z">
+<meta property="article:modified_time" content="2020-05-04T04:12:22.985Z">
+<meta property="article:author" content="mjy">
+<meta property="article:tag" content="ubuntu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu下搭建私人同步云盘nextcloud">
-<meta name="twitter:description" content="虽然搭建后才发觉和自己的需求有点偏差，不过其支持WebDAV协议还是有点用处。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -22,9 +24,13 @@
     <link rel="icon" href="/img/favicon.png">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -47,7 +53,7 @@
           open_in_new: false
       }
   </script>
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -121,7 +127,7 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                                <a class="fl mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                             
                                 <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                             
@@ -141,7 +147,7 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/news/">Hexo</a>
                     
                     </div>
                 </section>
@@ -187,7 +193,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                        <a class="mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                     
                         <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                     
@@ -222,13 +228,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -244,32 +250,19 @@
 <li>即便连上后，触发自动上传的时间不定，有时要亮屏放半天才会上传，且没有手动触发检测上传的选项。    </li>
 <li>上传时必须保持亮屏，否则会停止。  </li>
 </ol>
-<p>但搭建好nextcloud后才发觉其软件定位不是备份文件，而是同步与分享。目前暂<strong>不支持单向同步</strong>，即我需要的手机照片自动上传，但不同步下载服务器的照片。后通过免费的<a href="https://www.tacit.dk/foldersync/" target="_blank" rel="external">FolderSync</a>解决这个问题。<br>不过其支持WebDAV协议，故可用来给如Joplin之类的第三方程序做同步用，故仍旧保留了。<br>本文没用<a href="https://hub.docker.com/_/nextcloud/" target="_blank" rel="external">Docker</a>或<a href="https://docs.nextcloud.com/server/17/admin_manual/installation/source_installation.html#example-installation-on-ubuntu-18-04-lts-server" target="_blank" rel="external">官方脚本</a>的方式安装，因为前者对性能有损失且设置有限、不利于调试，而后者适合新装好的系统只跑nextcloud。</p>
-<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="php设置"><a href="#php设置" class="headerlink" title="php设置"></a>php设置</h1><p>编辑<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">memory_limit = 1024M</div><div class="line">post_max_size = 1024M</div><div class="line">upload_max_filesize = 1024M</div></pre></td></tr></table></figure></p>
-<h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install mariadb-server php7.2-mysql</div><div class="line">sudo mysql_secure_installation</div></pre></td></tr></table></figure>
-<p>输入并记好root用户的密码。注意root权限的用户是通过<code>auth_socket</code>而并非密码来验证的，故通过<code>sudo mysql -u root -p</code>登录时不输入密码或任意密码都能成功登录，而不是密码未设置成功。想取消<code>auth_socket</code>可以<a href="https://unix.stackexchange.com/questions/385202/mariadb-accepts-any-password" target="_blank" rel="external">看这里</a>。<br>启用4字节字符支持，编辑<code>/etc/mysql/mariadb.cnf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[mysqld]</div><div class="line">innodb_file_per_table=1</div><div class="line">character-set-server=utf8mb4</div></pre></td></tr></table></figure></p>
-<p>重启mysql。  </p>
-<h1 id="mysql创建nextcloud数据库"><a href="#mysql创建nextcloud数据库" class="headerlink" title="mysql创建nextcloud数据库"></a>mysql创建nextcloud数据库</h1><p>以root登录。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mysql -u root</div></pre></td></tr></table></figure></p>
-<p>创建nextcloud用户和数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CREATE DATABASE nextclouddb;</div><div class="line">CREATE USER &apos;nextcloud&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;PASSWORD&apos;;</div><div class="line">GRANT ALL PRIVILEGES ON nextclouddb.* TO &apos;nextcloud&apos;@&apos;localhost&apos;;</div><div class="line">FLUSH PRIVILEGES;</div><div class="line">exit</div></pre></td></tr></table></figure></p>
-<h1 id="创建数据文件夹"><a href="#创建数据文件夹" class="headerlink" title="创建数据文件夹"></a>创建数据文件夹</h1><p>从数据安全和硬盘空间扩展的角度强烈建议将nextcloud的数据放到别的地方，而不是默认的<code>/var/www/html/nextcloud/data</code>，否则后期想做数据迁移时由于<a href="https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170" target="_blank" rel="external">官方不支持会很麻烦</a>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /srv/hdd1/nextcloud</div><div class="line">sudo chown -R www-data:www-data /srv/hdd1/nextcloud</div></pre></td></tr></table></figure></p>
-<h1 id="安装nextcloud"><a href="#安装nextcloud" class="headerlink" title="安装nextcloud"></a>安装nextcloud</h1><p><a href="https://nextcloud.com/install/#instructions-server" target="_blank" rel="external">下载nextcloud源码</a>，解压并复制到网页服务器位置并修改权限为<code>www-data</code>，否则会报错<code>Internal Server Error</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /var/www/example.com</div><div class="line">sudo cp -r nextcloud /var/www/example.com</div><div class="line">sudo chown -R www-data:www-data /var/www/example.com/nextcloud/</div></pre></td></tr></table></figure></p>
-<p>打开安装页面<code>https://example.com/nextcloud</code>并输入数据库相关配置执行安装初始化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nextcloud</div><div class="line">nextclouddb</div><div class="line">localhost</div></pre></td></tr></table></figure></p>
-<p>如果安装正确则能进入网盘页面。<br>配置可信任域名。打开<code>/var/www/example.com/nextcloud/config/config.php</code>文件，添加域名和内网IP。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">'trusted_domains'</span> =&gt;</div><div class="line">  <span class="keyword">array</span> (</div><div class="line">   <span class="number">0</span> =&gt; <span class="string">'localhost'</span>,</div><div class="line">   <span class="number">1</span> =&gt; <span class="string">'example.com'</span>,</div><div class="line">   <span class="number">2</span> =&gt; <span class="string">'192.168.1.2'</span>,</div><div class="line">),</div></pre></td></tr></table></figure></p>
-<h1 id="安装并启用Redis缓存提升性能（可选）"><a href="#安装并启用Redis缓存提升性能（可选）" class="headerlink" title="安装并启用Redis缓存提升性能（可选）"></a>安装并启用Redis缓存提升性能（可选）</h1><p>如果只是几个人轻度使用没必要用牛刀。<br>安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-apcu redis-server php-redis</div></pre></td></tr></table></figure></p>
-<p>配置Redis。打开<code>/etc/redis/redis.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">port 0</div><div class="line">unixsocket /var/run/redis/redis-server.sock</div><div class="line">unixsocketperm 770</div></pre></td></tr></table></figure></p>
-<p>添加Apache用户<code>www-data</code>到<code>redis</code>组。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo usermod <span class="_">-a</span> -G redis www-data</div></pre></td></tr></table></figure></p>
-<p>重启apache服务，开始redis服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo service apache2 restart</div><div class="line">sudo service redis-server start</div></pre></td></tr></table></figure></p>
-<p>修改nextcloud配置文件<code>/var/www/example.com/nextcloud/config/config.php</code>，添加以下内容。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="string">'memcache.local'</span> =&gt; <span class="string">'\\OC\\Memcache\\Redis'</span>,</div><div class="line"><span class="string">'memcache.locking'</span> =&gt; <span class="string">'\\OC\\Memcache\\Redis'</span>,</div><div class="line"><span class="string">'filelocking.enabled'</span> =&gt; <span class="string">'true'</span>,</div><div class="line"><span class="string">'redis'</span> =&gt;</div><div class="line"><span class="keyword">array</span> (</div><div class="line"><span class="string">'host'</span> =&gt; <span class="string">'/var/run/redis/redis-server.sock'</span>,</div><div class="line"><span class="string">'port'</span> =&gt; <span class="number">0</span>,</div><div class="line"><span class="string">'timeout'</span> =&gt; <span class="number">0.0</span>,</div><div class="line">),</div></pre></td></tr></table></figure></p>
-<p>启用redis服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl <span class="built_in">enable</span> redis-server</div></pre></td></tr></table></figure></p>
-<p>测试redis服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo redis-cli <span class="_">-s</span> /var/run/redis/redis-server.sock ping</div></pre></td></tr></table></figure></p>
-<p>正常会打印<code>PONG</code>。<br>重启服务器。  </p>
-<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>打开nextcloud管理员概览页面(<a href="https://example.com/nextcloud/index.php/settings/admin/overview" target="_blank" rel="external">https://example.com/nextcloud/index.php/settings/admin/overview</a> )，确保<code>安全与设置警告</code>测试全部通过。  </p>
-<h2 id="Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”"><a href="#Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”" class="headerlink" title="Your web server is not properly set up to resolve “/.well-known/caldav”"></a>Your web server is not properly set up to resolve “/.well-known/caldav”</h2><p>由于之前并未将nextcloud装在网站根目录，故需通过rewrite进行301跳转。<br>启用rewrite模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod rewrite</div></pre></td></tr></table></figure></p>
-<p>编辑网站<strong>根目录</strong><code>/var/www/example.com/.htaccess</code>文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule mod_rewrite.c&gt;</div><div class="line">  RewriteEngine on</div><div class="line">  RewriteRule ^\.well-known/host-meta /nextcloud/public.php?service=host-meta [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/host-meta\.json /nextcloud/public.php?service=host-meta-json [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/webfinger /nextcloud/public.php?service=webfinger [QSA,L]</div><div class="line">  RewriteRule ^\.well-known/carddav /nextcloud/remote.php/dav/ [R=301,L]</div><div class="line">  RewriteRule ^\.well-known/caldav /nextcloud/remote.php/dav/ [R=301,L]</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
-<p>注，如果用<a href="https://blog.mjyai.com/2020/04/03/ubuntu-nginx-frontend-apache-backend/">nginx+apache方式搭建</a>则需把以上<code>RewriteRule</code>全部注释掉，在<code>example.com.conf</code>中设置301跳转。</p>
+<p>但搭建好nextcloud后才发觉其软件定位不是备份文件，而是同步与分享。目前暂<strong>不支持单向同步</strong>，即我需要的手机照片自动上传，但不同步下载服务器的照片。后通过免费的<a href="https://www.tacit.dk/foldersync/" target="_blank" rel="noopener">FolderSync</a>解决这个问题。<br>不过其支持WebDAV协议，故可用来给如Joplin之类的第三方程序做同步用，故仍旧保留了。<br>本文没用<a href="https://hub.docker.com/_/nextcloud/" target="_blank" rel="noopener">Docker</a>或<a href="https://docs.nextcloud.com/server/17/admin_manual/installation/source_installation.html#example-installation-on-ubuntu-18-04-lts-server" target="_blank" rel="noopener">官方脚本</a>的方式安装，因为前者对性能有损失且设置有限、不利于调试，而后者适合新装好的系统只跑nextcloud。</p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="php设置"><a href="#php设置" class="headerlink" title="php设置"></a>php设置</h1><p>编辑<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">memory_limit &#x3D; 1024M</span><br><span class="line">post_max_size &#x3D; 1024M</span><br><span class="line">upload_max_filesize &#x3D; 1024M</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install mariadb-server php7.2-mysql</span><br><span class="line">sudo mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<p>输入并记好root用户的密码。注意root权限的用户是通过<code>auth_socket</code>而并非密码来验证的，故通过<code>sudo mysql -u root -p</code>登录时不输入密码或任意密码都能成功登录，而不是密码未设置成功。想取消<code>auth_socket</code>可以<a href="https://unix.stackexchange.com/questions/385202/mariadb-accepts-any-password" target="_blank" rel="noopener">看这里</a>。<br>启用4字节字符支持，编辑<code>/etc/mysql/mariadb.cnf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">innodb_file_per_table&#x3D;1</span><br><span class="line">character-set-server&#x3D;utf8mb4</span><br></pre></td></tr></table></figure><br>重启mysql。  </p>
+<h1 id="mysql创建nextcloud数据库"><a href="#mysql创建nextcloud数据库" class="headerlink" title="mysql创建nextcloud数据库"></a>mysql创建nextcloud数据库</h1><p>以root登录。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql -u root</span><br></pre></td></tr></table></figure><br>创建nextcloud用户和数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE nextclouddb;</span><br><span class="line">CREATE USER &#39;nextcloud&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;PASSWORD&#39;;</span><br><span class="line">GRANT ALL PRIVILEGES ON nextclouddb.* TO &#39;nextcloud&#39;@&#39;localhost&#39;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br><span class="line">exit</span><br></pre></td></tr></table></figure></p>
+<h1 id="创建数据文件夹"><a href="#创建数据文件夹" class="headerlink" title="创建数据文件夹"></a>创建数据文件夹</h1><p>从数据安全和硬盘空间扩展的角度强烈建议将nextcloud的数据放到别的地方，而不是默认的<code>/var/www/html/nextcloud/data</code>，否则后期想做数据迁移时由于<a href="https://help.nextcloud.com/t/howto-change-move-data-directory-after-installation/17170" target="_blank" rel="noopener">官方不支持会很麻烦</a>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /srv/hdd1/nextcloud</span><br><span class="line">sudo chown -R www-data:www-data /srv/hdd1/nextcloud</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装nextcloud"><a href="#安装nextcloud" class="headerlink" title="安装nextcloud"></a>安装nextcloud</h1><p><a href="https://nextcloud.com/install/#instructions-server" target="_blank" rel="noopener">下载nextcloud源码</a>，解压并复制到网页服务器位置并修改权限为<code>www-data</code>，否则会报错<code>Internal Server Error</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /var/www/example.com</span><br><span class="line">sudo cp -r nextcloud /var/www/example.com</span><br><span class="line">sudo chown -R www-data:www-data /var/www/example.com/nextcloud/</span><br></pre></td></tr></table></figure><br>打开安装页面<code>https://example.com/nextcloud</code>并输入数据库相关配置执行安装初始化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nextcloud</span><br><span class="line">nextclouddb</span><br><span class="line">localhost</span><br></pre></td></tr></table></figure><br>如果安装正确则能进入网盘页面。<br>配置可信任域名。打开<code>/var/www/example.com/nextcloud/config/config.php</code>文件，添加域名和内网IP。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'trusted_domains'</span> =&gt;</span><br><span class="line">  <span class="keyword">array</span> (</span><br><span class="line">   <span class="number">0</span> =&gt; <span class="string">'localhost'</span>,</span><br><span class="line">   <span class="number">1</span> =&gt; <span class="string">'example.com'</span>,</span><br><span class="line">   <span class="number">2</span> =&gt; <span class="string">'192.168.1.2'</span>,</span><br><span class="line">),</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装并启用Redis缓存提升性能（可选）"><a href="#安装并启用Redis缓存提升性能（可选）" class="headerlink" title="安装并启用Redis缓存提升性能（可选）"></a>安装并启用Redis缓存提升性能（可选）</h1><p>如果只是几个人轻度使用没必要用牛刀。<br>安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install php-apcu redis-server php-redis</span><br></pre></td></tr></table></figure><br>配置Redis。打开<code>/etc/redis/redis.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">port 0</span><br><span class="line">unixsocket &#x2F;var&#x2F;run&#x2F;redis&#x2F;redis-server.sock</span><br><span class="line">unixsocketperm 770</span><br></pre></td></tr></table></figure><br>添加Apache用户<code>www-data</code>到<code>redis</code>组。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -a -G redis www-data</span><br></pre></td></tr></table></figure><br>重启apache服务，开始redis服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service apache2 restart</span><br><span class="line">sudo service redis-server start</span><br></pre></td></tr></table></figure><br>修改nextcloud配置文件<code>/var/www/example.com/nextcloud/config/config.php</code>，添加以下内容。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'memcache.local'</span> =&gt; <span class="string">'\\OC\\Memcache\\Redis'</span>,</span><br><span class="line"><span class="string">'memcache.locking'</span> =&gt; <span class="string">'\\OC\\Memcache\\Redis'</span>,</span><br><span class="line"><span class="string">'filelocking.enabled'</span> =&gt; <span class="string">'true'</span>,</span><br><span class="line"><span class="string">'redis'</span> =&gt;</span><br><span class="line"><span class="keyword">array</span> (</span><br><span class="line"><span class="string">'host'</span> =&gt; <span class="string">'/var/run/redis/redis-server.sock'</span>,</span><br><span class="line"><span class="string">'port'</span> =&gt; <span class="number">0</span>,</span><br><span class="line"><span class="string">'timeout'</span> =&gt; <span class="number">0.0</span>,</span><br><span class="line">),</span><br></pre></td></tr></table></figure><br>启用redis服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> redis-server</span><br></pre></td></tr></table></figure><br>测试redis服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo redis-cli -s /var/run/redis/redis-server.sock ping</span><br></pre></td></tr></table></figure><br>正常会打印<code>PONG</code>。<br>重启服务器。  </p>
+<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>打开nextcloud管理员概览页面(<a href="https://example.com/nextcloud/index.php/settings/admin/overview" target="_blank" rel="noopener">https://example.com/nextcloud/index.php/settings/admin/overview</a> )，确保<code>安全与设置警告</code>测试全部通过。  </p>
+<h2 id="Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”"><a href="#Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”" class="headerlink" title="Your web server is not properly set up to resolve “/.well-known/caldav”"></a>Your web server is not properly set up to resolve “/.well-known/caldav”</h2><p>由于之前并未将nextcloud装在网站根目录，故需通过rewrite进行301跳转。<br>启用rewrite模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2enmod rewrite</span><br></pre></td></tr></table></figure><br>编辑网站<strong>根目录</strong><code>/var/www/example.com/.htaccess</code>文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;IfModule mod_rewrite.c&gt;</span><br><span class="line">  RewriteEngine on</span><br><span class="line">  RewriteRule ^\.well-known&#x2F;host-meta &#x2F;nextcloud&#x2F;public.php?service&#x3D;host-meta [QSA,L]</span><br><span class="line">  RewriteRule ^\.well-known&#x2F;host-meta\.json &#x2F;nextcloud&#x2F;public.php?service&#x3D;host-meta-json [QSA,L]</span><br><span class="line">  RewriteRule ^\.well-known&#x2F;webfinger &#x2F;nextcloud&#x2F;public.php?service&#x3D;webfinger [QSA,L]</span><br><span class="line">  RewriteRule ^\.well-known&#x2F;carddav &#x2F;nextcloud&#x2F;remote.php&#x2F;dav&#x2F; [R&#x3D;301,L]</span><br><span class="line">  RewriteRule ^\.well-known&#x2F;caldav &#x2F;nextcloud&#x2F;remote.php&#x2F;dav&#x2F; [R&#x3D;301,L]</span><br><span class="line">&lt;&#x2F;IfModule&gt;</span><br></pre></td></tr></table></figure><br>注，如果用<a href="https://blog.mjyai.com/2020/04/03/ubuntu-nginx-frontend-apache-backend/">nginx+apache方式搭建</a>则需把以上<code>RewriteRule</code>全部注释掉，在<code>example.com.conf</code>中设置301跳转。</p>
 <h2 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500 Internal Server Error"></a>500 Internal Server Error</h2><p>先检查redis-server是否正常工作，必要时注释掉<code>config.php</code>中redis的内容来查错。<br>这多出现于域名改变的情况，若<code>overwrite.cli.url</code>等设置改过仍无法解决，可以考虑重装。  </p>
 <h2 id="重装nextcloud"><a href="#重装nextcloud" class="headerlink" title="重装nextcloud"></a>重装nextcloud</h2><p>在<code>config</code>文件夹下重命名<code>config.php</code>并新建<code>CAN_INSTALL</code>文件。<br>浏览器打开<code>https://example.com/nextcloud</code>会进入安装向导。输入数据库相关配置。<br>注意这里必须新建一个和旧管理员用户名不一样的新管理员，如果输入旧管理员会报错用户已存在。完成设置后注销登录旧管理员把新建的这个删掉即可。    </p>
-<h1 id="移除nextcloud"><a href="#移除nextcloud" class="headerlink" title="移除nextcloud"></a>移除nextcloud</h1><p>删掉源文件，数据文件，数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /var/www/example.com/nextcloud</div><div class="line">sudo rm -rf /srv/hdd1/nextcloud</div><div class="line">DROP DATABASE nextclouddb;</div></pre></td></tr></table></figure></p>
+<h1 id="移除nextcloud"><a href="#移除nextcloud" class="headerlink" title="移除nextcloud"></a>移除nextcloud</h1><p>删掉源文件，数据文件，数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf &#x2F;var&#x2F;www&#x2F;example.com&#x2F;nextcloud</span><br><span class="line">sudo rm -rf &#x2F;srv&#x2F;hdd1&#x2F;nextcloud</span><br><span class="line">DROP DATABASE nextclouddb;</span><br></pre></td></tr></table></figure></p>
 
       
       
@@ -335,7 +328,7 @@
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -365,11 +358,13 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装配置apache"><span class="toc-number">1.</span> <span class="toc-text">安装配置apache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#php设置"><span class="toc-number">2.</span> <span class="toc-text">php设置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装mysql"><span class="toc-number">3.</span> <span class="toc-text">安装mysql</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql创建nextcloud数据库"><span class="toc-number">4.</span> <span class="toc-text">mysql创建nextcloud数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建数据文件夹"><span class="toc-number">5.</span> <span class="toc-text">创建数据文件夹</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装nextcloud"><span class="toc-number">6.</span> <span class="toc-text">安装nextcloud</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装并启用Redis缓存提升性能（可选）"><span class="toc-number">7.</span> <span class="toc-text">安装并启用Redis缓存提升性能（可选）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debug"><span class="toc-number">8.</span> <span class="toc-text">Debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”"><span class="toc-number">8.1.</span> <span class="toc-text">Your web server is not properly set up to resolve “/.well-known/caldav”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#500-Internal-Server-Error"><span class="toc-number">8.2.</span> <span class="toc-text">500 Internal Server Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重装nextcloud"><span class="toc-number">8.3.</span> <span class="toc-text">重装nextcloud</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移除nextcloud"><span class="toc-number">9.</span> <span class="toc-text">移除nextcloud</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装配置apache"><span class="toc-number">1.</span> <span class="toc-text">安装配置apache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#php设置"><span class="toc-number">2.</span> <span class="toc-text">php设置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装mysql"><span class="toc-number">3.</span> <span class="toc-text">安装mysql</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql创建nextcloud数据库"><span class="toc-number">4.</span> <span class="toc-text">mysql创建nextcloud数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建数据文件夹"><span class="toc-number">5.</span> <span class="toc-text">创建数据文件夹</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装nextcloud"><span class="toc-number">6.</span> <span class="toc-text">安装nextcloud</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装并启用Redis缓存提升性能（可选）"><span class="toc-number">7.</span> <span class="toc-text">安装并启用Redis缓存提升性能（可选）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debug"><span class="toc-number">8.</span> <span class="toc-text">Debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Your-web-server-is-not-properly-set-up-to-resolve-“-well-known-caldav”"><span class="toc-number">8.1.</span> <span class="toc-text">Your web server is not properly set up to resolve “&#x2F;.well-known&#x2F;caldav”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#500-Internal-Server-Error"><span class="toc-number">8.2.</span> <span class="toc-text">500 Internal Server Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重装nextcloud"><span class="toc-number">8.3.</span> <span class="toc-text">重装nextcloud</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移除nextcloud"><span class="toc-number">9.</span> <span class="toc-text">移除nextcloud</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -424,7 +419,7 @@
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 </section>
     
 
@@ -504,8 +499,12 @@
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -554,7 +553,7 @@ MathJax.Hub.Queue(function() {
     })
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
   <script language="javascript">
@@ -582,6 +581,7 @@ MathJax.Hub.Queue(function() {
         });
     });
 </script>
+
 
 
   </div>

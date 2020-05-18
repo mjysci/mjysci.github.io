@@ -11,10 +11,11 @@
 <meta property="og:url" content="https://blog.mjyai.com/2019/01/08/r6220-relay-bridge/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
-<meta property="og:updated_time" content="2020-05-04T04:12:22.985Z">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2019-01-08T03:35:23.000Z">
+<meta property="article:modified_time" content="2020-05-04T04:12:22.985Z">
+<meta property="article:author" content="mjy">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="R6220采用中继桥实现无线桥接">
-<meta name="twitter:description" content="htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -22,9 +23,13 @@
     <link rel="icon" href="/img/favicon.png">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -47,7 +52,7 @@
           open_in_new: false
       }
   </script>
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -121,7 +126,7 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                                <a class="fl mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                             
                                 <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                             
@@ -141,7 +146,7 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/news/">Hexo</a>
                     
                     </div>
                 </section>
@@ -187,7 +192,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                        <a class="mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                     
                         <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                     
@@ -222,7 +227,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
     </div>
 
 
@@ -235,17 +240,16 @@
       
           
         <p>htpc不能直连NAS和咸鱼有什么区别？采用中继桥实现同一网段后下行速度由100Mbps降为75Mbps，播放4K烤鸭测试视频不卡，可以接受。<br><a id="more"></a><br><a href="https://blog.mjyai.com/2019/01/06/r6220-breed-pandora/">前情提要</a>，虽然远程桌面非刚需，但htpc无法直连主路由网段的NAS不能接受。还是需要桥接把副路由连接设备和主路由放在同一网段。  </p>
-<h1 id="安装relay协议"><a href="#安装relay协议" class="headerlink" title="安装relay协议"></a>安装relay协议</h1><p>潘多拉默认未带，不过其应用层是和openwrt及luci兼容的，可装<a href="https://openwrt.org/packages/pkgdata/luci-proto-relay" target="_blank" rel="external">luci-proto-relay</a><br>ssh连上路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.1</div></pre></td></tr></table></figure></p>
-<p>更新并安装luci-proto-relay  </p>
+<h1 id="安装relay协议"><a href="#安装relay协议" class="headerlink" title="安装relay协议"></a>安装relay协议</h1><p>潘多拉默认未带，不过其应用层是和openwrt及luci兼容的，可装<a href="https://openwrt.org/packages/pkgdata/luci-proto-relay" target="_blank" rel="noopener">luci-proto-relay</a><br>ssh连上路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br></pre></td></tr></table></figure><br>更新并安装luci-proto-relay  </p>
 <pre><code>opkg update
 opkg install luci-proto-relay
 </code></pre><p>注：潘多拉的web ui和openwrt基本一样，其实自带软件包管理项，不想输命令可登录web管理——系统——软件包处搜索并安装。  </p>
 <h1 id="设置中继桥"><a href="#设置中继桥" class="headerlink" title="设置中继桥"></a>设置中继桥</h1><h2 id="修改LAN"><a href="#修改LAN" class="headerlink" title="修改LAN"></a>修改LAN</h2><p>接口——LAN，地址修改为和主路由不同的网段，如<code>192.168.2.1</code>。禁用DHCP。<br>将计算机连路由的接口取消自动获取IP, 改成静态IP<code>192.168.2.10</code>，默认网关<code>192.168.2.1</code>。断开与路由的连接然后重连。</p>
 <h2 id="以无线客户端模式加入主路由网络"><a href="#以无线客户端模式加入主路由网络" class="headerlink" title="以无线客户端模式加入主路由网络"></a>以无线客户端模式加入主路由网络</h2><p>无线——扫描——加入网络，填入密码后记得<strong>把防火墙区域改成lan</strong>。    </p>
 <h2 id="添加桥接接口"><a href="#添加桥接接口" class="headerlink" title="添加桥接接口"></a>添加桥接接口</h2><p>接口，添加接口，协议选<code>中继桥</code>（Relay bridge）。<br>在新接口设置界面勾选<code>lan</code>和<code>wwan</code>。<br>重启路由。  </p>
-<p>注：以上步骤参考自官方的<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="external">luci界面设置中继桥教程</a>。</p>
+<p>注：以上步骤参考自官方的<a href="https://openwrt.org/docs/guide-user/network/wifi/relay_configuration#setup_with_luci_gui" target="_blank" rel="noopener">luci界面设置中继桥教程</a>。</p>
 <h1 id="htpc连NAS"><a href="#htpc连NAS" class="headerlink" title="htpc连NAS"></a>htpc连NAS</h1><p>此步非必须。只是现在网络发现处NAS只出现在多媒体类别下，而不在计算机类别。<br>程序与功能——启用或关闭Windows功能——勾选SMB 1.0，重启win10。  </p>
-<h1 id="备用资料"><a href="#备用资料" class="headerlink" title="备用资料"></a>备用资料</h1><p>附上R6220原版固件资料以备不时之需：<br><a href="https://www.netgear.com/support/product/R6220.aspx#download" target="_blank" rel="external">R6220官方支持页面</a><br><a href="https://kb.netgear.com/24108/How-do-I-configure-my-Nighthawk-router-as-a-wireless-repeater" target="_blank" rel="external">Netgear设置wireless repeater步骤</a><br><a href="http://www.downloads.netgear.com/files/GDC/R6220/R6220-V1.1.0.80_1.0.1.zip" target="_blank" rel="external">R6220官方固件V1.1.0.80_1.0.1</a></p>
+<h1 id="备用资料"><a href="#备用资料" class="headerlink" title="备用资料"></a>备用资料</h1><p>附上R6220原版固件资料以备不时之需：<br><a href="https://www.netgear.com/support/product/R6220.aspx#download" target="_blank" rel="noopener">R6220官方支持页面</a><br><a href="https://kb.netgear.com/24108/How-do-I-configure-my-Nighthawk-router-as-a-wireless-repeater" target="_blank" rel="noopener">Netgear设置wireless repeater步骤</a><br><a href="http://www.downloads.netgear.com/files/GDC/R6220/R6220-V1.1.0.80_1.0.1.zip" target="_blank" rel="noopener">R6220官方固件V1.1.0.80_1.0.1</a></p>
 
       
       
@@ -311,7 +315,7 @@ opkg install luci-proto-relay
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -345,7 +349,9 @@ opkg install luci-proto-relay
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -400,7 +406,7 @@ opkg install luci-proto-relay
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 </section>
     
 
@@ -480,8 +486,12 @@ opkg install luci-proto-relay
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -530,7 +540,7 @@ MathJax.Hub.Queue(function() {
     })
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
   <script language="javascript">
@@ -558,6 +568,7 @@ MathJax.Hub.Queue(function() {
         });
     });
 </script>
+
 
 
   </div>

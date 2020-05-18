@@ -11,10 +11,13 @@
 <meta property="og:url" content="https://blog.mjyai.com/2020/03/23/ubuntu-full-text-rss/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。">
-<meta property="og:updated_time" content="2020-05-04T04:12:22.985Z">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-23T02:52:55.000Z">
+<meta property="article:modified_time" content="2020-05-04T04:12:22.985Z">
+<meta property="article:author" content="mjy">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="rss">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu下搭建rss全文输出服务full-text-rss">
-<meta name="twitter:description" content="只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -22,9 +25,13 @@
     <link rel="icon" href="/img/favicon.png">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -47,7 +54,7 @@
           open_in_new: false
       }
   </script>
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -121,7 +128,7 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                                <a class="fl mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                             
                                 <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                             
@@ -141,7 +148,7 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/news/">Hexo</a>
                     
                     </div>
                 </section>
@@ -187,7 +194,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                        <a class="mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                     
                         <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                     
@@ -222,13 +229,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rss/">rss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rss/" rel="tag">rss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -238,23 +245,20 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。<br><a id="more"></a><br>本文提供了搭建rss全文输出服务<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>的步骤，对国内环境如何科学地抓取全文亦有所涉及，此服务配合<a href="https://blog.mjyai.com/2020/03/22/ubuntu-ttrss/">自建rss阅读器tt-rss</a>使用效果更好。  </p>
-<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用mercury-parser-api"><a href="#为什么不用mercury-parser-api" class="headerlink" title="为什么不用mercury-parser-api"></a>为什么不用<a href="https://github.com/postlight/mercury-parser-api" target="_blank" rel="external">mercury-parser-api</a></h2><ol>
+        <p>只有摘要的rss内容和咸鱼有什么区别？这里推荐一个比mercury-parser-api更好用的rss全文输出服务。<br><a id="more"></a><br>本文提供了搭建rss全文输出服务<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="noopener">full-text-rss</a>的步骤，对国内环境如何科学地抓取全文亦有所涉及，此服务配合<a href="https://blog.mjyai.com/2020/03/22/ubuntu-ttrss/">自建rss阅读器tt-rss</a>使用效果更好。  </p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><h2 id="为什么不用mercury-parser-api"><a href="#为什么不用mercury-parser-api" class="headerlink" title="为什么不用mercury-parser-api"></a>为什么不用<a href="https://github.com/postlight/mercury-parser-api" target="_blank" rel="noopener">mercury-parser-api</a></h2><ol>
 <li>没有权限设置选项<br>这意味者要么限制其和阅读器服务处于同一个服务器中（localhost），要么通过反代开放到公网并通过防火墙限制访问IP，否则就是向全网公开的服务，任何人都能使用。  </li>
 <li>不支持代理<br>国内网络环境你懂的，这样就限制其只能部署在国外服务器才能发挥全部作用。  </li>
 </ol>
-<h2 id="fivefilters在线服务的不足之处"><a href="#fivefilters在线服务的不足之处" class="headerlink" title="fivefilters在线服务的不足之处"></a><a href="https://fivefilters.org/content-only/" target="_blank" rel="external">fivefilters在线服务</a>的不足之处</h2><ol>
+<h2 id="fivefilters在线服务的不足之处"><a href="#fivefilters在线服务的不足之处" class="headerlink" title="fivefilters在线服务的不足之处"></a><a href="https://fivefilters.org/content-only/" target="_blank" rel="noopener">fivefilters在线服务</a>的不足之处</h2><ol>
 <li>制作的feed链接为http<br>墙连全文都不用看，只检查url中的关键字就能拦截了。自行搭建可以设为全部走https，这样中间人只能知道你访问的域名，全文和域名以外的url是加密的。</li>
 <li>免费服务有限制<br>主要是一次抓取的文章限制为3篇，且文末有一行文字链接的广告。  </li>
 </ol>
-<p>其实轻度使用足够了。本文推荐的<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="external">full-text-rss</a>比fivefilters的线上版本慢一版，不过自己搭建能使用全功能无限制。  </p>
-<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install php-tidy</div><div class="line">sudo service apache2 reload</div></pre></td></tr></table></figure>
-<h1 id="安装full-text-rss"><a href="#安装full-text-rss" class="headerlink" title="安装full-text-rss"></a>安装full-text-rss</h1><p>克隆源码。国内搭建建议为默认的文件夹<code>full-text-rss</code>改名。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://bitbucket.org/fivefilters/full-text-rss.git</div></pre></td></tr></table></figure></p>
-<p>配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> full-text-rss</div><div class="line">sudo -u www-data cp config.php custom_config.php</div><div class="line">sudo -u www-data vi config.php</div></pre></td></tr></table></figure></p>
-<p>修改以下选项。其中<code>api_keys</code>改成自用密码，设成需密码才能使用此服务，<code>proxy_servers</code>为http代理设置，此处示例为<code>privoxy</code>的默认设置。如此设置后ftr将全局走代理，所以设置<code>allow_proxy_override</code>为<code>true</code>，如果不需代理则在生成的全文feed地址后加上<code>&amp;proxy=0</code>。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$options-&gt;key_required = <span class="keyword">true</span>;</div><div class="line">$options-&gt;api_keys[<span class="number">1</span>] = <span class="string">'your-secret-token'</span>;</div><div class="line">$options-&gt;proxy_servers = <span class="keyword">array</span>(<span class="string">'privoxy'</span>=&gt;<span class="keyword">array</span>(<span class="string">'host'</span>=&gt;<span class="string">'127.0.0.1:8118'</span>));</div><div class="line">$options-&gt;allow_proxy_override = <span class="keyword">true</span>;</div></pre></td></tr></table></figure></p>
-<p>注：国外服务器搭建则无需代理，<code>proxy_servers</code>不要修改，默认即可。  </p>
-<h1 id="更新网站定制抓取规则"><a href="#更新网站定制抓取规则" class="headerlink" title="更新网站定制抓取规则"></a>更新网站定制抓取规则</h1><p>没有规则的ftr和咸鱼一样。克隆官方网站规则集。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /var/www/example.com/full-text-rss/site_config</div><div class="line">sudo rm -rf standard</div><div class="line">sudo -u www-data git <span class="built_in">clone</span> https://github.com/fivefilters/ftr-site-config.git standard</div></pre></td></tr></table></figure></p>
-<h1 id="定制网站抓取规则"><a href="#定制网站抓取规则" class="headerlink" title="定制网站抓取规则"></a>定制网站抓取规则</h1><p>官方网站规则不带的网站可以自行设定抓取规则，好在fivefilters也提供了<a href="http://siteconfig.fivefilters.org/" target="_blank" rel="external">图形化的规则定制工具</a>。<br>输入需定制网站的任意一篇文章，点<code>Go</code>进入新页面，鼠标选定文章的全文范围，然后点击<code>Download Full-Text RSS site config</code>下载定制规则。<br>将规则文件上传到<code>site_config/custom/</code>文件夹下。</p>
+<p>其实轻度使用足够了。本文推荐的<a href="https://bitbucket.org/fivefilters/full-text-rss/src/master/" target="_blank" rel="noopener">full-text-rss</a>比fivefilters的线上版本慢一版，不过自己搭建能使用全功能无限制。  </p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a><a href="https://blog.mjyai.com/2020/01/24/rtorrent-compile/#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEapache">安装配置apache</a></h1><h1 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install php-tidy</span><br><span class="line">sudo service apache2 reload</span><br></pre></td></tr></table></figure>
+<h1 id="安装full-text-rss"><a href="#安装full-text-rss" class="headerlink" title="安装full-text-rss"></a>安装full-text-rss</h1><p>克隆源码。国内搭建建议为默认的文件夹<code>full-text-rss</code>改名。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/www/example.com</span><br><span class="line">sudo -u www-data git <span class="built_in">clone</span> https://bitbucket.org/fivefilters/full-text-rss.git</span><br></pre></td></tr></table></figure><br>配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> full-text-rss</span><br><span class="line">sudo -u www-data cp config.php custom_config.php</span><br><span class="line">sudo -u www-data vi config.php</span><br></pre></td></tr></table></figure><br>修改以下选项。其中<code>api_keys</code>改成自用密码，设成需密码才能使用此服务，<code>proxy_servers</code>为http代理设置，此处示例为<code>privoxy</code>的默认设置。如此设置后ftr将全局走代理，所以设置<code>allow_proxy_override</code>为<code>true</code>，如果不需代理则在生成的全文feed地址后加上<code>&amp;proxy=0</code>。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$options-&gt;key_required = <span class="keyword">true</span>;</span><br><span class="line">$options-&gt;api_keys[<span class="number">1</span>] = <span class="string">'your-secret-token'</span>;</span><br><span class="line">$options-&gt;proxy_servers = <span class="keyword">array</span>(<span class="string">'privoxy'</span>=&gt;<span class="keyword">array</span>(<span class="string">'host'</span>=&gt;<span class="string">'127.0.0.1:8118'</span>));</span><br><span class="line">$options-&gt;allow_proxy_override = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure><br>注：国外服务器搭建则无需代理，<code>proxy_servers</code>不要修改，默认即可。  </p>
+<h1 id="更新网站定制抓取规则"><a href="#更新网站定制抓取规则" class="headerlink" title="更新网站定制抓取规则"></a>更新网站定制抓取规则</h1><p>没有规则的ftr和咸鱼一样。克隆官方网站规则集。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/www/example.com/full-text-rss/site_config</span><br><span class="line">sudo rm -rf standard</span><br><span class="line">sudo -u www-data git <span class="built_in">clone</span> https://github.com/fivefilters/ftr-site-config.git standard</span><br></pre></td></tr></table></figure></p>
+<h1 id="定制网站抓取规则"><a href="#定制网站抓取规则" class="headerlink" title="定制网站抓取规则"></a>定制网站抓取规则</h1><p>官方网站规则不带的网站可以自行设定抓取规则，好在fivefilters也提供了<a href="http://siteconfig.fivefilters.org/" target="_blank" rel="noopener">图形化的规则定制工具</a>。<br>输入需定制网站的任意一篇文章，点<code>Go</code>进入新页面，鼠标选定文章的全文范围，然后点击<code>Download Full-Text RSS site config</code>下载定制规则。<br>将规则文件上传到<code>site_config/custom/</code>文件夹下。</p>
 
       
       
@@ -320,7 +324,7 @@
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -354,7 +358,9 @@
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -409,7 +415,7 @@
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 </section>
     
 
@@ -489,8 +495,12 @@
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -539,7 +549,7 @@ MathJax.Hub.Queue(function() {
     })
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
   <script language="javascript">
@@ -567,6 +577,7 @@ MathJax.Hub.Queue(function() {
         });
     });
 </script>
+
 
 
   </div>

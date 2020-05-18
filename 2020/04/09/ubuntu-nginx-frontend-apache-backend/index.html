@@ -11,10 +11,14 @@
 <meta property="og:url" content="https://blog.mjyai.com/2020/04/09/ubuntu-nginx-frontend-apache-backend/index.html">
 <meta property="og:site_name" content="名实合为">
 <meta property="og:description" content="nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。">
-<meta property="og:updated_time" content="2020-05-04T04:12:22.985Z">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-04-09T03:10:56.000Z">
+<meta property="article:modified_time" content="2020-05-04T04:12:22.985Z">
+<meta property="article:author" content="mjy">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="nextcloud">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu下nginx作为前端配合apache作为后端">
-<meta name="twitter:description" content="nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -22,9 +26,13 @@
     <link rel="icon" href="/img/favicon.png">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -47,7 +55,7 @@
           open_in_new: false
       }
   </script>
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -121,7 +129,7 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fl mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                                <a class="fl mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                             
                                 <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                             
@@ -141,7 +149,7 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://luuman.github.io/">name</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/news/">Hexo</a>
                     
                     </div>
                 </section>
@@ -187,7 +195,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a class="mail" target="_blank" href="/&#109;&#106;&#121;&#97;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                        <a class="mail" target="_blank" href="/&#116;&#101;&#115;&#116;&#64;&#111;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
                     
                         <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
                     
@@ -222,13 +230,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/笔记/">笔记</a>
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nextcloud/">nextcloud</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/">web</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nextcloud/" rel="tag">nextcloud</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -239,20 +247,11 @@
       
           
         <p>nginx与apache的强强结合，前者处理高并发和静态页面并反向代理包括apache之类的服务，后者对动态页面的兼容性更好。另外有的应用官方只支持nginx，所以需要一个让两者共存的方案。本身设置并不难，就是由于nextcloud官方并没有二者结合的配置所以踩了些坑。<br><a id="more"></a><br>注意中转影响效率，并不适合单机，适合多对多服务器。但由于第二点的需求故仍然采用了这个方案。</p>
-<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a>安装配置apache</h1><p>安装依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install apache2 libapache2-mod-php7.2</div><div class="line">sudo apt-get install php7.2-gd php7.2-json php7.2-curl php7.2-mbstring php7.2-intl php-imagick php7.2-xml php7.2-zip libapache2-mod-scgi</div></pre></td></tr></table></figure></p>
-<p>启用<code>.htaccess</code>。修改<code>/etc/apache2/apache2.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Directory /var/www/&gt;</div><div class="line">  AllowOverride All</div></pre></td></tr></table></figure></p>
-<p>修改<code>/etc/apache2/ports.conf</code>。将默认的<code>80</code>和<code>443</code>端口改成其他以免和nginx冲突。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Listen 7080</div><div class="line"># 此项可选，若没有就不添加</div><div class="line">&lt;IfModule ssl_module&gt;</div><div class="line">        Listen 7443</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
-<p>新建http站点配置文件<code>/etc/apache2/sites-available/example.com.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># 限制vhost仅监听本地7080端口</div><div class="line">&lt;VirtualHost 127.0.0.1:7080&gt;</div><div class="line">    Alias / &quot;/var/www/example.com/&quot;</div><div class="line"></div><div class="line">    &lt;Directory /var/www/example.com/&gt;</div><div class="line">        Options +FollowSymlinks</div><div class="line">        AllowOverride All</div><div class="line"></div><div class="line">        &lt;IfModule mod_dav.c&gt;</div><div class="line">            Dav off</div><div class="line">        &lt;/IfModule&gt;</div><div class="line"></div><div class="line">        SetEnv HOME /var/www/example.com</div><div class="line">        SetEnv HTTP_HOME /var/www/example.com</div><div class="line"></div><div class="line">        #此项可选，为nextcloud专用301跳转，没装不用加。</div><div class="line">        Redirect 301 /.well-known/carddav https://example.com/nextcloud/remote.php/dav</div><div class="line">        Redirect 301 /.well-known/caldav  https://example.com/nextcloud/remote.php/dav</div><div class="line">        Redirect 301 /.well-known/webdav  https://example.com/nextcloud/remote.php/dav</div><div class="line">    &lt;/Directory&gt;</div><div class="line"></div><div class="line">    ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log</div><div class="line">    CustomLog $&#123;APACHE_LOG_DIR&#125;/access.log combined</div><div class="line"></div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure></p>
-<p>开启apache相关模块。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo a2enmod rewrite headers env dir mime</div></pre></td></tr></table></figure></p>
-<p>禁用默认站点，启用本站配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo a2ensite example.com.conf</div><div class="line">sudo a2dissite 000-default.conf</div></pre></td></tr></table></figure></p>
-<h2 id="修改php上传文件大小上限"><a href="#修改php上传文件大小上限" class="headerlink" title="修改php上传文件大小上限"></a>修改php上传文件大小上限</h2><p>以apache为例，修改<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">upload_max_filesize = 64M</div><div class="line">max_file_uploads = 200</div><div class="line">post_max_size = 128M</div></pre></td></tr></table></figure></p>
-<p>重启apache服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl reload apache2</div></pre></td></tr></table></figure></p>
-<h1 id="安装配置nginx"><a href="#安装配置nginx" class="headerlink" title="安装配置nginx"></a>安装配置nginx</h1><p>安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install nginx</div></pre></td></tr></table></figure></p>
-<p>编辑<code>/etc/nginx/nginx.conf</code>。这里只将用户和用户组改为和apache一致的<code>www-data</code>。其他设置可以参考<a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/" target="_blank" rel="external">这里</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">user www-data www-data;</div></pre></td></tr></table></figure></p>
-<p>新建ssl站点配置文件<code>/etc/nginx/sites-available/example.com</code>。这个配置中<code>80</code>端口通过301跳转强制https访问，<code>8443</code>端口为https监听端口，若公网的<code>443</code>端口没封则可用<code>443</code>。然后将请求通过<code>proxy_pass</code>转给apache的<code>7080</code>。<br>关于ssl证书的签发见<a href="https://blog.mjyai.com/2020/04/03/ubuntu-letsencrypt/">部署Let’s Encrypt</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    listen [::]:80;</div><div class="line">    return 301 https://$host$request_uri;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 8443 http2;</div><div class="line">    listen [::]:8443 http2;</div><div class="line">    server_name example.com;</div><div class="line"></div><div class="line">    client_max_body_size 0;</div><div class="line">    underscores_in_headers on;</div><div class="line"></div><div class="line">    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">    ssl on;</div><div class="line">    ssl_certificate /etc/apache2/ssl/fullchain.cer;</div><div class="line">    ssl_certificate_key /etc/apache2/ssl/private/example.com.key;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_set_header Host $host:$server_port;</div><div class="line">        proxy_set_header X-Real-IP $remote_addr;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">        proxy_set_header  X-Forwarded-Proto   $scheme;</div><div class="line">        add_header Front-End-Https on;</div><div class="line">        add_header Strict-Transport-Security &quot;max-age=31536000; includeSubdomains&quot;;</div><div class="line"></div><div class="line">        proxy_headers_hash_max_size 512;</div><div class="line">        proxy_headers_hash_bucket_size 64;</div><div class="line"></div><div class="line">        proxy_buffering off;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_max_temp_file_size 0;</div><div class="line">        proxy_pass http://127.0.0.1:7080;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>启用站点。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo ln <span class="_">-s</span> /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/</div><div class="line">sudo systemctl reload nginx</div></pre></td></tr></table></figure></p>
-<h1 id="nextcloud相关设置"><a href="#nextcloud相关设置" class="headerlink" title="nextcloud相关设置"></a>nextcloud相关设置</h1><p>编辑<code>config.php</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;overwritehost&apos; =&gt; &apos;example.com:8443&apos;,</div><div class="line">&apos;overwriteprotocol&apos; =&gt; &apos;https&apos;,</div><div class="line">&apos;overwrite.cli.url&apos; =&gt; &apos;https://example.com:8443/nextcloud/&apos;,</div><div class="line">&apos;trusted_proxies&apos; =&gt; [&apos;127.0.0.1&apos;],</div></pre></td></tr></table></figure></p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://docs.nextcloud.com/server/15/admin_manual/configuration_server/reverse_proxy_configuration.html" target="_blank" rel="external">Nextcloud configuration » Reverse proxy</a><br><a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/" target="_blank" rel="external">Nginx Full Example Configuration</a><br><a href="http://tengine.taobao.org/book/index.html" target="_blank" rel="external">Nginx开发从入门到精通</a>  </p>
+<h1 id="安装配置apache"><a href="#安装配置apache" class="headerlink" title="安装配置apache"></a>安装配置apache</h1><p>安装依赖。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install apache2 libapache2-mod-php7.2</span><br><span class="line">sudo apt-get install php7.2-gd php7.2-json php7.2-curl php7.2-mbstring php7.2-intl php-imagick php7.2-xml php7.2-zip libapache2-mod-scgi</span><br></pre></td></tr></table></figure><br>启用<code>.htaccess</code>。修改<code>/etc/apache2/apache2.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory &#x2F;var&#x2F;www&#x2F;&gt;</span><br><span class="line">  AllowOverride All</span><br></pre></td></tr></table></figure><br>修改<code>/etc/apache2/ports.conf</code>。将默认的<code>80</code>和<code>443</code>端口改成其他以免和nginx冲突。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Listen 7080</span><br><span class="line"># 此项可选，若没有就不添加</span><br><span class="line">&lt;IfModule ssl_module&gt;</span><br><span class="line">        Listen 7443</span><br><span class="line">&lt;&#x2F;IfModule&gt;</span><br></pre></td></tr></table></figure><br>新建http站点配置文件<code>/etc/apache2/sites-available/example.com.conf</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 限制vhost仅监听本地7080端口</span><br><span class="line">&lt;VirtualHost 127.0.0.1:7080&gt;</span><br><span class="line">    Alias &#x2F; &quot;&#x2F;var&#x2F;www&#x2F;example.com&#x2F;&quot;</span><br><span class="line"></span><br><span class="line">    &lt;Directory &#x2F;var&#x2F;www&#x2F;example.com&#x2F;&gt;</span><br><span class="line">        Options +FollowSymlinks</span><br><span class="line">        AllowOverride All</span><br><span class="line"></span><br><span class="line">        &lt;IfModule mod_dav.c&gt;</span><br><span class="line">            Dav off</span><br><span class="line">        &lt;&#x2F;IfModule&gt;</span><br><span class="line"></span><br><span class="line">        SetEnv HOME &#x2F;var&#x2F;www&#x2F;example.com</span><br><span class="line">        SetEnv HTTP_HOME &#x2F;var&#x2F;www&#x2F;example.com</span><br><span class="line"></span><br><span class="line">        #此项可选，为nextcloud专用301跳转，没装不用加。</span><br><span class="line">        Redirect 301 &#x2F;.well-known&#x2F;carddav https:&#x2F;&#x2F;example.com&#x2F;nextcloud&#x2F;remote.php&#x2F;dav</span><br><span class="line">        Redirect 301 &#x2F;.well-known&#x2F;caldav  https:&#x2F;&#x2F;example.com&#x2F;nextcloud&#x2F;remote.php&#x2F;dav</span><br><span class="line">        Redirect 301 &#x2F;.well-known&#x2F;webdav  https:&#x2F;&#x2F;example.com&#x2F;nextcloud&#x2F;remote.php&#x2F;dav</span><br><span class="line">    &lt;&#x2F;Directory&gt;</span><br><span class="line"></span><br><span class="line">    ErrorLog $&#123;APACHE_LOG_DIR&#125;&#x2F;error.log</span><br><span class="line">    CustomLog $&#123;APACHE_LOG_DIR&#125;&#x2F;access.log combined</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;VirtualHost&gt;</span><br></pre></td></tr></table></figure><br>开启apache相关模块。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2enmod rewrite headers env dir mime</span><br></pre></td></tr></table></figure><br>禁用默认站点，启用本站配置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo a2ensite example.com.conf</span><br><span class="line">sudo a2dissite 000-default.conf</span><br></pre></td></tr></table></figure></p>
+<h2 id="修改php上传文件大小上限"><a href="#修改php上传文件大小上限" class="headerlink" title="修改php上传文件大小上限"></a>修改php上传文件大小上限</h2><p>以apache为例，修改<code>/etc/php/7.2/apache2/php.ini</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">upload_max_filesize &#x3D; 64M</span><br><span class="line">max_file_uploads &#x3D; 200</span><br><span class="line">post_max_size &#x3D; 128M</span><br></pre></td></tr></table></figure><br>重启apache服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl reload apache2</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装配置nginx"><a href="#安装配置nginx" class="headerlink" title="安装配置nginx"></a>安装配置nginx</h1><p>安装。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure><br>编辑<code>/etc/nginx/nginx.conf</code>。这里只将用户和用户组改为和apache一致的<code>www-data</code>。其他设置可以参考<a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/" target="_blank" rel="noopener">这里</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user www-data www-data;</span><br></pre></td></tr></table></figure><br>新建ssl站点配置文件<code>/etc/nginx/sites-available/example.com</code>。这个配置中<code>80</code>端口通过301跳转强制https访问，<code>8443</code>端口为https监听端口，若公网的<code>443</code>端口没封则可用<code>443</code>。然后将请求通过<code>proxy_pass</code>转给apache的<code>7080</code>。<br>关于ssl证书的签发见<a href="https://blog.mjyai.com/2020/04/03/ubuntu-letsencrypt/">部署Let’s Encrypt</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    listen [::]:80;</span><br><span class="line">    return 301 https:&#x2F;&#x2F;$host$request_uri;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 8443 http2;</span><br><span class="line">    listen [::]:8443 http2;</span><br><span class="line">    server_name example.com;</span><br><span class="line"></span><br><span class="line">    client_max_body_size 0;</span><br><span class="line">    underscores_in_headers on;</span><br><span class="line"></span><br><span class="line">    add_header Strict-Transport-Security &quot;max-age&#x3D;31536000; includeSubdomains&quot;;</span><br><span class="line"></span><br><span class="line">    ssl on;</span><br><span class="line">    ssl_certificate &#x2F;etc&#x2F;apache2&#x2F;ssl&#x2F;fullchain.cer;</span><br><span class="line">    ssl_certificate_key &#x2F;etc&#x2F;apache2&#x2F;ssl&#x2F;private&#x2F;example.com.key;</span><br><span class="line"></span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">        proxy_set_header Host $host:$server_port;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header  X-Forwarded-Proto   $scheme;</span><br><span class="line">        add_header Front-End-Https on;</span><br><span class="line">        add_header Strict-Transport-Security &quot;max-age&#x3D;31536000; includeSubdomains&quot;;</span><br><span class="line"></span><br><span class="line">        proxy_headers_hash_max_size 512;</span><br><span class="line">        proxy_headers_hash_bucket_size 64;</span><br><span class="line"></span><br><span class="line">        proxy_buffering off;</span><br><span class="line">        proxy_redirect off;</span><br><span class="line">        proxy_max_temp_file_size 0;</span><br><span class="line">        proxy_pass http:&#x2F;&#x2F;127.0.0.1:7080;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>启用站点。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/</span><br><span class="line">sudo systemctl reload nginx</span><br></pre></td></tr></table></figure></p>
+<h1 id="nextcloud相关设置"><a href="#nextcloud相关设置" class="headerlink" title="nextcloud相关设置"></a>nextcloud相关设置</h1><p>编辑<code>config.php</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#39;overwritehost&#39; &#x3D;&gt; &#39;example.com:8443&#39;,</span><br><span class="line">&#39;overwriteprotocol&#39; &#x3D;&gt; &#39;https&#39;,</span><br><span class="line">&#39;overwrite.cli.url&#39; &#x3D;&gt; &#39;https:&#x2F;&#x2F;example.com:8443&#x2F;nextcloud&#x2F;&#39;,</span><br><span class="line">&#39;trusted_proxies&#39; &#x3D;&gt; [&#39;127.0.0.1&#39;],</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://docs.nextcloud.com/server/15/admin_manual/configuration_server/reverse_proxy_configuration.html" target="_blank" rel="noopener">Nextcloud configuration » Reverse proxy</a><br><a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/" target="_blank" rel="noopener">Nginx Full Example Configuration</a><br><a href="http://tengine.taobao.org/book/index.html" target="_blank" rel="noopener">Nginx开发从入门到精通</a>  </p>
 
       
       
@@ -318,7 +317,7 @@
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -352,7 +351,9 @@
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -407,7 +408,7 @@
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 </section>
     
 
@@ -487,8 +488,12 @@
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -537,7 +542,7 @@ MathJax.Hub.Queue(function() {
     })
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
   <script language="javascript">
@@ -565,6 +570,7 @@ MathJax.Hub.Queue(function() {
         });
     });
 </script>
+
 
 
   </div>
