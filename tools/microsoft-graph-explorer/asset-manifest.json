@@ -1,0 +1,13 @@
+{
+  "main.css": "/tools/microsoft-graph-explorer/static/css/graph-explorer-v2.css",
+  "main.js": "/tools/microsoft-graph-explorer/static/js/graph-explorer-v2.js",
+  "main.css.map": "/tools/microsoft-graph-explorer/static/css/graph-explorer-v2.css.map",
+  "main.js.map": "/tools/microsoft-graph-explorer/static/js/graph-explorer-v2.js.map",
+  "editor.worker.js": "/tools/microsoft-graph-explorer/editor.worker.js",
+  "editor.worker.js.map": "/tools/microsoft-graph-explorer/editor.worker.js.map",
+  "index.html": "/tools/microsoft-graph-explorer/index.html",
+  "json.worker.js": "/tools/microsoft-graph-explorer/json.worker.js",
+  "json.worker.js.map": "/tools/microsoft-graph-explorer/json.worker.js.map",
+  "precache-manifest.f5c04f5898d80b85b8ffdc055c9c92ac.js": "/tools/microsoft-graph-explorer/precache-manifest.f5c04f5898d80b85b8ffdc055c9c92ac.js",
+  "service-worker.js": "/tools/microsoft-graph-explorer/service-worker.js"
+}
