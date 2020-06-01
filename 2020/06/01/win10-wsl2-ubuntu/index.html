@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>通过CSS高亮显示已访问链接 | 名实合为</title>
+  <title>Win10安装WSL2及Ubuntu20.04子系统 | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="原因不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。">
+  <meta name="description" content="本以为是小菜一碟，但还是遇到了WslRegisterDistribution failed和参考的对象类型不支持尝试的操作的坑，故记录一下。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="通过CSS高亮显示已访问链接">
-<meta property="og:url" content="https://blog.mjyai.com/2017/04/03/highlight-visited/index.html">
+<meta property="og:title" content="Win10安装WSL2及Ubuntu20.04子系统">
+<meta property="og:url" content="https://blog.mjyai.com/2020/06/01/win10-wsl2-ubuntu/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="原因不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。">
+<meta property="og:description" content="本以为是小菜一碟，但还是遇到了WslRegisterDistribution failed和参考的对象类型不支持尝试的操作的坑，故记录一下。">
 <meta property="og:locale" content="zh">
-<meta property="article:published_time" content="2017-04-02T23:18:07.000Z">
-<meta property="article:modified_time" content="2017-04-03T01:31:17.176Z">
+<meta property="article:published_time" content="2020-06-01T00:23:12.000Z">
+<meta property="article:modified_time" content="2020-06-01T01:28:04.568Z">
 <meta property="article:author" content="mjy">
-<meta property="article:tag" content="css">
-<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="win">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
@@ -203,11 +203,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-highlight-visited" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-win10-wsl2-ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/04/03/highlight-visited/" class="article-date">
-      <time datetime="2017-04-02T23:18:07.000Z" itemprop="datePublished">2017-04-03</time>
+      <a href="/2020/06/01/win10-wsl2-ubuntu/" class="article-date">
+      <time datetime="2020-06-01T00:23:12.000Z" itemprop="datePublished">2020-06-01</time>
 </a>
     </div>
   
@@ -220,7 +220,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      通过CSS高亮显示已访问链接
+      Win10安装WSL2及Ubuntu20.04子系统
     </h1>
   
 
@@ -235,7 +235,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/win/" rel="tag">win</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -245,14 +245,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>不少网站为了增加点击率通过CSS让已访问链接颜色不变，个别无节操门户网站甚至时不时改个标题让你以为是新文章，点进去发现已经看过。</p>
-<a id="more"></a>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>最初的解决方案是安装<a href="https://chrome.google.com/webstore/detail/stylish-custom-themes-for/fjnbnpbmkenffdnngjfgmeleoegfcffe" target="_blank" rel="noopener">Stylish</a>，然后安装全局主题<a href="https://userstyles.org/styles/31267/global-dark-style-changes-everything-to-dark" target="_blank" rel="noopener">Global dark style</a>。</p>
-<p>但用久了感觉这个主题适合夜晚使用，特别是阅读长文。其他情况下缺乏美感。</p>
-<p>我主要是需要已访问链接高亮显示，于是选择了<a href="https://userstyles.org/styles/17357/red-visited-mark-visited-links-red-dm" target="_blank" rel="noopener">Red:visited</a>。不过默认的红色实在有点刺眼，我要其比未访问链接低调一些，记忆当中HTML标准的默认浅紫色就不错，完整的推荐设置<a href="https://www.w3.org/TR/html5/rendering.html#the-css-user-agent-style-sheet-and-presentational-hints" target="_blank" rel="noopener">在这里</a>。把主题里的#CC0000改成#551A8B即可。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>但新的问题产生了：对于背景颜色较深的网站，紫色很难看清，所以还要改下链接的背景色。最终结果如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span>, <span class="selector-class">.fl</span><span class="selector-pseudo">:visited</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#551A8B</span> <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#ccc</span> <span class="meta">!important</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>如果背景是图片就无能为力了，去掉!important的话漏网之鱼又太多。想要解决的话应该是读取原有字体颜色，然后用lighten（依赖SASS）或者自己设计一个简单的数学变换来使其变浅。第一步需要javascript来实现。</p>
-<p>去<a href="https://greasyfork.org" target="_blank" rel="noopener">GreasyFork</a>找了下没有实现类似功能的脚本，准备自己写一个却发现由于安全问题getComputedStyle并<a href="https://hacks.mozilla.org/2010/03/privacy-related-changes-coming-to-css-vistited/" target="_blank" rel="noopener">不能返回已访问链接颜色的正确结果</a>。这样就不能直接在循环内判断是否visited并根据原来颜色变浅了。js读取颜色后要另外再用CSS来判断并改色。</p>
+        <p>本以为是小菜一碟，但还是遇到了WslRegisterDistribution failed和参考的对象类型不支持尝试的操作的坑，故记录一下。<br><a id="more"></a></p>
+<h1 id="为什么要升级到WSL2"><a href="#为什么要升级到WSL2" class="headerlink" title="为什么要升级到WSL2"></a>为什么要升级到WSL2</h1><p>WSL2主要是增加了完整的Linux内核和完全的系统调用兼容性，此外不再需要VM Ware和VirtualBox，而是将VM集成在后台管理和运行亦有助于提升性能节省资源。关于WSL2和1的详细比较<a href="https://docs.microsoft.com/en-us/windows/wsl/compare-versions" target="_blank" rel="noopener">见此处</a>。</p>
+<h1 id="强制升级Win10"><a href="#强制升级Win10" class="headerlink" title="强制升级Win10"></a>强制升级Win10</h1><p>WSL2要求Win10为目前最新的2020五月版(Build 19041)，部分设备已经推送了系统更新，到控制面板的<code>Windows更新</code>处可以自动更新。而没有推送的设备官方建议是加入<a href="https://insider.windows.com/" target="_blank" rel="noopener">Windows Insider</a>，但副作用是更新推送频繁，成了测试版的小白鼠。也有人建议<a href="https://www.microsoft.com/zh-cn/software-download/windows10ISO" target="_blank" rel="noopener">下载ISO镜像</a>来升级。<br>个人建议直接下载<a href="https://www.microsoft.com/zh-cn/software-download/windows10" target="_blank" rel="noopener">易升</a>，比镜像快，亦无需接受Insider的推送。  </p>
+<h1 id="安装WSL2"><a href="#安装WSL2" class="headerlink" title="安装WSL2"></a>安装WSL2</h1><h2 id="安装WSL"><a href="#安装WSL" class="headerlink" title="安装WSL"></a>安装WSL</h2><p>以管理员身份运行PowerShell。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dism.exe &#x2F;online &#x2F;enable-feature &#x2F;featurename:Microsoft-Windows-Subsystem-Linux &#x2F;all &#x2F;norestart</span><br></pre></td></tr></table></figure></p>
+<h2 id="开启虚拟机平台组件"><a href="#开启虚拟机平台组件" class="headerlink" title="开启虚拟机平台组件"></a>开启虚拟机平台组件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dism.exe &#x2F;online &#x2F;enable-feature &#x2F;featurename:VirtualMachinePlatform &#x2F;all &#x2F;norestart</span><br></pre></td></tr></table></figure>
+<h2 id="设定WSL2为默认版本"><a href="#设定WSL2为默认版本" class="headerlink" title="设定WSL2为默认版本"></a>设定WSL2为默认版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
+<h1 id="安装Ubuntu20-04"><a href="#安装Ubuntu20-04" class="headerlink" title="安装Ubuntu20.04"></a>安装Ubuntu20.04</h1><p>在<a href="https://www.microsoft.com/zh-cn/p/ubuntu-2004-lts/9n6svws3rx71?rtc=1" target="_blank" rel="noopener">Microsoft Store</a>直接获取即可。  </p>
+<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><h2 id="WslRegisterDistribution-failed-with-error-0x800706ba"><a href="#WslRegisterDistribution-failed-with-error-0x800706ba" class="headerlink" title="WslRegisterDistribution failed with error: 0x800706ba"></a>WslRegisterDistribution failed with error: 0x800706ba</h2><p>下载后第一次运行Ubuntu报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Installing, this may take a few minutes...</span><br><span class="line">WslRegisterDistribution failed with error: 0x800706ba</span><br><span class="line">Error: 0x800706ba The RPC server is unavailable.</span><br><span class="line"></span><br><span class="line">Press any key to continue...</span><br></pre></td></tr></table></figure><br>产生这个错误有两个可能的原因：  </p>
+<h3 id="LxssManager未正常运行。"><a href="#LxssManager未正常运行。" class="headerlink" title="LxssManager未正常运行。"></a>LxssManager未正常运行。</h3><p>以管理员身份运行<code>cmd</code>。重启该服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sc stop LxssManager</span><br><span class="line">sc start LxssManager</span><br></pre></td></tr></table></figure><br>之后可以通过<code>sc query LxssManager</code>检查服务运行状况。  </p>
+<h3 id="DNS-Client未运行。"><a href="#DNS-Client未运行。" class="headerlink" title="DNS Client未运行。"></a>DNS Client未运行。</h3><p>运行<code>service.msc</code>查看该服务状态，若没有运行则开启服务。<br>但有可能碰到服务状态下的按钮为灰色不可更改的情况。此时需要修改注册表。<br>运行<code>regedit</code>，转到<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\Dnscache</code>目录下。将<code>Start</code>的值由<code>4</code>（禁用）改为<code>2</code>（自动）。<br>重启系统。  </p>
+<h2 id="参考的对象类型不支持尝试的操作"><a href="#参考的对象类型不支持尝试的操作" class="headerlink" title="参考的对象类型不支持尝试的操作"></a>参考的对象类型不支持尝试的操作</h2><p>第一次启动Ubuntu后无法创建新用户，显示<code>参考的对象类型不支持尝试的操作</code>（The attempted operation is not supported for the type of object referenced.）。<br>以管理员身份运行<code>cmd</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh winsock reset</span><br></pre></td></tr></table></figure><br>原因是WSL的通信和<code>Proxifier</code>通过Winsock LSP抓取TCP连接产生冲突。<br>如果重置winsock则wsl正常但Proxifer无法工作。<a href="https://github.com/microsoft/WSL/issues/4177#issuecomment-597736482" target="_blank" rel="noopener">Proxifier的开发者提供的解决办法</a>如下：<br>下载<a href="http://www.proxifier.com/tmp/Test20200228/NoLsp.exe" target="_blank" rel="noopener">http://www.proxifier.com/tmp/Test20200228/NoLsp.exe</a>。<br>以管理员身份运行<code>cmd</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NoLsp.exe c:\windows\system32\wsl.exe</span><br></pre></td></tr></table></figure><br>使得wsl绕开Proxifer修改过的LSP。  </p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10" target="_blank" rel="noopener">Windows Subsystem for Linux Installation Guide for Windows 10</a>  </p>
 
       
       
@@ -307,13 +311,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></p>
+        <p><span>本文标题:</span><a href="/2020/06/01/win10-wsl2-ubuntu/">Win10安装WSL2及Ubuntu20.04子系统</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2017年04月03日 - 07时18分</p>
-        <p><span>最后更新:</span>2017年04月03日 - 09时31分</p>
+        <p><span>发布时间:</span>2020年06月01日 - 08时23分</p>
+        <p><span>最后更新:</span>2020年06月01日 - 09时28分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/04/03/highlight-visited/" title="通过CSS高亮显示已访问链接">https://blog.mjyai.com/2017/04/03/highlight-visited/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2017/04/03/highlight-visited/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/06/01/win10-wsl2-ubuntu/" title="Win10安装WSL2及Ubuntu20.04子系统">https://blog.mjyai.com/2020/06/01/win10-wsl2-ubuntu/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2020/06/01/win10-wsl2-ubuntu/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -326,18 +330,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/04/05/github-desktop/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          通过proxifier配合代理安装GitHub Desktop
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/04/02/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World! 静态博客Hexo部署于GitHub</div>
+    <a href="/2020/04/11/ubuntu-mattermost/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ubuntu下部署团队协作通讯软件mattermost</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -348,7 +343,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原因"><span class="toc-number">1.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过程"><span class="toc-number">2.</span> <span class="toc-text">过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TODO"><span class="toc-number">4.</span> <span class="toc-text">TODO</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么要升级到WSL2"><span class="toc-number">1.</span> <span class="toc-text">为什么要升级到WSL2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#强制升级Win10"><span class="toc-number">2.</span> <span class="toc-text">强制升级Win10</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装WSL2"><span class="toc-number">3.</span> <span class="toc-text">安装WSL2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装WSL"><span class="toc-number">3.1.</span> <span class="toc-text">安装WSL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启虚拟机平台组件"><span class="toc-number">3.2.</span> <span class="toc-text">开启虚拟机平台组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设定WSL2为默认版本"><span class="toc-number">3.3.</span> <span class="toc-text">设定WSL2为默认版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Ubuntu20-04"><span class="toc-number">4.</span> <span class="toc-text">安装Ubuntu20.04</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debug"><span class="toc-number">5.</span> <span class="toc-text">Debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#WslRegisterDistribution-failed-with-error-0x800706ba"><span class="toc-number">5.1.</span> <span class="toc-text">WslRegisterDistribution failed with error: 0x800706ba</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LxssManager未正常运行。"><span class="toc-number">5.1.1.</span> <span class="toc-text">LxssManager未正常运行。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-Client未运行。"><span class="toc-number">5.1.2.</span> <span class="toc-text">DNS Client未运行。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考的对象类型不支持尝试的操作"><span class="toc-number">5.2.</span> <span class="toc-text">参考的对象类型不支持尝试的操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -417,13 +412,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/04/05/github-desktop/" title="上一篇: 通过proxifier配合代理安装GitHub Desktop">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/04/02/hello-world/" title="下一篇: Hello World! 静态博客Hexo部署于GitHub">
+            <a href="/2020/04/11/ubuntu-mattermost/" title="下一篇: ubuntu下部署团队协作通讯软件mattermost">
                 <i class="fa fa-angle-right"></i>
             </a>
         
