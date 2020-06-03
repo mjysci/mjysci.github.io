@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.mjyai.com/2020/01/24/rtorrent-compile/</loc>
+    
+    <lastmod>2020-06-03T02:22:24.029Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.mjyai.com/2017/04/02/hello-world/</loc>
+    
+    <lastmod>2020-06-03T02:11:36.476Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.mjyai.com/2020/06/01/win10-wsl2-ubuntu/</loc>
     
-    <lastmod>2020-06-01T01:28:04.568Z</lastmod>
+    <lastmod>2020-06-03T01:55:15.889Z</lastmod>
     
   </url>
   
@@ -93,13 +107,6 @@
   </url>
   
   <url>
-    <loc>https://blog.mjyai.com/2020/01/24/rtorrent-compile/</loc>
-    
-    <lastmod>2020-03-18T15:15:16.461Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.mjyai.com/2018/11/19/cac-upgrade-ubuntu/</loc>
     
     <lastmod>2020-02-09T07:13:00.418Z</lastmod>
@@ -166,13 +173,6 @@
     <loc>https://blog.mjyai.com/2019/01/05/choose-router/</loc>
     
     <lastmod>2019-01-17T05:58:45.104Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.mjyai.com/2017/04/02/hello-world/</loc>
-    
-    <lastmod>2019-01-05T16:26:09.436Z</lastmod>
     
   </url>
   
