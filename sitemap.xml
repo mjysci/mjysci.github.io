@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.mjyai.com/2020/06/15/conda-ffmpeg-x264/</loc>
+    
+    <lastmod>2020-06-15T01:02:25.551Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.mjyai.com/2020/01/24/rtorrent-compile/</loc>
     
     <lastmod>2020-06-03T02:22:24.029Z</lastmod>
