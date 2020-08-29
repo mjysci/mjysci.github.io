@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.mjyai.com/2020/08/29/caddy-upgrade-v2/</loc>
+    
+    <lastmod>2020-08-29T11:23:53.179Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.mjyai.com/2019/03/11/rpi-docker-qiandao/</loc>
     
     <lastmod>2020-06-21T11:38:14.573Z</lastmod>
