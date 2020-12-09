@@ -13,7 +13,7 @@
 <meta property="og:description" content="网上找到个脚本在树莓派上使用正常，但路由上更新失败。改进之后可以直接在路由上跑，顺便用更安全的API Token方式取代原来的全局API进行更新。">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-12-07T11:41:57.000Z">
-<meta property="article:modified_time" content="2020-12-07T12:06:10.530Z">
+<meta property="article:modified_time" content="2020-12-09T13:46:03.258Z">
 <meta property="article:author" content="mjy">
 <meta property="article:tag" content="openwrt">
 <meta property="article:tag" content="bash">
@@ -247,10 +247,10 @@
           
         <p>网上找到个脚本在树莓派上使用正常，但路由上更新失败。改进之后可以直接在路由上跑，顺便用更安全的API Token方式取代原来的全局API进行更新。<br><a id="more"></a><br>yulewang的<a href="https://github.com/yulewang/cloudflare-api-v4-ddns" target="_blank" rel="noopener">脚本</a>已经写得很好，但由于我的路由上grep的版本过旧，不支持<code>-P</code>参数故获取id失败造成无法更新。用兼容性更好的<code>-E</code>实现。<br>另外原脚本用的是全局API，权限太多了，故改为更安全的可定制权限的API Token方式，也省去了一个<code>-u</code>的参数。  </p>
 <h1 id="在路由器上部署"><a href="#在路由器上部署" class="headerlink" title="在路由器上部署"></a>在路由器上部署</h1><h2 id="获取API-Token"><a href="#获取API-Token" class="headerlink" title="获取API Token"></a>获取API Token</h2><p>可在cloudflare的<a href="https://dash.cloudflare.com/profile/api-tokens" target="_blank" rel="noopener">个人账户处</a>创建Token，这个脚本需要<code>Zone.Zone</code>的读权限和<code>Zone.DNS</code>的写权限。  </p>
-<h2 id="下载脚本"><a href="#下载脚本" class="headerlink" title="下载脚本"></a>下载脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;mjysci&#x2F;cloudflare-api-v4-ddns&#x2F;master&#x2F;cf-v4-ddns.sh &gt; &#x2F;root&#x2F;cf-ddns.sh &amp;&amp; chmod +x &#x2F;root&#x2F;cf-ddns.sh</span><br></pre></td></tr></table></figure>
+<h2 id="下载脚本"><a href="#下载脚本" class="headerlink" title="下载脚本"></a>下载脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;mjysci&#x2F;cloudflare-api-ddns&#x2F;master&#x2F;cf-ddns.sh &gt; &#x2F;root&#x2F;cf-ddns.sh &amp;&amp; chmod +x &#x2F;root&#x2F;cf-ddns.sh</span><br></pre></td></tr></table></figure>
 <p>这里直接将脚本放在<code>$HOME</code>目录，由于路由系统的特性，放其他目录可能重启后会被删。  </p>
 <h2 id="设定定时任务"><a href="#设定定时任务" class="headerlink" title="设定定时任务"></a>设定定时任务</h2><p>通过<code>crontab -e</code>添加定时任务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 * * * * &#x2F;root&#x2F;cf-ddns.sh -k cloudflare-api-token -h host.example.com -z example.com -t A &gt;&#x2F;dev&#x2F;null 2&gt;&amp;1</span><br></pre></td></tr></table></figure></p>
-
+<h1 id="通过Docker部署"><a href="#通过Docker部署" class="headerlink" title="通过Docker部署"></a>通过Docker部署</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name cloudflare-api-ddns --restart&#x3D;always \</span><br><span class="line">			-e CFTOKEN&#x3D;cloudflare-api-token \</span><br><span class="line">			-e	CFZONE_NAME&#x3D;example.com \</span><br><span class="line">			-e	CFRECORD_NAME&#x3D;host.example.com \</span><br><span class="line">			-e	CFRECORD_TYPE&#x3D;A \</span><br><span class="line">			mjysci&#x2F;cloudflare-api-ddns:latest</span><br></pre></td></tr></table></figure>
       
       
         <div class="page-reward">
@@ -307,7 +307,7 @@
         <p><span>本文标题:</span><a href="/2020/12/07/cloudflare-api-ddns-openwrt/">支持路由器的cloudflare动态域名ddns更新脚本</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2020年12月07日 - 19时41分</p>
-        <p><span>最后更新:</span>2020年12月07日 - 20时06分</p>
+        <p><span>最后更新:</span>2020年12月09日 - 21时46分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/12/07/cloudflare-api-ddns-openwrt/" title="支持路由器的cloudflare动态域名ddns更新脚本">https://blog.mjyai.com/2020/12/07/cloudflare-api-ddns-openwrt/</a>
             <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2020/12/07/cloudflare-api-ddns-openwrt/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -336,7 +336,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在路由器上部署"><span class="toc-number">1.</span> <span class="toc-text">在路由器上部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#获取API-Token"><span class="toc-number">1.1.</span> <span class="toc-text">获取API Token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载脚本"><span class="toc-number">1.2.</span> <span class="toc-text">下载脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设定定时任务"><span class="toc-number">1.3.</span> <span class="toc-text">设定定时任务</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在路由器上部署"><span class="toc-number">1.</span> <span class="toc-text">在路由器上部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#获取API-Token"><span class="toc-number">1.1.</span> <span class="toc-text">获取API Token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载脚本"><span class="toc-number">1.2.</span> <span class="toc-text">下载脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设定定时任务"><span class="toc-number">1.3.</span> <span class="toc-text">设定定时任务</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#通过Docker部署"><span class="toc-number">2.</span> <span class="toc-text">通过Docker部署</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
