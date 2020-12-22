@@ -3,20 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Linux Mint 18.2版本升级至19.1 | 名实合为</title>
+  <title>用docker在树莓派上部署网页监控软件WebMonitor | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用Update Manager进行逐步升级，timeshift可跳过。">
+  <meta name="description" content="WebMonitor是一款python写的网页监控程序，优点是UI简洁，可视化操作简单，通知方式多样。弄了个支持树莓派(arm32v7)的镜像方便部署。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux Mint 18.2版本升级至19.1">
-<meta property="og:url" content="https://blog.mjyai.com/2019/03/04/upgrade-linux-mint/index.html">
+<meta property="og:title" content="用docker在树莓派上部署网页监控软件WebMonitor">
+<meta property="og:url" content="https://blog.mjyai.com/2020/12/22/raspberry-pi-docker-webmonitor/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="用Update Manager进行逐步升级，timeshift可跳过。">
+<meta property="og:description" content="WebMonitor是一款python写的网页监控程序，优点是UI简洁，可视化操作简单，通知方式多样。弄了个支持树莓派(arm32v7)的镜像方便部署。">
 <meta property="og:locale" content="zh">
-<meta property="article:published_time" content="2019-03-04T13:21:42.000Z">
-<meta property="article:modified_time" content="2019-03-04T14:31:46.000Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Selection_20201222-181140.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Selection_20201222-181812.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Selection_20201222-180253.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Screenshot%20from%202020-12-22%2018-55-21.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Selection_20201222-184605.png">
+<meta property="article:published_time" content="2020-12-22T07:09:20.000Z">
+<meta property="article:modified_time" content="2020-12-22T11:17:42.790Z">
 <meta property="article:author" content="mjy">
-<meta property="article:tag" content="linux">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="rpi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Selection_20201222-181140.png">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
   
@@ -202,11 +209,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-upgrade-linux-mint" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-raspberry-pi-docker-webmonitor" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/04/upgrade-linux-mint/" class="article-date">
-      <time datetime="2019-03-04T13:21:42.000Z" itemprop="datePublished">2019-03-04</time>
+      <a href="/2020/12/22/raspberry-pi-docker-webmonitor/" class="article-date">
+      <time datetime="2020-12-22T07:09:20.000Z" itemprop="datePublished">2020-12-22</time>
 </a>
     </div>
   
@@ -219,7 +226,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Linux Mint 18.2版本升级至19.1
+      用docker在树莓派上部署网页监控软件WebMonitor
     </h1>
   
 
@@ -234,7 +241,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpi/" rel="tag">rpi</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -244,16 +251,16 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>用Update Manager进行逐步升级，timeshift可跳过。<br><a id="more"></a></p>
-<h1 id="升级至18-3"><a href="#升级至18-3" class="headerlink" title="升级至18.3"></a>升级至18.3</h1><p>打开Update Manager，Edit——Upgrade to Linux Mint 18.3 Sylvia。如果是其他版本也是同样的位置，但升级版本不一样，每次升0.1。<br>完成后重启。  </p>
-<h1 id="升级至19"><a href="#升级至19" class="headerlink" title="升级至19"></a>升级至19</h1><h2 id="建立系统快照（可选）"><a href="#建立系统快照（可选）" class="headerlink" title="建立系统快照（可选）"></a>建立系统快照（可选）</h2><p>官方强制要求要建立系统快照，但如果像我这样mint只是备用系统，用来折腾不怕搞坏则此步可跳过。<br>以下附上建立快照的步骤：<br>安装timeshift<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install timeshift</span><br></pre></td></tr></table></figure><br>Menu——Timeshift打开快照安装向导，选择快照类型（默认RSYNC），选择存储位置，完成向导。<br>Create建立快照。</p>
-<h2 id="将显示管理器切换为LightDM"><a href="#将显示管理器切换为LightDM" class="headerlink" title="将显示管理器切换为LightDM"></a>将显示管理器切换为LightDM</h2><p>检查默认显示管理器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/X11/default-display-manager</span><br></pre></td></tr></table></figure><br>如果输出为<code>/usr/sbin/lightdm</code>则可跳过下面安装并切换LightDM的步骤。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install lightdm lightdm-settings slick-greeter</span><br></pre></td></tr></table></figure><br>安装过程中选择默认显示管理器为lightdm。<br>删除MDM。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt remove --purge mdm mint-mdm-themes*</span><br></pre></td></tr></table></figure><br>配置并重启。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg-reconfigure lightdm</span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure></p>
-<h2 id="升级系统"><a href="#升级系统" class="headerlink" title="升级系统"></a>升级系统</h2><p>安装mintupgrade。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install mintupgrade</span><br></pre></td></tr></table></figure><br>（可选）如果前面没有创建快照，执行以下命令以跳过timeshift检查。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo touch /etc/timeshift.json</span><br></pre></td></tr></table></figure><br>检查系统。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mintupgrade check</span><br></pre></td></tr></table></figure><br>检查过程中会给出依赖有冲突的包，用<code>apt remove</code>删掉即可，升级后再装回去。值得注意的是我之前还装了ros，删掉ros。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove ros-*</span><br></pre></td></tr></table></figure><br>另外建议想装<a href="http://www.ros.org/install/" target="_blank" rel="noopener">ROS</a>的老老实实在Ubuntu上弄，在Mint上经过一番折腾后也能用，但没必要把时间花在搭建环境的坑上。<br>预先下载好升级所需包。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mintupgrade download</span><br></pre></td></tr></table></figure><br>升级。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mintupgrade upgrade</span><br></pre></td></tr></table></figure></p>
-<h1 id="升级至19-1"><a href="#升级至19-1" class="headerlink" title="升级至19.1"></a>升级至19.1</h1><p>此时如果是装了第三方显卡驱动可能桌面会崩溃并进入低分辨率安全模式，先不管它。<br>每次升级后源会重置，打开Software Sources改成国内源。<br>打开Update Manager，Edit——Upgrade to Linux Mint 19.1 Tessa。  </p>
-<h1 id="收尾工作"><a href="#收尾工作" class="headerlink" title="收尾工作"></a>收尾工作</h1><p>解决桌面崩溃问题，重装nvidia显卡驱动。</p>
-<pre><code class="bash">apt-get install --reinstall nvidia-415
-</code></pre>
-<p>用的是这个源<code>sudo add-apt-repository ppa:graphics-drivers/ppa</code>。<br>如果还是不行就装<code>nvidia-396</code>。</p>
+        <p>WebMonitor是一款python写的网页监控程序，优点是UI简洁，可视化操作简单，通知方式多样。弄了个支持树莓派(arm32v7)的镜像方便部署。<br><a id="more"></a></p>
+<h1 id="网页监控软件比较"><a href="#网页监控软件比较" class="headerlink" title="网页监控软件比较"></a>网页监控软件比较</h1><h2 id="Page-Monitor"><a href="#Page-Monitor" class="headerlink" title="Page Monitor"></a><a href="https://chrome.google.com/webstore/detail/page-monitor/ogeebjpdeabhncjpfhgdibjajcajepgg" target="_blank" rel="noopener">Page Monitor</a></h2><p>➕可视化选择网页监控位置<br>➕免费，功能无限制<br>➖只支持Chrome插件，官方已停止开发<br>➖仅能通过浏览器发声来提醒<br><a href="https://visualping.io" target="_blank" rel="noopener">visualping.io</a>提供的网页监控插件，已停止插件开发，转向web服务。如果你的通知必须以某台机器已开Chrome为前提处理倒是适用。  </p>
+<p>##　<a href="https://distill.io" target="_blank" rel="noopener">Distill</a><br>➕可视化选择网页监控位置<br>➕多平台支持<br>➕通知方式多样<br>➕可云端同步<br>➖免费版<a href="https://distill.io/pricing" target="_blank" rel="noopener">功能受限</a><br>付费的话Distill就是网页监控的最终选择。免费版如果是选择浏览器插件离线跑则基本无限制。但我需要一些24*7监控间隔小于6小时且通知到手机的任务。    </p>
+<h2 id="Huginn"><a href="#Huginn" class="headerlink" title="Huginn"></a><a href="https://github.com/huginn/huginn" target="_blank" rel="noopener">Huginn</a></h2><p>➕定制程度高<br>➖硬件要求高<br>➖不支持ARM，排除掉树莓派和一些arm64的NAS之类的低功耗设备<br>➖设置任务略复杂<br>在x64的机子上试用过，建了一些简单的网页监控任务发送到Server酱，只是这些机器不适合24*7开机。如果能支持树莓派的话这就是自建网页监控的最终选择。  </p>
+<h2 id="WebMonitor"><a href="#WebMonitor" class="headerlink" title="WebMonitor"></a><a href="https://github.com/LogicJake/WebMonitor" target="_blank" rel="noopener">WebMonitor</a></h2><p>➕操作简单<br>➕通知方式多样<br>其实刚试用时已经很好用，不过我自己也有一些需求，做了些改进：<a href="https://github.com/LogicJake/WebMonitor/pull/44" target="_blank" rel="noopener">优化docker镜像大小 #43</a>，<a href="https://github.com/LogicJake/WebMonitor/pull/45" target="_blank" rel="noopener">增加arm64支持 #45</a>，<a href="https://github.com/LogicJake/WebMonitor/pull/46" target="_blank" rel="noopener">增加Bark通知方式 #46</a>，<a href="https://github.com/LogicJake/WebMonitor/pull/50" target="_blank" rel="noopener">增加自定义GET/POST通知方式 #50</a>。<br>不过在增加对arm支持时本来想一并对树莓派的arm32v7提供，结果由于arm32v7下的依赖有点特殊，不易在不影响其他架构镜像的情况下整合到一起，故单独构建了。<br>一开始也试过在树莓派上直接运行，但要解决一些raspbian上gcc编译报错的问题，比较繁琐。如果每次重装系统都要这样就有点浪费时间，故还是docker部署方便。  </p>
+<h1 id="部署docker镜像"><a href="#部署docker镜像" class="headerlink" title="部署docker镜像"></a>部署docker镜像</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name webmonitor -v &#x2F;home&#x2F;yourname&#x2F;docker&#x2F;webmonitor:&#x2F;app&#x2F;db -p 8000:8000 -e PORT&#x3D;8000 -e USERNAME&#x3D;yourname -e PASSWORD&#x3D;yourpassword mjysci&#x2F;webmonitor:arm32v7</span><br></pre></td></tr></table></figure>
+<p>注：<code>arm32v7</code>的tag是针对树莓派的，其他平台换成<code>latest</code>即可。  </p>
+<h1 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h1><h2 id="注册WxPusher"><a href="#注册WxPusher" class="headerlink" title="注册WxPusher"></a>注册WxPusher</h2><p>首先要增加通知方式，这里以<a href="https://wxpusher.zjiecode.com/admin" target="_blank" rel="noopener">WxPusher</a>为例展示<code>自定义GET/POST通知</code>。<br>打开上述页面微信扫码登录。右上角点击<code>创建新的应用</code>，如下图所示只需填必填的三项即可。<br><img src="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Selection_20201222-181140.png" alt=""><br>创建完毕后会显示<code>appToken</code>，只会显示一次，记下来。<br>打开左边栏<code>应用管理——关注应用</code>，微信扫码关注你刚创建的应用。然后点<code>用户管理——用户列表</code>查看你的<code>UID</code>，如下图所示记下来。<br><img src="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Selection_20201222-181812.png" alt=""></p>
+<h2 id="添加通知方式"><a href="#添加通知方式" class="headerlink" title="添加通知方式"></a>添加通知方式</h2><p>打开<code>http://IP:8000</code>，输入部署时设定的用户名和密码登录管理页面。<br>点击<code>设置——通知方式——增加</code>，如下图所示增加<code>自定义通知</code>。<br><img src="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Selection_20201222-180253.png" alt=""><br><code>自定义网址</code>格式如下，<code>appToken</code>和<code>uids</code>换成刚才记下的内容。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;wxpusher.zjiecode.com&#x2F;api&#x2F;send&#x2F;message&#123;data&#x3D;&#123;</span><br><span class="line">  &quot;appToken&quot;:&quot;AT_xxx&quot;,</span><br><span class="line">  &quot;content&quot;:&#123;content&#125;,</span><br><span class="line">  &quot;summary&quot;:&#123;header&#125;,</span><br><span class="line">  &quot;contentType&quot;:3,</span><br><span class="line">  &quot;uids&quot;:[&quot;UID_xxxx&quot;]</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="添加网页监控任务"><a href="#添加网页监控任务" class="headerlink" title="添加网页监控任务"></a>添加网页监控任务</h2><p>我这里监控的是<a href="https://s.mjyai.com/bwhGIA" target="_blank" rel="noopener">搬瓦工最具性价比的50刀CN2 GIA套餐</a>，先到该网页取得监控位置的<code>XPath</code>。<br>按<code>F12</code>调出开发者工具，按左上角的小箭头(Ctrl+Shift+C)开启选择模式，选定区域后右键高亮的代码，<code>COPY——COPY XPath</code>，如下图所示。<br><img src="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Screenshot from 2020-12-22 18-55-21.png" alt=""><br>点击<code>任务管理——网页监控管理——增加</code>。填写相关信息，如下图所示，然后点<code>保存</code>。<br><img src="https://cdn.jsdelivr.net/gh/mjysci/imgs@master/blog/Selection_20201222-184605.png" alt=""><br>保存任务后不会立即执行，像上图那样5分钟后手机微信将收到第一次抓取的信息，之后有变化才会再次通知。  </p>
 
       
       
@@ -308,13 +315,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></p>
+        <p><span>本文标题:</span><a href="/2020/12/22/raspberry-pi-docker-webmonitor/">用docker在树莓派上部署网页监控软件WebMonitor</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2019年03月04日 - 21时21分</p>
-        <p><span>最后更新:</span>2019年03月04日 - 22时31分</p>
+        <p><span>发布时间:</span>2020年12月22日 - 15时09分</p>
+        <p><span>最后更新:</span>2020年12月22日 - 19时17分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/03/04/upgrade-linux-mint/" title="Linux Mint 18.2版本升级至19.1">https://blog.mjyai.com/2019/03/04/upgrade-linux-mint/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2019/03/04/upgrade-linux-mint/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/12/22/raspberry-pi-docker-webmonitor/" title="用docker在树莓派上部署网页监控软件WebMonitor">https://blog.mjyai.com/2020/12/22/raspberry-pi-docker-webmonitor/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2020/12/22/raspberry-pi-docker-webmonitor/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -327,18 +334,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          ubuntu下安装与管理多个Linux内核
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/01/13/hc5661-pandorabox/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">极1s（hc5661）刷潘多拉固件</div>
+    <a href="/2020/12/07/cloudflare-api-ddns-openwrt/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">支持路由器的cloudflare动态域名ddns更新脚本</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -349,7 +347,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至18-3"><span class="toc-number">1.</span> <span class="toc-text">升级至18.3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至19"><span class="toc-number">2.</span> <span class="toc-text">升级至19</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立系统快照（可选）"><span class="toc-number">2.1.</span> <span class="toc-text">建立系统快照（可选）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将显示管理器切换为LightDM"><span class="toc-number">2.2.</span> <span class="toc-text">将显示管理器切换为LightDM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级系统"><span class="toc-number">2.3.</span> <span class="toc-text">升级系统</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至19-1"><span class="toc-number">3.</span> <span class="toc-text">升级至19.1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#收尾工作"><span class="toc-number">4.</span> <span class="toc-text">收尾工作</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网页监控软件比较"><span class="toc-number">1.</span> <span class="toc-text">网页监控软件比较</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Page-Monitor"><span class="toc-number">1.1.</span> <span class="toc-text">Page Monitor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Huginn"><span class="toc-number">1.2.</span> <span class="toc-text">Huginn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebMonitor"><span class="toc-number">1.3.</span> <span class="toc-text">WebMonitor</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#部署docker镜像"><span class="toc-number">2.</span> <span class="toc-text">部署docker镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用示例"><span class="toc-number">3.</span> <span class="toc-text">使用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册WxPusher"><span class="toc-number">3.1.</span> <span class="toc-text">注册WxPusher</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加通知方式"><span class="toc-number">3.2.</span> <span class="toc-text">添加通知方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加网页监控任务"><span class="toc-number">3.3.</span> <span class="toc-text">添加网页监控任务</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -418,13 +416,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" title="上一篇: ubuntu下安装与管理多个Linux内核">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2019/01/13/hc5661-pandorabox/" title="下一篇: 极1s（hc5661）刷潘多拉固件">
+            <a href="/2020/12/07/cloudflare-api-ddns-openwrt/" title="下一篇: 支持路由器的cloudflare动态域名ddns更新脚本">
                 <i class="fa fa-angle-right"></i>
             </a>
         

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.mjyai.com/2020/12/22/raspberry-pi-docker-webmonitor/</loc>
+    
+    <lastmod>2020-12-22T11:17:42.790Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.mjyai.com/2020/12/07/cloudflare-api-ddns-openwrt/</loc>
     
     <lastmod>2020-12-09T13:46:03.258Z</lastmod>
