@@ -1,0 +1,51 @@
+{
+    "header": [
+        " *   ",
+        " *   文件描述：本文件为请求参数，包括不限于网址、请求头、响应头、COOKIE、Referer、UserAgent",
+        " *   本文件仅为记录详细请求参数便于调试，非专业人员可将本文件删除",
+        " *   详细介绍请参考: https://bazhan.me/faq",
+        " *   "
+    ],
+    "directory": "www-simpletool-cn-c6u7l1ug",
+    "options": {
+        "url": "http://www.simpletool.cn/",
+        "index": "index.html",
+        "domain": "www.simpletool.cn",
+        "ipaddress": "118.24.69.94",
+        "filenameGenerator": "byType",
+        "request": {
+            "headers": {
+                "accept": "text/html,*/*",
+                "accept-language": "zh-CN,zh;q=0.9",
+                "accept-encoding": "gzip",
+                "cache-control": "no-cache",
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+                "x-scraper-website": "https://bazhan.me/"
+            }
+        },
+        "response": {
+            "statusCode": 200,
+            "headers": {
+                "server": "nginx/1.10.3 (Ubuntu)",
+                "date": "Sat, 05 Sep 2020 15:00:35 GMT",
+                "content-type": "text/html",
+                "last-modified": "Sat, 06 Jan 2018 08:57:24 GMT",
+                "transfer-encoding": "chunked",
+                "connection": "close",
+                "etag": "W/\"5a508f74-8a2\"",
+                "content-encoding": "gzip"
+            }
+        }
+    },
+    "user": {
+        "isWhite": false
+    },
+    "formatter": [
+        "saveOriginal"
+    ],
+    "time": {
+        "start": 1599318029254,
+        "end": 1599318048483,
+        "spend": "19.229s"
+    }
+}
