@@ -3,19 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Linux Mint 18.2版本升级至19.1 | 名实合为</title>
+  <title>用docker在树莓派上部署自动化软件huginn | 名实合为</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用Update Manager进行逐步升级，timeshift可跳过。">
+  <meta name="description" content="huginn官方并不支持ARM，所以在其基础上构建了支持树莓派(arm32v7)的docker镜像，在arm64v8的NAS设备上也能正常使用。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux Mint 18.2版本升级至19.1">
-<meta property="og:url" content="https://blog.mjyai.com/2019/03/04/upgrade-linux-mint/index.html">
+<meta property="og:title" content="用docker在树莓派上部署自动化软件huginn">
+<meta property="og:url" content="https://blog.mjyai.com/2020/12/24/raspberry-pi-docker-huginn/index.html">
 <meta property="og:site_name" content="名实合为">
-<meta property="og:description" content="用Update Manager进行逐步升级，timeshift可跳过。">
+<meta property="og:description" content="huginn官方并不支持ARM，所以在其基础上构建了支持树莓派(arm32v7)的docker镜像，在arm64v8的NAS设备上也能正常使用。">
 <meta property="og:locale" content="zh">
-<meta property="article:published_time" content="2019-03-04T13:21:42.000Z">
-<meta property="article:modified_time" content="2019-03-04T14:31:46.000Z">
+<meta property="article:published_time" content="2020-12-24T01:04:21.000Z">
+<meta property="article:modified_time" content="2020-12-24T01:35:04.822Z">
 <meta property="article:author" content="mjy">
-<meta property="article:tag" content="linux">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="arm">
+<meta property="article:tag" content="rpi">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
@@ -202,11 +204,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-upgrade-linux-mint" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-raspberry-pi-docker-huginn" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/04/upgrade-linux-mint/" class="article-date">
-      <time datetime="2019-03-04T13:21:42.000Z" itemprop="datePublished">2019-03-04</time>
+      <a href="/2020/12/24/raspberry-pi-docker-huginn/" class="article-date">
+      <time datetime="2020-12-24T01:04:21.000Z" itemprop="datePublished">2020-12-24</time>
 </a>
     </div>
   
@@ -219,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Linux Mint 18.2版本升级至19.1
+      用docker在树莓派上部署自动化软件huginn
     </h1>
   
 
@@ -234,7 +236,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arm/" rel="tag">arm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rpi/" rel="tag">rpi</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -244,16 +246,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>用Update Manager进行逐步升级，timeshift可跳过。<br><a id="more"></a></p>
-<h1 id="升级至18-3"><a href="#升级至18-3" class="headerlink" title="升级至18.3"></a>升级至18.3</h1><p>打开Update Manager，Edit——Upgrade to Linux Mint 18.3 Sylvia。如果是其他版本也是同样的位置，但升级版本不一样，每次升0.1。<br>完成后重启。  </p>
-<h1 id="升级至19"><a href="#升级至19" class="headerlink" title="升级至19"></a>升级至19</h1><h2 id="建立系统快照（可选）"><a href="#建立系统快照（可选）" class="headerlink" title="建立系统快照（可选）"></a>建立系统快照（可选）</h2><p>官方强制要求要建立系统快照，但如果像我这样mint只是备用系统，用来折腾不怕搞坏则此步可跳过。<br>以下附上建立快照的步骤：<br>安装timeshift<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install timeshift</span><br></pre></td></tr></table></figure><br>Menu——Timeshift打开快照安装向导，选择快照类型（默认RSYNC），选择存储位置，完成向导。<br>Create建立快照。</p>
-<h2 id="将显示管理器切换为LightDM"><a href="#将显示管理器切换为LightDM" class="headerlink" title="将显示管理器切换为LightDM"></a>将显示管理器切换为LightDM</h2><p>检查默认显示管理器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/X11/default-display-manager</span><br></pre></td></tr></table></figure><br>如果输出为<code>/usr/sbin/lightdm</code>则可跳过下面安装并切换LightDM的步骤。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install lightdm lightdm-settings slick-greeter</span><br></pre></td></tr></table></figure><br>安装过程中选择默认显示管理器为lightdm。<br>删除MDM。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt remove --purge mdm mint-mdm-themes*</span><br></pre></td></tr></table></figure><br>配置并重启。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg-reconfigure lightdm</span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure></p>
-<h2 id="升级系统"><a href="#升级系统" class="headerlink" title="升级系统"></a>升级系统</h2><p>安装mintupgrade。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install mintupgrade</span><br></pre></td></tr></table></figure><br>（可选）如果前面没有创建快照，执行以下命令以跳过timeshift检查。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo touch /etc/timeshift.json</span><br></pre></td></tr></table></figure><br>检查系统。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mintupgrade check</span><br></pre></td></tr></table></figure><br>检查过程中会给出依赖有冲突的包，用<code>apt remove</code>删掉即可，升级后再装回去。值得注意的是我之前还装了ros，删掉ros。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove ros-*</span><br></pre></td></tr></table></figure><br>另外建议想装<a href="http://www.ros.org/install/" target="_blank" rel="noopener">ROS</a>的老老实实在Ubuntu上弄，在Mint上经过一番折腾后也能用，但没必要把时间花在搭建环境的坑上。<br>预先下载好升级所需包。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mintupgrade download</span><br></pre></td></tr></table></figure><br>升级。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mintupgrade upgrade</span><br></pre></td></tr></table></figure></p>
-<h1 id="升级至19-1"><a href="#升级至19-1" class="headerlink" title="升级至19.1"></a>升级至19.1</h1><p>此时如果是装了第三方显卡驱动可能桌面会崩溃并进入低分辨率安全模式，先不管它。<br>每次升级后源会重置，打开Software Sources改成国内源。<br>打开Update Manager，Edit——Upgrade to Linux Mint 19.1 Tessa。  </p>
-<h1 id="收尾工作"><a href="#收尾工作" class="headerlink" title="收尾工作"></a>收尾工作</h1><p>解决桌面崩溃问题，重装nvidia显卡驱动。</p>
-<pre><code class="bash">apt-get install --reinstall nvidia-415
-</code></pre>
-<p>用的是这个源<code>sudo add-apt-repository ppa:graphics-drivers/ppa</code>。<br>如果还是不行就装<code>nvidia-396</code>。</p>
+        <p>huginn官方并不支持ARM，所以在其基础上构建了支持树莓派(arm32v7)的docker镜像，在arm64v8的NAS设备上也能正常使用。<br><a id="more"></a></p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>目前主要是用于网页监控，关于网页监控软件比较<a href="https://blog.mjyai.com/2020/12/22/raspberry-pi-docker-webmonitor/#%E7%BD%91%E9%A1%B5%E7%9B%91%E6%8E%A7%E8%BD%AF%E4%BB%B6%E6%AF%94%E8%BE%83">可以看这里</a>。<br>由于WebMonitor只能监控变化，无法对抓取内容进行判定，如只提醒降价。在现有框架下增加这个功能有点麻烦，故还是选择去填huginn不支持arm这个坑。  </p>
+<h1 id="硬件要求"><a href="#硬件要求" class="headerlink" title="硬件要求"></a>硬件要求</h1><p>官方推荐配置是双核2GB内存。<br>实际测试中一运行就占用了至少0.5GB内存，1GB内存的树莓派3B勉强可以运行。考虑到NAS的主业是存储，一般还会挂PT（这也是内存大户），故内存低于2GB的设备不建议使用。  </p>
+<h1 id="部署docker镜像"><a href="#部署docker镜像" class="headerlink" title="部署docker镜像"></a>部署docker镜像</h1><p>创建存储空间以保存数据（数据库）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume create huginn-data</span><br></pre></td></tr></table></figure><br>第一次运行初始化耗时较长，建议用交互模式便于查错（可选）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -p 3000:3000 -v huginn-data:&#x2F;var&#x2F;lib&#x2F;mysql mjysci&#x2F;huginn:arm32v7</span><br></pre></td></tr></table></figure><br>尝试访问<code>http://ip:3000</code>，默认用户<code>admin</code>，密码<code>password</code>。登录第一件事就是改掉默认用户和密码。<br>测试无误后<code>Ctrl+C</code>停止容器，用后台模式运行容器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name huginn --restart&#x3D;on-failure:5 -p 3000:3000 -v huginn-data:&#x2F;var&#x2F;lib&#x2F;mysql mjysci&#x2F;huginn:arm32v7</span><br></pre></td></tr></table></figure><br>另外<code>amd64</code>的设备用<a href="https://hub.docker.com/r/huginn/huginn" target="_blank" rel="noopener">官方镜像</a>即可。<br>由于huginn的配置较复杂，使用教程下一篇再说。  </p>
 
       
       
@@ -308,13 +304,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></p>
+        <p><span>本文标题:</span><a href="/2020/12/24/raspberry-pi-docker-huginn/">用docker在树莓派上部署自动化软件huginn</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
-        <p><span>发布时间:</span>2019年03月04日 - 21时21分</p>
-        <p><span>最后更新:</span>2019年03月04日 - 22时31分</p>
+        <p><span>发布时间:</span>2020年12月24日 - 09时04分</p>
+        <p><span>最后更新:</span>2020年12月24日 - 09时35分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/03/04/upgrade-linux-mint/" title="Linux Mint 18.2版本升级至19.1">https://blog.mjyai.com/2019/03/04/upgrade-linux-mint/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2019/03/04/upgrade-linux-mint/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/12/24/raspberry-pi-docker-huginn/" title="用docker在树莓派上部署自动化软件huginn">https://blog.mjyai.com/2020/12/24/raspberry-pi-docker-huginn/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2020/12/24/raspberry-pi-docker-huginn/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -327,18 +323,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          ubuntu下安装与管理多个Linux内核
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/01/13/hc5661-pandorabox/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">极1s（hc5661）刷潘多拉固件</div>
+    <a href="/2020/12/22/raspberry-pi-docker-webmonitor/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">用docker在树莓派上部署网页监控软件WebMonitor</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -349,7 +336,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至18-3"><span class="toc-number">1.</span> <span class="toc-text">升级至18.3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至19"><span class="toc-number">2.</span> <span class="toc-text">升级至19</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立系统快照（可选）"><span class="toc-number">2.1.</span> <span class="toc-text">建立系统快照（可选）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将显示管理器切换为LightDM"><span class="toc-number">2.2.</span> <span class="toc-text">将显示管理器切换为LightDM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级系统"><span class="toc-number">2.3.</span> <span class="toc-text">升级系统</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升级至19-1"><span class="toc-number">3.</span> <span class="toc-text">升级至19.1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#收尾工作"><span class="toc-number">4.</span> <span class="toc-text">收尾工作</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#需求"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#硬件要求"><span class="toc-number">2.</span> <span class="toc-text">硬件要求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#部署docker镜像"><span class="toc-number">3.</span> <span class="toc-text">部署docker镜像</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -418,13 +405,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/03/05/install-manage-linux-kernel-ubuntu/" title="上一篇: ubuntu下安装与管理多个Linux内核">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2019/01/13/hc5661-pandorabox/" title="下一篇: 极1s（hc5661）刷潘多拉固件">
+            <a href="/2020/12/22/raspberry-pi-docker-webmonitor/" title="下一篇: 用docker在树莓派上部署网页监控软件WebMonitor">
                 <i class="fa fa-angle-right"></i>
             </a>
         

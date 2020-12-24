@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.mjyai.com/2020/12/24/raspberry-pi-docker-huginn/</loc>
+    
+    <lastmod>2020-12-24T01:35:04.822Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.mjyai.com/2020/12/22/raspberry-pi-docker-webmonitor/</loc>
     
-    <lastmod>2020-12-22T11:26:50.608Z</lastmod>
+    <lastmod>2020-12-24T01:17:03.061Z</lastmod>
     
   </url>
   
