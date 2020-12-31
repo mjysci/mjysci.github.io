@@ -13,7 +13,7 @@
 <meta property="og:description" content="huginn官方并不支持ARM，所以在其基础上构建了支持树莓派(arm32v7)的docker镜像，在arm64v8的NAS设备上也能正常使用。">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-12-24T01:04:21.000Z">
-<meta property="article:modified_time" content="2020-12-24T02:09:46.763Z">
+<meta property="article:modified_time" content="2020-12-31T12:51:21.055Z">
 <meta property="article:author" content="mjy">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="arm">
@@ -247,7 +247,7 @@
       
           
         <p>huginn官方并不支持ARM，所以在其基础上构建了支持树莓派(arm32v7)的docker镜像，在arm64v8的NAS设备上也能正常使用。<br><a id="more"></a></p>
-<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>目前主要是用于网页监控，关于网页监控软件比较<a href="https://blog.mjyai.com/2020/12/22/raspberry-pi-docker-webmonitor/#%E7%BD%91%E9%A1%B5%E7%9B%91%E6%8E%A7%E8%BD%AF%E4%BB%B6%E6%AF%94%E8%BE%83">可以看这里</a>。<br>由于WebMonitor只能监控变化，无法对抓取内容进行判定，如只提醒降价。在现有框架下增加这个功能有点麻烦，故还是选择去填huginn不支持arm这个坑。  </p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>目前主要是用于网页监控，关于网页监控软件比较<a href="https://blog.mjyai.com/2020/12/22/raspberry-pi-docker-webmonitor/#%E7%BD%91%E9%A1%B5%E7%9B%91%E6%8E%A7%E8%BD%AF%E4%BB%B6%E6%AF%94%E8%BE%83">可以看这里</a>。<br>由于WebMonitor在监控规则上仍不够灵活，比如用js或python对抓取数据进行二次处理。在现有框架下增加这个功能有点麻烦，故还是选择去填huginn不支持arm这个坑。  </p>
 <h1 id="硬件要求"><a href="#硬件要求" class="headerlink" title="硬件要求"></a>硬件要求</h1><p>官方推荐配置是双核2GB内存。<br>实际测试中一运行就占用了至少0.5GB内存，1GB内存的树莓派3B勉强可以运行。考虑到NAS的主业是存储，一般还会挂PT（这也是内存大户），故内存低于2GB的设备不建议使用。  </p>
 <h1 id="部署docker镜像"><a href="#部署docker镜像" class="headerlink" title="部署docker镜像"></a>部署docker镜像</h1><p>创建存储空间以保存数据（数据库）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume create huginn-data</span><br></pre></td></tr></table></figure><br>第一次运行初始化耗时较长，建议用交互模式便于查错（可选）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -p 3000:3000 -v huginn-data:&#x2F;var&#x2F;lib&#x2F;mysql mjysci&#x2F;huginn:arm32v7</span><br></pre></td></tr></table></figure><br>尝试访问<code>http://ip:3000</code>，默认用户<code>admin</code>，密码<code>password</code>。登录第一件事就是改掉默认用户和密码。<br>测试无误后<code>Ctrl+C</code>停止容器，用后台模式运行容器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name huginn --restart&#x3D;on-failure:5 -p 3000:3000 -v huginn-data:&#x2F;var&#x2F;lib&#x2F;mysql mjysci&#x2F;huginn:arm32v7</span><br></pre></td></tr></table></figure><br>这个镜像也兼容<code>arm64v8</code>（<code>aarch64</code>）的设备。另外<code>amd64</code>架构的用<a href="https://hub.docker.com/r/huginn/huginn" target="_blank" rel="noopener">官方镜像</a>即可。<br>由于huginn的配置较复杂，使用教程下一篇再说。  </p>
 
@@ -307,7 +307,7 @@
         <p><span>本文标题:</span><a href="/2020/12/24/raspberry-pi-docker-huginn/">用docker在树莓派上部署自动化软件huginn</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
         <p><span>发布时间:</span>2020年12月24日 - 09时04分</p>
-        <p><span>最后更新:</span>2020年12月24日 - 10时09分</p>
+        <p><span>最后更新:</span>2020年12月31日 - 20时51分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/12/24/raspberry-pi-docker-huginn/" title="用docker在树莓派上部署自动化软件huginn">https://blog.mjyai.com/2020/12/24/raspberry-pi-docker-huginn/</a>
             <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2020/12/24/raspberry-pi-docker-huginn/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

@@ -32497,10 +32497,11 @@ var Container = function (_React$Component) {
       var d = new Date,
       dformat = [d.getFullYear(),
                d.getMonth()+1,
-               d.getDate()].join('/')+' '+
+               d.getDate()].join('_')+'_'+
               [d.getHours(),
                d.getMinutes(),
-               d.getSeconds()].join(':');
+               d.getSeconds(),
+		d.getMilliseconds()].join('_');
 
       target.download = `${dformat}.png`;
       target.href = objurl;
