@@ -138,7 +138,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/arm/" style="font-size: 18px;">arm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/caddy/" style="font-size: 10px;">caddy</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/conda/" style="font-size: 10px;">conda</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/docker/" style="font-size: 18px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/firmware/" style="font-size: 14px;">firmware</a> <a href="/tags/github/" style="font-size: 12px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/huginn/" style="font-size: 10px;">huginn</a> <a href="/tags/im/" style="font-size: 10px;">im</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/linux/" style="font-size: 12px;">linux</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/nas/" style="font-size: 12px;">nas</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/pt/" style="font-size: 10px;">pt</a> <a href="/tags/qemu/" style="font-size: 10px;">qemu</a> <a href="/tags/router/" style="font-size: 12px;">router</a> <a href="/tags/rpi/" style="font-size: 16px;">rpi</a> <a href="/tags/rss/" style="font-size: 14px;">rss</a> <a href="/tags/shopping/" style="font-size: 10px;">shopping</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/win/" style="font-size: 12px;">win</a>
+                        <a href="/tags/arm/" style="font-size: 16.67px;">arm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/caddy/" style="font-size: 10px;">caddy</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/conda/" style="font-size: 10px;">conda</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/docker/" style="font-size: 18.33px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/firmware/" style="font-size: 13.33px;">firmware</a> <a href="/tags/github/" style="font-size: 11.67px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/huginn/" style="font-size: 10px;">huginn</a> <a href="/tags/im/" style="font-size: 10px;">im</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/linux/" style="font-size: 11.67px;">linux</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/nas/" style="font-size: 11.67px;">nas</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/openwrt/" style="font-size: 11.67px;">openwrt</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/pt/" style="font-size: 10px;">pt</a> <a href="/tags/qemu/" style="font-size: 10px;">qemu</a> <a href="/tags/router/" style="font-size: 11.67px;">router</a> <a href="/tags/rpi/" style="font-size: 15px;">rpi</a> <a href="/tags/rss/" style="font-size: 13.33px;">rss</a> <a href="/tags/shopping/" style="font-size: 10px;">shopping</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/win/" style="font-size: 11.67px;">win</a>
                     </div>
                 </section>
                 
@@ -203,6 +203,73 @@
     </div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-docker-credential-login" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/03/14/docker-credential-login/" class="article-date">
+      <time datetime="2019-03-14T03:41:20.000Z" itemprop="datePublished">2019-03-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/14/docker-credential-login/">通过pass实现更安全的docker登录方式</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>docker默认登录是将密码明文存在本地的<code>~/.docker/config.json</code>，随便找个<a href="https://paulschou.com/tools/xlate/" target="_blank" rel="noopener">base64的解码器</a>就能还原，存在安全隐患。此文通过pass实现更安全的docker登录方式。<br>
+          
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a  href="/2019/03/14/docker-credential-login/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-aria2-docker-arm-qnap" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -785,73 +852,6 @@
       
         <p class="article-more-link">
           <a  href="/2019/01/06/r6220-breed-pandora/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-choose-router" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/01/05/choose-router/" class="article-date">
-      <time datetime="2019-01-05T11:50:58.000Z" itemprop="datePublished">2019-01-05</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/05/choose-router/">购买路由注意事项</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>简而言之，按自己需求选高端的高通方案或高性价比的雷凌方案的千兆LAN路由，是否用Merlin(华硕)或OpenWrt（避开博通），对发热比较敏感SoC选ARM架构。<br>
-          
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/firmware/" rel="tag">firmware</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/router/" rel="tag">router</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shopping/" rel="tag">shopping</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a  href="/2019/01/05/choose-router/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
