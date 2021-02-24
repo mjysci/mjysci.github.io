@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.mjyai.com/2021/02/24/raspberry-pi-gotify/</loc>
+    
+    <lastmod>2021-02-24T09:03:16.112Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.mjyai.com/2020/01/24/rtorrent-compile/</loc>
     
-    <lastmod>2021-02-12T15:30:24.693Z</lastmod>
+    <lastmod>2021-02-24T07:40:35.056Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.mjyai.com/2019/03/14/docker-credential-login/</loc>
+    
+    <lastmod>2021-02-24T07:33:04.781Z</lastmod>
     
   </url>
   
@@ -187,13 +201,6 @@
     <loc>https://blog.mjyai.com/2019/03/12/aria2-docker-arm-qnap/</loc>
     
     <lastmod>2019-04-23T06:19:14.988Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.mjyai.com/2019/03/14/docker-credential-login/</loc>
-    
-    <lastmod>2019-03-21T05:13:56.314Z</lastmod>
     
   </url>
   
