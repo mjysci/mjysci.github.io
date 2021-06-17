@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>结合systemd在服务已下线时通过Gotify进行通知 | 名实合为</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="服务器上有一些重要服务若下线则需马上进行处理，用systemd中的OnFailure结合Gotify能同时兼顾轻量和迅速的优点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="结合systemd在服务已下线时通过Gotify进行通知">
+<meta property="og:url" content="https://blog.mjyai.com/2021/06/17/systemd-gotify-warning-service/index.html">
+<meta property="og:site_name" content="名实合为">
+<meta property="og:description" content="服务器上有一些重要服务若下线则需马上进行处理，用systemd中的OnFailure结合Gotify能同时兼顾轻量和迅速的优点。">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2021-06-17T11:13:20.000Z">
+<meta property="article:modified_time" content="2021-06-17T12:13:55.691Z">
+<meta property="article:author" content="mjy">
+<meta property="article:tag" content="service">
+<meta property="article:tag" content="systemd">
+<meta property="article:tag" content="gotify">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="名实合为" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">mjy</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="/&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#106;&#121;&#64;&#122;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/arm/" style="font-size: 16.67px;">arm</a> <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/caddy/" style="font-size: 10px;">caddy</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/conda/" style="font-size: 10px;">conda</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/docker/" style="font-size: 18.33px;">docker</a> <a href="/tags/encode/" style="font-size: 10px;">encode</a> <a href="/tags/engineering/" style="font-size: 10px;">engineering</a> <a href="/tags/firmware/" style="font-size: 13.33px;">firmware</a> <a href="/tags/github/" style="font-size: 11.67px;">github</a> <a href="/tags/gotify/" style="font-size: 10px;">gotify</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/huginn/" style="font-size: 10px;">huginn</a> <a href="/tags/im/" style="font-size: 10px;">im</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/linux/" style="font-size: 11.67px;">linux</a> <a href="/tags/motion/" style="font-size: 10px;">motion</a> <a href="/tags/nas/" style="font-size: 11.67px;">nas</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/openwrt/" style="font-size: 11.67px;">openwrt</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/pt/" style="font-size: 10px;">pt</a> <a href="/tags/qemu/" style="font-size: 10px;">qemu</a> <a href="/tags/router/" style="font-size: 11.67px;">router</a> <a href="/tags/rpi/" style="font-size: 15px;">rpi</a> <a href="/tags/rss/" style="font-size: 13.33px;">rss</a> <a href="/tags/service/" style="font-size: 10px;">service</a> <a href="/tags/shopping/" style="font-size: 10px;">shopping</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/systemd/" style="font-size: 10px;">systemd</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/udacity/" style="font-size: 10px;">udacity</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/win/" style="font-size: 11.67px;">win</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/news/">Hexo</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">Valar morghulis</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">mjy</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">mjy</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="/&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#106;&#121;&#64;&#122;&#46;&#109;&#106;&#121;&#97;&#105;&#46;&#99;&#111;&#109;" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/mjysci" title="github">github</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-systemd-gotify-warning-service" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/06/17/systemd-gotify-warning-service/" class="article-date">
+      <time datetime="2021-06-17T11:13:20.000Z" itemprop="datePublished">2021-06-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      结合systemd在服务已下线时通过Gotify进行通知
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gotify/" rel="tag">gotify</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/service/" rel="tag">service</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/systemd/" rel="tag">systemd</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>服务器上有一些重要服务若下线则需马上进行处理，用<code>systemd</code>中的<code>OnFailure</code>结合<code>Gotify</code>能同时兼顾轻量和迅速的优点。<br><a id="more"></a></p>
+<h1 id="安装Gotify"><a href="#安装Gotify" class="headerlink" title="安装Gotify"></a>安装Gotify</h1><p>关于Gotify的优缺点和部署方法可参考<a href="https://blog.mjyai.com/2021/02/24/raspberry-pi-gotify/">这篇文章</a>。</p>
+<h1 id="设置gotify-warning服务"><a href="#设置gotify-warning服务" class="headerlink" title="设置gotify-warning服务"></a>设置gotify-warning服务</h1><p>创建<code>/etc/systemd/system/gotify-warning@.service</code>文件。注意其中的<code>@</code>说明这是一个模板服务，可生成多个实例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Gotify Warning</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type&#x3D;oneshot</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;bin&#x2F;curl -s \</span><br><span class="line">   --form-string &quot;title&#x3D;%H&quot; \</span><br><span class="line">   --form-string &quot;message&#x3D;service %I at %H failed&quot; \</span><br><span class="line">   --form-string &quot;priority&#x3D;5&quot; \</span><br><span class="line">   https:&#x2F;&#x2F;example.com&#x2F;gotify&#x2F;message?token&#x3D;你的令牌</span><br></pre></td></tr></table></figure><br>其中<code>%H</code>为<code>hostname</code>，<code>%I</code>为服务名称。<br>由于此服务是按需触发，故无需enable。  </p>
+<h1 id="编辑相关服务的配置文件"><a href="#编辑相关服务的配置文件" class="headerlink" title="编辑相关服务的配置文件"></a>编辑相关服务的配置文件</h1><p>在<code>[Unit]</code>下添加一行<code>OnFailure=gotify-warning@%n</code>。其中<code>%n</code>是该服务名。<br>以某个服务为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;qqbot</span><br><span class="line">After&#x3D;network.target</span><br><span class="line">StartLimitIntervalSec&#x3D;50</span><br><span class="line">StartLimitBurst&#x3D;3</span><br><span class="line">OnFailure&#x3D;gotify-warning@%n</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type&#x3D;simple</span><br><span class="line">User&#x3D;yourname</span><br><span class="line">WorkingDirectory&#x3D;&#x2F;opt&#x2F;qqbot</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;bin&#x2F;java -jar &#x2F;opt&#x2F;qqbot&#x2F;qqbot.jar</span><br><span class="line">Restart&#x3D;on-failure</span><br><span class="line">RestartSec&#x3D;10</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure><br>这里<code>Restart=on-failure</code>为程序下线时自动重启程序，且重启间隔为10秒。但有时重启也不能解决问题，故要用<code>StartLimitBurst</code>对重启次数进行限制，然后<code>StartLimitIntervalSec</code>是总监控时长，这里为50秒内重启3次以上就停止重启。最终触发<code>OnFailure</code>调用服务<code>gotify-warning@qqbot.service</code>给手机发出通知。<br>注：<br><code>StartLimitIntervalSec</code>是<code>systemd v230</code>后的版本才有的功能，某些古早CentOS（7.x）仅支持<code>StartLimitInterval</code>且要放在<code>[Service]</code>处。  </p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html" target="_blank" rel="noopener">systemd.unit manual</a><br><a href="https://gotify.net/docs/pushmsg" target="_blank" rel="noopener">Gotify - Push messages</a></p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipayimg.jpg" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/wechatimg.jpg" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/06/17/systemd-gotify-warning-service/">结合systemd在服务已下线时通过Gotify进行通知</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 mjy 的个人博客">mjy</a></p>
+        <p><span>发布时间:</span>2021年06月17日 - 19时13分</p>
+        <p><span>最后更新:</span>2021年06月17日 - 20时13分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/06/17/systemd-gotify-warning-service/" title="结合systemd在服务已下线时通过Gotify进行通知">https://blog.mjyai.com/2021/06/17/systemd-gotify-warning-service/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://blog.mjyai.com/2021/06/17/systemd-gotify-warning-service/　　作者: mjy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2021/02/24/raspberry-pi-gotify/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在树莓派上部署消息推送软件Gotify</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Gotify"><span class="toc-number">1.</span> <span class="toc-text">安装Gotify</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置gotify-warning服务"><span class="toc-number">2.</span> <span class="toc-text">设置gotify-warning服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编辑相关服务的配置文件"><span class="toc-number">3.</span> <span class="toc-text">编辑相关服务的配置文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'majunyi'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2021/02/24/raspberry-pi-gotify/" title="下一篇: 在树莓派上部署消息推送软件Gotify">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/systemd-gotify-warning-service/">结合systemd在服务已下线时通过Gotify进行通知</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/24/raspberry-pi-gotify/">在树莓派上部署消息推送软件Gotify</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/docker-compile-lede-openwrt/">在Docker容器内编译OpenWrt/Lede</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/31/how-to-contribute-rsshub/">RSSHub提交新规则详细指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/25/huginn-monitor-price-drop-notify-wechat/">huginn教程：监控商品页面并在降价时推送到微信通知</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/24/raspberry-pi-docker-huginn/">用docker在树莓派上部署自动化软件huginn</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/22/raspberry-pi-docker-webmonitor/">用docker在树莓派上部署网页监控软件WebMonitor</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/07/cloudflare-api-ddns-openwrt/">支持路由器的cloudflare动态域名ddns更新脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/29/caddy-upgrade-v2/">Web服务器Caddy安装升级到v2注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/15/conda-ffmpeg-x264/">conda环境下ffmpeg使用x264编码</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/01/win10-wsl2-ubuntu/">Win10安装WSL2及Ubuntu20.04子系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/11/ubuntu-mattermost/">ubuntu下部署团队协作通讯软件mattermost</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/09/ubuntu-nginx-frontend-apache-backend/">ubuntu下nginx作为前端配合apache作为后端</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/ubuntu-letsencrypt/">ubuntu下手动部署Let's Encrypt</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/29/no-tk/">慎用诸如tk之类的免费域名</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/ubuntu-full-text-rss/">ubuntu下搭建rss全文输出服务full-text-rss</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/22/ubuntu-ttrss/">ubuntu下自建rss阅读器ttrss</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/15/ubuntu-nextcloud/">ubuntu下搭建私人同步云盘nextcloud</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/24/rtorrent-compile/">ubuntu下编译配置rTorrent+ruTorrent</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/seafile-docker-arm64/">用Docker部署64位ARM版的seafile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/20/rpi3-ubuntu-arm64/">树莓派3安装arm64版Ubuntu 18.04 Server</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/fix-win10-ryzen-freeze/">解决win10下Ryzen平台间歇性卡顿问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/14/docker-credential-login/">通过pass实现更安全的docker登录方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/aria2-docker-arm-qnap/">ARM平台qnap用Docker部署aria2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qiandao-docker-qnap-arm/">ARM平台NAS（qnap TS-212P3）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/qemu-ubuntu-arm64/">通过QEMU在x86计算机上搭建arm64版ubuntu开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/11/rpi-docker-qiandao/">树莓派（arm32v7）用Docker部署签到站</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/install-manage-linux-kernel-ubuntu/">ubuntu下安装与管理多个Linux内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/04/upgrade-linux-mint/">Linux Mint 18.2版本升级至19.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/13/hc5661-pandorabox/">极1s（hc5661）刷潘多拉固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/r6220-relay-bridge/">R6220采用中继桥实现无线桥接</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/06/r6220-breed-pandora/">Netgear R6220刷Breed和pandorabox固件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/05/choose-router/">购买路由注意事项</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/19/cac-upgrade-ubuntu/">升级cloudatcost的ubuntu至18.04</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/carnd-env/">无人车开发工程师第一学期环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/22/rpi-cctv-motion/">利用树莓派DIY运动检测监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/github-desktop/">通过proxifier配合代理安装GitHub Desktop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/03/highlight-visited/">通过CSS高亮显示已访问链接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/hello-world/">Hello World! 静态博客Hexo部署于GitHub</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2021 mjy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>
